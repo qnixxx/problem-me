@@ -90,6 +90,99 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 @media(max-width:640px){.hero{padding:36px 0 24px}.hero .prompt,.hero .case{font-size:.66rem;letter-spacing:.065em}.hero h1{font-size:clamp(2.45rem,13vw,4.4rem);line-height:.88;margin-top:10px}.hero h1 span{font-size:.48em;line-height:1.02}}
 @media(max-width:390px){.hero .prompt,.hero .case{font-size:.62rem}.hero h1{font-size:clamp(2.25rem,12.5vw,3.75rem)}}
 
+
+/* v0.3 case navigation — shared across every Case File */
+.case-pager{
+  width:min(calc(100% - 32px),var(--max));
+  margin:0 auto 34px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:stretch;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.case-pager a{
+  min-width:0;
+  min-height:72px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:3px;
+  padding:12px 14px;
+  color:var(--green);
+  text-decoration:none;
+}
+.case-pager a + a{border-left:1px solid var(--line)}
+.case-pager .pager-all{
+  min-width:170px;
+  align-items:center;
+  text-align:center;
+  color:var(--cream);
+}
+.case-pager .pager-next{
+  align-items:flex-end;
+  text-align:right;
+}
+.case-pager small{
+  color:var(--muted);
+  font-size:.58rem;
+  letter-spacing:.08em;
+}
+.case-pager strong{
+  max-width:100%;
+  color:inherit;
+  font-size:.72rem;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+.case-pager .pager-disabled{
+  min-height:72px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:12px 14px;
+  color:var(--dim,var(--muted));
+  opacity:.42;
+}
+.case-pager .pager-disabled:last-child{
+  align-items:flex-end;
+  text-align:right;
+}
+@media(hover:hover) and (pointer:fine){
+  .case-pager a:hover{
+    background:rgba(99,255,181,.035);
+    color:var(--yellow);
+  }
+}
+@media(max-width:640px){
+  .case-pager{
+    width:min(calc(100% - 20px),var(--max));
+    grid-template-columns:1fr 1fr;
+  }
+  .case-pager .pager-all{
+    grid-column:1/-1;
+    grid-row:1;
+    min-width:0;
+    min-height:52px;
+    border-left:0;
+    border-bottom:1px solid var(--line);
+  }
+  .case-pager .pager-prev,
+  .case-pager .pager-disabled:first-child{
+    grid-column:1;
+    grid-row:2;
+  }
+  .case-pager .pager-next,
+  .case-pager .pager-disabled:last-child{
+    grid-column:2;
+    grid-row:2;
+    border-left:1px solid var(--line);
+  }
+  .case-pager a,
+  .case-pager .pager-disabled{min-height:68px;padding:10px}
+  .case-pager strong{font-size:.66rem}
+}
+
 </style>
 </head>
 <body>
@@ -118,5 +211,6 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </section>
 <section class="wrap lesson"><div class="box"><h3>REAL WORLD TRANSLATION_</h3><div class="translation"><span>Ponds</span><span>→</span><span>Vendors / projects / options</span></div><div class="translation"><span>MUSTs</span><span>→</span><span>Non-negotiable requirements</span></div><div class="translation"><span>WANT weights</span><span>→</span><span>Relative importance</span></div><div class="translation"><span>Adverse consequences</span><span>→</span><span>Decision risk</span></div></div><div class="box"><h3>REMEMBER_</h3><p class="rule"><strong>Do not use the scores to manufacture certainty.</strong> The value is in forcing the team to state criteria, weights and risks explicitly. If the inputs are weak or political, a precise-looking total is still weak.</p><p class="rule">This case now demonstrates both <strong>Decision Analysis</strong> and <strong>Problem Analysis</strong>. Kepner–Tregoe also includes <strong>Situation Appraisal</strong> and <strong>Potential Problem Analysis</strong>.</p></div></section>
 </main>
+<nav class="case-pager" aria-label="Case File navigation"><a class="pager-prev" href="pareto.html"><small>← PREVIOUS</small><strong>CASE #003 / PARETO</strong></a><a class="pager-all" href="index.html#techniques"><small>LIBRARY</small><strong>ALL TECHNIQUES</strong></a><span class="pager-disabled"><small>NEXT →</small><strong>END OF CURRENT LIBRARY</strong></span></nav>
 <footer><div class="wrap next"><span><strong class="footer-brand">problem.me</strong> — Same problems. Clearer thinking.</span><span><a href="index.html#techniques">← technique preview</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span></div></footer>
 </body></html>

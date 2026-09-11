@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Browse the problem.me visual problem-solving technique library — 5 Whys, Fishbone, Pareto Analysis and Kepner–Tregoe." />
+  <meta name="theme-color" content="#020805" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:title" content="Technique Library | problem.me" />
+  <meta property="og:description" content="Browse visual problem-solving techniques by goal, difficulty and use case." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://problem.me/techniques.html" />
+  <link rel="canonical" href="https://problem.me/techniques.html" />
+  <title>Technique Library | problem.me</title>
+  <style>
+    :root{
+      --bg:#020805;
+      --panel:#031009;
+      --panel2:#020d08;
+      --green:#63ffb5;
+      --green2:#21d67a;
+      --yellow:#ffe95b;
+      --cream:#f2f0df;
+      --muted:#86b79e;
+      --copy:#b9e4ce;
+      --line:#1f6f4d;
+      --max:1160px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{background:var(--bg);color-scheme:dark;scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:radial-gradient(circle at 50% 10%,#062015 0,var(--bg) 46%);
+      color:var(--green);
+      font-family:"Courier New",Courier,monospace;
+      line-height:1.5;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:99;
+      pointer-events:none;
+      background:repeating-linear-gradient(to bottom,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 4px);
+      opacity:.45;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:98;
+      pointer-events:none;
+      background:radial-gradient(circle at center,transparent 56%,rgba(0,0,0,.38) 100%);
+    }
+    a{color:inherit;text-underline-offset:.2em}
+    button,input{font:inherit}
+    :where(a,button,input):focus-visible{outline:2px solid var(--yellow);outline-offset:4px}
+    .wrap{width:min(calc(100% - 32px),var(--max));margin-inline:auto;min-width:0}
+    .skip-link{
+      position:fixed;top:10px;left:10px;z-index:120;
+      padding:8px 10px;border:1px solid var(--yellow);
+      background:var(--bg);color:var(--cream);
+      font-size:.72rem;text-decoration:none;
+      transform:translateY(-180%);transition:transform .15s ease;
+    }
+    .skip-link:focus{transform:translateY(0)}
+    .blink{animation:blink .8s steps(1,end) infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    header{
+      position:sticky;top:0;z-index:20;
+      border-bottom:1px solid rgba(99,255,181,.24);
+      background:rgba(2,8,5,.94);
+      -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    }
+    header nav{
+      min-height:70px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:20px;
+    }
+    .brand{
+      justify-self:start;
+      color:var(--green);
+      font-size:1.4rem;font-weight:700;letter-spacing:-.05em;
+      text-decoration:none;white-space:nowrap;
+    }
+    .back{
+      justify-self:center;
+      min-height:44px;
+      display:inline-flex;align-items:center;
+      color:var(--cream);font-size:.78rem;
+      text-decoration:none;white-space:nowrap;
+    }
+    .online{justify-self:end;color:var(--muted);font-size:.75rem;white-space:nowrap}
+    .dot{
+      width:8px;height:8px;display:inline-block;margin-right:6px;
+      border-radius:50%;background:var(--green);
+      box-shadow:0 0 10px rgba(99,255,181,.8)
+    }
+
+    .hero{padding:50px 0 30px}
+    .prompt,.case{
+      font-size:.72rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .prompt{color:var(--muted)}
+    .case{color:var(--yellow);margin-top:8px}
+    h1{
+      margin:12px 0 16px;
+      color:var(--cream);
+      font-size:clamp(3rem,8vw,6.4rem);
+      line-height:.85;
+      letter-spacing:-.07em;
+      text-transform:uppercase;
+    }
+    h1 span{display:block;color:var(--green)}
+    .lede{max-width:760px;margin:0;color:var(--copy);font-size:clamp(1rem,1.6vw,1.15rem)}
+
+    .controls{
+      margin:18px auto 26px;
+      border:1px solid var(--line);
+      background:var(--panel);
+    }
+    .controls-head{
+      display:flex;justify-content:space-between;gap:16px;
+      padding:10px 14px;border-bottom:1px solid var(--line);
+      color:var(--muted);font-size:.7rem;
+    }
+    .controls-head strong{color:var(--green)}
+    .control-body{display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px}
+    .search{position:relative}
+    .search label{position:absolute;left:-9999px}
+    .search input{
+      width:100%;min-height:46px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--cream);
+      padding:10px 12px;
+      border-radius:0;
+    }
+    .search input::placeholder{color:var(--muted)}
+    .filters{display:flex;flex-wrap:wrap;gap:8px}
+    .filter{
+      min-height:46px;
+      padding:9px 11px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--green);
+      cursor:pointer;
+    }
+    .filter[aria-pressed="true"]{
+      border-color:var(--yellow);
+      color:var(--yellow);
+      background:rgba(255,233,91,.035);
+    }
+
+    .library-status{
+      display:flex;justify-content:space-between;gap:16px;
+      margin:0 0 14px;
+      color:var(--muted);font-size:.72rem;
+    }
+    .library-status strong{color:var(--cream)}
+
+    .library-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      padding-bottom:36px;
+    }
+    .tech-card{
+      min-width:0;
+      display:grid;
+      grid-template-columns:150px minmax(0,1fr);
+      gap:18px;
+      min-height:230px;
+      padding:18px;
+      border:1px solid var(--line);
+      background:var(--panel);
+      text-decoration:none;
+      transition:border-color .15s ease,background-color .15s ease,transform .15s ease;
+    }
+    .tech-card[hidden]{display:none}
+    .visual{
+      min-width:0;
+      min-height:150px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      border-right:1px dashed rgba(99,255,181,.18);
+      padding-right:18px;
+      color:var(--green);
+    }
+    .visual pre{
+      margin:0;
+      color:var(--green);
+      font-family:inherit;
+      font-size:.72rem;
+      line-height:1.25;
+      white-space:pre;
+    }
+    .case-no{margin-top:14px;color:var(--yellow);font-size:.62rem}
+    .card-copy{min-width:0;display:flex;flex-direction:column}
+    .card-copy h2{margin:0 0 7px;color:var(--cream);font-size:1.25rem}
+    .card-copy p{margin:0;color:var(--copy);font-size:.83rem;line-height:1.55}
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      margin-top:16px;
+      border:1px solid var(--line);
+    }
+    .meta div{padding:8px 9px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .meta div:nth-child(2n){border-right:0}
+    .meta div:nth-last-child(-n+2){border-bottom:0}
+    .meta small{display:block;color:var(--muted);font-size:.56rem}
+    .meta strong{display:block;color:var(--cream);font-size:.67rem;line-height:1.3}
+    .open{margin-top:auto;padding-top:14px;color:var(--yellow);font-size:.72rem}
+
+    .empty{
+      display:none;
+      margin:0 0 40px;
+      padding:24px;
+      border:1px dashed var(--line);
+      color:var(--muted);
+      background:var(--panel2);
+    }
+    .empty.visible{display:block}
+
+    .method-note{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:18px;
+      align-items:start;
+      margin:12px auto 50px;
+      padding:20px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+    }
+    .method-no{color:var(--yellow);font-size:1.5rem;line-height:1}
+    .method-note h2{margin:0 0 7px;color:var(--cream);font-size:1rem}
+    .method-note p{margin:0;color:var(--copy);font-size:.82rem}
+
+    footer{
+      padding:28px 0 40px;
+      border-top:1px solid rgba(99,255,181,.22);
+      color:var(--muted);
+      font-size:.76rem;
+    }
+    .footer-row{display:flex;justify-content:space-between;gap:16px 24px}
+    .footer-row a{color:var(--green);text-decoration:none}
+    .footer-brand{color:var(--cream)}
+
+    @media(hover:hover) and (pointer:fine){
+      .brand:hover,.back:hover,.footer-row a:hover{color:var(--yellow)}
+      .tech-card:hover{border-color:var(--green);background:#04130c;transform:translateY(-2px)}
+      .filter:hover{border-color:var(--green)}
+    }
+    @media(max-width:820px){
+      .library-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .wrap{width:min(calc(100% - 20px),var(--max))}
+      header nav{min-height:58px;grid-template-columns:1fr auto;gap:12px}
+      .brand{font-size:1.25rem}.back{justify-self:end;font-size:.68rem}.online{display:none}
+      .hero{padding-top:34px}
+      .control-body{grid-template-columns:1fr}
+      .filters{display:grid;grid-template-columns:1fr 1fr}
+      .filter{width:100%}
+      .tech-card{grid-template-columns:1fr;gap:12px}
+      .visual{min-height:120px;border-right:0;border-bottom:1px dashed rgba(99,255,181,.18);padding:0 0 14px}
+      .method-note{grid-template-columns:1fr}
+      .footer-row{flex-direction:column;gap:8px}
+    }
+    @media(max-width:390px){
+      .wrap{width:min(calc(100% - 18px),var(--max))}
+      header nav{gap:8px}.back{font-size:.63rem}
+      .controls-head{flex-direction:column;gap:3px}
+      .filters{grid-template-columns:1fr}
+      .tech-card{padding:14px}
+      .meta{grid-template-columns:1fr}
+      .meta div{border-right:0}
+      .meta div:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+      .meta div:last-child{border-bottom:0}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Library navigation">
+      <a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a>
+      <a class="back" href="index.html#mission">← [ PATHFINDER ]</a>
+      <div class="online"><span class="dot" aria-hidden="true"></span>LIBRARY ONLINE</div>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="wrap">
+      <div class="prompt">&gt; list /techniques --all</div>
+      <div class="case">PROBLEM.ME // TECHNIQUE LIBRARY</div>
+      <h1>Choose the tool.<span>Then follow the evidence.</span></h1>
+      <p class="lede">Browse the current Capybara Case Files by the kind of problem you need to solve. The library is intentionally small: four techniques, each explained visually and built around a different way of thinking.</p>
+    </div>
+  </section>
+
+  <section class="wrap controls" aria-label="Technique filters">
+    <div class="controls-head">
+      <strong>LIBRARY FILTERS</strong>
+      <span>FILTER LOCALLY / NO ACCOUNT / NO AI</span>
+    </div>
+    <div class="control-body">
+      <div class="search">
+        <label for="techSearch">Search techniques</label>
+        <input id="techSearch" type="search" placeholder="search: root cause, decision, recurring..." autocomplete="off" />
+      </div>
+      <div class="filters" role="group" aria-label="Filter by goal">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">ALL</button>
+        <button class="filter" type="button" data-filter="root-cause" aria-pressed="false">ROOT CAUSE</button>
+        <button class="filter" type="button" data-filter="possible-causes" aria-pressed="false">POSSIBLE CAUSES</button>
+        <button class="filter" type="button" data-filter="prioritize" aria-pressed="false">PRIORITIZE</button>
+        <button class="filter" type="button" data-filter="decide" aria-pressed="false">DECIDE</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="library-title">
+    <div class="library-status">
+      <span id="library-title"><strong id="resultCount">4</strong> CASE FILES SHOWN</span>
+      <span>LIVE: #001–#004</span>
+    </div>
+
+    <div class="library-grid" id="libraryGrid">
+      <a class="tech-card" href="5-whys.html"
+         data-category="root-cause"
+         data-search="5 whys root cause cause chain why incident symptom systemic easy">
+        <div class="visual">
+          <pre aria-hidden="true">WHY?
+  └─ WHY?
+      └─ WHY?
+          └─ WHY?
+              └─ WHY?</pre>
+          <span class="case-no">CASE #001</span>
+        </div>
+        <div class="card-copy">
+          <h2>5 Whys</h2>
+          <p>Follow a causal chain past the first explanation until you reach something useful and evidence-based.</p>
+          <div class="meta">
+            <div><small>PURPOSE</small><strong>ROOT CAUSE</strong></div>
+            <div><small>DIFFICULTY</small><strong>EASY</strong></div>
+            <div><small>TIME</small><strong>15–30 MIN</strong></div>
+            <div><small>BEST FOR</small><strong>CAUSE CHAINS</strong></div>
+          </div>
+          <span class="open">OPEN CASE #001 →</span>
+        </div>
+      </a>
+
+      <a class="tech-card" href="fishbone.html"
+         data-category="possible-causes"
+         data-search="fishbone ishikawa possible causes hypotheses brainstorm multi cause root cause categories">
+        <div class="visual">
+          <pre aria-hidden="true"> People   Process
+    \       /
+-----\-----/------&gt;
+     /     \
+Materials  Systems</pre>
+          <span class="case-no">CASE #002</span>
+        </div>
+        <div class="card-copy">
+          <h2>Ishikawa / Fishbone</h2>
+          <p>Map plausible causes broadly before evidence narrows the investigation and prevents tunnel vision.</p>
+          <div class="meta">
+            <div><small>PURPOSE</small><strong>POSSIBLE CAUSES</strong></div>
+            <div><small>DIFFICULTY</small><strong>EASY</strong></div>
+            <div><small>TIME</small><strong>30–60 MIN</strong></div>
+            <div><small>BEST FOR</small><strong>MULTI-CAUSE PROBLEMS</strong></div>
+          </div>
+          <span class="open">OPEN CASE #002 →</span>
+        </div>
+      </a>
+
+      <a class="tech-card" href="pareto.html"
+         data-category="prioritize"
+         data-search="pareto prioritize priority recurring issues incidents defects tickets 80 20 impact frequency">
+        <div class="visual">
+          <pre aria-hidden="true">█
+█   ▆
+█   ▆   ▄
+█   ▆   ▄   ▂
+──────────────</pre>
+          <span class="case-no">CASE #003</span>
+        </div>
+        <div class="card-copy">
+          <h2>Pareto Analysis</h2>
+          <p>Rank recurring issues by frequency or impact so effort starts where the largest share of the pain sits.</p>
+          <div class="meta">
+            <div><small>PURPOSE</small><strong>PRIORITIZE</strong></div>
+            <div><small>DIFFICULTY</small><strong>EASY</strong></div>
+            <div><small>TIME</small><strong>20–45 MIN</strong></div>
+            <div><small>BEST FOR</small><strong>RECURRING ISSUES</strong></div>
+          </div>
+          <span class="open">OPEN CASE #003 →</span>
+        </div>
+      </a>
+
+      <a class="tech-card" href="kepner-tregoe.html"
+         data-category="decide"
+         data-search="kepner tregoe decision decide problem analysis must wants weighted risk alternatives complex choices">
+        <div class="visual">
+          <pre aria-hidden="true">MUSTS  | WANTS
+------- | ------
+WEIGHT  | SCORE
+RISK    | DECIDE</pre>
+          <span class="case-no">CASE #004</span>
+        </div>
+        <div class="card-copy">
+          <h2>Kepner–Tregoe</h2>
+          <p>Structure complex choices and investigate deviations by making criteria, risks and evidence explicit.</p>
+          <div class="meta">
+            <div><small>PURPOSE</small><strong>DECIDE + ANALYSE</strong></div>
+            <div><small>DIFFICULTY</small><strong>MEDIUM</strong></div>
+            <div><small>TIME</small><strong>30–90 MIN</strong></div>
+            <div><small>BEST FOR</small><strong>COMPLEX CHOICES</strong></div>
+          </div>
+          <span class="open">OPEN CASE #004 →</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="empty" id="emptyState" aria-live="polite">
+      NO MATCHES FOUND_ Try a broader search or reset the filter to ALL.
+    </div>
+
+    <div class="method-note">
+      <div class="method-no">04</div>
+      <div>
+        <h2>FOLLOW THE EVIDENCE_</h2>
+        <p>The library helps you choose a thinking tool. The technique still needs facts, observations and verification. problem.me should make thinking clearer — not manufacture certainty.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span><strong class="footer-brand">problem.me</strong> — Same problems. Clearer thinking.</span>
+    <span><a href="index.html">home</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const buttons = [...document.querySelectorAll('.filter')];
+  const cards = [...document.querySelectorAll('.tech-card')];
+  const search = document.getElementById('techSearch');
+  const count = document.getElementById('resultCount');
+  const empty = document.getElementById('emptyState');
+  let active = 'all';
+
+  function applyFilters() {
+    const query = search.value.trim().toLowerCase();
+    let shown = 0;
+
+    cards.forEach(card => {
+      const categoryMatch = active === 'all' || card.dataset.category === active;
+      const searchMatch = !query || card.dataset.search.includes(query) || card.textContent.toLowerCase().includes(query);
+      const visible = categoryMatch && searchMatch;
+      card.hidden = !visible;
+      if (visible) shown++;
+    });
+
+    count.textContent = shown;
+    empty.classList.toggle('visible', shown === 0);
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      active = button.dataset.filter;
+      buttons.forEach(btn => btn.setAttribute('aria-pressed', String(btn === button)));
+      applyFilters();
+    });
+  });
+
+  search.addEventListener('input', applyFilters);
+})();
+</script>
+</body>
+</html>

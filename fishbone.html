@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002: The Mysterious Muddy Pool — map possible causes broadly, then narrow them with evidence." />
+  <meta name="description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002, then use the interactive Fishbone workspace to map and test possible causes for your own problem." />
   <meta name="theme-color" content="#020805" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="Ishikawa / Fishbone — Capybara Case #002 | problem.me" />
-  <meta property="og:description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002: The Mysterious Muddy Pool — map possible causes broadly, then narrow them with evidence." />
+  <meta property="og:description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002, then use the interactive Fishbone workspace to map and test possible causes for your own problem." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://problem.me/fishbone.html" />
   <link rel="canonical" href="https://problem.me/fishbone.html" />
@@ -158,6 +158,351 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   .case-pager strong{font-size:.66rem}
 }
 
+
+/* v0.4 interactive Fishbone workspace */
+.fb-workbench{
+  width:min(calc(100% - 32px),var(--max));
+  margin:14px auto 42px;
+}
+.fb-workbench-intro{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:20px;
+  align-items:end;
+  padding:26px 0 16px;
+  border-top:1px dashed var(--line);
+}
+.fb-workbench-intro h2{
+  margin:6px 0 7px;
+  color:var(--cream);
+  font-size:clamp(1.55rem,4vw,2.35rem);
+}
+.fb-workbench-intro p{
+  max-width:760px;
+  margin:0;
+  color:var(--text);
+  font-size:.86rem;
+}
+.fb-local{
+  color:var(--muted);
+  font-size:.64rem;
+  text-align:right;
+  white-space:nowrap;
+}
+.fb-local strong{color:var(--green)}
+
+.fb-tool{
+  border:1px solid var(--line);
+  background:var(--surface-deep);
+}
+.fb-tool-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding:11px 14px;
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:.68rem;
+}
+.fb-tool-head strong{color:var(--green)}
+.fb-tool-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
+  min-width:0;
+}
+.fb-editor{
+  min-width:0;
+  padding:16px;
+  border-right:1px solid var(--line);
+}
+.fb-live{
+  min-width:0;
+  padding:16px;
+  background:var(--surface-low);
+}
+.fb-field{margin-bottom:16px}
+.fb-field:last-child{margin-bottom:0}
+.fb-label{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:6px;
+  color:var(--yellow);
+  font-size:.66rem;
+  letter-spacing:.04em;
+}
+.fb-label small{
+  color:var(--muted);
+  font-size:.58rem;
+  font-weight:400;
+}
+.fb-tool input[type="text"],
+.fb-tool textarea,
+.fb-tool select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--panel);
+  color:var(--cream);
+  font-family:inherit;
+  font-size:.78rem;
+}
+.fb-tool input[type="text"]{
+  min-height:42px;
+  padding:9px 10px;
+}
+.fb-tool textarea{
+  min-height:78px;
+  resize:vertical;
+  padding:10px;
+  line-height:1.45;
+}
+.fb-tool select{
+  min-height:38px;
+  padding:7px 30px 7px 8px;
+}
+.fb-tool input::placeholder,
+.fb-tool textarea::placeholder{color:#5e8974}
+.fb-tool input:focus,
+.fb-tool textarea:focus,
+.fb-tool select:focus{
+  outline:1px solid var(--yellow);
+  outline-offset:1px;
+  border-color:var(--yellow);
+}
+
+.fb-categories{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.fb-category{
+  min-width:0;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.fb-category-head{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:8px;
+  align-items:center;
+  padding:9px 10px;
+  border-bottom:1px solid var(--line);
+}
+.fb-cat-no{
+  color:var(--yellow);
+  font-size:.65rem;
+}
+.fb-category-head input{
+  min-width:0;
+  min-height:36px!important;
+  padding:7px 8px!important;
+  color:var(--cream)!important;
+  font-weight:700;
+}
+.fb-causes{padding:8px}
+.fb-cause-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 104px;
+  gap:7px;
+  margin-bottom:7px;
+}
+.fb-cause-row:last-child{margin-bottom:0}
+.fb-cause-row input{min-width:0}
+.fb-cause-row select{
+  font-size:.65rem;
+  color:var(--muted);
+}
+.fb-cause-row[data-status="no"] select{color:var(--dim)}
+.fb-cause-row[data-status="likely"] select{color:var(--yellow)}
+.fb-cause-row[data-status="confirmed"] select{color:var(--green)}
+.fb-cat-actions{
+  display:flex;
+  gap:6px;
+  padding:0 8px 8px;
+}
+.fb-mini-btn,
+.fb-btn{
+  border:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  cursor:pointer;
+}
+.fb-mini-btn{
+  min-height:34px;
+  padding:6px 8px;
+  font-size:.61rem;
+}
+.fb-mini-btn:disabled,
+.fb-btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+.fb-summary-fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.fb-summary-fields .wide{grid-column:1/-1}
+
+.fb-live-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:start;
+  margin-bottom:10px;
+}
+.fb-live-head strong{
+  color:var(--cream);
+  font-size:.75rem;
+}
+.fb-status{
+  color:var(--yellow);
+  font-size:.64rem;
+  text-align:right;
+}
+.fb-map-scroll{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-inline:contain;
+  padding:3px 0 8px;
+}
+.fb-live-svg{
+  display:block;
+  width:100%;
+  min-width:760px;
+  height:auto;
+}
+.fb-live-svg .spine,
+.fb-live-svg .rib,
+.fb-live-svg .twig,
+.fb-live-svg .tail{
+  fill:none;
+  stroke:var(--green);
+  stroke-width:2;
+  vector-effect:non-scaling-stroke;
+}
+.fb-live-svg .rib{stroke:var(--line)}
+.fb-live-svg .twig{stroke:var(--grid);stroke-width:1.4}
+.fb-live-svg .rib-likely,
+.fb-live-svg .twig-likely{stroke:var(--yellow)}
+.fb-live-svg .rib-confirmed,
+.fb-live-svg .twig-confirmed{stroke:var(--green);stroke-width:2.7}
+.fb-live-svg .rib-no,
+.fb-live-svg .twig-no{stroke:var(--dim);opacity:.55}
+.fb-live-svg .head-shape{fill:var(--panel);stroke:var(--green);stroke-width:2}
+.fb-live-svg text{font-family:"Courier New",Courier,monospace}
+.fb-live-svg .cat{fill:var(--yellow);font-size:13px;font-weight:700}
+.fb-live-svg .cause{fill:var(--text2);font-size:10px}
+.fb-live-svg .cause-no{fill:var(--dim)}
+.fb-live-svg .cause-likely{fill:var(--yellow)}
+.fb-live-svg .cause-confirmed{fill:var(--green);font-weight:700}
+.fb-live-svg .effect{fill:var(--cream);font-size:13px;font-weight:700}
+.fb-live-svg .small{fill:var(--muted);font-size:9px}
+.fb-live-svg .cap-line{fill:none;stroke:var(--green);stroke-width:2;vector-effect:non-scaling-stroke}
+.fb-live-svg .cap-fill{fill:var(--surface-low)}
+.fb-map-key{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px 13px;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:.59rem;
+}
+.fb-map-key b{color:var(--yellow)}
+.fb-tip{
+  margin-top:12px;
+  padding:11px 12px;
+  border-left:2px solid var(--yellow);
+  background:var(--panel);
+  color:var(--text);
+  font-size:.7rem;
+  line-height:1.5;
+}
+.fb-tip strong{color:var(--yellow)}
+
+.fb-tool-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:14px 16px;
+  border-top:1px solid var(--line);
+}
+.fb-btn{
+  min-height:42px;
+  padding:8px 11px;
+  font-size:.68rem;
+}
+.fb-btn.primary{
+  border-color:var(--yellow);
+  color:var(--yellow);
+}
+.fb-btn.danger{color:var(--bad)}
+.fb-action-status{
+  margin-left:auto;
+  align-self:center;
+  color:var(--muted);
+  font-size:.61rem;
+}
+.fb-privacy{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:.61rem;
+}
+.fb-privacy strong{color:var(--green)}
+
+@media(hover:hover) and (pointer:fine){
+  .fb-mini-btn:hover,
+  .fb-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+}
+
+@media(max-width:820px){
+  .fb-workbench-intro{grid-template-columns:1fr}
+  .fb-local{text-align:left}
+  .fb-tool-grid{grid-template-columns:1fr}
+  .fb-editor{border-right:0;border-bottom:1px solid var(--line)}
+}
+
+@media(max-width:640px){
+  .fb-workbench{width:min(calc(100% - 20px),var(--max))}
+  .fb-tool-head{flex-direction:column;gap:3px}
+  .fb-categories{grid-template-columns:1fr}
+  .fb-summary-fields{grid-template-columns:1fr}
+  .fb-summary-fields .wide{grid-column:auto}
+  .fb-live-svg{min-width:720px}
+  .fb-tool-actions{padding:12px}
+  .fb-btn{flex:1 1 calc(50% - 8px)}
+  .fb-action-status{width:100%;margin-left:0}
+}
+@media(max-width:390px){
+  .fb-workbench{width:min(calc(100% - 18px),var(--max))}
+  .fb-editor,.fb-live{padding:12px}
+  .fb-cause-row{grid-template-columns:minmax(0,1fr) 96px}
+  .fb-cause-row select{font-size:.58rem}
+  .fb-live-svg{min-width:680px}
+}
+
+@media print{
+  body::before,body::after,header,.hero,.case-intro,.workspace,.evidence,.causal,.resolution,.lesson,.case-pager,footer,.fb-workbench-intro,.fb-tool-actions,.fb-privacy{display:none!important}
+  body{background:#fff!important;color:#111!important}
+  .fb-workbench{width:100%!important;margin:0!important}
+  .fb-tool{border:0!important;background:#fff!important}
+  .fb-tool-head{border-color:#aaa!important;color:#444!important;padding:0 0 12px!important}
+  .fb-tool-head strong{color:#111!important}
+  .fb-tool-grid{grid-template-columns:1fr!important}
+  .fb-editor{border:0!important;padding:0 0 16px!important}
+  .fb-live{background:#fff!important;padding:0!important}
+  .fb-category,.fb-tool input,.fb-tool textarea,.fb-tool select,.fb-tip{background:#fff!important;color:#111!important;border-color:#aaa!important}
+  .fb-live-svg .head-shape{fill:#fff!important}
+  .fb-live-svg .cap-fill{fill:#fff!important}
+  .fb-live-svg .cat,.fb-live-svg .effect,.fb-live-svg .cause,.fb-live-svg .cause-likely,.fb-live-svg .cause-confirmed,.fb-live-svg .small{fill:#111!important}
+  .fb-live-svg .spine,.fb-live-svg .rib,.fb-live-svg .twig,.fb-live-svg .tail,.fb-live-svg .cap-line{stroke:#222!important}
+}
+
 </style>
 </head>
 <body>
@@ -197,6 +542,523 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 <div class="causal"><div class="phase">CONTRIBUTING PATH FOUND_</div><h2>The diagram told us where to look. Evidence told us what mattered.</h2><div class="chain"><span class="node">MISSED MAINTENANCE</span><span class="arr">→</span><span class="node">CLOGGED FILTER</span><span class="arr">→</span><span class="node">LOW FLOW</span><span class="arr">→</span><span class="node">MUDDY POOL</span></div></div>
 <div class="resolution"><div><div class="capy"><div class="body"></div><span class="leg leg-a"></span><span class="leg leg-b"></span><div class="head"><span class="ear"></span><span class="eye"></span><span class="nose"></span></div></div><div class="cap-status">STATUS: WATER ACCEPTABLE AGAIN ☕</div></div><div><div class="phase">RESULT_</div><h2>Clean the filter. Restore the maintenance control.</h2><p>The other branches stay documented instead of being forgotten. Fishbone helped Capybara think broadly; testing narrowed the map to a supported causal path.</p></div></div>
 <div class="lesson"><div class="box"><h3>REAL WORLD TRANSLATION_</h3><div class="translation"><span>Muddy pool</span><span>→</span><span>Your effect/problem</span></div><div class="translation"><span>Main bones</span><span>→</span><span>Cause categories</span></div><div class="translation"><span>Small branches</span><span>→</span><span>Hypotheses</span></div><div class="translation"><span>[NO] / [!!!]</span><span>→</span><span>Evidence</span></div></div><div class="box"><h3>REMEMBER_</h3><p class="rule"><strong>A Fishbone does not prove root cause.</strong> Its job is to stop tunnel vision: organize plausible causes, expose gaps, then investigate the branches with data and observation.</p></div></div></section>
+
+
+<section class="fb-workbench" aria-labelledby="fb-tool-title">
+  <div class="fb-workbench-intro">
+    <div>
+      <div class="prompt">&gt; run /tools/fishbone --interactive</div>
+      <h2 id="fb-tool-title">TRY IT YOURSELF_</h2>
+      <p>Put your own effect at the fish's head, map possible causes across six editable families, then mark each hypothesis as evidence weakens or strengthens it.</p>
+    </div>
+    <div class="fb-local"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
+  </div>
+
+  <div class="fb-tool">
+    <div class="fb-tool-head">
+      <strong>FISHBONE WORKSPACE / YOUR CASE</strong>
+      <span>MAP → TEST → NARROW</span>
+    </div>
+
+    <div class="fb-tool-grid">
+      <div class="fb-editor">
+        <div class="fb-field">
+          <div class="fb-label">
+            <label for="fbEffect">EFFECT / PROBLEM_</label>
+            <small>observable, specific, neutral</small>
+          </div>
+          <textarea id="fbEffect" placeholder="Example: Customer payments fail intermittently after 14:00"></textarea>
+        </div>
+
+        <div class="fb-label">
+          <span>CAUSE FAMILIES_</span>
+          <small>rename any category to fit your problem</small>
+        </div>
+        <div class="fb-categories" id="fbCategories"></div>
+
+        <div class="fb-summary-fields">
+          <div class="fb-field">
+            <div class="fb-label"><label for="fbSupported">BEST-SUPPORTED HYPOTHESIS_</label></div>
+            <textarea id="fbSupported" placeholder="What currently fits the evidence best?"></textarea>
+          </div>
+          <div class="fb-field">
+            <div class="fb-label"><label for="fbNextTest">NEXT VERIFICATION STEP_</label></div>
+            <textarea id="fbNextTest" placeholder="What observation, test, or data would confirm or reject it?"></textarea>
+          </div>
+          <div class="fb-field wide">
+            <div class="fb-label"><label for="fbNotes">EVIDENCE / NOTES_</label></div>
+            <textarea id="fbNotes" placeholder="Facts, timestamps, measurements, links, contradictions..."></textarea>
+          </div>
+        </div>
+
+        <p class="fb-privacy"><strong>PRIVACY:</strong> this draft stays in your browser's local storage. Nothing is uploaded by this page.</p>
+      </div>
+
+      <aside class="fb-live" aria-label="Live Fishbone preview">
+        <div class="fb-live-head">
+          <strong>LIVE EVIDENCE MAP_</strong>
+          <span class="fb-status" id="fbStatus">STATUS: WAITING FOR EFFECT</span>
+        </div>
+        <div class="fb-map-scroll">
+          <svg class="fb-live-svg" id="fbLiveSvg" viewBox="0 0 1100 620" role="img" aria-label="Live Fishbone diagram generated from your entries"></svg>
+        </div>
+        <div class="fb-map-key">
+          <span>UNTESTED = neutral</span>
+          <span>[NO] = weakened</span>
+          <span><b>[LIKELY]</b> = supported</span>
+          <span>[CONFIRMED] = verified</span>
+        </div>
+        <div class="fb-tip" id="fbTip"><strong>TIP:</strong> Start by stating the effect without embedding your preferred explanation.</div>
+      </aside>
+    </div>
+
+    <div class="fb-tool-actions">
+      <button class="fb-btn primary" id="fbCopyBtn" type="button">COPY SUMMARY</button>
+      <button class="fb-btn" id="fbPrintBtn" type="button">PRINT / SAVE PDF</button>
+      <button class="fb-btn danger" id="fbResetBtn" type="button">RESET DRAFT</button>
+      <span class="fb-action-status" id="fbActionStatus" aria-live="polite">AUTO-SAVE READY_</span>
+    </div>
+  </div>
+</section>
+
+</main>
 <nav class="case-pager" aria-label="Case File navigation"><a class="pager-prev" href="5-whys.html"><small>← PREVIOUS</small><strong>CASE #001 / 5 WHYS</strong></a><a class="pager-all" href="techniques.html"><small>LIBRARY</small><strong>ALL TECHNIQUES</strong></a><a class="pager-next" href="pareto.html"><small>NEXT →</small><strong>CASE #003 / PARETO</strong></a></nav>
 <footer><div class="wrap next"><span><strong class="footer-brand">problem.me</strong> — Same problems. Clearer thinking.</span><span><a href="techniques.html">← technique library</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span></div></footer>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'problemme_fishbone_v04';
+  const CATEGORY_COUNT = 6;
+  const MIN_CAUSES = 1;
+  const MAX_CAUSES = 5;
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  const defaults = [
+    'People',
+    'Process',
+    'Tools / Systems',
+    'Environment',
+    'Inputs',
+    'Measurement'
+  ];
+
+  const effect = document.getElementById('fbEffect');
+  const categoriesEl = document.getElementById('fbCategories');
+  const supported = document.getElementById('fbSupported');
+  const nextTest = document.getElementById('fbNextTest');
+  const notes = document.getElementById('fbNotes');
+  const svg = document.getElementById('fbLiveSvg');
+  const status = document.getElementById('fbStatus');
+  const tip = document.getElementById('fbTip');
+  const actionStatus = document.getElementById('fbActionStatus');
+  const copyBtn = document.getElementById('fbCopyBtn');
+  const printBtn = document.getElementById('fbPrintBtn');
+  const resetBtn = document.getElementById('fbResetBtn');
+
+  let state = makeDefaultState();
+
+  function makeDefaultState() {
+    return {
+      effect: '',
+      categories: defaults.map(name => ({
+        name,
+        causes: [
+          { text: '', status: 'untested' },
+          { text: '', status: 'untested' }
+        ]
+      })),
+      supported: '',
+      nextTest: '',
+      notes: ''
+    };
+  }
+
+  function esc(text) {
+    return String(text).replace(/[&<>'"]/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'
+    }[c]));
+  }
+
+  function normalizeStatus(value) {
+    return ['untested','no','likely','confirmed'].includes(value) ? value : 'untested';
+  }
+
+  function safeLoad() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!saved || typeof saved !== 'object') return;
+      const next = makeDefaultState();
+      next.effect = typeof saved.effect === 'string' ? saved.effect : '';
+      next.supported = typeof saved.supported === 'string' ? saved.supported : '';
+      next.nextTest = typeof saved.nextTest === 'string' ? saved.nextTest : '';
+      next.notes = typeof saved.notes === 'string' ? saved.notes : '';
+
+      if (Array.isArray(saved.categories)) {
+        next.categories = Array.from({length:CATEGORY_COUNT}, (_, i) => {
+          const src = saved.categories[i] || {};
+          const name = typeof src.name === 'string' && src.name.trim() ? src.name : defaults[i];
+          let causes = Array.isArray(src.causes) ? src.causes.slice(0, MAX_CAUSES).map(item => ({
+            text: typeof item?.text === 'string' ? item.text : '',
+            status: normalizeStatus(item?.status)
+          })) : [];
+          if (!causes.length) causes = [{text:'',status:'untested'}];
+          return { name, causes };
+        });
+      }
+      state = next;
+    } catch (_) {}
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      actionStatus.textContent = 'AUTO-SAVED LOCALLY_';
+    } catch (_) {
+      actionStatus.textContent = 'LOCAL SAVE UNAVAILABLE_';
+    }
+  }
+
+  function renderCategories() {
+    categoriesEl.innerHTML = state.categories.map((category, ci) => `
+      <section class="fb-category" data-category="${ci}">
+        <div class="fb-category-head">
+          <span class="fb-cat-no">${String(ci + 1).padStart(2,'0')}</span>
+          <input type="text" data-cat-name="${ci}" aria-label="Cause family ${ci + 1} name" value="${esc(category.name)}" maxlength="28">
+        </div>
+        <div class="fb-causes">
+          ${category.causes.map((cause, ri) => `
+            <div class="fb-cause-row" data-status="${cause.status}">
+              <input type="text" data-cause="${ci}:${ri}" aria-label="${esc(category.name)} cause ${ri + 1}" placeholder="possible cause..." value="${esc(cause.text)}" maxlength="70">
+              <select data-cause-status="${ci}:${ri}" aria-label="${esc(category.name)} cause ${ri + 1} evidence status">
+                <option value="untested"${cause.status === 'untested' ? ' selected' : ''}>UNTESTED</option>
+                <option value="no"${cause.status === 'no' ? ' selected' : ''}>NO</option>
+                <option value="likely"${cause.status === 'likely' ? ' selected' : ''}>LIKELY</option>
+                <option value="confirmed"${cause.status === 'confirmed' ? ' selected' : ''}>CONFIRMED</option>
+              </select>
+            </div>`).join('')}
+        </div>
+        <div class="fb-cat-actions">
+          <button class="fb-mini-btn" type="button" data-add-cause="${ci}" ${category.causes.length >= MAX_CAUSES ? 'disabled' : ''}>+ CAUSE</button>
+          <button class="fb-mini-btn" type="button" data-remove-cause="${ci}" ${category.causes.length <= MIN_CAUSES ? 'disabled' : ''}>− LAST</button>
+        </div>
+      </section>
+    `).join('');
+  }
+
+  function svgEl(name, attrs = {}, text = '') {
+    const el = document.createElementNS(SVG_NS, name);
+    Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k, v));
+    if (text) el.textContent = text;
+    return el;
+  }
+
+  function short(text, n) {
+    const value = String(text || '').trim();
+    if (!value) return '';
+    return value.length > n ? value.slice(0, n - 1) + '…' : value;
+  }
+
+  function branchClass(category) {
+    const statuses = category.causes.filter(c => c.text.trim()).map(c => c.status);
+    if (statuses.includes('confirmed')) return 'confirmed';
+    if (statuses.includes('likely')) return 'likely';
+    if (statuses.length && statuses.every(s => s === 'no')) return 'no';
+    return 'untested';
+  }
+
+  function renderSvg() {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // Tail and spine.
+    svg.appendChild(svgEl('path', {class:'tail', d:'M110 310 L42 250 L62 310 L42 370 Z'}));
+    svg.appendChild(svgEl('line', {class:'spine', x1:'62', y1:'310', x2:'925', y2:'310'}));
+
+    // Fish head / effect.
+    svg.appendChild(svgEl('path', {
+      class:'head-shape',
+      d:'M925 232 Q1026 232 1062 310 Q1026 388 925 388 Q960 310 925 232 Z'
+    }));
+    svg.appendChild(svgEl('circle', {cx:'1020', cy:'278', r:'4', fill:'var(--yellow)'}));
+
+    const effectLines = wrapEffect(state.effect || 'YOUR EFFECT', 16, 3);
+    effectLines.forEach((line, i) => {
+      svg.appendChild(svgEl('text', {
+        class:'effect',
+        x:'952',
+        y:String(303 + i * 18),
+        'text-anchor':'middle'
+      }, line.toUpperCase()));
+    });
+    svg.appendChild(svgEl('text', {class:'small', x:'952', y:'367', 'text-anchor':'middle'}, 'EFFECT'));
+
+    // Capybara near the tail.
+    const g = svgEl('g', {transform:'translate(72 274) scale(.48)'});
+    g.appendChild(svgEl('ellipse', {class:'cap-line cap-fill', cx:'76', cy:'56', rx:'60', ry:'34'}));
+    g.appendChild(svgEl('rect', {class:'cap-line cap-fill', x:'40', y:'83', width:'20', height:'24'}));
+    g.appendChild(svgEl('rect', {class:'cap-line cap-fill', x:'91', y:'83', width:'20', height:'24'}));
+    g.appendChild(svgEl('ellipse', {class:'cap-line cap-fill', cx:'126', cy:'45', rx:'38', ry:'30'}));
+    g.appendChild(svgEl('circle', {class:'cap-line cap-fill', cx:'112', cy:'17', r:'10'}));
+    g.appendChild(svgEl('line', {class:'cap-line', x1:'126', y1:'42', x2:'132', y2:'42'}));
+    g.appendChild(svgEl('path', {class:'cap-line', d:'M150 49 l9 5 l-9 5'}));
+    svg.appendChild(g);
+    svg.appendChild(svgEl('text', {class:'small', x:'78', y:'414'}, 'CAPYBARA.EXE'));
+    svg.appendChild(svgEl('text', {class:'small', x:'78', y:'428'}, 'MAPPING HYPOTHESES...'));
+
+    const xs = [310, 565, 820];
+    state.categories.forEach((category, ci) => {
+      const top = ci < 3;
+      const slot = ci % 3;
+      const sx = xs[slot];
+      const sy = 310;
+      const ex = sx - 112;
+      const ey = top ? 112 : 508;
+      const statusClass = branchClass(category);
+
+      svg.appendChild(svgEl('line', {
+        class:`rib rib-${statusClass}`,
+        x1:String(sx), y1:String(sy), x2:String(ex), y2:String(ey)
+      }));
+
+      // Category label at branch end.
+      svg.appendChild(svgEl('text', {
+        class:'cat',
+        x:String(ex - 8),
+        y:String(top ? ey - 15 : ey + 27),
+        'text-anchor':'middle'
+      }, short(category.name || `Category ${ci+1}`, 18).toUpperCase()));
+
+      // Up to four visible causes per category.
+      const visibleCauses = category.causes.filter(c => c.text.trim()).slice(0,4);
+      visibleCauses.forEach((cause, ri) => {
+        const t = (ri + 1) / (visibleCauses.length + 1);
+        const bx = sx + (ex - sx) * t;
+        const by = sy + (ey - sy) * t;
+        const twigLen = 82;
+        const tx2 = bx - twigLen;
+        const classSuffix = cause.status === 'untested' ? '' : `-${cause.status}`;
+
+        svg.appendChild(svgEl('line', {
+          class:`twig twig${classSuffix}`,
+          x1:String(bx), y1:String(by), x2:String(tx2), y2:String(by)
+        }));
+
+        const statusText = cause.status === 'no' ? ' [NO]' :
+                           cause.status === 'likely' ? ' [LIKELY]' :
+                           cause.status === 'confirmed' ? ' [CONF]' : '';
+        svg.appendChild(svgEl('text', {
+          class:`cause cause${classSuffix}`,
+          x:String(tx2 - 4),
+          y:String(by - 4),
+          'text-anchor':'start'
+        }, short(cause.text, 19) + statusText));
+      });
+
+      if (category.causes.filter(c => c.text.trim()).length > 4) {
+        svg.appendChild(svgEl('text', {
+          class:'small',
+          x:String(ex - 10),
+          y:String(top ? ey + 4 : ey - 4),
+          'text-anchor':'middle'
+        }, '+ MORE'));
+      }
+    });
+  }
+
+  function wrapEffect(text, maxChars, maxLines) {
+    const words = String(text || '').trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return ['YOUR EFFECT'];
+    const lines = [];
+    let current = '';
+    words.forEach(word => {
+      const next = current ? current + ' ' + word : word;
+      if (next.length <= maxChars) {
+        current = next;
+      } else {
+        if (current) lines.push(current);
+        current = word;
+      }
+    });
+    if (current) lines.push(current);
+    if (lines.length > maxLines) {
+      const kept = lines.slice(0, maxLines);
+      kept[maxLines - 1] = short(kept[maxLines - 1], maxChars - 1) + '…';
+      return kept;
+    }
+    return lines;
+  }
+
+  function renderGuidance() {
+    const entered = state.categories.flatMap(c => c.causes).filter(c => c.text.trim());
+    const likely = entered.filter(c => c.status === 'likely').length;
+    const confirmed = entered.filter(c => c.status === 'confirmed').length;
+    const no = entered.filter(c => c.status === 'no').length;
+    const usedFamilies = state.categories.filter(c => c.causes.some(x => x.text.trim())).length;
+
+    if (!state.effect.trim()) {
+      status.textContent = 'STATUS: WAITING FOR EFFECT';
+      tip.innerHTML = '<strong>TIP:</strong> Start with an observable effect. Avoid writing the suspected cause into the problem statement.';
+    } else if (entered.length === 0) {
+      status.textContent = 'STATUS: EFFECT CAPTURED';
+      tip.innerHTML = '<strong>TIP:</strong> Brainstorm broadly before judging. Put plausible causes on several branches, even if some feel unlikely.';
+    } else if (usedFamilies < 3) {
+      status.textContent = 'STATUS: SEARCHING TOO NARROWLY';
+      tip.innerHTML = '<strong>TIP:</strong> You are concentrating on only a few cause families. Fishbone is useful because it forces a wider search.';
+    } else if (likely === 0 && confirmed === 0 && no === 0) {
+      status.textContent = 'STATUS: HYPOTHESES MAPPED';
+      tip.innerHTML = '<strong>TIP:</strong> Now test the branches. Evidence should weaken some hypotheses and strengthen others.';
+    } else if (confirmed > 0) {
+      status.textContent = 'STATUS: VERIFY THE CAUSAL CLAIM';
+      tip.innerHTML = '<strong>TIP:</strong> A CONFIRMED label should mean you have actually verified the relationship, not merely that the explanation sounds convincing.';
+    } else if (likely > 0) {
+      status.textContent = 'STATUS: EVIDENCE NARROWING MAP';
+      tip.innerHTML = '<strong>TIP:</strong> Good. Keep competing explanations visible until a test or observation separates them.';
+    } else if (no > 0) {
+      status.textContent = 'STATUS: ELIMINATING SUSPECTS';
+      tip.innerHTML = '<strong>TIP:</strong> A [NO] is useful evidence too. Record why the branch was weakened so the team does not revisit it without new facts.';
+    } else {
+      status.textContent = 'STATUS: MAPPING HYPOTHESES';
+      tip.innerHTML = '<strong>TIP:</strong> Keep causes specific enough that you can test them.';
+    }
+  }
+
+  function renderAll() {
+    renderCategories();
+    renderSvg();
+    renderGuidance();
+  }
+
+  function syncStaticFields() {
+    effect.value = state.effect;
+    supported.value = state.supported;
+    nextTest.value = state.nextTest;
+    notes.value = state.notes;
+  }
+
+  categoriesEl.addEventListener('input', e => {
+    const target = e.target;
+    if (target.matches('[data-cat-name]')) {
+      const ci = Number(target.dataset.catName);
+      state.categories[ci].name = target.value;
+      save(); renderSvg(); renderGuidance();
+      return;
+    }
+    if (target.matches('[data-cause]')) {
+      const [ci, ri] = target.dataset.cause.split(':').map(Number);
+      state.categories[ci].causes[ri].text = target.value;
+      save(); renderSvg(); renderGuidance();
+    }
+  });
+
+  categoriesEl.addEventListener('change', e => {
+    const target = e.target;
+    if (target.matches('[data-cause-status]')) {
+      const [ci, ri] = target.dataset.causeStatus.split(':').map(Number);
+      state.categories[ci].causes[ri].status = normalizeStatus(target.value);
+      save();
+      renderCategories();
+      renderSvg();
+      renderGuidance();
+    }
+  });
+
+  categoriesEl.addEventListener('click', e => {
+    const add = e.target.closest('[data-add-cause]');
+    const remove = e.target.closest('[data-remove-cause]');
+
+    if (add) {
+      const ci = Number(add.dataset.addCause);
+      if (state.categories[ci].causes.length < MAX_CAUSES) {
+        state.categories[ci].causes.push({text:'',status:'untested'});
+        save(); renderAll();
+        const inputs = categoriesEl.querySelectorAll(`[data-cause^="${ci}:"]`);
+        inputs[inputs.length - 1]?.focus();
+      }
+      return;
+    }
+
+    if (remove) {
+      const ci = Number(remove.dataset.removeCause);
+      const causes = state.categories[ci].causes;
+      if (causes.length <= MIN_CAUSES) return;
+      const last = causes[causes.length - 1];
+      if ((last.text.trim() || last.status !== 'untested') && !window.confirm('Remove the last cause and its evidence status?')) return;
+      causes.pop();
+      save(); renderAll();
+    }
+  });
+
+  [effect, supported, nextTest, notes].forEach(el => {
+    el.addEventListener('input', () => {
+      state.effect = effect.value;
+      state.supported = supported.value;
+      state.nextTest = nextTest.value;
+      state.notes = notes.value;
+      save();
+      renderSvg();
+      renderGuidance();
+    });
+  });
+
+  function summaryText() {
+    const lines = ['problem.me — Fishbone summary', ''];
+    lines.push('EFFECT: ' + (state.effect.trim() || '[not defined]'), '');
+    state.categories.forEach((category, ci) => {
+      lines.push(`${String(ci+1).padStart(2,'0')} ${category.name || 'Unnamed category'}`);
+      const filled = category.causes.filter(c => c.text.trim());
+      if (!filled.length) {
+        lines.push('  - [no hypotheses]');
+      } else {
+        filled.forEach(c => {
+          const flag = c.status === 'untested' ? 'UNTESTED' : c.status.toUpperCase();
+          lines.push(`  - ${c.text.trim()} [${flag}]`);
+        });
+      }
+      lines.push('');
+    });
+    lines.push('BEST-SUPPORTED HYPOTHESIS: ' + (state.supported.trim() || '[not defined]'));
+    lines.push('NEXT VERIFICATION STEP: ' + (state.nextTest.trim() || '[not defined]'));
+    if (state.notes.trim()) lines.push('', 'EVIDENCE / NOTES:', state.notes.trim());
+    lines.push('', 'Generated locally at problem.me');
+    return lines.join('\n');
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    const text = summaryText();
+    try {
+      await navigator.clipboard.writeText(text);
+      actionStatus.textContent = 'SUMMARY COPIED_';
+    } catch (_) {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.opacity = '0';
+      document.body.appendChild(temp);
+      temp.select();
+      try {
+        document.execCommand('copy');
+        actionStatus.textContent = 'SUMMARY COPIED_';
+      } catch (_) {
+        actionStatus.textContent = 'COPY FAILED_';
+      }
+      temp.remove();
+    }
+  });
+
+  printBtn.addEventListener('click', () => window.print());
+
+  resetBtn.addEventListener('click', () => {
+    if (!window.confirm('Reset this local Fishbone draft?')) return;
+    state = makeDefaultState();
+    try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+    syncStaticFields();
+    renderAll();
+    actionStatus.textContent = 'DRAFT RESET_';
+  });
+
+  safeLoad();
+  syncStaticFields();
+  renderAll();
+})();
+</script>
+
 </body></html>

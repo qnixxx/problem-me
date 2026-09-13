@@ -744,6 +744,58 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   .fb-pdf-diagram .cap-line{stroke:#222!important}
 }
 
+
+/* v0.5.3 privacy parity */
+.fb-privacy-panel{
+  margin:14px 16px 0;
+  padding:13px;
+  border:1px solid var(--line);
+  background:rgba(99,255,181,.018);
+}
+.fb-privacy-panel.is-private{
+  border-color:var(--yellow);
+  box-shadow:inset 3px 0 0 var(--yellow);
+  background:rgba(255,233,91,.018);
+}
+.fb-privacy-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.fb-privacy-mode{
+  min-width:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+}
+.fb-privacy-led{
+  width:8px;height:8px;margin-top:5px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 8px rgba(99,255,181,.7);
+}
+.fb-privacy-panel.is-private .fb-privacy-led{
+  background:var(--yellow);box-shadow:0 0 8px rgba(255,233,91,.7);
+}
+.fb-privacy-mode strong{display:block;color:var(--cream);font-size:.7rem;line-height:1.35}
+.fb-privacy-mode span:last-child{display:block;margin-top:3px;color:var(--muted);font-size:.61rem;line-height:1.45}
+.fb-privacy-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.fb-privacy-actions .fb-btn{min-height:36px;padding:7px 9px;font-size:.6rem}
+.fb-privacy-warning{
+  margin:11px 0 0;padding-top:10px;border-top:1px dashed rgba(99,255,181,.17);
+  color:var(--muted);font-size:.6rem;line-height:1.5
+}
+.fb-privacy-warning strong{color:var(--yellow)}
+.fb-tool.is-private .fb-tool-head{border-bottom-color:rgba(255,233,91,.55)}
+.fb-tool.is-private .fb-tool-head strong{color:var(--yellow)}
+@media(max-width:620px){
+  .fb-privacy-head{flex-direction:column}
+  .fb-privacy-actions{width:100%;justify-content:flex-start}
+  .fb-privacy-actions .fb-btn{flex:1 1 calc(50% - 7px)}
+}
+@media(max-width:390px){.fb-privacy-actions .fb-btn{flex-basis:100%}}
+@media print{.fb-privacy-panel{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -792,13 +844,31 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       <h2 id="fb-tool-title">TRY IT YOURSELF_</h2>
       <p>Put your own effect at the fish's head, map possible causes across six editable families, then mark each hypothesis as evidence weakens or strengthens it.</p>
     </div>
-    <div class="fb-local"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
+    <div class="fb-local" id="fbLocalMode"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
   </div>
 
   <div class="fb-tool">
     <div class="fb-tool-head">
       <strong>FISHBONE WORKSPACE / YOUR CASE</strong>
       <span>MAP → TEST → NARROW</span>
+    </div>
+
+
+    <div class="fb-privacy-panel" id="fbPrivacyPanel">
+      <div class="fb-privacy-head">
+        <div class="fb-privacy-mode">
+          <span class="fb-privacy-led" aria-hidden="true"></span>
+          <div>
+            <strong id="fbPrivacyTitle">LOCAL SAVE ACTIVE_</strong>
+            <span id="fbPrivacyCopy">Changes are auto-saved in this browser on this device.</span>
+          </div>
+        </div>
+        <div class="fb-privacy-actions">
+          <button class="fb-btn primary" id="fbPrivateBtn" type="button" aria-pressed="false">PRIVATE SESSION</button>
+          <button class="fb-btn danger" id="fbClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button>
+        </div>
+      </div>
+      <p class="fb-privacy-warning"><strong>SECURITY:</strong> Your investigation stays on this device. Never enter passwords, API keys, access tokens or credentials.</p>
     </div>
 
     <div class="fb-tool-grid">
@@ -832,7 +902,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
           </div>
         </div>
 
-        <p class="fb-privacy"><strong>PRIVACY:</strong> this draft stays in your browser's local storage. Nothing is uploaded by this page.</p>
+
       </div>
 
       <aside class="fb-live" aria-label="Live Fishbone preview">
@@ -954,6 +1024,14 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   const printBtn = document.getElementById('fbPrintBtn');
   const resetBtn = document.getElementById('fbResetBtn');
 
+  const toolShell = document.querySelector('.fb-tool');
+  const localMode = document.getElementById('fbLocalMode');
+  const privacyPanel = document.getElementById('fbPrivacyPanel');
+  const privacyTitle = document.getElementById('fbPrivacyTitle');
+  const privacyCopy = document.getElementById('fbPrivacyCopy');
+  const privateBtn = document.getElementById('fbPrivateBtn');
+  const clearDataBtn = document.getElementById('fbClearDataBtn');
+
   const pdfCount = document.getElementById('fbPdfCount');
   const pdfGenerated = document.getElementById('fbPdfGenerated');
   const pdfEffect = document.getElementById('fbPdfEffect');
@@ -963,6 +1041,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   const pdfNextTest = document.getElementById('fbPdfNextTest');
   const pdfNotes = document.getElementById('fbPdfNotes');
 
+  let privateMode = false;
   let state = makeDefaultState();
 
 
@@ -1026,6 +1105,39 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     pdfDiagram.appendChild(clone);
   }
 
+
+  function renderPrivacyMode() {
+    toolShell.classList.toggle('is-private', privateMode);
+    privacyPanel.classList.toggle('is-private', privateMode);
+    privateBtn.setAttribute('aria-pressed', privateMode ? 'true' : 'false');
+    if (privateMode) {
+      privacyTitle.textContent = 'PRIVATE SESSION ACTIVE_';
+      privacyCopy.textContent = 'problem.me will not write changes from this session to localStorage. Refreshing or closing this tab discards private changes; an older saved draft, if any, remains untouched.';
+      privateBtn.textContent = 'RETURN TO LOCAL SAVE';
+      localMode.innerHTML = '<strong>PRIVATE SESSION</strong><br>not saved on this device';
+    } else {
+      privacyTitle.textContent = 'LOCAL SAVE ACTIVE_';
+      privacyCopy.textContent = 'Changes are auto-saved in this browser on this device.';
+      privateBtn.textContent = 'PRIVATE SESSION';
+      localMode.innerHTML = '<strong>LOCAL WORKSPACE</strong><br>saved on this device';
+    }
+  }
+
+  function clearProblemMeLocalData() {
+    try {
+      const prefixes = ['problem-me:', 'problemme_', 'problem.me:'];
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (key && prefixes.some(prefix => key.startsWith(prefix))) keys.push(key);
+      }
+      keys.forEach(key => localStorage.removeItem(key));
+      return {ok:true, count:keys.length};
+    } catch (_) {
+      return {ok:false, count:0};
+    }
+  }
+
   function makeDefaultState() {
     return {
       effect: '',
@@ -1079,6 +1191,10 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   }
 
   function save() {
+    if (privateMode) {
+      actionStatus.textContent = 'PRIVATE SESSION — NOT SAVED_';
+      return;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       actionStatus.textContent = 'AUTO-SAVED LOCALLY_';
@@ -1390,7 +1506,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     lines.push('BEST-SUPPORTED HYPOTHESIS: ' + (state.supported.trim() || '[not defined]'));
     lines.push('NEXT VERIFICATION STEP: ' + (state.nextTest.trim() || '[not defined]'));
     if (state.notes.trim()) lines.push('', 'EVIDENCE / NOTES:', state.notes.trim());
-    lines.push('', 'Generated locally at problem.me');
+    lines.push('', privateMode ? 'Private Session — not saved by problem.me' : 'Generated locally at problem.me');
     return lines.join('\n');
   }
 
@@ -1398,7 +1514,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     const text = summaryText();
     try {
       await navigator.clipboard.writeText(text);
-      actionStatus.textContent = 'SUMMARY COPIED_';
+      actionStatus.textContent = privateMode ? 'SUMMARY COPIED — PRIVATE SESSION_' : 'SUMMARY COPIED_';
     } catch (_) {
       const temp = document.createElement('textarea');
       temp.value = text;
@@ -1408,7 +1524,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
       temp.select();
       try {
         document.execCommand('copy');
-        actionStatus.textContent = 'SUMMARY COPIED_';
+        actionStatus.textContent = privateMode ? 'SUMMARY COPIED — PRIVATE SESSION_' : 'SUMMARY COPIED_';
       } catch (_) {
         actionStatus.textContent = 'COPY FAILED_';
       }
@@ -1418,13 +1534,46 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
 
   printBtn.addEventListener('click', () => { renderPdfReport(); window.print(); });
 
-  resetBtn.addEventListener('click', () => {
-    if (!window.confirm('Reset this local Fishbone draft?')) return;
+
+  privateBtn.addEventListener('click', () => {
+    if (!privateMode) {
+      privateMode = true;
+      renderPrivacyMode();
+      actionStatus.textContent = 'PRIVATE SESSION — NOT SAVED_';
+      return;
+    }
+    if (!window.confirm('Return to local save? The investigation currently on screen will be written to this device.')) return;
+    privateMode = false;
+    renderPrivacyMode();
+    save();
+  });
+
+  clearDataBtn.addEventListener('click', () => {
+    if (!window.confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this Fishbone form? This cannot be undone.')) return;
+    const result = clearProblemMeLocalData();
+    if (!result.ok) {
+      actionStatus.textContent = 'LOCAL DATA CLEAR FAILED_';
+      return;
+    }
     state = makeDefaultState();
-    try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
     syncStaticFields();
     renderAll();
-    actionStatus.textContent = 'DRAFT RESET_';
+    renderPrivacyMode();
+    actionStatus.textContent = result.count ? `LOCAL DATA CLEARED — ${result.count} ITEM${result.count === 1 ? '' : 'S'}_` : 'NO SAVED LOCAL DATA FOUND_';
+  });
+
+  resetBtn.addEventListener('click', () => {
+    const message = privateMode
+      ? 'Reset this Private Session? The previously saved local Fishbone draft, if any, will remain untouched.'
+      : 'Reset this local Fishbone draft?';
+    if (!window.confirm(message)) return;
+    state = makeDefaultState();
+    if (!privateMode) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+    }
+    syncStaticFields();
+    renderAll();
+    actionStatus.textContent = privateMode ? 'PRIVATE SESSION RESET — NOT SAVED_' : 'DRAFT RESET_';
   });
 
   window.addEventListener('beforeprint', renderPdfReport);
@@ -1432,6 +1581,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   safeLoad();
   syncStaticFields();
   renderAll();
+  renderPrivacyMode();
 })();
 </script>
 

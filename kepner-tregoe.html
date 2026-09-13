@@ -526,6 +526,34 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   .kt-pdf-pill.unknown{color:#222!important;border-color:#888!important}
 }
 
+
+/* v0.5.3 privacy parity */
+.kt-privacy-panel{
+  margin:14px 16px 0;padding:13px;border:1px solid var(--line);background:rgba(99,255,181,.018)
+}
+.kt-privacy-panel.is-private{
+  border-color:var(--yellow);box-shadow:inset 3px 0 0 var(--yellow);background:rgba(255,233,91,.018)
+}
+.kt-privacy-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.kt-privacy-mode{min-width:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px;align-items:start}
+.kt-privacy-led{width:8px;height:8px;margin-top:5px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(99,255,181,.7)}
+.kt-privacy-panel.is-private .kt-privacy-led{background:var(--yellow);box-shadow:0 0 8px rgba(255,233,91,.7)}
+.kt-privacy-mode strong{display:block;color:var(--cream);font-size:.7rem;line-height:1.35}
+.kt-privacy-mode span:last-child{display:block;margin-top:3px;color:var(--muted);font-size:.61rem;line-height:1.45}
+.kt-privacy-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.kt-privacy-actions .kt-btn{min-height:36px;padding:7px 9px;font-size:.6rem}
+.kt-privacy-warning{margin:11px 0 0;padding-top:10px;border-top:1px dashed rgba(99,255,181,.17);color:var(--muted);font-size:.6rem;line-height:1.5}
+.kt-privacy-warning strong{color:var(--yellow)}
+.kt-shell.is-private .kt-shell-head{border-bottom-color:rgba(255,233,91,.55)}
+.kt-shell.is-private .kt-shell-head strong{color:var(--yellow)}
+@media(max-width:620px){
+  .kt-privacy-head{flex-direction:column}
+  .kt-privacy-actions{width:100%;justify-content:flex-start}
+  .kt-privacy-actions .kt-btn{flex:1 1 calc(50% - 7px)}
+}
+@media(max-width:390px){.kt-privacy-actions .kt-btn{flex-basis:100%}}
+@media print{.kt-privacy-panel{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -561,11 +589,20 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       <h2 id="kt-tool-title">TRY IT YOURSELF_</h2>
       <p>Use Decision Analysis when you need to choose between alternatives. Use Problem Analysis when something has deviated from normal and you need to explain why.</p>
     </div>
-    <div class="kt-local"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
+    <div class="kt-local" id="ktLocalMode"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
   </div>
 
   <div class="kt-shell">
     <div class="kt-shell-head"><strong>KEPNER–TREGOE WORKSPACE / YOUR CASE</strong><span>STRUCTURE → COMPARE → VERIFY</span></div>
+
+    <div class="kt-privacy-panel" id="ktPrivacyPanel">
+      <div class="kt-privacy-head">
+        <div class="kt-privacy-mode"><span class="kt-privacy-led" aria-hidden="true"></span><div><strong id="ktPrivacyTitle">LOCAL SAVE ACTIVE_</strong><span id="ktPrivacyCopy">Changes are auto-saved in this browser on this device.</span></div></div>
+        <div class="kt-privacy-actions"><button class="kt-btn primary" id="ktPrivateBtn" type="button" aria-pressed="false">PRIVATE SESSION</button><button class="kt-btn danger" id="ktClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button></div>
+      </div>
+      <p class="kt-privacy-warning"><strong>SECURITY:</strong> Your investigation stays on this device. Never enter passwords, API keys, access tokens or credentials.</p>
+    </div>
+
     <div class="kt-tabs" role="tablist" aria-label="Kepner–Tregoe workspace mode">
       <button class="kt-tab" id="ktDecisionTab" type="button" role="tab" aria-selected="true" aria-controls="ktDecisionPanel">DECISION ANALYSIS</button>
       <button class="kt-tab" id="ktProblemTab" type="button" role="tab" aria-selected="false" aria-controls="ktProblemPanel">PROBLEM ANALYSIS</button>
@@ -589,7 +626,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 
           <div class="kt-subhead"><strong>ADVERSE CONSEQUENCES_</strong><span>scores are not an automatic decision</span></div>
           <div class="kt-risk-grid" id="ktRisks"></div>
-          <p class="kt-privacy"><strong>PRIVACY:</strong> this draft stays in your browser's local storage. Nothing is uploaded by this page.</p>
+          
         </div>
         <aside class="kt-live" aria-label="Decision Analysis result">
           <div class="kt-live-head"><strong>DECISION READOUT_</strong><span class="kt-status" id="ktDecisionStatus">STATUS: DEFINE THE DECISION</span></div>
@@ -616,7 +653,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
             <div class="kt-field"><div class="kt-label"><label for="ktVerification">VERIFICATION STEP_</label></div><textarea id="ktVerification" placeholder="What test or observation would confirm or reject the best-fitting cause?"></textarea></div>
             <div class="kt-field"><div class="kt-label"><label for="ktPaNotes">EVIDENCE / NOTES_</label></div><textarea id="ktPaNotes" placeholder="Measurements, timestamps, observations, contradictions..."></textarea></div>
           </div>
-          <p class="kt-privacy"><strong>PRIVACY:</strong> this draft stays in your browser's local storage. Nothing is uploaded by this page.</p>
+          
         </div>
         <aside class="kt-live" aria-label="Problem Analysis result">
           <div class="kt-live-head"><strong>HYPOTHESIS READOUT_</strong><span class="kt-status" id="ktProblemStatus">STATUS: DEFINE THE DEVIATION</span></div>
@@ -785,6 +822,18 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
     notes:$('ktPdfNotes')
   };
 
+
+  const privacyEls={
+    shell:document.querySelector('.kt-shell'),
+    localMode:$('ktLocalMode'),
+    panel:$('ktPrivacyPanel'),
+    title:$('ktPrivacyTitle'),
+    copy:$('ktPrivacyCopy'),
+    privateBtn:$('ktPrivateBtn'),
+    clearBtn:$('ktClearDataBtn')
+  };
+  let privateMode=false;
+
   const els={decisionTab:$('ktDecisionTab'),problemTab:$('ktProblemTab'),decisionPanel:$('ktDecisionPanel'),problemPanel:$('ktProblemPanel'),objective:$('ktObjective'),alts:$('ktAlternatives'),must:$('ktMustTable'),want:$('ktWantTable'),risks:$('ktRisks'),decisionStatus:$('ktDecisionStatus'),decisionMeta:$('ktDecisionMeta'),decisionRanking:$('ktDecisionRanking'),decisionCallout:$('ktDecisionCallout'),decisionTip:$('ktDecisionTip'),deviation:$('ktDeviation'),dimensions:$('ktDimensions'),changes:$('ktChanges'),causes:$('ktCauses'),verification:$('ktVerification'),paNotes:$('ktPaNotes'),problemStatus:$('ktProblemStatus'),problemMeta:$('ktProblemMeta'),causeRanking:$('ktCauseRanking'),problemCallout:$('ktProblemCallout'),problemTip:$('ktProblemTip'),actionStatus:$('ktActionStatus')};
 
 
@@ -874,10 +923,36 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
   let state=blankState();
   function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
   function num(v,min=0,max=10){const n=Number(v);return Number.isFinite(n)?Math.min(max,Math.max(min,n)):0}
+
+  function renderPrivacy(){
+    privacyEls.shell.classList.toggle('is-private',privateMode);
+    privacyEls.panel.classList.toggle('is-private',privateMode);
+    privacyEls.privateBtn.setAttribute('aria-pressed',privateMode?'true':'false');
+    if(privateMode){
+      privacyEls.title.textContent='PRIVATE SESSION ACTIVE_';
+      privacyEls.copy.textContent='problem.me will not write changes from this session to localStorage. Refreshing or closing this tab discards private changes; an older saved draft, if any, remains untouched.';
+      privacyEls.privateBtn.textContent='RETURN TO LOCAL SAVE';
+      privacyEls.localMode.innerHTML='<strong>PRIVATE SESSION</strong><br>not saved on this device';
+    }else{
+      privacyEls.title.textContent='LOCAL SAVE ACTIVE_';
+      privacyEls.copy.textContent='Changes are auto-saved in this browser on this device.';
+      privacyEls.privateBtn.textContent='PRIVATE SESSION';
+      privacyEls.localMode.innerHTML='<strong>LOCAL WORKSPACE</strong><br>saved on this device';
+    }
+  }
+  function clearProblemMeLocalData(){
+    try{
+      const prefixes=['problem-me:', 'problemme_', 'problem.me:'],keys=[];
+      for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key&&prefixes.some(prefix=>key.startsWith(prefix)))keys.push(key)}
+      keys.forEach(key=>localStorage.removeItem(key));
+      return {ok:true,count:keys.length};
+    }catch(e){return {ok:false,count:0}}
+  }
+
   function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&typeof x==='object')state=normalize(x)}catch(e){}}
   function normalize(x){const s=blankState();s.active=x.active==='problem'?'problem':'decision';const d=x.decision||{};s.decision.objective=typeof d.objective==='string'?d.objective:'';if(Array.isArray(d.alternatives)){s.decision.alternatives=d.alternatives.slice(0,MAX_ALT).map((a,i)=>({name:typeof a?.name==='string'?a.name:`Option ${String.fromCharCode(65+i)}`,risk:typeof a?.risk==='string'?a.risk:''}));while(s.decision.alternatives.length<MIN_ALT)s.decision.alternatives.push({name:`Option ${String.fromCharCode(65+s.decision.alternatives.length)}`,risk:''})}const ac=s.decision.alternatives.length;if(Array.isArray(d.musts)){s.decision.musts=d.musts.slice(0,MAX_MUST).map(m=>({name:typeof m?.name==='string'?m.name:'',results:Array.from({length:ac},(_,i)=>['pass','fail','untested'].includes(m?.results?.[i])?m.results[i]:'untested')}));if(!s.decision.musts.length)s.decision.musts=[{name:'',results:Array(ac).fill('untested')}]};if(Array.isArray(d.wants)){s.decision.wants=d.wants.slice(0,MAX_WANT).map(w=>({name:typeof w?.name==='string'?w.name:'',weight:num(w?.weight,1,10)||1,scores:Array.from({length:ac},(_,i)=>num(w?.scores?.[i],0,10))}));if(!s.decision.wants.length)s.decision.wants=[{name:'',weight:10,scores:Array(ac).fill(0)}]};const p=x.problem||{};s.problem.deviation=typeof p.deviation==='string'?p.deviation:'';dims.forEach(k=>{s.problem.dimensions[k]={is:typeof p.dimensions?.[k]?.is==='string'?p.dimensions[k].is:'',isnot:typeof p.dimensions?.[k]?.isnot==='string'?p.dimensions[k].isnot:''}});s.problem.changes=typeof p.changes==='string'?p.changes:'';if(Array.isArray(p.causes)){s.problem.causes=p.causes.slice(0,MAX_CAUSE).map(c=>({name:typeof c?.name==='string'?c.name:'',tests:{what:fit(c?.tests?.what),where:fit(c?.tests?.where),when:fit(c?.tests?.when),extent:fit(c?.tests?.extent),change:fit(c?.tests?.change)}}));while(s.problem.causes.length<MIN_CAUSE)s.problem.causes.push(newCause())}s.problem.verification=typeof p.verification==='string'?p.verification:'';s.problem.notes=typeof p.notes==='string'?p.notes:'';return s}
   function fit(v){return ['fit','no','unknown'].includes(v)?v:'unknown'}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));els.actionStatus.textContent='AUTO-SAVED LOCALLY_'}catch(e){els.actionStatus.textContent='LOCAL SAVE UNAVAILABLE_'}}
+  function save(){if(privateMode){els.actionStatus.textContent='PRIVATE SESSION — NOT SAVED_';return}try{localStorage.setItem(KEY,JSON.stringify(state));els.actionStatus.textContent='AUTO-SAVED LOCALLY_'}catch(e){els.actionStatus.textContent='LOCAL SAVE UNAVAILABLE_'}}
   function setTab(which){state.active=which;const d=which==='decision';els.decisionTab.setAttribute('aria-selected',String(d));els.problemTab.setAttribute('aria-selected',String(!d));els.decisionPanel.classList.toggle('active',d);els.problemPanel.classList.toggle('active',!d);els.decisionPanel.hidden=!d;els.problemPanel.hidden=d;save()}
   els.decisionTab.addEventListener('click',()=>setTab('decision'));els.problemTab.addEventListener('click',()=>setTab('problem'));
 
@@ -907,9 +982,25 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
   function sync(){els.objective.value=state.decision.objective;els.deviation.value=state.problem.deviation;els.changes.value=state.problem.changes;els.verification.value=state.problem.verification;els.paNotes.value=state.problem.notes;setTab(state.active);renderDecisionAll();renderProblemAll()}
   function decisionSummary(){const m=decisionMetrics(),eligible=[...m].filter(x=>x.eligible).sort((a,b)=>b.total-a.total),lines=['DECISION ANALYSIS','OBJECTIVE: '+(state.decision.objective.trim()||'[not defined]'),''];lines.push('ALTERNATIVES:');m.forEach(x=>lines.push(`- ${x.name}: ${x.total} points / ${x.eligible?'eligible':x.failed?'MUST fail':'MUST untested'}`));if(eligible[0])lines.push('',`CURRENT LEADER: ${eligible[0].name} (${eligible[0].total})`);lines.push('','ADVERSE CONSEQUENCES:');state.decision.alternatives.forEach(a=>lines.push(`- ${a.name}: ${a.risk.trim()||'[none recorded]'}`));return lines}
   function problemSummary(){const b=bestCause(),lines=['PROBLEM ANALYSIS','DEVIATION: '+(state.problem.deviation.trim()||'[not defined]'),''];dims.forEach(k=>{lines.push(`${dimLabels[k]} IS: ${state.problem.dimensions[k].is.trim()||'[blank]'}`);lines.push(`${dimLabels[k]} IS NOT: ${state.problem.dimensions[k].isnot.trim()||'[blank]'}`)});lines.push('','DISTINCTIONS / CHANGES: '+(state.problem.changes.trim()||'[blank]'),'','POSSIBLE CAUSES:');causeMetrics().forEach(x=>lines.push(`- ${x.name}: fits ${x.yes}/5, conflicts ${x.no}, unknown ${x.unknown}`));if(b)lines.push('',`BEST CURRENT FIT: ${b.name}`);lines.push('VERIFICATION: '+(state.problem.verification.trim()||'[not defined]'));if(state.problem.notes.trim())lines.push('NOTES: '+state.problem.notes.trim());return lines}
-  $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.','Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>{renderPdf();window.print()});$('ktResetBtn').addEventListener('click',()=>{if(!confirm('Reset both local Kepner–Tregoe workspaces?'))return;state=blankState();try{localStorage.removeItem(KEY)}catch(e){}sync();els.actionStatus.textContent='DRAFT RESET_'})
+
+  privacyEls.privateBtn.addEventListener('click',()=>{
+    if(!privateMode){
+      privateMode=true;renderPrivacy();els.actionStatus.textContent='PRIVATE SESSION — NOT SAVED_';return;
+    }
+    if(!confirm('Return to local save? Both workspaces currently on screen will be written to this device.'))return;
+    privateMode=false;renderPrivacy();save();
+  });
+  privacyEls.clearBtn.addEventListener('click',()=>{
+    if(!confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear both Kepner–Tregoe workspaces? This cannot be undone.'))return;
+    const result=clearProblemMeLocalData();
+    if(!result.ok){els.actionStatus.textContent='LOCAL DATA CLEAR FAILED_';return}
+    state=blankState();sync();renderPrivacy();
+    els.actionStatus.textContent=result.count?`LOCAL DATA CLEARED — ${result.count} ITEM${result.count===1?'':'S'}_`:'NO SAVED LOCAL DATA FOUND_';
+  });
+
+  $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.',privateMode?'Private Session — not saved by problem.me':'Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>{renderPdf();window.print()});$('ktResetBtn').addEventListener('click',()=>{const q=privateMode?'Reset this Private Session? The previously saved local Kepner–Tregoe draft, if any, will remain untouched.':'Reset both local Kepner–Tregoe workspaces?';if(!confirm(q))return;state=blankState();if(!privateMode){try{localStorage.removeItem(KEY)}catch(e){}}sync();els.actionStatus.textContent=privateMode?'PRIVATE SESSION RESET — NOT SAVED_':'DRAFT RESET_'})
   window.addEventListener('beforeprint',renderPdf);
-  load();sync();renderPdf();
+  load();sync();renderPdf();renderPrivacy();
 })();
 </script>
 

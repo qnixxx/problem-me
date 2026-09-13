@@ -503,6 +503,247 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   .fb-live-svg .spine,.fb-live-svg .rib,.fb-live-svg .twig,.fb-live-svg .tail,.fb-live-svg .cap-line{stroke:#222!important}
 }
 
+
+/* v0.5.2 Fishbone print/PDF report */
+.fb-pdf-report{
+  display:none;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:var(--surface-low);
+}
+.fb-pdf-inner{padding:22px}
+.fb-pdf-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:start;
+  padding-bottom:16px;
+  border-bottom:1px dashed rgba(99,255,181,.2);
+}
+.fb-pdf-kicker{
+  color:var(--yellow);
+  font-size:.62rem;
+  letter-spacing:.06em;
+}
+.fb-pdf-head h2{
+  margin:8px 0 7px;
+  color:var(--cream);
+  font-size:1.9rem;
+  line-height:1;
+}
+.fb-pdf-head p{
+  max-width:650px;
+  margin:0;
+  color:var(--text);
+  font-size:.78rem;
+  line-height:1.55;
+}
+.fb-pdf-capy{
+  min-width:238px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.fb-pdf-capy pre{
+  margin:0;
+  color:var(--green);
+  font-size:.62rem;
+  line-height:1.08;
+}
+.fb-pdf-capy-note{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:.61rem;
+  line-height:1.45;
+}
+.fb-pdf-meta{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0;
+}
+.fb-pdf-meta .box,
+.fb-pdf-section,
+.fb-pdf-summary,
+.fb-pdf-family{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.fb-pdf-meta .box{padding:11px 12px}
+.fb-pdf-meta small,
+.fb-pdf-section small,
+.fb-pdf-summary small{
+  display:block;
+  color:var(--muted);
+  font-size:.56rem;
+  letter-spacing:.05em;
+}
+.fb-pdf-meta strong{
+  display:block;
+  margin-top:4px;
+  color:var(--cream);
+  font-size:.82rem;
+  line-height:1.4;
+}
+.fb-pdf-section{
+  margin-bottom:14px;
+  padding:14px;
+}
+.fb-pdf-effect{
+  color:var(--cream);
+  font-size:1rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.fb-pdf-diagram{
+  margin-top:12px;
+  overflow:hidden;
+}
+.fb-pdf-diagram svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-width:0!important;
+}
+.fb-pdf-families{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:14px;
+}
+.fb-pdf-family{padding:12px}
+.fb-pdf-family h3{
+  margin:0 0 8px;
+  color:var(--yellow);
+  font-size:.7rem;
+}
+.fb-pdf-family ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.fb-pdf-family li{
+  padding:6px 0;
+  border-bottom:1px dashed rgba(99,255,181,.14);
+  color:var(--text);
+  font-size:.7rem;
+  line-height:1.42;
+}
+.fb-pdf-family li:last-child{border-bottom:0}
+.fb-pdf-badge{
+  display:inline-block;
+  min-width:72px;
+  margin-right:7px;
+  color:var(--muted);
+  font-size:.57rem;
+}
+.fb-pdf-badge.likely{color:var(--yellow)}
+.fb-pdf-badge.confirmed{color:var(--green);font-weight:700}
+.fb-pdf-badge.no{color:var(--dim)}
+.fb-pdf-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  overflow:hidden;
+}
+.fb-pdf-summary > div{
+  min-width:0;
+  padding:14px;
+  border-right:1px solid var(--line);
+}
+.fb-pdf-summary > div:last-child{border-right:0}
+.fb-pdf-summary strong{
+  display:block;
+  color:var(--cream);
+  font-size:.88rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.fb-pdf-summary p{
+  margin:7px 0 0;
+  color:var(--text);
+  font-size:.72rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+.fb-pdf-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px dashed rgba(99,255,181,.2);
+  color:var(--muted);
+  font-size:.63rem;
+  line-height:1.5;
+}
+.fb-pdf-footer strong{color:var(--yellow)}
+
+@media(max-width:640px){
+  .fb-pdf-head{grid-template-columns:1fr}
+  .fb-pdf-capy{min-width:0}
+  .fb-pdf-meta{grid-template-columns:1fr}
+  .fb-pdf-families{grid-template-columns:1fr}
+  .fb-pdf-summary{grid-template-columns:1fr}
+  .fb-pdf-summary > div{border-right:0;border-bottom:1px solid var(--line)}
+  .fb-pdf-summary > div:last-child{border-bottom:0}
+}
+
+@media print{
+  .fb-tool{display:none!important}
+  .fb-pdf-report{
+    display:block!important;
+    border:0!important;
+    background:#fff!important;
+    margin:0!important;
+  }
+  .fb-pdf-inner{padding:0!important}
+  .fb-pdf-head,
+  .fb-pdf-footer{border-color:#999!important}
+  .fb-pdf-capy,
+  .fb-pdf-meta .box,
+  .fb-pdf-section,
+  .fb-pdf-summary,
+  .fb-pdf-family{
+    background:#fff!important;
+    border-color:#aaa!important;
+  }
+  .fb-pdf-kicker,
+  .fb-pdf-family h3,
+  .fb-pdf-footer strong{color:#111!important}
+  .fb-pdf-head h2,
+  .fb-pdf-effect,
+  .fb-pdf-meta strong,
+  .fb-pdf-summary strong{color:#111!important}
+  .fb-pdf-head p,
+  .fb-pdf-meta small,
+  .fb-pdf-section small,
+  .fb-pdf-summary small,
+  .fb-pdf-summary p,
+  .fb-pdf-capy-note,
+  .fb-pdf-footer,
+  .fb-pdf-family li{color:#444!important}
+  .fb-pdf-capy pre{color:#222!important}
+  .fb-pdf-badge,
+  .fb-pdf-badge.likely,
+  .fb-pdf-badge.confirmed,
+  .fb-pdf-badge.no{color:#222!important}
+  .fb-pdf-diagram .head-shape{fill:#fff!important}
+  .fb-pdf-diagram .cap-fill{fill:#fff!important}
+  .fb-pdf-diagram .cat,
+  .fb-pdf-diagram .effect,
+  .fb-pdf-diagram .cause,
+  .fb-pdf-diagram .cause-likely,
+  .fb-pdf-diagram .cause-confirmed,
+  .fb-pdf-diagram .small{fill:#111!important}
+  .fb-pdf-diagram .cause-no{fill:#666!important}
+  .fb-pdf-diagram .spine,
+  .fb-pdf-diagram .rib,
+  .fb-pdf-diagram .twig,
+  .fb-pdf-diagram .tail,
+  .fb-pdf-diagram .cap-line{stroke:#222!important}
+}
+
 </style>
 </head>
 <body>
@@ -619,6 +860,64 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       <span class="fb-action-status" id="fbActionStatus" aria-live="polite">AUTO-SAVE READY_</span>
     </div>
   </div>
+
+
+  <section class="fb-pdf-report" id="fbPdfReport" aria-hidden="true">
+    <div class="fb-pdf-inner">
+      <div class="fb-pdf-head">
+        <div>
+          <div class="fb-pdf-kicker">problem.me // Fishbone export</div>
+          <h2>CAPYBARA CAUSE MAP_</h2>
+          <p>A printable evidence map of the possible causes behind your effect. Broad enough to prevent tunnel vision; structured enough to make the suspects uncomfortable.</p>
+        </div>
+        <div class="fb-pdf-capy" aria-hidden="true">
+          <pre>      __
+  ___/  \___
+ /  •    •  \__
+|      ▿       _)
+ \___      ___/
+     \____/
+      /  \</pre>
+          <div class="fb-pdf-capy-note">CAPYBARA.EXE NOTE_: “I checked every bone. None of them were snacks.”</div>
+        </div>
+      </div>
+
+      <div class="fb-pdf-meta">
+        <div class="box"><small>METHOD</small><strong>Fishbone / Ishikawa</strong></div>
+        <div class="box"><small>HYPOTHESES MAPPED</small><strong id="fbPdfCount">0</strong></div>
+        <div class="box"><small>GENERATED</small><strong id="fbPdfGenerated">—</strong></div>
+      </div>
+
+      <div class="fb-pdf-section">
+        <small>EFFECT / PROBLEM</small>
+        <div class="fb-pdf-effect" id="fbPdfEffect">Not defined.</div>
+        <div class="fb-pdf-diagram" id="fbPdfDiagram"></div>
+      </div>
+
+      <div class="fb-pdf-families" id="fbPdfFamilies"></div>
+
+      <div class="fb-pdf-summary">
+        <div>
+          <small>BEST-SUPPORTED HYPOTHESIS</small>
+          <strong id="fbPdfSupported">Not defined.</strong>
+          <p id="fbPdfNotes">EVIDENCE / NOTES:
+Not defined.</p>
+        </div>
+        <div>
+          <small>NEXT VERIFICATION STEP</small>
+          <strong id="fbPdfNextTest">Not defined.</strong>
+          <p>CAPYBARA TAKEAWAY:
+A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</p>
+        </div>
+      </div>
+
+      <div class="fb-pdf-footer">
+        <span><strong>problem.me</strong> — same problems, clearer thinking.</span>
+        <span>Generated locally in this browser.</span>
+      </div>
+    </div>
+  </section>
+
 </section>
 
 </main>
@@ -655,7 +954,77 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   const printBtn = document.getElementById('fbPrintBtn');
   const resetBtn = document.getElementById('fbResetBtn');
 
+  const pdfCount = document.getElementById('fbPdfCount');
+  const pdfGenerated = document.getElementById('fbPdfGenerated');
+  const pdfEffect = document.getElementById('fbPdfEffect');
+  const pdfDiagram = document.getElementById('fbPdfDiagram');
+  const pdfFamilies = document.getElementById('fbPdfFamilies');
+  const pdfSupported = document.getElementById('fbPdfSupported');
+  const pdfNextTest = document.getElementById('fbPdfNextTest');
+  const pdfNotes = document.getElementById('fbPdfNotes');
+
   let state = makeDefaultState();
+
+
+  function prettyStamp() {
+    const now = new Date();
+    try {
+      return now.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch (_) {
+      return now.toString();
+    }
+  }
+
+  function pdfStatusLabel(status) {
+    if (status === 'no') return 'NO';
+    if (status === 'likely') return 'LIKELY';
+    if (status === 'confirmed') return 'CONFIRMED';
+    return 'UNTESTED';
+  }
+
+  function renderPdfReport() {
+    const allCauses = state.categories.flatMap(category =>
+      category.causes.filter(cause => cause.text.trim())
+    );
+
+    pdfCount.textContent = String(allCauses.length);
+    pdfGenerated.textContent = prettyStamp();
+    pdfEffect.textContent = state.effect.trim() || 'Not defined.';
+    pdfSupported.textContent = state.supported.trim() || 'Not defined.';
+    pdfNextTest.textContent = state.nextTest.trim() || 'Not defined.';
+    pdfNotes.textContent = 'EVIDENCE / NOTES:\n' + (state.notes.trim() || 'Not defined.');
+
+    pdfFamilies.innerHTML = state.categories.map((category, ci) => {
+      const filled = category.causes.filter(cause => cause.text.trim());
+      const items = filled.length
+        ? filled.map(cause => `
+            <li>
+              <span class="fb-pdf-badge ${cause.status}">[${pdfStatusLabel(cause.status)}]</span>
+              ${esc(cause.text.trim())}
+            </li>
+          `).join('')
+        : '<li><span class="fb-pdf-badge">[EMPTY]</span>No hypotheses recorded.</li>';
+
+      return `
+        <section class="fb-pdf-family">
+          <h3>${String(ci + 1).padStart(2,'0')} // ${esc(category.name || `Category ${ci + 1}`)}</h3>
+          <ul>${items}</ul>
+        </section>
+      `;
+    }).join('');
+
+    pdfDiagram.innerHTML = '';
+    const clone = svg.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.setAttribute('aria-hidden', 'true');
+    pdfDiagram.appendChild(clone);
+  }
 
   function makeDefaultState() {
     return {
@@ -925,6 +1294,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     renderCategories();
     renderSvg();
     renderGuidance();
+    renderPdfReport();
   }
 
   function syncStaticFields() {
@@ -939,13 +1309,13 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     if (target.matches('[data-cat-name]')) {
       const ci = Number(target.dataset.catName);
       state.categories[ci].name = target.value;
-      save(); renderSvg(); renderGuidance();
+      save(); renderSvg(); renderGuidance(); renderPdfReport(); renderPdfReport();
       return;
     }
     if (target.matches('[data-cause]')) {
       const [ci, ri] = target.dataset.cause.split(':').map(Number);
       state.categories[ci].causes[ri].text = target.value;
-      save(); renderSvg(); renderGuidance();
+      save(); renderSvg(); renderGuidance(); renderPdfReport(); renderPdfReport();
     }
   });
 
@@ -958,6 +1328,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       renderCategories();
       renderSvg();
       renderGuidance();
+      renderPdfReport();
     }
   });
 
@@ -996,6 +1367,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       save();
       renderSvg();
       renderGuidance();
+      renderPdfReport();
     });
   });
 
@@ -1044,7 +1416,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     }
   });
 
-  printBtn.addEventListener('click', () => window.print());
+  printBtn.addEventListener('click', () => { renderPdfReport(); window.print(); });
 
   resetBtn.addEventListener('click', () => {
     if (!window.confirm('Reset this local Fishbone draft?')) return;
@@ -1054,6 +1426,8 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     renderAll();
     actionStatus.textContent = 'DRAFT RESET_';
   });
+
+  window.addEventListener('beforeprint', renderPdfReport);
 
   safeLoad();
   syncStaticFields();

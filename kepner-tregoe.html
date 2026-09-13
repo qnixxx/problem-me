@@ -211,6 +211,321 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 @media(max-width:390px){.kt-workbench{width:min(calc(100% - 18px),var(--max))}.kt-tab{font-size:.65rem}.kt-cause-tests{grid-template-columns:1fr}.kt-table{min-width:590px}}
 @media print{body::before,body::after,header,.hero,.case-intro,.console,.decision,.pa-console,.lesson,.case-pager,footer,.kt-intro,.kt-tabs,.kt-actions,.kt-privacy{display:none!important}body{background:#fff!important;color:#111!important}.kt-workbench{width:100%!important;margin:0!important}.kt-shell{border:0!important;background:#fff!important}.kt-panel{display:block!important}.kt-panel+.kt-panel{margin-top:28px}.kt-panel-grid{grid-template-columns:1fr!important}.kt-editor{border:0!important;padding:0 0 16px!important}.kt-live{background:#fff!important;padding:0!important}.kt-shell input,.kt-shell textarea,.kt-shell select,.kt-risk,.kt-dim,.kt-cause,.kt-result,.kt-callout,.kt-tip{background:#fff!important;color:#111!important;border-color:#aaa!important}.kt-table th,.kt-table td{border-color:#aaa!important}.kt-result-row,.kt-cause-meta{color:#222!important}}
 
+
+/* v0.5.2 Kepner–Tregoe print/PDF report */
+.kt-pdf-report{
+  display:none;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:var(--surface-low);
+}
+.kt-pdf-inner{padding:22px}
+.kt-pdf-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:start;
+  padding-bottom:16px;
+  border-bottom:1px dashed rgba(99,255,181,.2);
+}
+.kt-pdf-kicker{
+  color:var(--yellow);
+  font-size:.62rem;
+  letter-spacing:.06em;
+}
+.kt-pdf-head h2{
+  margin:8px 0 7px;
+  color:var(--cream);
+  font-size:1.9rem;
+  line-height:1;
+}
+.kt-pdf-head p{
+  max-width:680px;
+  margin:0;
+  color:#b9e4ce;
+  font-size:.78rem;
+  line-height:1.55;
+}
+.kt-pdf-capy{
+  min-width:250px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.kt-pdf-capy pre{
+  margin:0;
+  color:var(--green);
+  font-size:.61rem;
+  line-height:1.08;
+}
+.kt-pdf-capy-note{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:.61rem;
+  line-height:1.45;
+}
+.kt-pdf-meta{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0;
+}
+.kt-pdf-meta .box,
+.kt-pdf-section,
+.kt-pdf-table-wrap,
+.kt-pdf-summary,
+.kt-pdf-dim{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.kt-pdf-meta .box{padding:11px 12px}
+.kt-pdf-meta small,
+.kt-pdf-section small,
+.kt-pdf-summary small{
+  display:block;
+  color:var(--muted);
+  font-size:.56rem;
+  letter-spacing:.05em;
+}
+.kt-pdf-meta strong{
+  display:block;
+  margin-top:4px;
+  color:var(--cream);
+  font-size:.82rem;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+.kt-pdf-part{
+  margin-top:20px;
+  break-before:auto;
+}
+.kt-pdf-part-title{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:end;
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+.kt-pdf-part-title strong{
+  color:var(--cream);
+  font-size:1rem;
+}
+.kt-pdf-part-title span{
+  color:var(--yellow);
+  font-size:.62rem;
+}
+.kt-pdf-section{
+  margin-bottom:12px;
+  padding:14px;
+}
+.kt-pdf-section h3{
+  margin:0 0 8px;
+  color:var(--yellow);
+  font-size:.7rem;
+}
+.kt-pdf-objective,
+.kt-pdf-deviation{
+  color:var(--cream);
+  font-size:.96rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.kt-pdf-table-wrap{
+  margin-bottom:12px;
+  overflow:hidden;
+}
+.kt-pdf-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.64rem;
+}
+.kt-pdf-table th,
+.kt-pdf-table td{
+  padding:7px 8px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  vertical-align:top;
+}
+.kt-pdf-table th:last-child,
+.kt-pdf-table td:last-child{border-right:0}
+.kt-pdf-table tr:last-child td{border-bottom:0}
+.kt-pdf-table th{
+  background:#020a06;
+  color:var(--muted);
+  font-weight:400;
+}
+.kt-pdf-table td{
+  color:#b9e4ce;
+}
+.kt-pdf-table td.num{
+  color:var(--cream);
+  text-align:right;
+}
+.kt-pdf-table tr.best td{
+  color:var(--yellow);
+}
+.kt-pdf-table tr.ineligible{
+  opacity:.6;
+}
+.kt-pdf-pill{
+  display:inline-block;
+  padding:2px 5px;
+  border:1px solid var(--line);
+  font-size:.54rem;
+}
+.kt-pdf-pill.pass{color:var(--green)}
+.kt-pdf-pill.fail{color:var(--bad)}
+.kt-pdf-pill.untested{color:var(--muted)}
+.kt-pdf-pill.fit{color:var(--green)}
+.kt-pdf-pill.no{color:var(--bad)}
+.kt-pdf-pill.unknown{color:var(--muted)}
+.kt-pdf-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.kt-pdf-summary > div{
+  min-width:0;
+  padding:14px;
+  border-right:1px solid var(--line);
+}
+.kt-pdf-summary > div:last-child{border-right:0}
+.kt-pdf-summary strong{
+  display:block;
+  color:var(--cream);
+  font-size:.88rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.kt-pdf-summary p{
+  margin:7px 0 0;
+  color:#b9e4ce;
+  font-size:.72rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+.kt-pdf-dims{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+.kt-pdf-dim{padding:12px}
+.kt-pdf-dim h4{
+  margin:0 0 8px;
+  color:var(--yellow);
+  font-size:.68rem;
+}
+.kt-pdf-dim-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.kt-pdf-dim-grid div{
+  min-width:0;
+  padding:8px;
+  border:1px dashed rgba(99,255,181,.18);
+}
+.kt-pdf-dim-grid small{
+  display:block;
+  color:var(--muted);
+  font-size:.53rem;
+  margin-bottom:4px;
+}
+.kt-pdf-dim-grid p{
+  margin:0;
+  color:var(--cream);
+  font-size:.68rem;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+.kt-pdf-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px dashed rgba(99,255,181,.2);
+  color:var(--muted);
+  font-size:.63rem;
+  line-height:1.5;
+}
+.kt-pdf-footer strong{color:var(--yellow)}
+.kt-pdf-keep{break-inside:avoid}
+
+@media(max-width:720px){
+  .kt-pdf-head{grid-template-columns:1fr}
+  .kt-pdf-capy{min-width:0}
+  .kt-pdf-meta{grid-template-columns:1fr}
+  .kt-pdf-dims{grid-template-columns:1fr}
+  .kt-pdf-summary{grid-template-columns:1fr}
+  .kt-pdf-summary > div{border-right:0;border-bottom:1px solid var(--line)}
+  .kt-pdf-summary > div:last-child{border-bottom:0}
+}
+
+@media print{
+  .kt-shell{display:none!important}
+  .kt-pdf-report{
+    display:block!important;
+    border:0!important;
+    background:#fff!important;
+    margin:0!important;
+  }
+  .kt-pdf-inner{padding:0!important}
+  .kt-pdf-head,
+  .kt-pdf-footer,
+  .kt-pdf-part-title{border-color:#999!important}
+  .kt-pdf-capy,
+  .kt-pdf-meta .box,
+  .kt-pdf-section,
+  .kt-pdf-table-wrap,
+  .kt-pdf-summary,
+  .kt-pdf-dim{
+    background:#fff!important;
+    border-color:#aaa!important;
+  }
+  .kt-pdf-kicker,
+  .kt-pdf-part-title span,
+  .kt-pdf-section h3,
+  .kt-pdf-dim h4,
+  .kt-pdf-footer strong{color:#111!important}
+  .kt-pdf-head h2,
+  .kt-pdf-part-title strong,
+  .kt-pdf-objective,
+  .kt-pdf-deviation,
+  .kt-pdf-meta strong,
+  .kt-pdf-summary strong,
+  .kt-pdf-dim-grid p,
+  .kt-pdf-table td.num{color:#111!important}
+  .kt-pdf-head p,
+  .kt-pdf-meta small,
+  .kt-pdf-summary small,
+  .kt-pdf-summary p,
+  .kt-pdf-capy-note,
+  .kt-pdf-footer,
+  .kt-pdf-table th,
+  .kt-pdf-table td,
+  .kt-pdf-dim-grid small{color:#444!important}
+  .kt-pdf-capy pre{color:#222!important}
+  .kt-pdf-table th{background:#f3f3f3!important}
+  .kt-pdf-table th,
+  .kt-pdf-table td,
+  .kt-pdf-dim-grid div{border-color:#bbb!important}
+  .kt-pdf-table tr.best td{color:#111!important;font-weight:700}
+  .kt-pdf-pill,
+  .kt-pdf-pill.pass,
+  .kt-pdf-pill.fail,
+  .kt-pdf-pill.untested,
+  .kt-pdf-pill.fit,
+  .kt-pdf-pill.no,
+  .kt-pdf-pill.unknown{color:#222!important;border-color:#888!important}
+}
+
 </style>
 </head>
 <body>
@@ -321,6 +636,127 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   </div>
 </section>
 
+
+<section class="kt-pdf-report" id="ktPdfReport" aria-hidden="true">
+  <div class="kt-pdf-inner">
+    <div class="kt-pdf-head">
+      <div>
+        <div class="kt-pdf-kicker">problem.me // Kepner–Tregoe export</div>
+        <h2>CAPYBARA DECISION DOSSIER_</h2>
+        <p>One report for choosing deliberately and diagnosing carefully: Decision Analysis first, Problem Analysis second.</p>
+      </div>
+      <div class="kt-pdf-capy" aria-hidden="true">
+        <pre>       __
+   ___/  \___
+  /  •    •  \__
+ |      ▿       _)
+  \___  📋  ___/
+      \____/
+       /  \</pre>
+        <div class="kt-pdf-capy-note">CAPYBARA.EXE NOTE_: “I weighted the options. The snacks were not an approved criterion.”</div>
+      </div>
+    </div>
+
+    <div class="kt-pdf-meta">
+      <div class="box"><small>METHOD</small><strong>Kepner–Tregoe</strong></div>
+      <div class="box"><small>WORKSPACES</small><strong>Decision + Problem Analysis</strong></div>
+      <div class="box"><small>GENERATED</small><strong id="ktPdfGenerated">—</strong></div>
+    </div>
+
+    <section class="kt-pdf-part" aria-label="Decision Analysis report">
+      <div class="kt-pdf-part-title">
+        <strong>01 // DECISION ANALYSIS_</strong>
+        <span>MUSTs → WANTs → RISKS</span>
+      </div>
+
+      <div class="kt-pdf-section kt-pdf-keep">
+        <small>DECISION OBJECTIVE</small>
+        <div class="kt-pdf-objective" id="ktPdfObjective">Not defined.</div>
+      </div>
+
+      <div class="kt-pdf-table-wrap kt-pdf-keep">
+        <table class="kt-pdf-table">
+          <thead><tr><th>RANK</th><th>ALTERNATIVE</th><th>ELIGIBILITY</th><th>SCORE</th><th>ADVERSE CONSEQUENCE / RISK</th></tr></thead>
+          <tbody id="ktPdfDecisionRanking"></tbody>
+        </table>
+      </div>
+
+      <div class="kt-pdf-section kt-pdf-keep">
+        <h3>MUST REQUIREMENTS_</h3>
+        <div class="kt-pdf-table-wrap" style="margin:0">
+          <table class="kt-pdf-table" id="ktPdfMustTable"></table>
+        </div>
+      </div>
+
+      <div class="kt-pdf-section kt-pdf-keep">
+        <h3>WEIGHTED WANT CRITERIA_</h3>
+        <div class="kt-pdf-table-wrap" style="margin:0">
+          <table class="kt-pdf-table" id="ktPdfWantTable"></table>
+        </div>
+      </div>
+
+      <div class="kt-pdf-summary kt-pdf-keep">
+        <div>
+          <small>CURRENT ELIGIBLE LEADER</small>
+          <strong id="ktPdfLeader">Not defined.</strong>
+          <p id="ktPdfLeaderNote">Complete MUSTs and WANTs before treating the ranking as useful.</p>
+        </div>
+        <div>
+          <small>CAPYBARA CHECK</small>
+          <strong>Score ≠ certainty.</strong>
+          <p>Use the totals to expose judgment, then stress-test the risks before deciding.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="kt-pdf-part" aria-label="Problem Analysis report">
+      <div class="kt-pdf-part-title">
+        <strong>02 // PROBLEM ANALYSIS_</strong>
+        <span>IS / IS NOT → FIT → VERIFY</span>
+      </div>
+
+      <div class="kt-pdf-section kt-pdf-keep">
+        <small>DEVIATION / PROBLEM</small>
+        <div class="kt-pdf-deviation" id="ktPdfDeviation">Not defined.</div>
+      </div>
+
+      <div class="kt-pdf-dims" id="ktPdfDimensions"></div>
+
+      <div class="kt-pdf-section kt-pdf-keep">
+        <small>DISTINCTIONS / RECENT CHANGES</small>
+        <div class="kt-pdf-deviation" id="ktPdfChanges">Not defined.</div>
+      </div>
+
+      <div class="kt-pdf-table-wrap kt-pdf-keep">
+        <table class="kt-pdf-table">
+          <thead><tr><th>RANK</th><th>POSSIBLE CAUSE</th><th>FITS</th><th>CONFLICTS</th><th>UNKNOWN</th><th>FIT SCORE</th></tr></thead>
+          <tbody id="ktPdfCauseRanking"></tbody>
+        </table>
+      </div>
+
+      <div class="kt-pdf-summary kt-pdf-keep">
+        <div>
+          <small>BEST CURRENT FIT</small>
+          <strong id="ktPdfBestCause">Not defined.</strong>
+          <p id="ktPdfNotes">EVIDENCE / NOTES:
+Not defined.</p>
+        </div>
+        <div>
+          <small>VERIFICATION STEP</small>
+          <strong id="ktPdfVerification">Not defined.</strong>
+          <p>CAPYBARA TAKEAWAY:
+The best-fitting explanation is still only a hypothesis until the evidence verifies it.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="kt-pdf-footer">
+      <span><strong>problem.me</strong> — same problems, clearer thinking.</span>
+      <span>Structure the judgment. Then follow the evidence.</span>
+    </div>
+  </div>
+</section>
+
 </main>
 <nav class="case-pager" aria-label="Case File navigation"><a class="pager-prev" href="pareto.html"><small>← PREVIOUS</small><strong>CASE #003 / PARETO</strong></a><a class="pager-all" href="techniques.html"><small>LIBRARY</small><strong>ALL TECHNIQUES</strong></a><span class="pager-disabled"><small>NEXT →</small><strong>END OF CURRENT LIBRARY</strong></span></nav>
 <footer><div class="wrap next"><span><strong class="footer-brand">problem.me</strong> — Same problems. Clearer thinking.</span><span><a href="techniques.html">← technique library</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span></div></footer>
@@ -331,7 +767,107 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   const dims=['what','where','when','extent'];
   const dimLabels={what:'WHAT',where:'WHERE',when:'WHEN',extent:'EXTENT'};
   const $=id=>document.getElementById(id);
+
+  const pdfEls={
+    generated:$('ktPdfGenerated'),
+    objective:$('ktPdfObjective'),
+    decisionRanking:$('ktPdfDecisionRanking'),
+    mustTable:$('ktPdfMustTable'),
+    wantTable:$('ktPdfWantTable'),
+    leader:$('ktPdfLeader'),
+    leaderNote:$('ktPdfLeaderNote'),
+    deviation:$('ktPdfDeviation'),
+    dimensions:$('ktPdfDimensions'),
+    changes:$('ktPdfChanges'),
+    causeRanking:$('ktPdfCauseRanking'),
+    bestCause:$('ktPdfBestCause'),
+    verification:$('ktPdfVerification'),
+    notes:$('ktPdfNotes')
+  };
+
   const els={decisionTab:$('ktDecisionTab'),problemTab:$('ktProblemTab'),decisionPanel:$('ktDecisionPanel'),problemPanel:$('ktProblemPanel'),objective:$('ktObjective'),alts:$('ktAlternatives'),must:$('ktMustTable'),want:$('ktWantTable'),risks:$('ktRisks'),decisionStatus:$('ktDecisionStatus'),decisionMeta:$('ktDecisionMeta'),decisionRanking:$('ktDecisionRanking'),decisionCallout:$('ktDecisionCallout'),decisionTip:$('ktDecisionTip'),deviation:$('ktDeviation'),dimensions:$('ktDimensions'),changes:$('ktChanges'),causes:$('ktCauses'),verification:$('ktVerification'),paNotes:$('ktPaNotes'),problemStatus:$('ktProblemStatus'),problemMeta:$('ktProblemMeta'),causeRanking:$('ktCauseRanking'),problemCallout:$('ktProblemCallout'),problemTip:$('ktProblemTip'),actionStatus:$('ktActionStatus')};
+
+
+  function pdfStamp(){
+    const now=new Date();
+    try{return now.toLocaleString(undefined,{year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'})}
+    catch(e){return now.toString()}
+  }
+
+  function decisionEligibility(metric){
+    if(metric.failed)return 'MUST FAIL';
+    if(metric.untested)return 'MUST UNTESTED';
+    return 'ELIGIBLE';
+  }
+
+  function renderPdf(){
+    const dMetrics=decisionMetrics();
+    const dSorted=[...dMetrics].sort((a,b)=>b.total-a.total);
+    const eligible=dSorted.filter(x=>x.eligible);
+    const leader=eligible[0]||null;
+
+    pdfEls.generated.textContent=pdfStamp();
+    pdfEls.objective.textContent=state.decision.objective.trim()||'Not defined.';
+
+    pdfEls.decisionRanking.innerHTML=dSorted.map((x,i)=>{
+      const alt=state.decision.alternatives[x.i];
+      return `<tr class="${leader?.i===x.i?'best ':''}${!x.eligible?'ineligible':''}">
+        <td>${String(i+1).padStart(2,'0')}</td>
+        <td>${esc(x.name)}</td>
+        <td>${decisionEligibility(x)}</td>
+        <td class="num">${x.total}</td>
+        <td>${esc(alt?.risk?.trim()||'[none recorded]')}</td>
+      </tr>`;
+    }).join('')||'<tr><td>--</td><td>No alternatives.</td><td>—</td><td class="num">0</td><td>—</td></tr>';
+
+    const alts=state.decision.alternatives;
+    pdfEls.mustTable.innerHTML=`<thead><tr><th>MUST requirement</th>${alts.map(a=>`<th>${esc(a.name||'Option')}</th>`).join('')}</tr></thead><tbody>${
+      state.decision.musts.map(m=>`<tr><td>${esc(m.name.trim()||'[unnamed MUST]')}</td>${
+        alts.map((a,ai)=>{
+          const v=m.results[ai]||'untested';
+          return `<td><span class="kt-pdf-pill ${v}">${v.toUpperCase()}</span></td>`;
+        }).join('')
+      }</tr>`).join('')
+    }</tbody>`;
+
+    pdfEls.wantTable.innerHTML=`<thead><tr><th>WANT criterion</th><th>WEIGHT</th>${alts.map(a=>`<th>${esc(a.name||'Option')}</th>`).join('')}</tr></thead><tbody>${
+      state.decision.wants.map(w=>`<tr><td>${esc(w.name.trim()||'[unnamed WANT]')}</td><td class="num">${w.weight}</td>${
+        alts.map((a,ai)=>`<td class="num">${w.scores[ai]??0}</td>`).join('')
+      }</tr>`).join('')
+    }</tbody>`;
+
+    pdfEls.leader.textContent=leader?`${leader.name} — ${leader.total} points`:'No eligible leader yet.';
+    pdfEls.leaderNote.textContent=leader
+      ? 'Eligible after current MUST checks. Review adverse consequences before deciding.'
+      : 'Resolve MUST failures or untested gates before treating WANT scores as a decision.';
+
+    pdfEls.deviation.textContent=state.problem.deviation.trim()||'Not defined.';
+    pdfEls.dimensions.innerHTML=dims.map(k=>`<section class="kt-pdf-dim kt-pdf-keep">
+      <h4>${dimLabels[k]}_</h4>
+      <div class="kt-pdf-dim-grid">
+        <div><small>IS</small><p>${esc(state.problem.dimensions[k].is.trim()||'[blank]')}</p></div>
+        <div><small>IS NOT</small><p>${esc(state.problem.dimensions[k].isnot.trim()||'[blank]')}</p></div>
+      </div>
+    </section>`).join('');
+    pdfEls.changes.textContent=state.problem.changes.trim()||'Not defined.';
+
+    const cMetrics=causeMetrics().filter(x=>state.problem.causes[x.i].name.trim());
+    const cBest=bestCause();
+    const cSorted=[...cMetrics].sort((a,b)=>a.no-b.no||b.yes-a.yes||b.score-a.score);
+
+    pdfEls.causeRanking.innerHTML=cSorted.map((x,i)=>`<tr class="${cBest?.i===x.i?'best':''}">
+      <td>${String(i+1).padStart(2,'0')}</td>
+      <td>${esc(x.name)}</td>
+      <td class="num">${x.yes}/5</td>
+      <td class="num">${x.no}</td>
+      <td class="num">${x.unknown}</td>
+      <td class="num">${x.score}</td>
+    </tr>`).join('')||'<tr><td>--</td><td>No tested possible causes.</td><td class="num">0/5</td><td class="num">0</td><td class="num">5</td><td class="num">0</td></tr>';
+
+    pdfEls.bestCause.textContent=cBest?cBest.name:'Not defined.';
+    pdfEls.verification.textContent=state.problem.verification.trim()||'Not defined.';
+    pdfEls.notes.textContent='EVIDENCE / NOTES:\n'+(state.problem.notes.trim()||'Not defined.');
+  }
 
   function blankState(){return {active:'decision',decision:{objective:'',alternatives:[{name:'Option A',risk:''},{name:'Option B',risk:''},{name:'Option C',risk:''}],musts:[{name:'',results:['untested','untested','untested']},{name:'',results:['untested','untested','untested']}],wants:[{name:'',weight:10,scores:[0,0,0]},{name:'',weight:7,scores:[0,0,0]},{name:'',weight:5,scores:[0,0,0]}]},problem:{deviation:'',dimensions:{what:{is:'',isnot:''},where:{is:'',isnot:''},when:{is:'',isnot:''},extent:{is:'',isnot:''}},changes:'',causes:[newCause(),newCause(),newCause()],verification:'',notes:''}}}
   function newCause(){return {name:'',tests:{what:'unknown',where:'unknown',when:'unknown',extent:'unknown',change:'unknown'}}}
@@ -371,8 +907,9 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   function sync(){els.objective.value=state.decision.objective;els.deviation.value=state.problem.deviation;els.changes.value=state.problem.changes;els.verification.value=state.problem.verification;els.paNotes.value=state.problem.notes;setTab(state.active);renderDecisionAll();renderProblemAll()}
   function decisionSummary(){const m=decisionMetrics(),eligible=[...m].filter(x=>x.eligible).sort((a,b)=>b.total-a.total),lines=['DECISION ANALYSIS','OBJECTIVE: '+(state.decision.objective.trim()||'[not defined]'),''];lines.push('ALTERNATIVES:');m.forEach(x=>lines.push(`- ${x.name}: ${x.total} points / ${x.eligible?'eligible':x.failed?'MUST fail':'MUST untested'}`));if(eligible[0])lines.push('',`CURRENT LEADER: ${eligible[0].name} (${eligible[0].total})`);lines.push('','ADVERSE CONSEQUENCES:');state.decision.alternatives.forEach(a=>lines.push(`- ${a.name}: ${a.risk.trim()||'[none recorded]'}`));return lines}
   function problemSummary(){const b=bestCause(),lines=['PROBLEM ANALYSIS','DEVIATION: '+(state.problem.deviation.trim()||'[not defined]'),''];dims.forEach(k=>{lines.push(`${dimLabels[k]} IS: ${state.problem.dimensions[k].is.trim()||'[blank]'}`);lines.push(`${dimLabels[k]} IS NOT: ${state.problem.dimensions[k].isnot.trim()||'[blank]'}`)});lines.push('','DISTINCTIONS / CHANGES: '+(state.problem.changes.trim()||'[blank]'),'','POSSIBLE CAUSES:');causeMetrics().forEach(x=>lines.push(`- ${x.name}: fits ${x.yes}/5, conflicts ${x.no}, unknown ${x.unknown}`));if(b)lines.push('',`BEST CURRENT FIT: ${b.name}`);lines.push('VERIFICATION: '+(state.problem.verification.trim()||'[not defined]'));if(state.problem.notes.trim())lines.push('NOTES: '+state.problem.notes.trim());return lines}
-  $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.','Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>window.print());$('ktResetBtn').addEventListener('click',()=>{if(!confirm('Reset both local Kepner–Tregoe workspaces?'))return;state=blankState();try{localStorage.removeItem(KEY)}catch(e){}sync();els.actionStatus.textContent='DRAFT RESET_'})
-  load();sync();
+  $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.','Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>{renderPdf();window.print()});$('ktResetBtn').addEventListener('click',()=>{if(!confirm('Reset both local Kepner–Tregoe workspaces?'))return;state=blankState();try{localStorage.removeItem(KEY)}catch(e){}sync();els.actionStatus.textContent='DRAFT RESET_'})
+  window.addEventListener('beforeprint',renderPdf);
+  load();sync();renderPdf();
 })();
 </script>
 

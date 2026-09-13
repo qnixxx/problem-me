@@ -172,6 +172,244 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 @media(hover:hover) and (pointer:fine){.pt-btn:hover,.pt-rm:hover{border-color:var(--yellow);color:var(--yellow)}}@media(max-width:900px){.pt-grid{grid-template-columns:1fr}.pt-edit{border-right:0;border-bottom:1px solid var(--line)}}@media(max-width:640px){.ptw{width:min(calc(100% - 20px),var(--max))}.ptw-intro{grid-template-columns:1fr}.ptw-local{text-align:left}.pt-head{flex-direction:column;gap:3px}.pt-settings{grid-template-columns:1fr 1fr}.pt-settings .pt-field:first-child{grid-column:1/-1}.pt-summary{grid-template-columns:1fr}.pt-summary .wide{grid-column:auto}.pt-stats{grid-template-columns:1fr 1fr}.pt-stat:last-child{grid-column:1/-1}.pt-svg{min-width:720px}.pt-msg{width:100%;margin-left:0}}@media(max-width:390px){.ptw{width:min(calc(100% - 18px),var(--max))}.pt-edit,.pt-live{padding:12px}.pt-row,.pt-rowhead{grid-template-columns:26px minmax(0,1fr) 76px 34px}.pt-svg{min-width:680px}.pt-rrow{grid-template-columns:22px minmax(0,1fr) auto}.pt-rrow .cum{display:none}}
 @media print{body::before,body::after,header,.hero,.case-intro,.data-shell,.priority,.after,.lesson,.case-pager,footer,.ptw-intro,.pt-bottom,.pt-privacy{display:none!important}.ptw{width:100%!important;margin:0!important}.pt-tool{border:0!important;background:#fff!important}.pt-grid{grid-template-columns:1fr!important}.pt-edit{border:0!important}.pt-live{background:#fff!important}.pt-tool input,.pt-tool textarea,.pt-rank,.pt-stat,.pt-tip{background:#fff!important;color:#111!important;border-color:#aaa!important}}
 
+
+/* v0.5.2 Pareto print/PDF report */
+.pt-pdf-report{
+  display:none;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:var(--surface-low);
+}
+.pt-pdf-inner{padding:22px}
+.pt-pdf-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:start;
+  padding-bottom:16px;
+  border-bottom:1px dashed rgba(99,255,181,.2);
+}
+.pt-pdf-kicker{
+  color:var(--yellow);
+  font-size:.62rem;
+  letter-spacing:.06em;
+}
+.pt-pdf-head h2{
+  margin:8px 0 7px;
+  color:var(--cream);
+  font-size:1.9rem;
+  line-height:1;
+}
+.pt-pdf-head p{
+  max-width:650px;
+  margin:0;
+  color:#b9e4ce;
+  font-size:.78rem;
+  line-height:1.55;
+}
+.pt-pdf-capy{
+  min-width:238px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.pt-pdf-capy pre{
+  margin:0;
+  color:var(--green);
+  font-size:.62rem;
+  line-height:1.08;
+}
+.pt-pdf-capy-note{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:.61rem;
+  line-height:1.45;
+}
+.pt-pdf-meta{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0;
+}
+.pt-pdf-meta .box,
+.pt-pdf-section,
+.pt-pdf-rank,
+.pt-pdf-summary{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.pt-pdf-meta .box{padding:11px 12px}
+.pt-pdf-meta small,
+.pt-pdf-section small,
+.pt-pdf-summary small{
+  display:block;
+  color:var(--muted);
+  font-size:.56rem;
+  letter-spacing:.05em;
+}
+.pt-pdf-meta strong{
+  display:block;
+  margin-top:4px;
+  color:var(--cream);
+  font-size:.82rem;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+.pt-pdf-section{
+  margin-bottom:14px;
+  padding:14px;
+}
+.pt-pdf-title{
+  color:var(--cream);
+  font-size:1rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.pt-pdf-chart{
+  margin-top:12px;
+  overflow:hidden;
+}
+.pt-pdf-chart svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-width:0!important;
+}
+.pt-pdf-rank{
+  margin-bottom:14px;
+  overflow:hidden;
+}
+.pt-pdf-rank-head,
+.pt-pdf-rank-row{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr) 90px 90px 90px;
+  gap:8px;
+  align-items:center;
+}
+.pt-pdf-rank-head{
+  padding:9px 12px;
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:.57rem;
+}
+.pt-pdf-rank-row{
+  padding:8px 12px;
+  border-bottom:1px dashed rgba(99,255,181,.14);
+  color:#b9e4ce;
+  font-size:.68rem;
+}
+.pt-pdf-rank-row:last-child{border-bottom:0}
+.pt-pdf-rank-row.hot .name,
+.pt-pdf-rank-row.hot .cum{color:var(--yellow)}
+.pt-pdf-rank-row .rank{color:var(--yellow)}
+.pt-pdf-rank-row .value{color:var(--cream)}
+.pt-pdf-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  overflow:hidden;
+}
+.pt-pdf-summary > div{
+  min-width:0;
+  padding:14px;
+  border-right:1px solid var(--line);
+}
+.pt-pdf-summary > div:last-child{border-right:0}
+.pt-pdf-summary strong{
+  display:block;
+  color:var(--cream);
+  font-size:.88rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.pt-pdf-summary p{
+  margin:7px 0 0;
+  color:#b9e4ce;
+  font-size:.72rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+.pt-pdf-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px dashed rgba(99,255,181,.2);
+  color:var(--muted);
+  font-size:.63rem;
+  line-height:1.5;
+}
+.pt-pdf-footer strong{color:var(--yellow)}
+
+@media(max-width:700px){
+  .pt-pdf-head{grid-template-columns:1fr}
+  .pt-pdf-capy{min-width:0}
+  .pt-pdf-meta{grid-template-columns:1fr 1fr}
+  .pt-pdf-rank-head,
+  .pt-pdf-rank-row{grid-template-columns:34px minmax(0,1fr) 70px 70px}
+  .pt-pdf-rank-head span:nth-child(5),
+  .pt-pdf-rank-row span:nth-child(5){display:none}
+}
+@media(max-width:520px){
+  .pt-pdf-meta{grid-template-columns:1fr}
+  .pt-pdf-summary{grid-template-columns:1fr}
+  .pt-pdf-summary > div{border-right:0;border-bottom:1px solid var(--line)}
+  .pt-pdf-summary > div:last-child{border-bottom:0}
+}
+
+@media print{
+  .pt-tool{display:none!important}
+  .pt-pdf-report{
+    display:block!important;
+    border:0!important;
+    background:#fff!important;
+    margin:0!important;
+  }
+  .pt-pdf-inner{padding:0!important}
+  .pt-pdf-head,
+  .pt-pdf-footer{border-color:#999!important}
+  .pt-pdf-capy,
+  .pt-pdf-meta .box,
+  .pt-pdf-section,
+  .pt-pdf-rank,
+  .pt-pdf-summary{
+    background:#fff!important;
+    border-color:#aaa!important;
+  }
+  .pt-pdf-kicker,
+  .pt-pdf-footer strong{color:#111!important}
+  .pt-pdf-head h2,
+  .pt-pdf-title,
+  .pt-pdf-meta strong,
+  .pt-pdf-summary strong,
+  .pt-pdf-rank-row .value{color:#111!important}
+  .pt-pdf-head p,
+  .pt-pdf-meta small,
+  .pt-pdf-section small,
+  .pt-pdf-summary small,
+  .pt-pdf-summary p,
+  .pt-pdf-capy-note,
+  .pt-pdf-footer,
+  .pt-pdf-rank-head,
+  .pt-pdf-rank-row{color:#444!important}
+  .pt-pdf-capy pre{color:#222!important}
+  .pt-pdf-rank-row.hot .name,
+  .pt-pdf-rank-row.hot .cum,
+  .pt-pdf-rank-row .rank{color:#111!important;font-weight:700}
+  .pt-pdf-chart .bar{fill:#ddd!important;stroke:#222!important}
+  .pt-pdf-chart .bar.hot{fill:#bbb!important;stroke:#111!important}
+  .pt-pdf-chart .cum,
+  .pt-pdf-chart .thr{stroke:#111!important}
+  .pt-pdf-chart .grid,
+  .pt-pdf-chart .axis{stroke:#777!important}
+  .pt-pdf-chart .lab,
+  .pt-pdf-chart .small,
+  .pt-pdf-chart .val,
+  .pt-pdf-chart .hotxt{fill:#111!important}
+  .pt-pdf-chart .point{fill:#fff!important;stroke:#111!important}
+}
+
 </style>
 </head>
 <body>
@@ -203,14 +441,76 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 <div class="pt-summary"><div class="pt-field"><div class="pt-label"><label for="ptAction">FIRST ACTION / INVESTIGATION_</label></div><textarea id="ptAction" placeholder="What will you do with the highest-priority category?"></textarea></div><div class="pt-field wide"><div class="pt-label"><label for="ptNotes">NOTES / DATA QUALITY_</label></div><textarea id="ptNotes" placeholder="Time window, source, exclusions, severity assumptions..."></textarea></div></div><p class="pt-privacy"><strong>PRIVACY:</strong> this draft stays in your browser's local storage. Nothing is uploaded.</p></div>
 <aside class="pt-live"><div class="pt-livehead"><strong>LIVE PARETO_</strong><span class="pt-status" id="ptStatus">STATUS: WAITING FOR DATA</span></div><div class="pt-scroll"><svg class="pt-svg" id="ptSvg" viewBox="0 0 920 520" role="img" aria-label="Live Pareto chart"></svg></div><div class="pt-stats"><div class="pt-stat hot"><small>FOCUS SET</small><strong id="ptFocus">—</strong></div><div class="pt-stat"><small>TOTAL</small><strong id="ptTotal">0</strong></div><div class="pt-stat"><small>FIRST TARGET</small><strong id="ptFirst">—</strong></div></div><div class="pt-rank"><div class="pt-rankhead"><strong>RANKED DATA_</strong><span id="ptMeta">0 categories</span></div><div class="pt-rlist" id="ptRank"></div></div><div class="pt-tip" id="ptTip"><strong>TIP:</strong> Use one consistent measure across all categories.</div></aside></div><div class="pt-bottom"><button class="pt-btn primary" id="ptCopy" type="button">COPY SUMMARY</button><button class="pt-btn" id="ptPrint" type="button">PRINT / SAVE PDF</button><button class="pt-btn danger" id="ptReset" type="button">RESET DRAFT</button><span class="pt-msg" id="ptMsg">AUTO-SAVE READY_</span></div></div></section>
 
+
+<section class="pt-pdf-report" id="ptPdfReport" aria-hidden="true">
+  <div class="pt-pdf-inner">
+    <div class="pt-pdf-head">
+      <div>
+        <div class="pt-pdf-kicker">problem.me // Pareto export</div>
+        <h2>CAPYBARA PRIORITY REPORT_</h2>
+        <p>A ranked view of where the pain is concentrated, how quickly cumulative impact builds, and which categories deserve attention first.</p>
+      </div>
+      <div class="pt-pdf-capy" aria-hidden="true">
+        <pre>      __
+  ___/  \___
+ /  •    •  \__
+|      ▿       _)
+ \___  ☕  ___/
+     \____/
+      /  \</pre>
+        <div class="pt-pdf-capy-note">CAPYBARA.EXE NOTE_: “The 80/20 rule is not a diet. I checked.”</div>
+      </div>
+    </div>
+
+    <div class="pt-pdf-meta">
+      <div class="box"><small>ANALYSIS</small><strong id="ptPdfAnalysis">Pareto investigation</strong></div>
+      <div class="box"><small>TOTAL</small><strong id="ptPdfTotal">0</strong></div>
+      <div class="box"><small>FOCUS SET</small><strong id="ptPdfFocus">—</strong></div>
+      <div class="box"><small>GENERATED</small><strong id="ptPdfGenerated">—</strong></div>
+    </div>
+
+    <div class="pt-pdf-section">
+      <small>LIVE PARETO / RANKED IMPACT</small>
+      <div class="pt-pdf-title" id="ptPdfHeadline">No category data yet.</div>
+      <div class="pt-pdf-chart" id="ptPdfChart"></div>
+    </div>
+
+    <div class="pt-pdf-rank">
+      <div class="pt-pdf-rank-head">
+        <span>RANK</span><span>CATEGORY</span><span>VALUE</span><span>SHARE</span><span>CUMULATIVE</span>
+      </div>
+      <div id="ptPdfRank"></div>
+    </div>
+
+    <div class="pt-pdf-summary">
+      <div>
+        <small>FIRST TARGET</small>
+        <strong id="ptPdfFirst">Not defined.</strong>
+        <p id="ptPdfAction">FIRST ACTION / INVESTIGATION:
+Not defined.</p>
+      </div>
+      <div>
+        <small>DATA QUALITY / NOTES</small>
+        <strong id="ptPdfThreshold">Focus threshold: 80%</strong>
+        <p id="ptPdfNotes">Not defined.</p>
+      </div>
+    </div>
+
+    <div class="pt-pdf-footer">
+      <span><strong>problem.me</strong> — same problems, clearer thinking.</span>
+      <span>CAPYBARA RULE_: Pareto prioritizes. It does not prove causality.</span>
+    </div>
+  </div>
+</section>
+
 </main>
 <nav class="case-pager" aria-label="Case File navigation"><a class="pager-prev" href="fishbone.html"><small>← PREVIOUS</small><strong>CASE #002 / FISHBONE</strong></a><a class="pager-all" href="techniques.html"><small>LIBRARY</small><strong>ALL TECHNIQUES</strong></a><a class="pager-next" href="kepner-tregoe.html"><small>NEXT →</small><strong>CASE #004 / KEPNER–TREGOE</strong></a></nav>
 <footer><div class="wrap next"><span><strong class="footer-brand">problem.me</strong> — Same problems. Clearer thinking.</span><span><a href="techniques.html">← technique library</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span></div></footer>
 
-<script>(()=>{const K='problemme_pareto_v04',NS='http://www.w3.org/2000/svg',MIN=3,MAX=12,$=id=>document.getElementById(id);const rows=$('ptRows'),a=$('ptAnalysis'),u=$('ptUnit'),th=$('ptThreshold'),act=$('ptAction'),notes=$('ptNotes'),svg=$('ptSvg'),st=$('ptStatus'),tip=$('ptTip'),focus=$('ptFocus'),total=$('ptTotal'),first=$('ptFirst'),rank=$('ptRank'),meta=$('ptMeta'),msg=$('ptMsg');let S={analysis:'',unit:'incidents',threshold:80,rows:Array.from({length:6},()=>({name:'',value:''})),action:'',notes:''};const num=v=>{v=Number(v);return Number.isFinite(v)&&v>=0?v:0},esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),short=(x,n)=>{x=String(x||'').trim();return x.length>n?x.slice(0,n-1)+'…':x};try{let z=JSON.parse(localStorage.getItem(K));if(z){S.analysis=typeof z.analysis==='string'?z.analysis:'';S.unit=typeof z.unit==='string'&&z.unit.trim()?z.unit:'incidents';S.threshold=Math.min(100,Math.max(50,Math.round(num(z.threshold)||80)));S.action=typeof z.action==='string'?z.action:'';S.notes=typeof z.notes==='string'?z.notes:'';if(Array.isArray(z.rows)){S.rows=z.rows.slice(0,MAX).map(r=>({name:typeof r?.name==='string'?r.name:'',value:r?.value===''?'':String(num(r?.value))}));while(S.rows.length<MIN)S.rows.push({name:'',value:''})}}}catch(e){}
-function save(){try{localStorage.setItem(K,JSON.stringify(S));msg.textContent='AUTO-SAVED LOCALLY_'}catch(e){msg.textContent='LOCAL SAVE UNAVAILABLE_'}}function data(){let e=S.rows.map(r=>({name:r.name.trim(),value:num(r.value)})).filter(r=>r.name&&r.value>0).sort((x,y)=>y.value-x.value||x.name.localeCompare(y.name)),t=e.reduce((s,r)=>s+r.value,0),run=0;e.forEach(r=>{run+=r.value;r.pct=t?r.value/t*100:0;r.cum=t?run/t*100:0});let c=e.findIndex(r=>r.cum>=S.threshold);if(e.length&&c<0)c=e.length-1;return{e,t,c}}function renderRows(){rows.innerHTML=S.rows.map((r,i)=>`<div class="pt-row"><span class="pt-no">${String(i+1).padStart(2,'0')}</span><input data-n="${i}" aria-label="Category ${i+1}" placeholder="category..." value="${esc(r.name)}"><input data-v="${i}" aria-label="Value ${i+1}" type="number" min="0" inputmode="decimal" placeholder="0" value="${esc(r.value)}"><button class="pt-rm" data-rm="${i}" ${S.rows.length<=MIN?'disabled':''}>×</button></div>`).join('');$('ptAdd').disabled=S.rows.length>=MAX}function el(n,at={},tx=''){let e=document.createElementNS(NS,n);Object.entries(at).forEach(([k,v])=>e.setAttribute(k,v));if(tx)e.textContent=tx;return e}function nice(v){if(v<=5)return 5;let m=10**Math.floor(Math.log10(v)),x=v/m,q=x<=1?1:x<=2?2:x<=5?5:10;return q*m}function chart(){svg.replaceChildren();let{e,t,c}=data(),W=920,H=520,L=72,R=58,T=48,B=105,PW=W-L-R,PH=H-T-B;svg.append(el('line',{class:'axis',x1:L,y1:T,x2:L,y2:T+PH}),el('line',{class:'axis',x1:L,y1:T+PH,x2:L+PW,y2:T+PH}),el('line',{class:'axis',x1:L+PW,y1:T,x2:L+PW,y2:T+PH}));if(!e.length){svg.append(el('text',{class:'val',x:W/2,y:H/2,'text-anchor':'middle'},'ADD CATEGORY DATA'));return}let M=nice(Math.max(...e.map(r=>r.value)));for(let i=0;i<=5;i++){let q=i/5,y=T+PH-q*PH;svg.append(el('line',{class:'grid',x1:L,y1:y,x2:L+PW,y2:y}),el('text',{class:'small',x:L-10,y:y+4,'text-anchor':'end'},String(Math.round(M*q))),el('text',{class:'small',x:L+PW+10,y:y+4},Math.round(q*100)+'%'))}let ty=T+PH-S.threshold/100*PH;svg.append(el('line',{class:'thr',x1:L,y1:ty,x2:L+PW,y2:ty}),el('text',{class:'hotxt',x:L+PW-4,y:ty-8,'text-anchor':'end'},S.threshold+'% FOCUS LINE'));let slot=PW/e.length,bw=Math.max(24,Math.min(64,slot*.62)),pts=[];e.forEach((r,i)=>{let x=L+slot*(i+.5),h=r.value/M*PH,y=T+PH-h;svg.append(el('rect',{class:i<=c?'bar hot':'bar',x:x-bw/2,y,width:bw,height:h}),el('text',{class:'val',x,y:Math.max(T+12,y-7),'text-anchor':'middle'},String(r.value)),el('text',{class:'lab',transform:`translate(${x-4} ${T+PH+25}) rotate(35)`},short(r.name,18)));let py=T+PH-r.cum/100*PH;pts.push([x,py,r.cum])});svg.append(el('polyline',{class:'cum',points:pts.map(p=>p[0]+','+p[1]).join(' ')}));pts.forEach((p,i)=>svg.append(el('circle',{class:'point',cx:p[0],cy:p[1],r:i===c?6:4.5})));if(c>=0)svg.append(el('text',{class:'hotxt',x:Math.min(W-R-8,pts[c][0]+12),y:Math.max(T+12,pts[c][1]-10)},Math.round(pts[c][2])+'% REACHED'))}
+<script>(()=>{const K='problemme_pareto_v04',NS='http://www.w3.org/2000/svg',MIN=3,MAX=12,$=id=>document.getElementById(id);const rows=$('ptRows'),a=$('ptAnalysis'),u=$('ptUnit'),th=$('ptThreshold'),act=$('ptAction'),notes=$('ptNotes'),svg=$('ptSvg'),st=$('ptStatus'),tip=$('ptTip'),focus=$('ptFocus'),total=$('ptTotal'),first=$('ptFirst'),rank=$('ptRank'),meta=$('ptMeta'),msg=$('ptMsg'),pdfAnalysis=$('ptPdfAnalysis'),pdfTotal=$('ptPdfTotal'),pdfFocus=$('ptPdfFocus'),pdfGenerated=$('ptPdfGenerated'),pdfHeadline=$('ptPdfHeadline'),pdfChart=$('ptPdfChart'),pdfRank=$('ptPdfRank'),pdfFirst=$('ptPdfFirst'),pdfAction=$('ptPdfAction'),pdfThreshold=$('ptPdfThreshold'),pdfNotes=$('ptPdfNotes');let S={analysis:'',unit:'incidents',threshold:80,rows:Array.from({length:6},()=>({name:'',value:''})),action:'',notes:''};const num=v=>{v=Number(v);return Number.isFinite(v)&&v>=0?v:0},esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),short=(x,n)=>{x=String(x||'').trim();return x.length>n?x.slice(0,n-1)+'…':x};try{let z=JSON.parse(localStorage.getItem(K));if(z){S.analysis=typeof z.analysis==='string'?z.analysis:'';S.unit=typeof z.unit==='string'&&z.unit.trim()?z.unit:'incidents';S.threshold=Math.min(100,Math.max(50,Math.round(num(z.threshold)||80)));S.action=typeof z.action==='string'?z.action:'';S.notes=typeof z.notes==='string'?z.notes:'';if(Array.isArray(z.rows)){S.rows=z.rows.slice(0,MAX).map(r=>({name:typeof r?.name==='string'?r.name:'',value:r?.value===''?'':String(num(r?.value))}));while(S.rows.length<MIN)S.rows.push({name:'',value:''})}}}catch(e){}
+function stamp(){let d=new Date;try{return d.toLocaleString(undefined,{year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(e){return d.toString()}}function renderPdf(){let{e,t,c}=data(),unit=(S.unit.trim()||'units');pdfAnalysis.textContent=S.analysis.trim()||'Pareto investigation';pdfTotal.textContent=t?String(t)+' '+short(unit,12):'0';pdfFocus.textContent=e.length&&c>=0?`Top ${c+1} → ${Math.round(e[c].cum)}%`:'—';pdfGenerated.textContent=stamp();pdfHeadline.textContent=e.length&&c>=0?`${c+1} of ${e.length} categories reach the ${S.threshold}% focus threshold.`:'No category data yet.';pdfFirst.textContent=e.length?e[0].name:'Not defined.';pdfAction.textContent='FIRST ACTION / INVESTIGATION:\n'+(S.action.trim()||'Not defined.');pdfThreshold.textContent='Focus threshold: '+S.threshold+'%';pdfNotes.textContent=S.notes.trim()||'Not defined.';pdfRank.innerHTML=e.length?e.map((r,i)=>`<div class="pt-pdf-rank-row${i<=c?' hot':''}"><span class="rank">${String(i+1).padStart(2,'0')}</span><span class="name">${esc(r.name)}</span><span class="value">${r.value}</span><span>${r.pct.toFixed(1)}%</span><span class="cum">${r.cum.toFixed(1)}%</span></div>`).join(''):'<div class="pt-pdf-rank-row"><span class="rank">--</span><span class="name">No category data recorded.</span><span class="value">0</span><span>0%</span><span class="cum">0%</span></div>';pdfChart.innerHTML='';let clone=svg.cloneNode(true);clone.removeAttribute('id');clone.setAttribute('aria-hidden','true');pdfChart.appendChild(clone)}function save(){try{localStorage.setItem(K,JSON.stringify(S));msg.textContent='AUTO-SAVED LOCALLY_'}catch(e){msg.textContent='LOCAL SAVE UNAVAILABLE_'}}function data(){let e=S.rows.map(r=>({name:r.name.trim(),value:num(r.value)})).filter(r=>r.name&&r.value>0).sort((x,y)=>y.value-x.value||x.name.localeCompare(y.name)),t=e.reduce((s,r)=>s+r.value,0),run=0;e.forEach(r=>{run+=r.value;r.pct=t?r.value/t*100:0;r.cum=t?run/t*100:0});let c=e.findIndex(r=>r.cum>=S.threshold);if(e.length&&c<0)c=e.length-1;return{e,t,c}}function renderRows(){rows.innerHTML=S.rows.map((r,i)=>`<div class="pt-row"><span class="pt-no">${String(i+1).padStart(2,'0')}</span><input data-n="${i}" aria-label="Category ${i+1}" placeholder="category..." value="${esc(r.name)}"><input data-v="${i}" aria-label="Value ${i+1}" type="number" min="0" inputmode="decimal" placeholder="0" value="${esc(r.value)}"><button class="pt-rm" data-rm="${i}" ${S.rows.length<=MIN?'disabled':''}>×</button></div>`).join('');$('ptAdd').disabled=S.rows.length>=MAX}function el(n,at={},tx=''){let e=document.createElementNS(NS,n);Object.entries(at).forEach(([k,v])=>e.setAttribute(k,v));if(tx)e.textContent=tx;return e}function nice(v){if(v<=5)return 5;let m=10**Math.floor(Math.log10(v)),x=v/m,q=x<=1?1:x<=2?2:x<=5?5:10;return q*m}function chart(){svg.replaceChildren();let{e,t,c}=data(),W=920,H=520,L=72,R=58,T=48,B=105,PW=W-L-R,PH=H-T-B;svg.append(el('line',{class:'axis',x1:L,y1:T,x2:L,y2:T+PH}),el('line',{class:'axis',x1:L,y1:T+PH,x2:L+PW,y2:T+PH}),el('line',{class:'axis',x1:L+PW,y1:T,x2:L+PW,y2:T+PH}));if(!e.length){svg.append(el('text',{class:'val',x:W/2,y:H/2,'text-anchor':'middle'},'ADD CATEGORY DATA'));return}let M=nice(Math.max(...e.map(r=>r.value)));for(let i=0;i<=5;i++){let q=i/5,y=T+PH-q*PH;svg.append(el('line',{class:'grid',x1:L,y1:y,x2:L+PW,y2:y}),el('text',{class:'small',x:L-10,y:y+4,'text-anchor':'end'},String(Math.round(M*q))),el('text',{class:'small',x:L+PW+10,y:y+4},Math.round(q*100)+'%'))}let ty=T+PH-S.threshold/100*PH;svg.append(el('line',{class:'thr',x1:L,y1:ty,x2:L+PW,y2:ty}),el('text',{class:'hotxt',x:L+PW-4,y:ty-8,'text-anchor':'end'},S.threshold+'% FOCUS LINE'));let slot=PW/e.length,bw=Math.max(24,Math.min(64,slot*.62)),pts=[];e.forEach((r,i)=>{let x=L+slot*(i+.5),h=r.value/M*PH,y=T+PH-h;svg.append(el('rect',{class:i<=c?'bar hot':'bar',x:x-bw/2,y,width:bw,height:h}),el('text',{class:'val',x,y:Math.max(T+12,y-7),'text-anchor':'middle'},String(r.value)),el('text',{class:'lab',transform:`translate(${x-4} ${T+PH+25}) rotate(35)`},short(r.name,18)));let py=T+PH-r.cum/100*PH;pts.push([x,py,r.cum])});svg.append(el('polyline',{class:'cum',points:pts.map(p=>p[0]+','+p[1]).join(' ')}));pts.forEach((p,i)=>svg.append(el('circle',{class:'point',cx:p[0],cy:p[1],r:i===c?6:4.5})));if(c>=0)svg.append(el('text',{class:'hotxt',x:Math.min(W-R-8,pts[c][0]+12),y:Math.max(T+12,pts[c][1]-10)},Math.round(pts[c][2])+'% REACHED'))}
 function stats(){let{e,t,c}=data();total.textContent=t?String(t)+' '+short(S.unit||'units',10):'0';meta.textContent=e.length+' '+(e.length===1?'category':'categories');if(!e.length){focus.textContent=first.textContent='—';rank.innerHTML='<div class="pt-rrow"><span class="rank">--</span><span class="name">Add category data to begin.</span><span class="count">0</span><span class="cum">0%</span></div>';return}focus.textContent=(c+1)+' → '+Math.round(e[c].cum)+'%';first.textContent=short(e[0].name,18);rank.innerHTML=e.map((r,i)=>`<div class="pt-rrow${i<=c?' hot':''}"><span class="rank">${String(i+1).padStart(2,'0')}</span><span class="name">${esc(r.name)}</span><span class="count">${r.value}</span><span class="cum">${Math.round(r.cum)}%</span></div>`).join('')}function guide(){let{e,c}=data();if(!e.length){st.textContent='STATUS: WAITING FOR DATA';tip.innerHTML='<strong>TIP:</strong> Use one consistent measure — frequency, cost, downtime, defects, or another impact metric.'}else if(e.length===1){st.textContent='STATUS: NEED MORE CATEGORIES';tip.innerHTML='<strong>TIP:</strong> Pareto compares categories. Add the other recurring problem types from the same time window.'}else if(e[0].pct>=S.threshold){st.textContent='STATUS: ONE CATEGORY DOMINATES';tip.innerHTML='<strong>TIP:</strong> Validate the data before treating one dominant category as a real priority signal.'}else if(c+1<=Math.ceil(e.length/2)){st.textContent='STATUS: VITAL FEW IDENTIFIED';tip.innerHTML='<strong>TIP:</strong> Prioritize the highlighted set, then use a causal technique to understand why those categories occur.'}else{st.textContent='STATUS: IMPACT IS DISTRIBUTED';tip.innerHTML='<strong>TIP:</strong> Your data is less concentrated than a classic “vital few” pattern. That is still a valid result.'}}function render(){renderRows();chart();stats();guide()}function sync(){a.value=S.analysis;u.value=S.unit;th.value=S.threshold;act.value=S.action;notes.value=S.notes}
 rows.addEventListener('input',e=>{if(e.target.dataset.n!==undefined)S.rows[+e.target.dataset.n].name=e.target.value;else if(e.target.dataset.v!==undefined)S.rows[+e.target.dataset.v].value=e.target.value;else return;save();chart();stats();guide()});rows.addEventListener('click',e=>{let b=e.target.closest('[data-rm]');if(!b)return;let i=+b.dataset.rm,r=S.rows[i];if(S.rows.length<=MIN)return;if((r.name.trim()||num(r.value)>0)&&!confirm('Remove this category and its value?'))return;S.rows.splice(i,1);save();render()});$('ptAdd').onclick=()=>{if(S.rows.length<MAX){S.rows.push({name:'',value:''});save();renderRows();rows.querySelector(`[data-n="${S.rows.length-1}"]`)?.focus()}};$('ptSample').onclick=()=>{if(S.rows.some(r=>r.name.trim()||num(r.value)>0)&&!confirm('Replace current category data with the café sample?'))return;S={analysis:'Chaotic Capybara Café — weekly incidents',unit:'incidents',threshold:80,rows:[{name:'Dropped watermelon',value:'42'},{name:'Cold coffee',value:'25'},{name:'Missing spoons',value:'13'},{name:'Long queue',value:'9'},{name:'Wrong order',value:'7'},{name:'Chair squeak',value:'4'}],action:'',notes:'Sample data from Case #003.'};sync();save();render();msg.textContent='CAFÉ SAMPLE LOADED_'};[a,u,th,act,notes].forEach(x=>x.addEventListener('input',()=>{S.analysis=a.value;S.unit=u.value;S.threshold=Math.min(100,Math.max(50,Math.round(num(th.value)||80)));S.action=act.value;S.notes=notes.value;save();chart();stats();guide()}));th.addEventListener('change',()=>th.value=S.threshold);
-function summary(){let{e,t,c}=data(),L=['problem.me — Pareto summary',''];if(S.analysis.trim())L.push('ANALYSIS: '+S.analysis.trim());L.push('UNIT: '+(S.unit.trim()||'value'),'FOCUS THRESHOLD: '+S.threshold+'%','TOTAL: '+t,'');if(!e.length)L.push('[no category data]');else{L.push('RANKED CATEGORIES:');e.forEach((r,i)=>L.push(`${i+1}. ${r.name} — ${r.value} (${r.pct.toFixed(1)}%, cumulative ${r.cum.toFixed(1)}%)${i<=c?' *FOCUS*':''}`));L.push('',`FOCUS SET: top ${c+1} → ${e[c].cum.toFixed(1)}% cumulative`,`FIRST TARGET: ${e[0].name}`)}if(S.action.trim())L.push('','FIRST ACTION / INVESTIGATION:',S.action.trim());if(S.notes.trim())L.push('','NOTES / DATA QUALITY:',S.notes.trim());L.push('','Reminder: Pareto prioritizes; it does not prove causality.','Generated locally at problem.me');return L.join('\n')}$('ptCopy').onclick=async()=>{let t=summary();try{await navigator.clipboard.writeText(t);msg.textContent='SUMMARY COPIED_'}catch(e){let x=document.createElement('textarea');x.value=t;document.body.append(x);x.select();try{document.execCommand('copy');msg.textContent='SUMMARY COPIED_'}catch(e){msg.textContent='COPY FAILED_'}x.remove()}};$('ptPrint').onclick=()=>print();$('ptReset').onclick=()=>{if(!confirm('Reset this local Pareto draft?'))return;S={analysis:'',unit:'incidents',threshold:80,rows:Array.from({length:6},()=>({name:'',value:''})),action:'',notes:''};try{localStorage.removeItem(K)}catch(e){}sync();render();msg.textContent='DRAFT RESET_'};sync();render()})();</script>
+function summary(){let{e,t,c}=data(),L=['problem.me — Pareto summary',''];if(S.analysis.trim())L.push('ANALYSIS: '+S.analysis.trim());L.push('UNIT: '+(S.unit.trim()||'value'),'FOCUS THRESHOLD: '+S.threshold+'%','TOTAL: '+t,'');if(!e.length)L.push('[no category data]');else{L.push('RANKED CATEGORIES:');e.forEach((r,i)=>L.push(`${i+1}. ${r.name} — ${r.value} (${r.pct.toFixed(1)}%, cumulative ${r.cum.toFixed(1)}%)${i<=c?' *FOCUS*':''}`));L.push('',`FOCUS SET: top ${c+1} → ${e[c].cum.toFixed(1)}% cumulative`,`FIRST TARGET: ${e[0].name}`)}if(S.action.trim())L.push('','FIRST ACTION / INVESTIGATION:',S.action.trim());if(S.notes.trim())L.push('','NOTES / DATA QUALITY:',S.notes.trim());L.push('','Reminder: Pareto prioritizes; it does not prove causality.','Generated locally at problem.me');return L.join('\n')}$('ptCopy').onclick=async()=>{let t=summary();try{await navigator.clipboard.writeText(t);msg.textContent='SUMMARY COPIED_'}catch(e){let x=document.createElement('textarea');x.value=t;document.body.append(x);x.select();try{document.execCommand('copy');msg.textContent='SUMMARY COPIED_'}catch(e){msg.textContent='COPY FAILED_'}x.remove()}};$('ptPrint').onclick=()=>{renderPdf();print()};$('ptReset').onclick=()=>{if(!confirm('Reset this local Pareto draft?'))return;S={analysis:'',unit:'incidents',threshold:80,rows:Array.from({length:6},()=>({name:'',value:''})),action:'',notes:''};try{localStorage.removeItem(K)}catch(e){}sync();render();msg.textContent='DRAFT RESET_'};addEventListener('beforeprint',renderPdf);sync();render()})();</script>
 
 </body></html>

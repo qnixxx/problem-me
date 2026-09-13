@@ -445,6 +445,300 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   .summary-preview{border-color:#333!important;background:#fff!important}
 }
 
+
+/* v0.5.2 print/PDF report enhancement */
+.pdf-report{
+  display:none;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:var(--surface-low);
+}
+.pdf-report-inner{padding:22px}
+.pdf-report-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:start;
+  padding-bottom:16px;
+  border-bottom:1px dashed rgba(99,255,181,.2);
+}
+.pdf-kicker{
+  color:var(--yellow);
+  font-size:.62rem;
+  letter-spacing:.06em;
+}
+.pdf-report-head h2{
+  margin:8px 0 7px;
+  color:var(--cream);
+  font-size:1.9rem;
+  line-height:1;
+}
+.pdf-report-head p{
+  max-width:640px;
+  margin:0;
+  color:var(--text);
+  font-size:.78rem;
+  line-height:1.55;
+}
+.pdf-capy-card{
+  min-width:220px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.pdf-capy-card pre{
+  margin:0;
+  color:var(--green);
+  font-size:.64rem;
+  line-height:1.1;
+}
+.pdf-capy-note{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:.61rem;
+  line-height:1.45;
+}
+.pdf-meta{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0 18px;
+}
+.pdf-meta .box,
+.pdf-section,
+.pdf-why-list li,
+.pdf-summary{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.pdf-meta .box{padding:11px 12px}
+.pdf-meta small,
+.pdf-section small{
+  display:block;
+  color:var(--muted);
+  font-size:.56rem;
+  letter-spacing:.05em;
+}
+.pdf-meta strong{
+  display:block;
+  margin-top:4px;
+  color:var(--cream);
+  font-size:.82rem;
+  line-height:1.4;
+}
+.pdf-section{
+  margin-bottom:14px;
+  padding:14px;
+}
+.pdf-section h3{
+  margin:0 0 10px;
+  color:var(--yellow);
+  font-size:.72rem;
+}
+.pdf-problem{
+  color:var(--cream);
+  font-size:1rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.pdf-why-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  gap:8px;
+}
+.pdf-why-list li{
+  padding:10px 12px;
+}
+.pdf-why-list .why-no{
+  display:block;
+  margin-bottom:4px;
+  color:var(--yellow);
+  font-size:.6rem;
+}
+.pdf-why-list .verify-flag{
+  display:inline-block;
+  margin-left:8px;
+  color:var(--bad);
+  font-size:.58rem;
+}
+.pdf-why-list .why-copy{
+  color:var(--cream);
+  font-size:.78rem;
+  line-height:1.45;
+}
+.pdf-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  overflow:hidden;
+}
+.pdf-summary > div{
+  min-width:0;
+  padding:14px;
+  border-right:1px solid var(--line);
+}
+.pdf-summary > div:last-child{border-right:0}
+.pdf-summary strong{
+  display:block;
+  color:var(--cream);
+  font-size:.9rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.pdf-summary p{
+  margin:6px 0 0;
+  color:var(--text);
+  font-size:.75rem;
+  line-height:1.55;
+  white-space:pre-wrap;
+}
+.pdf-footer{
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px dashed rgba(99,255,181,.2);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  color:var(--muted);
+  font-size:.63rem;
+  line-height:1.5;
+}
+.pdf-footer strong{color:var(--yellow)}
+@media(max-width:640px){
+  .pdf-report-head{grid-template-columns:1fr}
+  .pdf-capy-card{min-width:0}
+  .pdf-meta{grid-template-columns:1fr}
+  .pdf-summary{grid-template-columns:1fr}
+  .pdf-summary > div{border-right:0;border-bottom:1px solid var(--line)}
+  .pdf-summary > div:last-child{border-bottom:0}
+}
+@media print{
+  .workspace-shell{display:none!important}
+  .pdf-report{
+    display:block!important;
+    border:0!important;
+    background:#fff!important;
+    margin:0!important;
+  }
+  .pdf-report-inner{padding:0!important}
+  .pdf-report-head,
+  .pdf-footer{border-color:#999!important}
+  .pdf-capy-card,
+  .pdf-meta .box,
+  .pdf-section,
+  .pdf-why-list li,
+  .pdf-summary{
+    background:#fff!important;
+    border-color:#aaa!important;
+  }
+  .pdf-kicker,
+  .pdf-section h3,
+  .pdf-footer strong{color:#111!important}
+  .pdf-report-head h2,
+  .pdf-problem,
+  .pdf-summary strong,
+  .pdf-why-list .why-copy,
+  .pdf-meta strong{color:#111!important}
+  .pdf-report-head p,
+  .pdf-meta small,
+  .pdf-section small,
+  .pdf-capy-note,
+  .pdf-summary p,
+  .pdf-footer,
+  .pdf-why-list .why-no{color:#444!important}
+  .pdf-capy-card pre{color:#222!important}
+  .pdf-why-list .verify-flag{color:#111!important}
+}
+
+/* v0.5.1 privacy layer — local save + private session controls */
+.privacy-panel{
+  margin:0 0 18px;
+  padding:13px;
+  border:1px solid var(--line);
+  background:rgba(99,255,181,.018);
+}
+.privacy-panel.is-private{
+  border-color:var(--yellow);
+  box-shadow:inset 3px 0 0 var(--yellow);
+  background:rgba(255,233,91,.018);
+}
+.privacy-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.privacy-mode{
+  min-width:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+}
+.privacy-led{
+  width:8px;
+  height:8px;
+  margin-top:5px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px rgba(99,255,181,.7);
+}
+.privacy-panel.is-private .privacy-led{
+  background:var(--yellow);
+  box-shadow:0 0 8px rgba(255,233,91,.7);
+}
+.privacy-mode strong{
+  display:block;
+  color:var(--cream);
+  font-size:.7rem;
+  line-height:1.35;
+}
+.privacy-mode span:last-child{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:.61rem;
+  line-height:1.45;
+}
+.privacy-actions{
+  flex:0 0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:7px;
+}
+.privacy-actions .tool-btn{
+  min-height:36px;
+  padding:7px 9px;
+  font-size:.6rem;
+}
+.privacy-warning{
+  margin:11px 0 0;
+  padding-top:10px;
+  border-top:1px dashed rgba(99,255,181,.17);
+  color:var(--muted);
+  font-size:.6rem;
+  line-height:1.5;
+}
+.privacy-warning strong{color:var(--yellow)}
+.workspace-shell.is-private .workspace-head{
+  border-bottom-color:rgba(255,233,91,.55);
+}
+.workspace-shell.is-private .workspace-head strong{color:var(--yellow)}
+@media(max-width:620px){
+  .privacy-head{flex-direction:column}
+  .privacy-actions{width:100%;justify-content:flex-start}
+  .privacy-actions .tool-btn{flex:1 1 calc(50% - 7px)}
+}
+@media(max-width:390px){
+  .privacy-actions .tool-btn{flex-basis:100%}
+}
+@media print{
+  .privacy-panel{display:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -474,17 +768,34 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     <div class="workbench-intro">
       <div class="prompt">&gt; run /tools/5-whys --interactive</div>
       <h2 id="workbench-title">TRY IT YOURSELF_</h2>
-      <p>Use the same logic on your own problem. Your draft stays in this browser on this device; nothing is sent anywhere.</p>
+      <p>Use the same logic on your own problem. Choose local auto-save or switch to a Private Session that does not save the investigation to localStorage.</p>
     </div>
 
-    <div class="workspace-shell">
+    <div class="workspace-shell" id="workspaceShell">
       <div class="workspace-head">
         <strong>5 WHYS WORKSPACE / LOCAL DRAFT</strong>
-        <span>AUTO-SAVE: ON</span>
+        <span id="saveModeLabel">AUTO-SAVE: ON</span>
       </div>
 
       <div class="workspace-grid">
         <form class="form-pane" id="fiveWhysForm" autocomplete="off">
+          <div class="privacy-panel" id="privacyPanel">
+            <div class="privacy-head">
+              <div class="privacy-mode">
+                <span class="privacy-led" id="privacyLed" aria-hidden="true"></span>
+                <div>
+                  <strong id="privacyModeTitle">LOCAL SAVE ACTIVE_</strong>
+                  <span id="privacyModeCopy">Changes are auto-saved in this browser on this device.</span>
+                </div>
+              </div>
+              <div class="privacy-actions">
+                <button class="tool-btn primary" id="privateSessionBtn" type="button" aria-pressed="false">PRIVATE SESSION</button>
+                <button class="tool-btn danger" id="clearLocalDataBtn" type="button">CLEAR ALL LOCAL DATA</button>
+              </div>
+            </div>
+            <p class="privacy-warning"><strong>SECURITY:</strong> Your investigation stays on this device. Never enter passwords, API keys, access tokens or credentials.</p>
+          </div>
+
           <div class="field-group">
             <label for="problemInput">PROBLEM_ <small>Describe the observable symptom, not your theory.</small></label>
             <textarea id="problemInput" name="problem" placeholder="Example: The checkout service failed during peak traffic."></textarea>
@@ -514,7 +825,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
             <textarea id="notesInput" name="notes" placeholder="What supports or challenges this chain?"></textarea>
           </div>
 
-          <div class="save-note"><strong>LOCAL ONLY_</strong><span>The draft is stored with localStorage. Clearing browser/site data will remove it.</span></div>
+          <div class="save-note"><strong id="saveNoteTitle">LOCAL ONLY_</strong><span id="saveNoteText">The draft is stored with localStorage. Clearing browser/site data will remove it.</span></div>
         </form>
 
         <aside class="live-pane" aria-label="Live 5 Whys chain preview">
@@ -546,6 +857,62 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
         <span class="action-status" id="actionStatus" role="status" aria-live="polite">DRAFT READY_</span>
       </div>
     </div>
+
+
+    <section class="pdf-report" id="pdfReport" aria-hidden="true">
+      <div class="pdf-report-inner">
+        <div class="pdf-report-head">
+          <div>
+            <div class="pdf-kicker">problem.me // 5 Whys export</div>
+            <h2>CAPYBARA INCIDENT REPORT_</h2>
+            <p>A cleaner print/PDF summary of your 5 Whys investigation. Serious problem-solving, mildly supervised by a calm capybara.</p>
+          </div>
+          <div class="pdf-capy-card" aria-hidden="true">
+            <pre>   (\__/)
+  ==( •ㅅ•)==
+    / 　 づ</pre>
+            <div class="pdf-capy-note">CAPYBARA.EXE NOTE_: “I asked why until the snacks confessed.”</div>
+          </div>
+        </div>
+
+        <div class="pdf-meta">
+          <div class="box"><small>REPORT</small><strong id="pdfReportTitle">5 Whys investigation</strong></div>
+          <div class="box"><small>MODE</small><strong id="pdfMode">Local save</strong></div>
+          <div class="box"><small>GENERATED</small><strong id="pdfGenerated">—</strong></div>
+        </div>
+
+        <div class="pdf-section">
+          <small>PROBLEM</small>
+          <div class="pdf-problem" id="pdfProblem">Not defined.</div>
+        </div>
+
+        <div class="pdf-section">
+          <h3>CAUSE CHAIN_</h3>
+          <ol class="pdf-why-list" id="pdfWhyList"></ol>
+        </div>
+
+        <div class="pdf-summary">
+          <div>
+            <small>ROOT CAUSE CANDIDATE</small>
+            <strong id="pdfRoot">Not defined.</strong>
+            <p id="pdfEvidence">EVIDENCE / NOTES:
+Not defined.</p>
+          </div>
+          <div>
+            <small>COUNTERMEASURE</small>
+            <strong id="pdfCounter">Not defined.</strong>
+            <p id="pdfNextStep">CAPYBARA TAKEAWAY:
+Target the repeatable weakness, not only the symptom.</p>
+          </div>
+        </div>
+
+        <div class="pdf-footer">
+          <span><strong>problem.me</strong> — same problems, clearer thinking.</span>
+          <span id="pdfFooterMode">Generated locally in this browser.</span>
+        </div>
+      </div>
+    </section>
+
   </div>
 </section>
 
@@ -556,6 +923,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 <script>
 (() => {
   const STORAGE_KEY = 'problem-me:5-whys:v1';
+  const PROBLEM_ME_PREFIXES = ['problem-me:', 'problemme_', 'problem.me:'];
   const MIN_WHYS = 1;
   const DEFAULT_WHYS = 5;
   const MAX_WHYS = 10;
@@ -576,14 +944,40 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   const rootPreview = document.getElementById('rootPreview');
   const counterPreview = document.getElementById('counterPreview');
   const actionStatus = document.getElementById('actionStatus');
+  const workspaceShell = document.getElementById('workspaceShell');
+  const saveModeLabel = document.getElementById('saveModeLabel');
+  const privacyPanel = document.getElementById('privacyPanel');
+  const privacyModeTitle = document.getElementById('privacyModeTitle');
+  const privacyModeCopy = document.getElementById('privacyModeCopy');
+  const privateSessionBtn = document.getElementById('privateSessionBtn');
+  const clearLocalDataBtn = document.getElementById('clearLocalDataBtn');
+  const saveNoteTitle = document.getElementById('saveNoteTitle');
+  const saveNoteText = document.getElementById('saveNoteText');
 
-  let state = {
-    problem: '',
-    whys: Array.from({length: DEFAULT_WHYS}, () => ({text:'', verify:false})),
-    root: '',
-    countermeasure: '',
-    notes: ''
-  };
+  const pdfReportTitle = document.getElementById('pdfReportTitle');
+  const pdfMode = document.getElementById('pdfMode');
+  const pdfGenerated = document.getElementById('pdfGenerated');
+  const pdfProblem = document.getElementById('pdfProblem');
+  const pdfWhyList = document.getElementById('pdfWhyList');
+  const pdfRoot = document.getElementById('pdfRoot');
+  const pdfEvidence = document.getElementById('pdfEvidence');
+  const pdfCounter = document.getElementById('pdfCounter');
+  const pdfNextStep = document.getElementById('pdfNextStep');
+  const pdfFooterMode = document.getElementById('pdfFooterMode');
+
+  let privateMode = false;
+
+  function blankState() {
+    return {
+      problem: '',
+      whys: Array.from({length: DEFAULT_WHYS}, () => ({text:'', verify:false})),
+      root: '',
+      countermeasure: '',
+      notes: ''
+    };
+  }
+
+  let state = blankState();
 
   function safeLoad() {
     try {
@@ -603,6 +997,10 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   }
 
   function save() {
+    if (privateMode) {
+      actionStatus.textContent = 'PRIVATE SESSION — NOT SAVED_';
+      return;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       actionStatus.textContent = 'AUTO-SAVED LOCALLY_';
@@ -611,8 +1009,88 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     }
   }
 
+  function clearProblemMeLocalData() {
+    try {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (key && PROBLEM_ME_PREFIXES.some(prefix => key.startsWith(prefix))) keys.push(key);
+      }
+      keys.forEach(key => localStorage.removeItem(key));
+      return {ok:true, count:keys.length};
+    } catch (_) {
+      return {ok:false, count:0};
+    }
+  }
+
+  function renderPrivacyMode() {
+    workspaceShell.classList.toggle('is-private', privateMode);
+    privacyPanel.classList.toggle('is-private', privateMode);
+    privateSessionBtn.setAttribute('aria-pressed', privateMode ? 'true' : 'false');
+
+    if (privateMode) {
+      saveModeLabel.textContent = 'AUTO-SAVE: OFF / PRIVATE';
+      privacyModeTitle.textContent = 'PRIVATE SESSION ACTIVE_';
+      privacyModeCopy.textContent = 'problem.me will not write changes from this session to localStorage. Refreshing or closing this tab discards private changes; an older saved draft, if any, remains untouched.';
+      privateSessionBtn.textContent = 'RETURN TO LOCAL SAVE';
+      saveNoteTitle.textContent = 'NOT SAVED_';
+      saveNoteText.textContent = 'Private Session keeps this investigation in page memory only and does not write it to localStorage. Copy or Print happens only when you choose those actions.';
+    } else {
+      saveModeLabel.textContent = 'AUTO-SAVE: ON';
+      privacyModeTitle.textContent = 'LOCAL SAVE ACTIVE_';
+      privacyModeCopy.textContent = 'Changes are auto-saved in this browser on this device.';
+      privateSessionBtn.textContent = 'PRIVATE SESSION';
+      saveNoteTitle.textContent = 'LOCAL ONLY_';
+      saveNoteText.textContent = 'The draft is stored with localStorage. Clearing browser/site data will remove it.';
+    }
+  }
+
   function esc(text) {
     return String(text).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  }
+
+
+  function prettyStamp() {
+    const now = new Date();
+    try {
+      return now.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch (_) {
+      return now.toString();
+    }
+  }
+
+  function shortForPdf(text, max) {
+    return text.length > max ? text.slice(0, max - 1) + '…' : text;
+  }
+
+  function renderPdfReport() {
+    pdfReportTitle.textContent = state.problem.trim()
+      ? shortForPdf(state.problem.trim(), 58)
+      : '5 Whys investigation';
+    pdfMode.textContent = privateMode ? 'Private Session' : 'Local save';
+    pdfGenerated.textContent = prettyStamp();
+    pdfProblem.textContent = state.problem.trim() || 'Not defined.';
+    pdfWhyList.innerHTML = state.whys.map((w, i) => `
+      <li>
+        <span class="why-no">WHY #${i + 1}${w.verify ? '<span class="verify-flag">VERIFY THIS LINK</span>' : ''}</span>
+        <div class="why-copy">${esc(w.text.trim() || '[not defined]')}</div>
+      </li>
+    `).join('');
+    pdfRoot.textContent = state.root.trim() || 'Not defined.';
+    pdfCounter.textContent = state.countermeasure.trim() || 'Not defined.';
+    pdfEvidence.textContent = 'EVIDENCE / NOTES:\n' + (state.notes.trim() || 'Not defined.');
+    pdfNextStep.textContent = privateMode
+      ? 'CAPYBARA TAKEAWAY:\nPrivate session mode keeps this report unsaved unless you export it yourself.'
+      : 'CAPYBARA TAKEAWAY:\nTarget the repeatable weakness, not only the symptom.';
+    pdfFooterMode.textContent = privateMode
+      ? 'Private Session — generated without local saving.'
+      : 'Generated locally in this browser.';
   }
 
   function renderWhyFields() {
@@ -672,6 +1150,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 
     rootPreview.textContent = state.root.trim() || 'Not defined yet.';
     counterPreview.textContent = 'COUNTERMEASURE: ' + (state.countermeasure.trim() || 'Not defined yet.');
+    renderPdfReport();
   }
 
   function syncFormFromState() {
@@ -734,18 +1213,48 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     renderChain();
   });
 
-  resetBtn.addEventListener('click', () => {
-    if (!window.confirm('Reset this local 5 Whys draft?')) return;
-    state = {
-      problem:'',
-      whys:Array.from({length: DEFAULT_WHYS}, () => ({text:'', verify:false})),
-      root:'',
-      countermeasure:'',
-      notes:''
-    };
-    try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+  privateSessionBtn.addEventListener('click', () => {
+    if (!privateMode) {
+      privateMode = true;
+      renderPrivacyMode();
+      actionStatus.textContent = 'PRIVATE SESSION — NOT SAVED_';
+      return;
+    }
+
+    if (!window.confirm('Return to local save? The investigation currently on screen will be written to this device.')) return;
+    privateMode = false;
+    renderPrivacyMode();
+    save();
+  });
+
+  clearLocalDataBtn.addEventListener('click', () => {
+    const ok = window.confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this 5 Whys form? This cannot be undone.');
+    if (!ok) return;
+
+    const result = clearProblemMeLocalData();
+    if (!result.ok) {
+      actionStatus.textContent = 'LOCAL DATA CLEAR FAILED_';
+      return;
+    }
+
+    state = blankState();
     syncFormFromState();
-    actionStatus.textContent = 'DRAFT RESET_';
+    renderPrivacyMode();
+    actionStatus.textContent = result.count ? `LOCAL DATA CLEARED — ${result.count} ITEM${result.count === 1 ? '' : 'S'}_` : 'NO SAVED LOCAL DATA FOUND_';
+  });
+
+  resetBtn.addEventListener('click', () => {
+    const message = privateMode
+      ? 'Reset this Private Session? The previously saved local draft, if any, will remain untouched.'
+      : 'Reset this local 5 Whys draft?';
+    if (!window.confirm(message)) return;
+
+    state = blankState();
+    if (!privateMode) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+    }
+    syncFormFromState();
+    actionStatus.textContent = privateMode ? 'PRIVATE SESSION RESET — NOT SAVED_' : 'DRAFT RESET_';
   });
 
   function summaryText() {
@@ -757,7 +1266,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     lines.push('', 'ROOT CAUSE CANDIDATE: ' + (state.root.trim() || '[not defined]'));
     lines.push('COUNTERMEASURE: ' + (state.countermeasure.trim() || '[not defined]'));
     if (state.notes.trim()) lines.push('', 'EVIDENCE / NOTES:', state.notes.trim());
-    lines.push('', 'Generated locally at problem.me');
+    lines.push('', privateMode ? 'Private Session — not saved by problem.me' : 'Generated locally at problem.me');
     return lines.join('\n');
   }
 
@@ -765,7 +1274,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     const text = summaryText();
     try {
       await navigator.clipboard.writeText(text);
-      actionStatus.textContent = 'SUMMARY COPIED_';
+      actionStatus.textContent = privateMode ? 'SUMMARY COPIED — PRIVATE SESSION_' : 'SUMMARY COPIED_';
     } catch (_) {
       const temp = document.createElement('textarea');
       temp.value = text;
@@ -774,16 +1283,19 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       temp.style.opacity = '0';
       document.body.appendChild(temp);
       temp.select();
-      try { document.execCommand('copy'); actionStatus.textContent = 'SUMMARY COPIED_'; }
+      try { document.execCommand('copy'); actionStatus.textContent = privateMode ? 'SUMMARY COPIED — PRIVATE SESSION_' : 'SUMMARY COPIED_'; }
       catch (_) { actionStatus.textContent = 'COPY FAILED — SELECT MANUALLY_'; }
       temp.remove();
     }
   });
 
-  printBtn.addEventListener('click', () => window.print());
+  printBtn.addEventListener('click', () => { renderPdfReport(); window.print(); });
+
+  window.addEventListener('beforeprint', renderPdfReport);
 
   safeLoad();
   syncFormFromState();
+  renderPrivacyMode();
 })();
 </script>
 

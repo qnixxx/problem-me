@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="problem.me — visual problem-solving techniques for clearer thinking." />
+  <meta name="description" content="problem.me — interactive problem-solving tools for clearer thinking. Choose a technique, follow the evidence, and work through real problems locally in your browser." />
   <meta name="theme-color" content="#020805" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="problem.me — Same problems. Clearer thinking." />
-  <meta property="og:description" content="Visual problem-solving techniques, explained simply and shown through memorable Capybara Case Files." />
+  <meta property="og:description" content="Visual problem-solving techniques with interactive workspaces, evidence tracking, private sessions, connected technique handoffs, and memorable Capybara Case Files." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://problem.me/" />
   <title>problem.me — Same problems. Clearer thinking.</title>
@@ -963,7 +963,7 @@
   <section id="boot" aria-label="problem.me boot sequence">
     <div class="boot-shell">
       <div class="boot-bar">
-        <span>problem.me BIOS / rev 0.3</span>
+        <span>problem.me BIOS / rev 0.6</span>
         <span>LIVE BUILD</span>
       </div>
 
@@ -990,7 +990,7 @@
             <a href="#mission">[01] Pathfinder</a>
             <a href="techniques.html">[02] Library</a>
           </div>
-          <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version"> / v0.3</span></div>
+          <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version"> / v0.6</span></div>
         </nav>
       </div>
     </header>
@@ -1001,7 +1001,7 @@
           <div>
             <div class="prompt">&gt; problem_solver.exe / ready</div>
             <h1 id="hero-title">Better tools <span>for tough problems.</span></h1>
-            <p class="lede">problem.me is becoming a visual library of practical problem-solving techniques — explained simply, shown visually, and built for people solving real problems.</p>
+            <p class="lede">problem.me is a visual problem-solving workspace — learn a technique, use it on a real problem, separate evidence from assumptions, and move to the next useful method.</p>
 
             <div class="terminal-prompt" aria-label="Animated mission prompt">
               <span class="chev" aria-hidden="true">&gt;</span>
@@ -1017,7 +1017,7 @@
 
           <div class="hero-art frame">
             <div class="hero-art-top">
-              <span>PATHFINDER / BUILD 001</span>
+              <span>REASONING LAYER / BUILD 006</span>
               <span>STATUS: ACTIVE</span>
             </div>
 
@@ -1038,7 +1038,7 @@
 
             <div class="mini-status">
               <strong>MISSION PATH</strong>
-              UNDERSTAND<br />EXPLORE<br />ANALYSE<br />SOLVE<br />IMPROVE_
+              CHOOSE<br />MAP<br />TEST<br />VERIFY<br />ACT_
             </div>
           </div>
         </div>
@@ -1093,7 +1093,7 @@
               <div class="prompt">&gt; list /techniques --featured</div>
               <h2 id="techniques-title">Featured Case Files_</h2>
             </div>
-            <p>Four starting points. Browse the full library when you want to compare them.</p>
+            <p>Four starting points. Each Case File now includes an interactive workspace for working on your own problem.</p>
           </div>
 
           <div class="tech-grid">
@@ -1105,7 +1105,7 @@
               └─ WHY?</pre>
               <h3>5 Whys</h3>
               <p>Keep asking why until the symptom gives way to a cause worth investigating.</p>
-              <div class="tech-meta"><span class="badge">ROOT CAUSE / EASY</span><span class="open-guide">OPEN CASE #001 →</span></div>
+              <div class="tech-meta"><span class="badge">ROOT CAUSE / EASY</span><span class="open-guide">OPEN CASE + TOOL #001 →</span></div>
             </a>
 
             <a class="tech tech-link" href="fishbone.html" aria-label="Open Case 002: Ishikawa Fishbone">
@@ -1116,7 +1116,7 @@
 Materials  Systems</pre>
               <h3>Ishikawa / Fishbone</h3>
               <p>Organize possible causes before the team chases the loudest theory.</p>
-              <div class="tech-meta"><span class="badge">CAUSES / EASY</span><span class="open-guide">OPEN CASE #002 →</span></div>
+              <div class="tech-meta"><span class="badge">CAUSES / EASY</span><span class="open-guide">OPEN CASE + TOOL #002 →</span></div>
             </a>
 
             <a class="tech tech-link" href="pareto.html" aria-label="Open Case 003: Pareto Analysis">
@@ -1127,7 +1127,7 @@ Materials  Systems</pre>
 ──────────────</pre>
               <h3>Pareto Analysis</h3>
               <p>Focus effort on the relatively small number of causes creating most of the impact.</p>
-              <div class="tech-meta"><span class="badge">PRIORITIZE / EASY</span><span class="open-guide">OPEN CASE #003 →</span></div>
+              <div class="tech-meta"><span class="badge">PRIORITIZE / EASY</span><span class="open-guide">OPEN CASE + TOOL #003 →</span></div>
             </a>
 
             <a class="tech tech-link" href="kepner-tregoe.html" aria-label="Open Case 004: Kepner–Tregoe">
@@ -1137,7 +1137,7 @@ WEIGHT  | SCORE
 RISK    | DECIDE</pre>
               <h3>Kepner–Tregoe</h3>
               <p>Make complex decisions explicit: requirements first, weighted preferences next, risk before commitment.</p>
-              <div class="tech-meta"><span class="badge">DECISION / MEDIUM</span><span class="open-guide">OPEN CASE #004 →</span></div>
+              <div class="tech-meta"><span class="badge">DECISION / MEDIUM</span><span class="open-guide">OPEN CASE + TOOL #004 →</span></div>
             </a>
           </div>
 
@@ -1152,10 +1152,10 @@ RISK    | DECIDE</pre>
           <div class="launch-box frame">
             <div>
               <div class="prompt">&gt; cat /status/launch.txt</div>
-              <h2 id="launch-title">THE LIBRARY IS BEING BUILT_</h2>
-              <p>Four Capybara Case Files are live, and the dedicated Technique Library is now online for browsing and comparison.</p>
+              <h2 id="launch-title">THE WORKSPACE IS ONLINE_</h2>
+              <p>Four interactive techniques are live with local/private sessions, evidence ledgers, connected technique handoffs, and cleaner report exports — without requiring an account or cloud storage.</p>
             </div>
-            <div class="launch-state">V0.3 ONLINE<span class="blink-cursor" aria-hidden="true">_</span></div>
+            <div class="launch-state">V0.6 ONLINE<span class="blink-cursor" aria-hidden="true">_</span></div>
           </div>
         </div>
       </section>
@@ -1189,19 +1189,19 @@ RISK    | DECIDE</pre>
 
       const lines = [
         ['PROBLEM.ME SYSTEM START', 'ok'],
-        ['Checking problem library.......................... OK', 'ok'],
-        ['Loading visual explanation engine................. OK', 'ok'],
+        ['Checking technique library........................ OK', 'ok'],
+        ['Loading interactive workspaces.................... OK', 'ok'],
         ['Mounting /techniques.............................. OK', 'ok'],
+        ['Private Session mode.............................. ARMED', 'ok'],
+        ['Evidence Ledger................................... ONLINE', 'ok'],
+        ['Technique handoffs................................ CONNECTED', 'ok'],
+        ['Report export engine.............................. READY', 'ok'],
+        ['Cloud account requirement......................... NONE', 'ok'],
         ['Checking for obvious causes....................... NONE FOUND', 'warn'],
         ['Blaming DNS....................................... TEMPTING', 'warn'],
-        ['Asking "why?" five times........................ ARMED', 'ok'],
-        ['Scanning for giant methodologies.................. NONE', 'ok'],
-        ['Meeting detected.................................. COFFEE REQUIRED', 'warn'],
         ['Capybara consultant............................... ONLINE', 'ok'],
         ['Common sense...................................... EXPERIMENTAL', 'warn'],
         ['Everything looks good............................. SUSPICIOUS', 'warn'],
-        ['AI recommendation layer........................... DEFERRED', 'warn'],
-        ['Manual technique selection........................ ENABLED', 'ok'],
         ['Preparing clearer thinking........................ DONE', 'ok']
       ];
 
@@ -1216,7 +1216,7 @@ RISK    | DECIDE</pre>
 
       function typeMission() {
         if (!typed) return;
-        const text = 'choose a mission. learn a technique. solve something real.';
+        const text = 'choose a technique. follow the evidence. solve something real.';
         typed.textContent = '';
 
         if (reduceMotion) {

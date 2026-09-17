@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <!-- Change only this value for future homepage release labels. -->
+  <meta name="application-version" content="0.7.2" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="problem.me — interactive problem-solving tools for clearer thinking. Choose a technique, follow the evidence, and work through real problems locally in your browser." />
   <meta name="theme-color" content="#020805" />
@@ -963,7 +965,7 @@
   <section id="boot" aria-label="problem.me boot sequence">
     <div class="boot-shell">
       <div class="boot-bar">
-        <span>problem.me BIOS / rev 0.6</span>
+        <span>problem.me BIOS<span data-release-label data-prefix=" / rev "></span></span>
         <span>LIVE BUILD</span>
       </div>
 
@@ -990,7 +992,7 @@
             <a href="#mission">[01] Pathfinder</a>
             <a href="techniques.html">[02] Library</a>
           </div>
-          <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version"> / v0.7.2</span></div>
+          <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version" data-release-label data-prefix=" / v"></span></div>
         </nav>
       </div>
     </header>
@@ -1155,7 +1157,7 @@ RISK    | DECIDE</pre>
               <h2 id="launch-title">THE WORKSPACE IS ONLINE_</h2>
               <p>Four interactive techniques are live with local/private sessions, evidence ledgers, connected technique handoffs, and cleaner report exports — without requiring an account or cloud storage.</p>
             </div>
-            <div class="launch-state">V0.6 ONLINE<span class="blink-cursor" aria-hidden="true">_</span></div>
+            <div class="launch-state"><span data-release-label data-prefix="V" data-suffix=" ONLINE">ONLINE</span><span class="blink-cursor" aria-hidden="true">_</span></div>
           </div>
         </div>
       </section>
@@ -1168,6 +1170,16 @@ RISK    | DECIDE</pre>
       </div>
     </footer>
   </div>
+
+  <script>
+    (() => {
+      // All visible release labels read this one metadata value.
+      const version = document.querySelector('meta[name="application-version"]').content;
+      document.querySelectorAll('[data-release-label]').forEach(label => {
+        label.textContent = `${label.dataset.prefix || ''}${version}${label.dataset.suffix || ''}`;
+      });
+    })();
+  </script>
 
   <script>
     (() => {

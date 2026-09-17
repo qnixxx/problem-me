@@ -11,27 +11,29 @@
 </head>
 <body>
 <a class="skip" href="#workspace">Skip to workspace</a>
-<header><a href="index.html">problem.me_</a><span>v0.8 / INVESTIGATION PILOT</span></header>
-<main>
-<section class="panel">
-<p class="kicker">&gt; /investigations/shared</p>
-<h1>ONE PROBLEM. FOLLOW THE EVIDENCE_</h1>
-<p>Explore causes in Fishbone and examine them with 5 Whys. Both workspaces and one shared Evidence Ledger travel together.</p>
-<label for="name">INVESTIGATION NAME</label><input id="name" maxlength="80" placeholder="Name the problem">
-<label for="status">STATUS</label><select id="status"><option value="open">OPEN</option><option value="verifying">VERIFYING</option><option value="resolved">RESOLVED</option><option value="archived">ARCHIVED</option></select>
-<p id="identity" class="muted"></p>
-<div class="actions"><button id="mode">START LOCAL SAVE</button><button id="save">SAVE NOW</button><button id="export">EXPORT .PROBLEMME</button><button id="import">IMPORT .PROBLEMME</button><button id="open">OPEN SAVED</button><button id="new">NEW INVESTIGATION</button><button id="delete">DELETE SAVED PILOT</button></div>
+<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html">← [ LIBRARY ]</a><span class="online"><i class="dot" aria-hidden="true"></i>INVESTIGATION PILOT</span></nav></header>
+<main class="wrap">
+<section class="hero" aria-labelledby="page-title">
+<div><p class="prompt">&gt; /investigations/shared <span class="version">v0.8 PILOT</span></p><h1 id="page-title">ONE PROBLEM.<span>CLEARER THINKING_</span></h1><p class="lede">Follow a cause from Fishbone into 5 Whys. Keep your work, evidence, and next steps together.</p></div>
+<div class="consultant" aria-label="Capybara consultant: following the evidence"><div class="capy-art" aria-hidden="true"><div class="body"></div><span class="leg leg-a"></span><span class="leg leg-b"></span><div class="head"><span class="ear"></span><span class="eye"></span><span class="nose"></span></div></div><small>CAPYBARA.EXE</small><span>FOLLOWING THE EVIDENCE</span></div>
+</section>
+<section class="case-file" aria-labelledby="case-title">
+<div class="section-bar"><h2 id="case-title">YOUR INVESTIGATION_</h2><span>01 / DEFINE THE CASE</span></div>
+<div class="case-fields"><div><label for="name">INVESTIGATION NAME</label><input id="name" maxlength="80" placeholder="What are you trying to understand?"></div><div><label for="status">STATUS</label><select id="status"><option value="open">OPEN</option><option value="verifying">VERIFYING</option><option value="resolved">RESOLVED</option><option value="archived">ARCHIVED</option></select></div></div>
+<div class="case-actions"><div class="primary-actions"><button id="export" class="primary">EXPORT .PROBLEMME ↓</button><button id="save">SAVE NOW</button></div><details class="file-menu"><summary>FILE OPTIONS +</summary><div class="file-menu-body"><button id="import">IMPORT .PROBLEMME</button><button id="open">OPEN SAVED</button><button id="new">NEW INVESTIGATION</button><button id="delete" class="danger">DELETE SAVED PILOT</button><p id="identity" class="muted"></p></div></details></div>
 <input id="file" type="file" accept=".problemme,application/json,application/vnd.problemme+json" hidden>
-<p id="privacy">PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy.</p>
+<div class="privacy-strip"><div><strong>YOUR WORK. YOUR DEVICE.</strong><p id="privacy">PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy.</p></div><button id="mode">START LOCAL SAVE</button></div>
 <p id="message" role="status" aria-live="polite">Loading both workspaces…</p>
 </section>
-<section class="panel" aria-label="Choose technique">
-<div class="actions"><button id="five" aria-pressed="true">5 WHYS</button><button id="fish" aria-pressed="false">FISHBONE</button></div>
-<p>Switching preserves both workspaces. The Evidence Ledger is shared.</p>
-<div id="causePanel" hidden><label for="cause">FISHBONE CAUSE TO EXAMINE</label><select id="cause"></select><button id="examine">EXAMINE IN 5 WHYS →</button><p class="muted">You will be asked before changing an existing 5 Whys problem statement. Its WHY chain remains intact.</p></div>
-</section>
+<section class="tool-stage" aria-labelledby="technique-title">
+<div class="stage-heading"><h2 id="technique-title">FOLLOW THE EVIDENCE_</h2><span>02 / CHOOSE YOUR APPROACH</span></div>
+<div class="technique-tabs" role="group" aria-label="Choose technique"><button id="five" aria-pressed="true"><span class="tab-number">01</span><span><strong>5 WHYS</strong><small>Follow a causal chain</small></span><span class="tab-arrow" aria-hidden="true">↘</span></button><button id="fish" aria-pressed="false"><span class="tab-number">02</span><span><strong>FISHBONE</strong><small>Explore possible causes</small></span><span class="tab-arrow" aria-hidden="true">↘</span></button></div>
+<p class="workspace-note"><span class="dot" aria-hidden="true"></span>BOTH WORKSPACES KEPT <span class="note-divider">/</span> ONE SHARED EVIDENCE LEDGER</p>
+<div id="causePanel" class="cause-panel" hidden><div class="cause-copy"><span class="prompt">NEXT STEP_</span><h3>A cause worth examining?</h3><p>Choose a branch to explore in 5 Whys.</p></div><div class="cause-controls"><label for="cause">FISHBONE CAUSE</label><select id="cause"></select><button id="examine">EXAMINE IN 5 WHYS →</button><p class="muted">We’ll ask before changing your starting point. Existing WHY answers stay intact.</p></div></div>
 <div id="workspace" tabindex="-1"></div>
-<p class="capy">CAPYBARA.EXE: Two tools. One trail of evidence. Snacks remain optional.</p>
+</section>
+<aside class="capy-note"><strong>CAPYBARA.EXE:</strong> Changing tools is allowed. Changing the facts to fit your theory is less helpful.</aside>
 </main>
+<footer><div class="wrap"><span><strong>problem.me</strong> — Same problems. Clearer thinking.</span><a href="index.html">[ BACK TO BASE ]</a></div></footer>
 <noscript>This pilot requires JavaScript. The standalone tools remain available from the homepage.</noscript>
 </body></html>

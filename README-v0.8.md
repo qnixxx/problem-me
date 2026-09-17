@@ -72,3 +72,18 @@ The existing CRT/capybara designs are reused in same-origin iframes. Embedded
 tools are forced into memory-only mode; the outer page owns persistence and
 navigation. All shared pilot scripts and styles are local files. No external
 dependencies, accounts, telemetry or network data calls were added.
+
+## Design update
+
+The shared page now uses the established Case File palette, 980px content width,
+CRT scanlines, typography and CSS capybara. Investigation name/status share a row
+on desktop. Export and save are primary actions; import/open/new/delete are
+grouped under File Options. Privacy controls stay visible. Technique selection
+uses large two-column buttons with descriptions. The embedded tools align with
+the page edges and the Evidence Ledger fills the full width. Mobile layouts
+reduce decoration and stack controls as needed.
+
+Replace investigation.html, investigation.css, 5-whys.html and fishbone.html
+together for this design update. Other included files match the existing pilot.
+The data format and saving behavior are unchanged. Visual browser verification
+is still pending; automated controller and markup checks passed.

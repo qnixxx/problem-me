@@ -1143,7 +1143,14 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 .investigation-embedded .fb-privacy,.investigation-embedded #saveModeLabel,
 .investigation-embedded #fbLocalMode {display:none!important}
 .investigation-embedded body::before,.investigation-embedded body::after{display:none}
-.investigation-embedded .workbench,.investigation-embedded .fb-workbench{margin:0 auto;padding:12px 0}
+/* Align the embedded tool and shared ledger with the outer investigation. */
+.investigation-embedded body{background:var(--bg)}
+.investigation-embedded .workbench,.investigation-embedded .fb-workbench{width:100%;max-width:none;margin:0;padding:0}
+.investigation-embedded .wrap{width:100%;max-width:none}
+.investigation-embedded .pm-reasoning{width:100%;max-width:none;grid-template-columns:minmax(0,1fr);margin:16px 0 24px}
+.investigation-embedded .workspace-shell.is-private .workspace-head,
+.investigation-embedded .fb-tool.is-private .fb-tool-head{border-color:var(--line)}
+.investigation-embedded .workspace-head strong,.investigation-embedded .fb-tool-head strong{color:var(--green)}
 </style>
 </head>
 <body>

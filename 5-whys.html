@@ -983,7 +983,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 }
 
 
-/* v0.7.1 — Investigation foundation */
+/* v0.7.2 — Investigation foundation */
 .investigation-panel{
   margin:0 0 16px;
   border:1px solid var(--line);
@@ -1885,7 +1885,10 @@ Target the repeatable weakness, not only the symptom.</p>
         <input data-pm-text="${i}" type="text" maxlength="180" placeholder="What do you know, assume, test, or observe?" value="${esc(item.text)}">
         <button class="pm-evidence-remove" data-pm-remove="${i}" type="button" aria-label="Remove evidence row ${i+1}">×</button>
       </div>`).join('');
+    renderLedgerSummary();
+  }
 
+  function renderLedgerSummary() {
     addBtn.disabled = ledger.length >= MAX_ROWS;
     const items = filled();
     const counts = {fact:0,assumption:0,test:0,result:0};
@@ -1915,7 +1918,7 @@ Target the repeatable weakness, not only the symptom.</p>
     if (e.target.dataset.pmText !== undefined) {
       ledger[Number(e.target.dataset.pmText)].text = e.target.value;
       saveLedger();
-      renderLedger();
+      renderLedgerSummary();
     }
   });
   rowsEl.addEventListener('change', e => {
@@ -2073,7 +2076,7 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
   const ACTIVE_KEY = 'problem-me:investigation:active:v1';
   const SCHEMA = 'problem.me/investigation';
   const SCHEMA_VERSION = 1;
-  const APP_VERSION = '0.7.1';
+  const APP_VERSION = '0.7.2';
   const TECHNIQUE = '5-whys';
   const MAX_FILE_BYTES = 1024 * 1024;
 
@@ -2092,6 +2095,7 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
   const privateBtn = document.getElementById('privateSessionBtn');
 
   let meta = freshMeta();
+  let savedFingerprint = null;
 
   function nowIso() {
     return new Date().toISOString();
@@ -2159,6 +2163,7 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
     try {
       const saved = JSON.parse(localStorage.getItem(ACTIVE_KEY));
       if (!validEnvelope(saved)) return;
+      savedFingerprint = fingerprint(saved);
       meta = {
         id: String(saved.id || makeId()),
         title: cleanTitle(saved.title),
@@ -2170,43 +2175,50 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
     } catch (_) {}
   }
 
-  function validToolData(data) {
-    if (!data || typeof data !== 'object') return false;
-    const whys = data.whys;
-    return typeof data.problem === 'string'
-      && Array.isArray(whys)
-      && whys.length >= 1
-      && whys.length <= 10;
+  function record(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
   }
 
-  function validEvidence(items) {
-    return Array.isArray(items)
-      && items.length <= 12
-      && items.every(item =>
-        item && typeof item === 'object'
-        && ['fact','assumption','test','result'].includes(item.type)
-        && typeof item.text === 'string'
-      );
+  function timestamp(value) {
+    return typeof value === 'string'
+      && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+      && Number.isFinite(Date.parse(value));
   }
 
   function validEnvelope(obj) {
-    if (!obj || typeof obj !== 'object') return false;
-    if (obj.schema !== SCHEMA || obj.schemaVersion !== SCHEMA_VERSION) return false;
-    if (obj.currentTechnique !== TECHNIQUE) return false;
-    if (!obj.toolData || !validToolData(obj.toolData[TECHNIQUE])) return false;
-    if (!validEvidence(obj.evidence || [])) return false;
-    return true;
+    if (!record(obj) || obj.schema !== SCHEMA || obj.schemaVersion !== SCHEMA_VERSION) return false;
+    if (obj.currentTechnique !== TECHNIQUE || !record(obj.toolData)) return false;
+    if (typeof obj.appVersion !== 'string' || !obj.appVersion.trim()) return false;
+    if (typeof obj.id !== 'string' || !obj.id.trim()) return false;
+    if (typeof obj.title !== 'string' || obj.title.length > 80) return false;
+    if (!['open','verifying','resolved','archived'].includes(obj.status)) return false;
+    if (!timestamp(obj.createdAt) || !timestamp(obj.updatedAt)) return false;
+    if (!Array.isArray(obj.techniquesUsed) || !obj.techniquesUsed.includes(TECHNIQUE)
+        || !obj.techniquesUsed.every(x => typeof x === 'string' && x.trim())) return false;
+    if (!Array.isArray(obj.history) || !obj.history.every(x => record(x)
+        && timestamp(x.at) && typeof x.technique === 'string' && typeof x.action === 'string')) return false;
+    const data = obj.toolData[TECHNIQUE];
+    if (!record(data) || !['problem','root','countermeasure','notes'].every(k => typeof data[k] === 'string')) return false;
+    if (!Array.isArray(data.whys) || data.whys.length < 1 || data.whys.length > 10
+        || !data.whys.every(x => record(x) && typeof x.text === 'string' && typeof x.verify === 'boolean')) return false;
+    return Array.isArray(obj.evidence) && obj.evidence.length <= 12
+      && obj.evidence.every(x => record(x) && ['fact','assumption','test','result'].includes(x.type) && typeof x.text === 'string');
+  }
+
+  function fingerprint(envelope) {
+    const d = envelope.toolData[TECHNIQUE];
+    return JSON.stringify([envelope.id, envelope.title, envelope.status,
+      d.problem, d.root, d.countermeasure, d.notes,
+      d.whys.map(x => [x.text, x.verify]),
+      envelope.evidence.filter(x => x.text.trim()).map(x => [x.type, x.text])]);
   }
 
   function capture({touch=true} = {}) {
     const title = cleanTitle(nameInput.value) || titleFromProblem() || 'Untitled investigation';
     const now = nowIso();
 
-    meta.title = title;
-    meta.status = normalizeStatus(statusSelect.value);
-    if (touch) meta.updatedAt = now;
 
-    const history = Array.isArray(meta.history) ? meta.history.slice(-49) : [];
+    const history = Array.isArray(meta.history) ? meta.history.slice(touch ? -49 : -50) : [];
     if (touch) history.push({at:now, technique:TECHNIQUE, action:'snapshot'});
 
     return {
@@ -2215,7 +2227,7 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
       appVersion: APP_VERSION,
       id: meta.id,
       title,
-      status: meta.status,
+      status: normalizeStatus(statusSelect.value),
       createdAt: meta.createdAt,
       updatedAt: touch ? now : meta.updatedAt,
       currentTechnique: TECHNIQUE,
@@ -2230,8 +2242,6 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
 
   function render() {
     panel.classList.toggle('is-private', isPrivate());
-    nameInput.value = meta.title || nameInput.value;
-    statusSelect.value = normalizeStatus(meta.status);
     idEl.textContent = meta.id || '—';
     createdEl.textContent = stamp(meta.createdAt);
     updatedEl.textContent = stamp(meta.updatedAt);
@@ -2240,12 +2250,14 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
       stateEl.innerHTML = '<strong>PRIVATE SESSION</strong><br>local snapshot saving disabled';
       saveBtn.disabled = true;
       saveBtn.textContent = 'SAVE DISABLED IN PRIVATE';
-    } else if (meta.updatedAt) {
+    } else if (savedFingerprint === fingerprint(capture({touch:false}))) {
       stateEl.innerHTML = '<strong>SAVED INVESTIGATION</strong><br>pilot local snapshot';
       saveBtn.disabled = false;
       saveBtn.textContent = 'SAVE INVESTIGATION';
     } else {
-      stateEl.innerHTML = '<strong>NEW INVESTIGATION</strong><br>not saved yet';
+      stateEl.innerHTML = savedFingerprint
+        ? '<strong>UNSAVED SNAPSHOT</strong><br>current workspace differs from saved snapshot'
+        : '<strong>UNSAVED SNAPSHOT</strong><br>save the current investigation when ready';
       saveBtn.disabled = false;
       saveBtn.textContent = 'SAVE INVESTIGATION';
     }
@@ -2257,12 +2269,12 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
       return;
     }
     const envelope = capture({touch:true});
-    meta.updatedAt = envelope.updatedAt;
-    meta.history = envelope.history;
-    nameInput.value = envelope.title;
 
     try {
       localStorage.setItem(ACTIVE_KEY, JSON.stringify(envelope));
+      meta = {...meta, title:envelope.title, status:envelope.status, updatedAt:envelope.updatedAt, history:envelope.history};
+      nameInput.value = envelope.title;
+      savedFingerprint = fingerprint(envelope);
       messageEl.textContent = 'INVESTIGATION SNAPSHOT SAVED_';
       render();
     } catch (_) {
@@ -2272,9 +2284,13 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
 
   function exportFile() {
     const envelope = capture({touch:false});
-    envelope.updatedAt = meta.updatedAt || nowIso();
+    envelope.updatedAt = nowIso();
     const json = JSON.stringify(envelope, null, 2);
     const blob = new Blob([json], {type:'application/vnd.problemme+json'});
+    if (blob.size > MAX_FILE_BYTES) {
+      messageEl.textContent = 'EXPORT TOO LARGE — REDUCE CONTENT TO FIT THE 1 MiB IMPORT LIMIT_';
+      return;
+    }
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -2292,7 +2308,8 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
     const tool = window.problemMeFiveWhys?.getState?.() || {};
     const evidence = window.problemMeEvidence?.getState?.() || [];
     return Boolean(
-      String(tool.problem || '').trim()
+      nameInput.value.trim() || statusSelect.value !== 'open'
+      || String(tool.problem || '').trim()
       || String(tool.root || '').trim()
       || String(tool.countermeasure || '').trim()
       || String(tool.notes || '').trim()
@@ -2341,16 +2358,21 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
     nameInput.value = meta.title;
     statusSelect.value = meta.status;
 
+    let stored = false;
+    savedFingerprint = null;
     if (!isPrivate()) {
       try {
         localStorage.setItem(ACTIVE_KEY, JSON.stringify(parsed));
+        savedFingerprint = fingerprint(parsed);
+        stored = true;
       } catch (_) {}
     }
 
     render();
     messageEl.textContent = isPrivate()
       ? 'INVESTIGATION IMPORTED INTO PRIVATE SESSION — NOT SAVED_'
-      : 'INVESTIGATION IMPORTED_';
+      : stored ? 'INVESTIGATION IMPORTED_' : 'IMPORTED — SNAPSHOT SAVE FAILED; EXPORT TO KEEP A COPY_';
+    document.dispatchEvent(new Event('change'));
   }
 
   saveBtn.addEventListener('click', saveLocal);
@@ -2381,11 +2403,15 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
 
   window.addEventListener('pm-clear-all', () => {
     meta = freshMeta();
+    savedFingerprint = null;
     nameInput.value = '';
     statusSelect.value = 'open';
     render();
     messageEl.textContent = 'INVESTIGATION SNAPSHOT CLEARED WITH LOCAL DATA_';
   });
+
+  ['input','change'].forEach(type => document.addEventListener(type, render));
+  document.addEventListener('click', () => setTimeout(render, 0));
 
   readActiveSnapshotMeta();
   nameInput.value = meta.title;

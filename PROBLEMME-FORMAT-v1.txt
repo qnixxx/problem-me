@@ -29,3 +29,26 @@ Privacy:
   Local Save can store one pilot investigation snapshot in browser localStorage.
   Private Session disables local investigation saving.
   Export and import remain available in Private Session.
+
+Implementation clarification — v0.7.2
+  schemaVersion remains 1; well-formed v0.7.1 exports remain supported.
+  All listed top-level fields are required. Timestamps must be parseable
+  ISO 8601 date-times with timezone; status must use one of the listed values.
+  toolData["5-whys"] contains string fields problem, root, countermeasure,
+  notes, and 1–10 whys objects with string text and boolean verify.
+  evidence contains at most 12 objects with type (fact, assumption, test,
+  result) and string text. history entries have at, technique and action.
+  techniquesUsed includes "5-whys"; title has at most 80 characters.
+  Imports are capped at 1 MiB. Exports above that limit are blocked so the
+  application does not create a file that its importer would reject.
+  Files are readable JSON, not encrypted.
+
+Snapshot semantics
+  Workspace and evidence drafts auto-save independently in Local Save mode.
+  SAVE INVESTIGATION records an explicit snapshot with name and status.
+  Reload keeps the latest drafts and restores the last saved snapshot metadata.
+  The panel marks differing current content as UNSAVED SNAPSHOT; it does not
+  silently replace newer drafts with the older snapshot. Name/status edits
+  require SAVE INVESTIGATION. Export captures current on-screen content.
+  Save timestamps advance only after a successful snapshot write.
+  Private Session blocks saving; explicit export/import remain available.

@@ -912,7 +912,10 @@ privateBtn.onclick=()=>{if(!privateMode){privateMode=true;privacy();msg.textCont
         <input data-pm-text="${i}" type="text" maxlength="180" placeholder="What do you know, assume, test, or observe?" value="${esc(item.text)}">
         <button class="pm-evidence-remove" data-pm-remove="${i}" type="button" aria-label="Remove evidence row ${i+1}">×</button>
       </div>`).join('');
+    renderLedgerSummary();
+  }
 
+  function renderLedgerSummary() {
     addBtn.disabled = ledger.length >= MAX_ROWS;
     const items = filled();
     const counts = {fact:0,assumption:0,test:0,result:0};
@@ -942,7 +945,7 @@ privateBtn.onclick=()=>{if(!privateMode){privateMode=true;privacy();msg.textCont
     if (e.target.dataset.pmText !== undefined) {
       ledger[Number(e.target.dataset.pmText)].text = e.target.value;
       saveLedger();
-      renderLedger();
+      renderLedgerSummary();
     }
   });
   rowsEl.addEventListener('change', e => {

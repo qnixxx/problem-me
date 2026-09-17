@@ -982,6 +982,154 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
   }
 }
 
+
+/* v0.7.1 — Investigation foundation */
+.investigation-panel{
+  margin:0 0 16px;
+  border:1px solid var(--line);
+  background:var(--surface-low);
+}
+.investigation-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:flex-start;
+  padding:13px 14px;
+  border-bottom:1px solid var(--line);
+}
+.investigation-kicker{
+  color:var(--yellow);
+  font-size:.61rem;
+  letter-spacing:.05em;
+}
+.investigation-head h3{
+  margin:5px 0 0;
+  color:var(--cream);
+  font-size:.92rem;
+}
+.investigation-head p{
+  margin:5px 0 0;
+  max-width:680px;
+  color:var(--muted);
+  font-size:.62rem;
+  line-height:1.5;
+}
+.investigation-state{
+  flex:0 0 auto;
+  color:var(--muted);
+  font-size:.58rem;
+  line-height:1.5;
+  text-align:right;
+}
+.investigation-state strong{color:var(--green)}
+.investigation-panel.is-private .investigation-state strong{color:var(--yellow)}
+.investigation-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(160px,.6fr);
+  gap:10px;
+  padding:14px;
+}
+.investigation-field label{
+  display:block;
+  margin-bottom:6px;
+  color:var(--yellow);
+  font-size:.6rem;
+}
+.investigation-field input,
+.investigation-field select{
+  width:100%;
+  min-height:42px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--panel);
+  color:var(--cream);
+  font:inherit;
+  font-size:.72rem;
+}
+.investigation-field input{padding:9px 10px}
+.investigation-field select{padding:8px 30px 8px 9px}
+.investigation-field input::placeholder{color:#5e8974}
+.investigation-field input:focus,
+.investigation-field select:focus{
+  outline:1px solid var(--yellow);
+  outline-offset:1px;
+  border-color:var(--yellow);
+}
+.investigation-meta{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  padding:0 14px 14px;
+}
+.investigation-meta div{
+  min-width:0;
+  padding:9px 10px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.investigation-meta small{
+  display:block;
+  color:var(--muted);
+  font-size:.52rem;
+}
+.investigation-meta strong{
+  display:block;
+  margin-top:4px;
+  color:var(--cream);
+  font-size:.63rem;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+.investigation-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:12px 14px;
+  border-top:1px solid var(--line);
+}
+.investigation-actions .tool-btn{
+  min-height:40px;
+  font-size:.62rem;
+}
+.investigation-file{
+  display:none;
+}
+.investigation-message{
+  flex:1 1 220px;
+  align-self:center;
+  color:var(--muted);
+  font-size:.58rem;
+  text-align:right;
+  line-height:1.45;
+}
+.investigation-message strong{color:var(--yellow)}
+.investigation-note{
+  margin:0;
+  padding:0 14px 13px;
+  color:var(--muted);
+  font-size:.57rem;
+  line-height:1.5;
+}
+.investigation-note strong{color:var(--yellow)}
+.investigation-panel.is-private{
+  border-color:rgba(255,233,91,.65);
+  box-shadow:inset 3px 0 0 var(--yellow);
+}
+@media(max-width:640px){
+  .investigation-head{flex-direction:column}
+  .investigation-state{text-align:left}
+  .investigation-grid{grid-template-columns:1fr}
+  .investigation-meta{grid-template-columns:1fr}
+  .investigation-actions .tool-btn{flex:1 1 calc(50% - 8px)}
+  .investigation-message{flex-basis:100%;text-align:left}
+}
+@media(max-width:390px){
+  .investigation-actions .tool-btn{flex-basis:100%}
+}
+@media print{
+  .investigation-panel{display:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -1013,6 +1161,51 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       <h2 id="workbench-title">TRY IT YOURSELF_</h2>
       <p>Use the same logic on your own problem. Choose local auto-save or switch to a Private Session that does not save the investigation to localStorage.</p>
     </div>
+
+
+    <section class="investigation-panel" id="investigationPanel" aria-labelledby="investigationTitle">
+      <div class="investigation-head">
+        <div>
+          <div class="investigation-kicker">&gt; /investigations/pilot</div>
+          <h3 id="investigationTitle">INVESTIGATION_</h3>
+          <p>Name this problem, save a local snapshot, or carry the complete 5 Whys workspace and Evidence Ledger as a portable <code>.problemme</code> file.</p>
+        </div>
+        <div class="investigation-state" id="investigationState"><strong>NEW INVESTIGATION</strong><br>not saved yet</div>
+      </div>
+
+      <div class="investigation-grid">
+        <div class="investigation-field">
+          <label for="investigationName">INVESTIGATION NAME_</label>
+          <input id="investigationName" type="text" maxlength="80" placeholder="Example: Payment failures after 14:00">
+        </div>
+        <div class="investigation-field">
+          <label for="investigationStatus">STATUS_</label>
+          <select id="investigationStatus">
+            <option value="open">OPEN</option>
+            <option value="verifying">VERIFYING</option>
+            <option value="resolved">RESOLVED</option>
+            <option value="archived">ARCHIVED</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="investigation-meta">
+        <div><small>INVESTIGATION ID</small><strong id="investigationId">—</strong></div>
+        <div><small>CREATED</small><strong id="investigationCreated">—</strong></div>
+        <div><small>LAST SNAPSHOT</small><strong id="investigationUpdated">—</strong></div>
+      </div>
+
+      <div class="investigation-actions">
+        <button class="tool-btn primary" id="saveInvestigationBtn" type="button">SAVE INVESTIGATION</button>
+        <button class="tool-btn" id="exportInvestigationBtn" type="button">EXPORT .PROBLEMME</button>
+        <button class="tool-btn" id="importInvestigationBtn" type="button">IMPORT .PROBLEMME</button>
+        <input class="investigation-file" id="investigationFileInput" type="file" accept=".problemme,application/json,application/vnd.problemme+json">
+        <span class="investigation-message" id="investigationMessage" role="status" aria-live="polite">PORTABLE FILE READY_</span>
+      </div>
+
+      <p class="investigation-note"><strong>LOCAL-FIRST:</strong> Save stores one pilot investigation snapshot in this browser. Export creates a readable JSON-based <code>.problemme</code> file you own. Private Session blocks browser saving but still allows export/import.</p>
+    </section>
+
 
     <div class="workspace-shell" id="workspaceShell">
       <div class="workspace-head">
@@ -1586,6 +1779,35 @@ Target the repeatable weakness, not only the symptom.</p>
 
   printBtn.addEventListener('click', () => { renderPdfReport(); window.print(); });
 
+
+  window.problemMeFiveWhys = {
+    getState() {
+      return JSON.parse(JSON.stringify(state));
+    },
+    setState(input) {
+      const next = blankState();
+      if (input && typeof input === 'object') {
+        next.problem = typeof input.problem === 'string' ? input.problem : '';
+        next.root = typeof input.root === 'string' ? input.root : '';
+        next.countermeasure = typeof input.countermeasure === 'string' ? input.countermeasure : '';
+        next.notes = typeof input.notes === 'string' ? input.notes : '';
+        if (Array.isArray(input.whys) && input.whys.length) {
+          next.whys = input.whys.slice(0, MAX_WHYS).map(item => ({
+            text: typeof item?.text === 'string' ? item.text : '',
+            verify: Boolean(item?.verify)
+          }));
+        }
+      }
+      state = next;
+      syncFormFromState();
+      save();
+      return true;
+    },
+    isPrivate() {
+      return privateMode;
+    }
+  };
+
   window.addEventListener('beforeprint', renderPdfReport);
 
   safeLoad();
@@ -1817,10 +2039,358 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
     history.replaceState(null,'',location.pathname + location.search);
   }
 
+
+  window.problemMeEvidence = {
+    getState() {
+      return ledger.map(item => ({type:item.type, text:item.text}));
+    },
+    setState(items) {
+      if (Array.isArray(items) && items.length) {
+        ledger = items.slice(0, MAX_ROWS).map(item => ({
+          type: normalizeType(item?.type),
+          text: typeof item?.text === 'string' ? item.text : ''
+        }));
+      } else {
+        ledger = [{type:'fact', text:''}];
+      }
+      renderLedger();
+      saveLedger();
+      return true;
+    },
+    isPrivate
+  };
+
   loadLedger();
   renderLedger();
   refreshHandoff();
   consumeIncomingHandoff();
+})();
+</script>
+
+
+<script>
+(() => {
+  const ACTIVE_KEY = 'problem-me:investigation:active:v1';
+  const SCHEMA = 'problem.me/investigation';
+  const SCHEMA_VERSION = 1;
+  const APP_VERSION = '0.7.1';
+  const TECHNIQUE = '5-whys';
+  const MAX_FILE_BYTES = 1024 * 1024;
+
+  const panel = document.getElementById('investigationPanel');
+  const nameInput = document.getElementById('investigationName');
+  const statusSelect = document.getElementById('investigationStatus');
+  const idEl = document.getElementById('investigationId');
+  const createdEl = document.getElementById('investigationCreated');
+  const updatedEl = document.getElementById('investigationUpdated');
+  const stateEl = document.getElementById('investigationState');
+  const messageEl = document.getElementById('investigationMessage');
+  const saveBtn = document.getElementById('saveInvestigationBtn');
+  const exportBtn = document.getElementById('exportInvestigationBtn');
+  const importBtn = document.getElementById('importInvestigationBtn');
+  const fileInput = document.getElementById('investigationFileInput');
+  const privateBtn = document.getElementById('privateSessionBtn');
+
+  let meta = freshMeta();
+
+  function nowIso() {
+    return new Date().toISOString();
+  }
+
+  function makeId() {
+    if (window.crypto?.randomUUID) return crypto.randomUUID();
+    return 'pm-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10);
+  }
+
+  function freshMeta() {
+    const now = nowIso();
+    return {
+      id: makeId(),
+      title: '',
+      status: 'open',
+      createdAt: now,
+      updatedAt: '',
+      history: [{at:now, technique:TECHNIQUE, action:'created'}]
+    };
+  }
+
+  function isPrivate() {
+    return Boolean(window.problemMeFiveWhys?.isPrivate?.());
+  }
+
+  function stamp(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '—';
+    try {
+      return d.toLocaleString(undefined, {
+        year:'numeric', month:'short', day:'2-digit',
+        hour:'2-digit', minute:'2-digit'
+      });
+    } catch (_) {
+      return d.toString();
+    }
+  }
+
+  function cleanTitle(value) {
+    return String(value || '').trim().slice(0,80);
+  }
+
+  function safeFilename(value) {
+    const base = cleanTitle(value) || 'problem-me-investigation';
+    return base
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-+|-+$/g,'')
+      .slice(0,60) || 'problem-me-investigation';
+  }
+
+  function titleFromProblem() {
+    const p = String(window.problemMeFiveWhys?.getState?.().problem || '').trim();
+    if (!p) return '';
+    return p.length > 80 ? p.slice(0,79) + '…' : p;
+  }
+
+  function normalizeStatus(value) {
+    return ['open','verifying','resolved','archived'].includes(value) ? value : 'open';
+  }
+
+  function readActiveSnapshotMeta() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(ACTIVE_KEY));
+      if (!validEnvelope(saved)) return;
+      meta = {
+        id: String(saved.id || makeId()),
+        title: cleanTitle(saved.title),
+        status: normalizeStatus(saved.status),
+        createdAt: saved.createdAt || nowIso(),
+        updatedAt: saved.updatedAt || '',
+        history: Array.isArray(saved.history) ? saved.history.slice(-50) : []
+      };
+    } catch (_) {}
+  }
+
+  function validToolData(data) {
+    if (!data || typeof data !== 'object') return false;
+    const whys = data.whys;
+    return typeof data.problem === 'string'
+      && Array.isArray(whys)
+      && whys.length >= 1
+      && whys.length <= 10;
+  }
+
+  function validEvidence(items) {
+    return Array.isArray(items)
+      && items.length <= 12
+      && items.every(item =>
+        item && typeof item === 'object'
+        && ['fact','assumption','test','result'].includes(item.type)
+        && typeof item.text === 'string'
+      );
+  }
+
+  function validEnvelope(obj) {
+    if (!obj || typeof obj !== 'object') return false;
+    if (obj.schema !== SCHEMA || obj.schemaVersion !== SCHEMA_VERSION) return false;
+    if (obj.currentTechnique !== TECHNIQUE) return false;
+    if (!obj.toolData || !validToolData(obj.toolData[TECHNIQUE])) return false;
+    if (!validEvidence(obj.evidence || [])) return false;
+    return true;
+  }
+
+  function capture({touch=true} = {}) {
+    const title = cleanTitle(nameInput.value) || titleFromProblem() || 'Untitled investigation';
+    const now = nowIso();
+
+    meta.title = title;
+    meta.status = normalizeStatus(statusSelect.value);
+    if (touch) meta.updatedAt = now;
+
+    const history = Array.isArray(meta.history) ? meta.history.slice(-49) : [];
+    if (touch) history.push({at:now, technique:TECHNIQUE, action:'snapshot'});
+
+    return {
+      schema: SCHEMA,
+      schemaVersion: SCHEMA_VERSION,
+      appVersion: APP_VERSION,
+      id: meta.id,
+      title,
+      status: meta.status,
+      createdAt: meta.createdAt,
+      updatedAt: touch ? now : meta.updatedAt,
+      currentTechnique: TECHNIQUE,
+      techniquesUsed: [TECHNIQUE],
+      history,
+      toolData: {
+        [TECHNIQUE]: window.problemMeFiveWhys?.getState?.() || {}
+      },
+      evidence: window.problemMeEvidence?.getState?.() || []
+    };
+  }
+
+  function render() {
+    panel.classList.toggle('is-private', isPrivate());
+    nameInput.value = meta.title || nameInput.value;
+    statusSelect.value = normalizeStatus(meta.status);
+    idEl.textContent = meta.id || '—';
+    createdEl.textContent = stamp(meta.createdAt);
+    updatedEl.textContent = stamp(meta.updatedAt);
+
+    if (isPrivate()) {
+      stateEl.innerHTML = '<strong>PRIVATE SESSION</strong><br>local snapshot saving disabled';
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'SAVE DISABLED IN PRIVATE';
+    } else if (meta.updatedAt) {
+      stateEl.innerHTML = '<strong>SAVED INVESTIGATION</strong><br>pilot local snapshot';
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'SAVE INVESTIGATION';
+    } else {
+      stateEl.innerHTML = '<strong>NEW INVESTIGATION</strong><br>not saved yet';
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'SAVE INVESTIGATION';
+    }
+  }
+
+  function saveLocal() {
+    if (isPrivate()) {
+      messageEl.innerHTML = '<strong>PRIVATE SESSION:</strong> local investigation saving is disabled. Export still works.';
+      return;
+    }
+    const envelope = capture({touch:true});
+    meta.updatedAt = envelope.updatedAt;
+    meta.history = envelope.history;
+    nameInput.value = envelope.title;
+
+    try {
+      localStorage.setItem(ACTIVE_KEY, JSON.stringify(envelope));
+      messageEl.textContent = 'INVESTIGATION SNAPSHOT SAVED_';
+      render();
+    } catch (_) {
+      messageEl.textContent = 'INVESTIGATION SAVE UNAVAILABLE_';
+    }
+  }
+
+  function exportFile() {
+    const envelope = capture({touch:false});
+    envelope.updatedAt = meta.updatedAt || nowIso();
+    const json = JSON.stringify(envelope, null, 2);
+    const blob = new Blob([json], {type:'application/vnd.problemme+json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = safeFilename(envelope.title) + '.problemme';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    messageEl.textContent = isPrivate()
+      ? 'PRIVATE INVESTIGATION EXPORTED — NOT SAVED LOCALLY_'
+      : 'INVESTIGATION EXPORTED_';
+  }
+
+  function workingDataExists() {
+    const tool = window.problemMeFiveWhys?.getState?.() || {};
+    const evidence = window.problemMeEvidence?.getState?.() || [];
+    return Boolean(
+      String(tool.problem || '').trim()
+      || String(tool.root || '').trim()
+      || String(tool.countermeasure || '').trim()
+      || String(tool.notes || '').trim()
+      || (Array.isArray(tool.whys) && tool.whys.some(w => String(w?.text || '').trim()))
+      || evidence.some(x => String(x?.text || '').trim())
+    );
+  }
+
+  async function importFile(file) {
+    if (!file) return;
+    if (file.size > MAX_FILE_BYTES) {
+      messageEl.textContent = 'IMPORT REJECTED — FILE TOO LARGE_';
+      return;
+    }
+
+    let parsed;
+    try {
+      parsed = JSON.parse(await file.text());
+    } catch (_) {
+      messageEl.textContent = 'IMPORT REJECTED — NOT VALID JSON_';
+      return;
+    }
+
+    if (!validEnvelope(parsed)) {
+      messageEl.textContent = 'IMPORT REJECTED — UNSUPPORTED .PROBLEMME FORMAT_';
+      return;
+    }
+
+    if (workingDataExists()) {
+      const ok = confirm(`Open "${cleanTitle(parsed.title) || 'Untitled investigation'}" and replace the current 5 Whys workspace and Evidence Ledger?`);
+      if (!ok) return;
+    }
+
+    meta = {
+      id: String(parsed.id || makeId()),
+      title: cleanTitle(parsed.title),
+      status: normalizeStatus(parsed.status),
+      createdAt: parsed.createdAt || nowIso(),
+      updatedAt: parsed.updatedAt || '',
+      history: Array.isArray(parsed.history) ? parsed.history.slice(-50) : []
+    };
+
+    window.problemMeFiveWhys?.setState?.(parsed.toolData[TECHNIQUE]);
+    window.problemMeEvidence?.setState?.(parsed.evidence || []);
+
+    nameInput.value = meta.title;
+    statusSelect.value = meta.status;
+
+    if (!isPrivate()) {
+      try {
+        localStorage.setItem(ACTIVE_KEY, JSON.stringify(parsed));
+      } catch (_) {}
+    }
+
+    render();
+    messageEl.textContent = isPrivate()
+      ? 'INVESTIGATION IMPORTED INTO PRIVATE SESSION — NOT SAVED_'
+      : 'INVESTIGATION IMPORTED_';
+  }
+
+  saveBtn.addEventListener('click', saveLocal);
+  exportBtn.addEventListener('click', exportFile);
+  importBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', () => importFile(fileInput.files?.[0]));
+
+  nameInput.addEventListener('input', () => {
+    meta.title = cleanTitle(nameInput.value);
+    messageEl.textContent = 'INVESTIGATION METADATA CHANGED — SAVE WHEN READY_';
+  });
+  statusSelect.addEventListener('change', () => {
+    meta.status = normalizeStatus(statusSelect.value);
+    messageEl.textContent = 'INVESTIGATION STATUS CHANGED — SAVE WHEN READY_';
+  });
+
+  privateBtn?.addEventListener('click', () => {
+    setTimeout(() => {
+      render();
+      messageEl.textContent = isPrivate()
+        ? 'PRIVATE SESSION — EXPORT/IMPORT AVAILABLE, LOCAL SNAPSHOT DISABLED_'
+        : 'LOCAL SAVE RESTORED_';
+    }, 0);
+  });
+
+  window.addEventListener('pm-clear-all', () => {
+    meta = freshMeta();
+    nameInput.value = '';
+    statusSelect.value = 'open';
+    render();
+    messageEl.textContent = 'INVESTIGATION SNAPSHOT CLEARED WITH LOCAL DATA_';
+  });
+
+  readActiveSnapshotMeta();
+  nameInput.value = meta.title;
+  statusSelect.value = meta.status;
+  render();
 })();
 </script>
 

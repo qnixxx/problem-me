@@ -1,0 +1,31 @@
+problem.me portable investigation format — schema v1
+
+File extension:
+  .problemme
+
+Encoding:
+  UTF-8 JSON
+
+Top-level fields:
+  schema              "problem.me/investigation"
+  schemaVersion       1
+  appVersion          problem.me release that created the file
+  id                  investigation identifier
+  title               user-facing investigation name
+  status              open | verifying | resolved | archived
+  createdAt           ISO 8601 timestamp
+  updatedAt           ISO 8601 timestamp
+  currentTechnique    "5-whys" in the v0.7.1 pilot
+  techniquesUsed      array of technique identifiers
+  history             reasoning / snapshot event array
+  toolData            technique-specific workspace data
+  evidence            Evidence Ledger entries
+
+Security model:
+  The file is data only. problem.me parses it as JSON and does not execute file content.
+  The v0.7.1 pilot accepts files up to 1 MiB and validates the schema before import.
+
+Privacy:
+  Local Save can store one pilot investigation snapshot in browser localStorage.
+  Private Session disables local investigation saving.
+  Export and import remain available in Private Session.

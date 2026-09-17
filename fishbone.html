@@ -1040,8 +1040,23 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 }
 
 </style>
+<script>if (new URLSearchParams(location.search).get('investigation') === '1') document.documentElement.classList.add('investigation-embedded');</script>
+<style>
+.investigation-embedded .shared-entry,.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
+.investigation-embedded .story,.investigation-embedded .case-intro,.investigation-embedded .workspace,
+.investigation-embedded .evidence,.investigation-embedded .causal,.investigation-embedded .resolution,
+.investigation-embedded .lesson,.investigation-embedded .case-pager,.investigation-embedded .pm-handoff,
+.investigation-embedded .privacy-panel,.investigation-embedded .fb-privacy-panel,
+.investigation-embedded .investigation-panel,.investigation-embedded .workbench-intro,
+.investigation-embedded .fb-workbench-intro,.investigation-embedded .save-note,
+.investigation-embedded .fb-privacy,.investigation-embedded #saveModeLabel,
+.investigation-embedded #fbLocalMode {display:none!important}
+.investigation-embedded body::before,.investigation-embedded body::after{display:none}
+.investigation-embedded .workbench,.investigation-embedded .fb-workbench{margin:0 auto;padding:12px 0}
+</style>
 </head>
 <body>
+<p class="shared-entry" style="text-align:center;padding:12px"><a href="investigation.html">[ OPEN SHARED INVESTIGATION PILOT — 5 WHYS + FISHBONE → ]</a></p>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #002 OPEN</div></nav></div></header>
 <main id="main-content">
@@ -1335,7 +1350,8 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   const pdfNextTest = document.getElementById('fbPdfNextTest');
   const pdfNotes = document.getElementById('fbPdfNotes');
 
-  let privateMode = false;
+  const embedded = new URLSearchParams(location.search).get('investigation') === '1';
+  let privateMode = embedded;
   let state = makeDefaultState();
 
 
@@ -1459,6 +1475,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   }
 
   function safeLoad() {
+    if (embedded) return;
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (!saved || typeof saved !== 'object') return;
@@ -1800,7 +1817,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     lines.push('BEST-SUPPORTED HYPOTHESIS: ' + (state.supported.trim() || '[not defined]'));
     lines.push('NEXT VERIFICATION STEP: ' + (state.nextTest.trim() || '[not defined]'));
     if (state.notes.trim()) lines.push('', 'EVIDENCE / NOTES:', state.notes.trim());
-    lines.push('', privateMode ? 'Private Session — not saved by problem.me' : 'Generated locally at problem.me');
+    lines.push('', embedded ? 'Shared investigation — saving is controlled by the investigation page' : privateMode ? 'Private Session — not saved by problem.me' : 'Generated locally at problem.me');
     return lines.join('\n');
   }
 
@@ -1830,6 +1847,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
 
 
   privateBtn.addEventListener('click', () => {
+    if (embedded) return;
     if (!privateMode) {
       privateMode = true;
       renderPrivacyMode();
@@ -1843,6 +1861,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   });
 
   clearDataBtn.addEventListener('click', () => {
+    if (embedded) return;
     if (!window.confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this Fishbone form? This cannot be undone.')) return;
     const result = clearProblemMeLocalData();
     if (!result.ok) {
@@ -1871,6 +1890,14 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     actionStatus.textContent = privateMode ? 'PRIVATE SESSION RESET — NOT SAVED_' : 'DRAFT RESET_';
   });
 
+  window.problemMeFishbone = {
+    getState() { return JSON.parse(JSON.stringify(state)); },
+    setState(input) {
+      state = JSON.parse(JSON.stringify(input));
+      syncStaticFields(); renderAll();
+    },
+    isPrivate() { return privateMode; }
+  };
   window.addEventListener('beforeprint', renderPdfReport);
 
   safeLoad();
@@ -1915,6 +1942,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     return ['fact','assumption','test','result'].includes(x) ? x : 'fact';
   }
   function loadLedger() {
+    if (new URLSearchParams(location.search).get('investigation') === '1') return;
     try {
       const saved = JSON.parse(localStorage.getItem(LEDGER_KEY));
       if (Array.isArray(saved) && saved.length) {
@@ -2084,6 +2112,7 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW CAUSE WITH 5 WHYS →',seed
   });
 
   function consumeIncomingHandoff() {
+    if (new URLSearchParams(location.search).get('investigation') === '1') return;
     if (!location.hash || !location.hash.includes('pm_seed=')) return;
     const params = new URLSearchParams(location.hash.slice(1));
     const seed = params.get('pm_seed') || '';
@@ -2107,6 +2136,13 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW CAUSE WITH 5 WHYS →',seed
     history.replaceState(null,'',location.pathname + location.search);
   }
 
+  window.problemMeEvidence = {
+    getState() { return ledger.map(x => ({type:x.type,text:x.text})); },
+    setState(items) {
+      ledger = items.length ? items.map(x => ({type:normalizeType(x.type),text:x.text})) : [{type:'fact',text:''}];
+      renderLedger();
+    }
+  };
   loadLedger();
   renderLedger();
   refreshHandoff();
@@ -2114,4 +2150,5 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW CAUSE WITH 5 WHYS →',seed
 })();
 </script>
 
+<script src="investigation-bridge.js"></script>
 </body></html>

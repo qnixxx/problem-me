@@ -1131,8 +1131,23 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 }
 
 </style>
+<script>if (new URLSearchParams(location.search).get('investigation') === '1') document.documentElement.classList.add('investigation-embedded');</script>
+<style>
+.investigation-embedded .shared-entry,.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
+.investigation-embedded .story,.investigation-embedded .case-intro,.investigation-embedded .workspace,
+.investigation-embedded .evidence,.investigation-embedded .causal,.investigation-embedded .resolution,
+.investigation-embedded .lesson,.investigation-embedded .case-pager,.investigation-embedded .pm-handoff,
+.investigation-embedded .privacy-panel,.investigation-embedded .fb-privacy-panel,
+.investigation-embedded .investigation-panel,.investigation-embedded .workbench-intro,
+.investigation-embedded .fb-workbench-intro,.investigation-embedded .save-note,
+.investigation-embedded .fb-privacy,.investigation-embedded #saveModeLabel,
+.investigation-embedded #fbLocalMode {display:none!important}
+.investigation-embedded body::before,.investigation-embedded body::after{display:none}
+.investigation-embedded .workbench,.investigation-embedded .fb-workbench{margin:0 auto;padding:12px 0}
+</style>
 </head>
 <body>
+<p class="shared-entry" style="text-align:center;padding:12px"><a href="investigation.html">[ OPEN SHARED INVESTIGATION PILOT — 5 WHYS + FISHBONE → ]</a></p>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #001 OPEN</div></nav></div></header>
 <main id="main-content">
@@ -1452,7 +1467,8 @@ Target the repeatable weakness, not only the symptom.</p>
   const pdfNextStep = document.getElementById('pdfNextStep');
   const pdfFooterMode = document.getElementById('pdfFooterMode');
 
-  let privateMode = false;
+  const embedded = new URLSearchParams(location.search).get('investigation') === '1';
+  let privateMode = embedded;
 
   function blankState() {
     return {
@@ -1467,6 +1483,7 @@ Target the repeatable weakness, not only the symptom.</p>
   let state = blankState();
 
   function safeLoad() {
+    if (embedded) return;
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (!saved || typeof saved !== 'object') return;
@@ -1560,7 +1577,7 @@ Target the repeatable weakness, not only the symptom.</p>
     pdfReportTitle.textContent = state.problem.trim()
       ? shortForPdf(state.problem.trim(), 58)
       : '5 Whys investigation';
-    pdfMode.textContent = privateMode ? 'Private Session' : 'Local save';
+    pdfMode.textContent = embedded ? 'Shared investigation' : privateMode ? 'Private Session' : 'Local save';
     pdfGenerated.textContent = prettyStamp();
     pdfProblem.textContent = state.problem.trim() || 'Not defined.';
     pdfWhyList.innerHTML = state.whys.map((w, i) => `
@@ -1573,9 +1590,9 @@ Target the repeatable weakness, not only the symptom.</p>
     pdfCounter.textContent = state.countermeasure.trim() || 'Not defined.';
     pdfEvidence.textContent = 'EVIDENCE / NOTES:\n' + (state.notes.trim() || 'Not defined.');
     pdfNextStep.textContent = privateMode
-      ? 'CAPYBARA TAKEAWAY:\nPrivate session mode keeps this report unsaved unless you export it yourself.'
+      ? 'CAPYBARA TAKEAWAY:\nCheck the investigation saving mode before you close this page.'
       : 'CAPYBARA TAKEAWAY:\nTarget the repeatable weakness, not only the symptom.';
-    pdfFooterMode.textContent = privateMode
+    pdfFooterMode.textContent = embedded ? 'Saving is controlled by the shared investigation page.' : privateMode
       ? 'Private Session — generated without local saving.'
       : 'Generated locally in this browser.';
   }
@@ -1701,6 +1718,7 @@ Target the repeatable weakness, not only the symptom.</p>
   });
 
   privateSessionBtn.addEventListener('click', () => {
+    if (embedded) return;
     if (!privateMode) {
       privateMode = true;
       renderPrivacyMode();
@@ -1715,6 +1733,7 @@ Target the repeatable weakness, not only the symptom.</p>
   });
 
   clearLocalDataBtn.addEventListener('click', () => {
+    if (embedded) return;
     const ok = window.confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this 5 Whys form? This cannot be undone.');
     if (!ok) return;
 
@@ -1754,7 +1773,7 @@ Target the repeatable weakness, not only the symptom.</p>
     lines.push('', 'ROOT CAUSE CANDIDATE: ' + (state.root.trim() || '[not defined]'));
     lines.push('COUNTERMEASURE: ' + (state.countermeasure.trim() || '[not defined]'));
     if (state.notes.trim()) lines.push('', 'EVIDENCE / NOTES:', state.notes.trim());
-    lines.push('', privateMode ? 'Private Session — not saved by problem.me' : 'Generated locally at problem.me');
+    lines.push('', embedded ? 'Shared investigation — saving is controlled by the investigation page' : privateMode ? 'Private Session — not saved by problem.me' : 'Generated locally at problem.me');
     return lines.join('\n');
   }
 
@@ -1851,6 +1870,7 @@ Target the repeatable weakness, not only the symptom.</p>
     return ['fact','assumption','test','result'].includes(x) ? x : 'fact';
   }
   function loadLedger() {
+    if (new URLSearchParams(location.search).get('investigation') === '1') return;
     try {
       const saved = JSON.parse(localStorage.getItem(LEDGER_KEY));
       if (Array.isArray(saved) && saved.length) {
@@ -2019,6 +2039,7 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
   });
 
   function consumeIncomingHandoff() {
+    if (new URLSearchParams(location.search).get('investigation') === '1') return;
     if (!location.hash || !location.hash.includes('pm_seed=')) return;
     const params = new URLSearchParams(location.hash.slice(1));
     const seed = params.get('pm_seed') || '';
@@ -2073,6 +2094,7 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
 
 <script>
 (() => {
+  if (new URLSearchParams(location.search).get('investigation') === '1') return;
   const ACTIVE_KEY = 'problem-me:investigation:active:v1';
   const SCHEMA = 'problem.me/investigation';
   const SCHEMA_VERSION = 1;
@@ -2420,4 +2442,5 @@ return {seed:problem||root,one:{target:'fishbone.html',label:'MAP ALTERNATIVE CA
 })();
 </script>
 
+<script src="investigation-bridge.js"></script>
 </body></html>

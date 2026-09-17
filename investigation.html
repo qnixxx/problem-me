@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#020805">
+<title>Shared Investigation Pilot | problem.me</title>
+<link rel="stylesheet" href="investigation.css">
+<script src="investigation-model.js" defer></script>
+<script src="investigation.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to workspace</a>
+<header><a href="index.html">problem.me_</a><span>v0.8 / INVESTIGATION PILOT</span></header>
+<main>
+<section class="panel">
+<p class="kicker">&gt; /investigations/shared</p>
+<h1>ONE PROBLEM. FOLLOW THE EVIDENCE_</h1>
+<p>Explore causes in Fishbone and examine them with 5 Whys. Both workspaces and one shared Evidence Ledger travel together.</p>
+<label for="name">INVESTIGATION NAME</label><input id="name" maxlength="80" placeholder="Name the problem">
+<label for="status">STATUS</label><select id="status"><option value="open">OPEN</option><option value="verifying">VERIFYING</option><option value="resolved">RESOLVED</option><option value="archived">ARCHIVED</option></select>
+<p id="identity" class="muted"></p>
+<div class="actions"><button id="mode">START LOCAL SAVE</button><button id="save">SAVE NOW</button><button id="export">EXPORT .PROBLEMME</button><button id="import">IMPORT .PROBLEMME</button><button id="open">OPEN SAVED</button><button id="new">NEW INVESTIGATION</button><button id="delete">DELETE SAVED PILOT</button></div>
+<input id="file" type="file" accept=".problemme,application/json,application/vnd.problemme+json" hidden>
+<p id="privacy">PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy.</p>
+<p id="message" role="status" aria-live="polite">Loading both workspaces…</p>
+</section>
+<section class="panel" aria-label="Choose technique">
+<div class="actions"><button id="five" aria-pressed="true">5 WHYS</button><button id="fish" aria-pressed="false">FISHBONE</button></div>
+<p>Switching preserves both workspaces. The Evidence Ledger is shared.</p>
+<div id="causePanel" hidden><label for="cause">FISHBONE CAUSE TO EXAMINE</label><select id="cause"></select><button id="examine">EXAMINE IN 5 WHYS →</button><p class="muted">You will be asked before changing an existing 5 Whys problem statement. Its WHY chain remains intact.</p></div>
+</section>
+<div id="workspace" tabindex="-1"></div>
+<p class="capy">CAPYBARA.EXE: Two tools. One trail of evidence. Snacks remain optional.</p>
+</main>
+<noscript>This pilot requires JavaScript. The standalone tools remain available from the homepage.</noscript>
+</body></html>

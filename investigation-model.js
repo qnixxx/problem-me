@@ -37,13 +37,13 @@
     if (new TextEncoder().encode(text).length > LIMIT) throw Error('File exceeds the 1 MiB limit.');
     const obj = clone(validate(JSON.parse(text)));
     obj.schemaVersion = 2;
-    obj.appVersion = '0.8.0-pilot';
+    obj.appVersion = '0.8.1';
     TECHNIQUES.forEach(tool => { if (!obj.toolData[tool]) obj.toolData[tool] = blank(tool); });
     return obj;
   }
   function fresh() {
     const now = new Date().toISOString();
-    return {schema:'problem.me/investigation',schemaVersion:2,appVersion:'0.8.0-pilot',
+    return {schema:'problem.me/investigation',schemaVersion:2,appVersion:'0.8.1',
       id:root.crypto.randomUUID(),title:'',status:'open',createdAt:now,updatedAt:now,
       currentTechnique:'5-whys',techniquesUsed:['5-whys'],history:[],
       toolData:Object.fromEntries(TECHNIQUES.map(t=>[t,blank(t)])),evidence:[]};

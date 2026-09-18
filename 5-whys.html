@@ -1156,7 +1156,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 </head>
 <body>
-<p class="shared-entry" style="text-align:center;padding:12px"><a href="investigation.html">[ OPEN SHARED INVESTIGATION PILOT — 5 WHYS + FISHBONE → ]</a></p>
+<p class="shared-entry" style="text-align:center;padding:12px"><a href="investigation.html">[ OPEN INVESTIGATION WORKSPACE — 5 WHYS + FISHBONE → ]</a></p>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #001 OPEN</div></nav></div></header>
 <main id="main-content">
@@ -1743,7 +1743,7 @@ Target the repeatable weakness, not only the symptom.</p>
 
   clearLocalDataBtn.addEventListener('click', () => {
     if (embedded) return;
-    const ok = window.confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this 5 Whys form? This cannot be undone.');
+    const ok = window.confirm('Delete all standalone problem.me technique drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this 5 Whys form? My Investigations are managed separately. This cannot be undone.');
     if (!ok) return;
 
     const result = clearProblemMeLocalData();

@@ -1,33 +1,64 @@
 (() => {
   'use strict';
+
   const M = ProblemMeInvestigation;
-  const KEY = 'problem-me:investigation:pilot:v2';
+  const Store = ProblemMeInvestigationStore;
   const $ = id => document.getElementById(id);
-  let state = M.fresh(), privateMode = true, ready = false, applying = false;
-  let expected = null;
-  const frames = {}, adapters = {};
+  const requestedId = new URLSearchParams(location.search).get('id');
+
+  let state = M.fresh();
+  let privateMode = true;
+  let ready = false;
+  let applying = false;
+  let expectedText = null;
+  let dirty = false;
+  let revision = 0;
+  let saveTimer = null;
+  let saveBlocked = false;
+  let saveQueue = Promise.resolve();
+
+  const frames = {};
+  const adapters = {};
   const tell = text => { $('message').textContent = text; };
+
+  function encoded(value) {
+    return M.encode(value);
+  }
+
   function resizeFrame(frame) {
     if (!frame || frame.hidden) return;
     const doc = frame.contentDocument;
     if (!doc?.body) return;
-    const height = Math.ceil(doc.body.scrollHeight);
+    const height = Math.ceil(Math.max(doc.body.scrollHeight, doc.documentElement?.scrollHeight || 0));
     if (!Number.isFinite(height) || height < 1) return;
     const current = Math.round(parseFloat(frame.style.height) || 0);
     if (Math.abs(current - height) > 1) frame.style.height = `${height}px`;
   }
+
+  function updateUrlForSavedState() {
+    if (privateMode) return;
+    const target = `investigation.html?id=${encodeURIComponent(state.id)}`;
+    if (`${location.pathname.split('/').pop()}${location.search}` !== target) history.replaceState(null, '', target);
+  }
+
+  function clearSavedUrl() {
+    if (location.search) history.replaceState(null, '', 'investigation.html');
+  }
+
   function render() {
     $('identity').textContent = `ID ${state.id} · Updated ${new Date(state.updatedAt).toLocaleString()}`;
     $('mode').textContent = privateMode ? 'START LOCAL SAVE' : 'ENTER PRIVATE SESSION';
-    $('save').disabled = !ready || privateMode;
+    $('save').disabled = !ready || privateMode || saveBlocked;
     $('privacy').textContent = privateMode
       ? "PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy."
-      : 'LOCAL SAVE — both workspaces and the shared ledger auto-save in this browser. Other standalone drafts are separate.';
+      : 'LOCAL SAVE — this investigation auto-saves in My Investigations using browser storage on this device. problem.me does not receive a copy.';
+
     M.TECHNIQUES.forEach(tool => { frames[tool].hidden = state.currentTechnique !== tool; });
     requestAnimationFrame(() => resizeFrame(frames[state.currentTechnique]));
     $('five').setAttribute('aria-pressed', String(state.currentTechnique === '5-whys'));
     $('fish').setAttribute('aria-pressed', String(state.currentTechnique === 'fishbone'));
     $('causePanel').hidden = state.currentTechnique !== 'fishbone';
+
     const previous = $('cause').value;
     $('cause').replaceChildren();
     state.toolData.fishbone.categories.forEach((category, ci) => category.causes.forEach((cause, ri) => {
@@ -37,53 +68,103 @@
       option.textContent = `${category.name}: ${cause.text}`;
       $('cause').append(option);
     }));
-    if ([...$('cause').options].some(x=>x.value === previous)) $('cause').value = previous;
+    if ([...$('cause').options].some(x => x.value === previous)) $('cause').value = previous;
     $('examine').disabled = !ready || !$('cause').options.length;
   }
+
   function capture() {
     if (!ready || applying) return;
     M.TECHNIQUES.forEach(tool => { state.toolData[tool] = adapters[tool].get(); });
-    const ledger = adapters[state.currentTechnique].evidence().filter(x=>x.text.trim());
+    const ledger = adapters[state.currentTechnique].evidence().filter(x => x.text.trim());
     if (JSON.stringify(ledger) !== JSON.stringify(state.evidence)) {
       state.evidence = ledger;
       applying = true;
-      M.TECHNIQUES.filter(t=>t!==state.currentTechnique).forEach(t=>adapters[t].setEvidence(ledger));
+      M.TECHNIQUES.filter(t => t !== state.currentTechnique).forEach(t => adapters[t].setEvidence(ledger));
       applying = false;
     }
     state.title = $('name').value;
     state.status = $('status').value;
   }
-  function persist() {
-    if (privateMode) { tell('PRIVATE SESSION — export to keep your work.'); return false; }
-    try {
-      if (localStorage.getItem(KEY) !== expected) throw Error('The saved pilot changed in another tab. Export this work, or open the saved copy before continuing local saves.');
-      const text = M.encode(state);
-      localStorage.setItem(KEY, text);
-      expected = text;
-      tell('BOTH WORKSPACES + SHARED LEDGER SAVED LOCALLY_');
-      return true;
-    } catch (error) { tell(`NOT SAVED — ${error.message} Export to keep a copy.`); return false; }
+
+  function markChanged() {
+    state.updatedAt = new Date().toISOString();
+    revision += 1;
+    dirty = true;
   }
+
+  function schedulePersist() {
+    if (privateMode || saveBlocked) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      saveTimer = null;
+      persistSnapshot({quiet:true});
+    }, 220);
+  }
+
+  function persistSnapshot({quiet=false} = {}) {
+    if (privateMode) {
+      if (!quiet) tell('PRIVATE SESSION — export to keep your work, or start local save.');
+      return Promise.resolve(false);
+    }
+    if (saveBlocked) {
+      if (!quiet) tell('LOCAL SAVE PAUSED — the saved copy changed elsewhere. Export this work or reopen it from My Investigations.');
+      return Promise.resolve(false);
+    }
+
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    const snapshot = M.clone(state);
+    const snapshotRevision = revision;
+    const snapshotText = encoded(snapshot);
+
+    const task = async () => {
+      try {
+        const stored = await Store.get(snapshot.id);
+        const storedText = stored ? encoded(stored) : null;
+        if (storedText !== expectedText) {
+          saveBlocked = true;
+          throw new Error('The saved investigation changed in another tab. Export this work, or reopen the saved copy from My Investigations before continuing local saves.');
+        }
+        await Store.put(snapshot);
+        expectedText = snapshotText;
+        if (revision === snapshotRevision) dirty = false;
+        updateUrlForSavedState();
+        if (!quiet) tell('INVESTIGATION SAVED LOCALLY — both workspaces + shared ledger.');
+        return true;
+      } catch (error) {
+        tell(`NOT SAVED — ${error.message} Export to keep a copy.`);
+        return false;
+      } finally {
+        render();
+      }
+    };
+
+    const result = saveQueue.then(task, task);
+    saveQueue = result.then(() => undefined, () => undefined);
+    return result;
+  }
+
   function changed(tool) {
     if (!ready || applying) return;
     const before = JSON.stringify(state);
     capture();
     if (tool) {
-      const evidence = adapters[tool].evidence().filter(x=>x.text.trim());
+      const evidence = adapters[tool].evidence().filter(x => x.text.trim());
       if (JSON.stringify(evidence) !== JSON.stringify(state.evidence)) {
         state.evidence = evidence;
         applying = true;
-        M.TECHNIQUES.filter(t=>t!==tool).forEach(t=>adapters[t].setEvidence(evidence));
+        M.TECHNIQUES.filter(t => t !== tool).forEach(t => adapters[t].setEvidence(evidence));
         applying = false;
       }
       if (!state.techniquesUsed.includes(tool)) state.techniquesUsed.push(tool);
     }
     if (JSON.stringify(state) !== before) {
-      state.updatedAt = new Date().toISOString();
-      persist();
+      markChanged();
+      schedulePersist();
       render();
     }
   }
+
   function apply(next) {
     applying = true;
     state = next;
@@ -96,19 +177,60 @@
     applying = false;
     render();
   }
+
   function switchTo(tool) {
     capture();
+    if (state.currentTechnique === tool) return;
     state.currentTechnique = tool;
     if (!state.techniquesUsed.includes(tool)) state.techniquesUsed.push(tool);
-    state.updatedAt = new Date().toISOString();
-    persist(); render();
+    markChanged();
+    schedulePersist();
+    render();
   }
+
   function confirmReplace() {
     capture();
     return confirm('Replace the investigation currently on screen, including BOTH workspaces and the shared ledger? Export first if you need to keep it.');
   }
+
+  async function initializeStorage() {
+    let migration = null;
+    try { migration = await Store.migrateLegacy(M); }
+    catch (_) { /* Private Session remains usable if storage is unavailable. */ }
+
+    if (requestedId) {
+      try {
+        const stored = await Store.get(requestedId);
+        if (!stored) {
+          tell('SAVED INVESTIGATION NOT FOUND — starting a new Private Session.');
+          clearSavedUrl();
+          return;
+        }
+        const next = M.decode(encoded(stored));
+        expectedText = encoded(next);
+        privateMode = false;
+        saveBlocked = false;
+        dirty = false;
+        apply(next);
+        tell('LOCAL INVESTIGATION OPENED — auto-save active on this device.');
+        return;
+      } catch (error) {
+        tell(`COULD NOT OPEN LOCAL INVESTIGATION — ${error.message} Private Session remains available.`);
+        clearSavedUrl();
+        return;
+      }
+    }
+
+    if (migration?.migrated || migration?.existing) {
+      tell('PREVIOUS SHARED PILOT MOVED TO MY INVESTIGATIONS — start fresh, import a file, or open your local investigations.');
+    } else {
+      tell('PRIVATE SESSION READY — start fresh, import a file, or start local save.');
+    }
+  }
+
   window.problemMePilot = {changed};
-  document.querySelectorAll('button,input,select').forEach(el=>el.disabled=true);
+  document.querySelectorAll('button,input,select').forEach(el => el.disabled = true);
+
   M.TECHNIQUES.forEach(tool => {
     const frame = document.createElement('iframe');
     frames[tool] = frame;
@@ -116,83 +238,159 @@
     frame.hidden = tool !== state.currentTechnique;
     frame.addEventListener('load', () => {
       const adapter = frame.contentWindow.investigationAdapter;
-      if (!adapter) { tell('Workspace did not load. Check that all pilot files are hosted together.'); return; }
+      if (!adapter) {
+        tell('Workspace did not load. Check that all investigation files are hosted together.');
+        return;
+      }
       adapters[tool] = adapter;
       const resize = () => resizeFrame(frame);
       new ResizeObserver(resize).observe(frame.contentDocument.body);
-      if (Object.keys(adapters).length === 2 && !ready) {
+      if (Object.keys(adapters).length === M.TECHNIQUES.length && !ready) {
         ready = true;
-        document.querySelectorAll('button,input,select').forEach(el=>el.disabled=false);
+        document.querySelectorAll('button,input,select').forEach(el => el.disabled = false);
         apply(state);
-        tell('PRIVATE SESSION READY — start fresh, import a file, or open the saved pilot.');
+        initializeStorage();
       }
       resize();
     });
     frame.src = `${tool}.html?investigation=1`;
     $('workspace').append(frame);
   });
+
   $('five').onclick = () => switchTo('5-whys');
   $('fish').onclick = () => switchTo('fishbone');
   $('name').oninput = () => changed();
   $('status').onchange = () => changed();
-  $('save').onclick = () => { capture(); persist(); };
-  $('mode').onclick = () => {
+
+  $('save').onclick = async () => {
     capture();
-    if (!privateMode) { privateMode = true; render(); tell('PRIVATE SESSION — the last saved copy remains unchanged.'); return; }
-    try {
-      const stored = localStorage.getItem(KEY);
-      if (!confirm(stored ? 'Save this investigation on this device and replace the existing saved pilot? Export either copy first if needed.' : 'Save both workspaces and the shared ledger on this device?')) return;
-      expected = stored;
-      privateMode = false;
-      if (!persist()) privateMode = true;
-      render();
-    } catch (_) { tell('Browser storage is unavailable. Private Session and export remain available.'); }
+    markChanged();
+    await persistSnapshot();
   };
+
+  $('mode').onclick = async () => {
+    capture();
+    if (!privateMode) {
+      if (dirty && !saveBlocked) await persistSnapshot({quiet:true});
+      privateMode = true;
+      clearTimeout(saveTimer);
+      saveTimer = null;
+      render();
+      tell(saveBlocked
+        ? 'PRIVATE SESSION — local save was paused because another tab changed the saved copy. Your current work remains in memory; export it to keep it.'
+        : 'PRIVATE SESSION — the last saved local copy remains unchanged from this point forward.');
+      return;
+    }
+
+    try {
+      const stored = await Store.get(state.id);
+      const storedText = stored ? encoded(stored) : null;
+      const prompt = stored
+        ? 'Save this Private Session over the existing local copy of this investigation? Export either copy first if needed.'
+        : 'Save this investigation in My Investigations on this device?';
+      if (!confirm(prompt)) return;
+      expectedText = storedText;
+      saveBlocked = false;
+      privateMode = false;
+      markChanged();
+      const ok = await persistSnapshot();
+      if (!ok) privateMode = true;
+      render();
+    } catch (_) {
+      privateMode = true;
+      render();
+      tell('Browser investigation storage is unavailable. Private Session and export remain available.');
+    }
+  };
+
   $('export').onclick = () => {
     capture();
     try {
-      const copy = M.clone(state); copy.updatedAt = new Date().toISOString();
-      const blob = new Blob([M.encode(copy)],{type:'application/vnd.problemme+json'});
-      const url = URL.createObjectURL(blob), link = document.createElement('a');
+      const copy = M.clone(state);
+      copy.updatedAt = new Date().toISOString();
+      const blob = new Blob([M.encode(copy)], {type:'application/vnd.problemme+json'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
       link.href = url;
-      link.download = (state.title.replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').slice(0,60) || 'problem-me-investigation') + '.problemme';
-      document.body.append(link); link.click(); link.remove();
-      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      link.download = (state.title.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 60) || 'problem-me-investigation') + '.problemme';
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
       tell('EXPORTED — both workspaces and the shared ledger. The file is readable JSON; share it only as intended.');
-    } catch (error) { tell(`EXPORT FAILED — ${error.message}`); }
+    } catch (error) {
+      tell(`EXPORT FAILED — ${error.message}`);
+    }
   };
-  $('import').onclick = () => { $('file').value=''; $('file').click(); };
+
+  $('import').onclick = () => { $('file').value = ''; $('file').click(); };
   $('file').onchange = async () => {
-    const file = $('file').files[0]; if (!file) return;
+    const file = $('file').files[0];
+    if (!file) return;
     try {
-      if (file.size > M.LIMIT) throw Error('File exceeds the 1 MiB limit.');
+      if (file.size > M.LIMIT) throw new Error('File exceeds the 1 MiB limit.');
       const next = M.decode(await file.text());
       if (!confirmReplace()) return;
+      clearTimeout(saveTimer);
+      saveTimer = null;
+      privateMode = true;
+      expectedText = null;
+      saveBlocked = false;
+      revision += 1;
+      dirty = true;
       apply(next);
-      if (privateMode) tell('IMPORTED INTO PRIVATE SESSION — both workspaces are ready.');
-      else persist();
-    } catch (error) { tell(`IMPORT REJECTED — ${error.message}`); }
+      clearSavedUrl();
+      tell('IMPORTED INTO PRIVATE SESSION — review it first, then START LOCAL SAVE to add it to My Investigations.');
+    } catch (error) {
+      tell(`IMPORT REJECTED — ${error.message}`);
+    }
   };
-  $('open').onclick = () => {
-    try {
-      const text = localStorage.getItem(KEY);
-      if (!text) { tell('No shared pilot is saved in this browser. Import a .problemme file to bring in a 5 Whys investigation.'); return; }
-      const next = M.decode(text);
-      if (!confirmReplace()) return;
-      expected = text; apply(next);
-      tell(privateMode ? 'SAVED COPY OPENED IN PRIVATE SESSION — editing does not change the saved copy.' : 'SAVED INVESTIGATION OPENED_');
-    } catch (error) { tell(`COULD NOT OPEN — ${error.message}`); }
+
+  $('open').onclick = async () => {
+    capture();
+    if (privateMode && dirty && !confirm('Private Session changes are not saved locally. Open My Investigations anyway?')) return;
+    if (!privateMode && dirty && !saveBlocked) await persistSnapshot({quiet:true});
+    location.href = 'investigations.html';
   };
+
   $('new').onclick = () => {
     if (!confirmReplace()) return;
-    privateMode = true; apply(M.fresh());
-    tell('NEW PRIVATE INVESTIGATION — any previous saved copy remains unchanged.');
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    privateMode = true;
+    expectedText = null;
+    saveBlocked = false;
+    dirty = false;
+    revision += 1;
+    apply(M.fresh());
+    clearSavedUrl();
+    tell('NEW PRIVATE INVESTIGATION — start working, export it, or start local save when ready.');
   };
-  $('delete').onclick = () => {
-    if (!confirm('Delete the saved shared pilot from this browser? The current in-memory work and standalone drafts will remain.')) return;
-    try { localStorage.removeItem(KEY); expected = null; privateMode = true; render(); tell('SAVED PILOT DELETED — current work is now private.'); }
-    catch (_) { tell('Could not delete the saved pilot. Browser storage is unavailable.'); }
+
+  $('delete').onclick = async () => {
+    capture();
+    let stored = null;
+    try { stored = await Store.get(state.id); }
+    catch (_) {}
+    if (!stored) {
+      tell('NO LOCAL COPY FOUND — current work remains in this session.');
+      return;
+    }
+    if (!confirm('Delete the local copy of this investigation from My Investigations? The current on-screen work will remain as a Private Session.')) return;
+    try {
+      await Store.remove(state.id);
+      expectedText = null;
+      privateMode = true;
+      saveBlocked = false;
+      dirty = true;
+      clearSavedUrl();
+      render();
+      tell('LOCAL COPY DELETED — current work is now a Private Session. Export or start local save to keep it again.');
+    } catch (_) {
+      tell('COULD NOT DELETE LOCAL COPY — browser storage is unavailable.');
+    }
   };
+
   $('examine').onclick = () => {
     capture();
     const [ci, ri] = $('cause').value.split(':').map(Number);
@@ -200,14 +398,17 @@
     if (!cause) return;
     if (!confirm(`Use this cause as the 5 Whys problem statement?\n\n${cause}\n\nExisting WHY answers will remain for you to review.`)) return;
     state.toolData['5-whys'].problem = cause;
-    state.history = [...state.history.slice(-49), {at:new Date().toISOString(),technique:'5-whys',action:'fishbone-cause-selected'}];
-    applying = true; adapters['5-whys'].set(state.toolData['5-whys']); applying = false;
+    state.history = [...state.history.slice(-49), {at:new Date().toISOString(), technique:'5-whys', action:'fishbone-cause-selected'}];
+    applying = true;
+    adapters['5-whys'].set(state.toolData['5-whys']);
+    applying = false;
     switchTo('5-whys');
     tell('CAUSE SENT TO 5 WHYS — review any existing WHY answers for this new starting point.');
   };
+
   window.addEventListener('beforeunload', event => {
-    if (!ready) return;
-    capture();
-    if (privateMode || expected !== JSON.stringify(state,null,2)) { event.preventDefault(); event.returnValue=''; }
+    if (!ready || !dirty) return;
+    event.preventDefault();
+    event.returnValue = '';
   });
 })();

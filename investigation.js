@@ -7,6 +7,15 @@
   let expected = null;
   const frames = {}, adapters = {};
   const tell = text => { $('message').textContent = text; };
+  function resizeFrame(frame) {
+    if (!frame || frame.hidden) return;
+    const doc = frame.contentDocument;
+    if (!doc?.body) return;
+    const height = Math.ceil(doc.body.scrollHeight);
+    if (!Number.isFinite(height) || height < 1) return;
+    const current = Math.round(parseFloat(frame.style.height) || 0);
+    if (Math.abs(current - height) > 1) frame.style.height = `${height}px`;
+  }
   function render() {
     $('identity').textContent = `ID ${state.id} · Updated ${new Date(state.updatedAt).toLocaleString()}`;
     $('mode').textContent = privateMode ? 'START LOCAL SAVE' : 'ENTER PRIVATE SESSION';
@@ -15,10 +24,7 @@
       ? "PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy."
       : 'LOCAL SAVE — both workspaces and the shared ledger auto-save in this browser. Other standalone drafts are separate.';
     M.TECHNIQUES.forEach(tool => { frames[tool].hidden = state.currentTechnique !== tool; });
-    requestAnimationFrame(() => {
-      const frame = frames[state.currentTechnique];
-      if (frame?.contentDocument?.body) frame.style.height = `${frame.contentDocument.body.scrollHeight + 24}px`;
-    });
+    requestAnimationFrame(() => resizeFrame(frames[state.currentTechnique]));
     $('five').setAttribute('aria-pressed', String(state.currentTechnique === '5-whys'));
     $('fish').setAttribute('aria-pressed', String(state.currentTechnique === 'fishbone'));
     $('causePanel').hidden = state.currentTechnique !== 'fishbone';
@@ -112,7 +118,7 @@
       const adapter = frame.contentWindow.investigationAdapter;
       if (!adapter) { tell('Workspace did not load. Check that all pilot files are hosted together.'); return; }
       adapters[tool] = adapter;
-      const resize = () => { if (!frame.hidden) frame.style.height = `${frame.contentDocument.body.scrollHeight + 24}px`; };
+      const resize = () => resizeFrame(frame);
       new ResizeObserver(resize).observe(frame.contentDocument.body);
       if (Object.keys(adapters).length === 2 && !ready) {
         ready = true;

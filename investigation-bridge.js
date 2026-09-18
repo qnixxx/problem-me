@@ -1,7 +1,13 @@
 (() => {
   if (new URLSearchParams(location.search).get('investigation') !== '1') return;
-  const technique = window.problemMeFiveWhys ? '5-whys' : 'fishbone';
-  const api = window.problemMeFiveWhys || window.problemMeFishbone;
+  const candidates = [
+    ['5-whys', window.problemMeFiveWhys],
+    ['fishbone', window.problemMeFishbone],
+    ['pareto', window.problemMePareto]
+  ];
+  const match = candidates.find(([, api]) => api);
+  if (!match || !window.problemMeEvidence) return;
+  const [technique, api] = match;
   window.investigationAdapter = {
     get: () => api.getState(),
     set: value => api.setState(value),

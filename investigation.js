@@ -51,13 +51,15 @@
     $('save').disabled = !ready || privateMode || saveBlocked;
     $('privacy').textContent = privateMode
       ? "PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy."
-      : 'LOCAL SAVE — this investigation auto-saves in My Investigations using browser storage on this device. problem.me does not receive a copy.';
+      : 'LOCAL SAVE — all three workspaces and the shared ledger auto-save in My Investigations using browser storage on this device. problem.me does not receive a copy.';
 
     M.TECHNIQUES.forEach(tool => { frames[tool].hidden = state.currentTechnique !== tool; });
     requestAnimationFrame(() => resizeFrame(frames[state.currentTechnique]));
     $('five').setAttribute('aria-pressed', String(state.currentTechnique === '5-whys'));
     $('fish').setAttribute('aria-pressed', String(state.currentTechnique === 'fishbone'));
+    $('pareto').setAttribute('aria-pressed', String(state.currentTechnique === 'pareto'));
     $('causePanel').hidden = state.currentTechnique !== 'fishbone';
+    $('paretoPanel').hidden = state.currentTechnique !== 'pareto';
 
     const previous = $('cause').value;
     $('cause').replaceChildren();
@@ -70,6 +72,23 @@
     }));
     if ([...$('cause').options].some(x => x.value === previous)) $('cause').value = previous;
     $('examine').disabled = !ready || !$('cause').options.length;
+
+    const previousPareto = $('paretoFocus').value;
+    $('paretoFocus').replaceChildren();
+    const ranked = state.toolData.pareto.rows
+      .map((row, index) => ({index, name:row.name.trim(), value:Number(row.value)}))
+      .filter(row => row.name && Number.isFinite(row.value) && row.value > 0)
+      .sort((a,b) => b.value - a.value || a.name.localeCompare(b.name));
+    ranked.forEach((row, rank) => {
+      const option = document.createElement('option');
+      option.value = String(row.index);
+      option.textContent = `${String(rank + 1).padStart(2,'0')} · ${row.name} — ${row.value}`;
+      $('paretoFocus').append(option);
+    });
+    if ([...$('paretoFocus').options].some(x => x.value === previousPareto)) $('paretoFocus').value = previousPareto;
+    const noPareto = !ready || !$('paretoFocus').options.length;
+    $('paretoWhy').disabled = noPareto;
+    $('paretoFish').disabled = noPareto;
   }
 
   function capture() {
@@ -129,7 +148,7 @@
         expectedText = snapshotText;
         if (revision === snapshotRevision) dirty = false;
         updateUrlForSavedState();
-        if (!quiet) tell('INVESTIGATION SAVED LOCALLY — both workspaces + shared ledger.');
+        if (!quiet) tell('INVESTIGATION SAVED LOCALLY — three workspaces + shared ledger.');
         return true;
       } catch (error) {
         tell(`NOT SAVED — ${error.message} Export to keep a copy.`);
@@ -190,7 +209,7 @@
 
   function confirmReplace() {
     capture();
-    return confirm('Replace the investigation currently on screen, including BOTH workspaces and the shared ledger? Export first if you need to keep it.');
+    return confirm('Replace the investigation currently on screen, including all THREE workspaces and the shared ledger? Export first if you need to keep it.');
   }
 
   async function initializeStorage() {
@@ -207,7 +226,7 @@
           return;
         }
         const next = M.decode(encoded(stored));
-        expectedText = encoded(next);
+        expectedText = encoded(stored);
         privateMode = false;
         saveBlocked = false;
         dirty = false;
@@ -234,7 +253,7 @@
   M.TECHNIQUES.forEach(tool => {
     const frame = document.createElement('iframe');
     frames[tool] = frame;
-    frame.title = tool === '5-whys' ? '5 Whys workspace' : 'Fishbone workspace';
+    frame.title = tool === '5-whys' ? '5 Whys workspace' : tool === 'fishbone' ? 'Fishbone workspace' : 'Pareto workspace';
     frame.hidden = tool !== state.currentTechnique;
     frame.addEventListener('load', () => {
       const adapter = frame.contentWindow.investigationAdapter;
@@ -259,6 +278,7 @@
 
   $('five').onclick = () => switchTo('5-whys');
   $('fish').onclick = () => switchTo('fishbone');
+  $('pareto').onclick = () => switchTo('pareto');
   $('name').oninput = () => changed();
   $('status').onchange = () => changed();
 
@@ -317,7 +337,7 @@
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      tell('EXPORTED — both workspaces and the shared ledger. The file is readable JSON; share it only as intended.');
+      tell('EXPORTED — all three workspaces and the shared ledger. The file is readable JSON; share it only as intended.');
     } catch (error) {
       tell(`EXPORT FAILED — ${error.message}`);
     }
@@ -404,6 +424,41 @@
     applying = false;
     switchTo('5-whys');
     tell('CAUSE SENT TO 5 WHYS — review any existing WHY answers for this new starting point.');
+  };
+
+
+  function selectedParetoCategory() {
+    const index = Number($('paretoFocus').value);
+    const row = state.toolData.pareto.rows[index];
+    return row?.name?.trim() || '';
+  }
+
+  $('paretoWhy').onclick = () => {
+    capture();
+    const category = selectedParetoCategory();
+    if (!category) return;
+    if (!confirm(`Use this Pareto category as the 5 Whys problem statement?\n\n${category}\n\nExisting WHY answers will remain for you to review.`)) return;
+    state.toolData['5-whys'].problem = category;
+    state.history = [...state.history.slice(-49), {at:new Date().toISOString(), technique:'5-whys', action:'pareto-category-selected'}];
+    applying = true;
+    adapters['5-whys'].set(state.toolData['5-whys']);
+    applying = false;
+    switchTo('5-whys');
+    tell('PARETO CATEGORY SENT TO 5 WHYS — investigate why this priority occurs.');
+  };
+
+  $('paretoFish').onclick = () => {
+    capture();
+    const category = selectedParetoCategory();
+    if (!category) return;
+    if (!confirm(`Use this Pareto category as the Fishbone effect / problem?\n\n${category}\n\nExisting Fishbone branches will remain for you to review.`)) return;
+    state.toolData.fishbone.effect = category;
+    state.history = [...state.history.slice(-49), {at:new Date().toISOString(), technique:'fishbone', action:'pareto-category-selected'}];
+    applying = true;
+    adapters.fishbone.set(state.toolData.fishbone);
+    applying = false;
+    switchTo('fishbone');
+    tell('PARETO CATEGORY SENT TO FISHBONE — map plausible causes before narrowing with evidence.');
   };
 
   window.addEventListener('beforeunload', event => {

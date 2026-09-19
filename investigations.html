@@ -7,6 +7,7 @@
 <meta name="description" content="Your local problem.me investigations. Stored in this browser on this device, with portable .problemme export and import.">
 <title>My Investigations | problem.me</title>
 <link rel="stylesheet" href="investigations.css">
+<link rel="icon" href="favicon.ico">
 <script src="investigation-model.js" defer></script>
 <script src="investigation-store.js" defer></script>
 <script src="investigations.js" defer></script>
@@ -16,7 +17,7 @@
 <header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="investigation.html">+ [ NEW INVESTIGATION ]</a><span class="online"><i class="dot" aria-hidden="true"></i>LOCAL WORKSPACE</span></nav></header>
 <main class="wrap">
 <section class="hero" aria-labelledby="page-title">
-<p class="prompt">&gt; /my-investigations <span class="version">v0.9</span></p>
+<p class="prompt">&gt; /my-investigations <span class="version">v0.9.1</span></p>
 <h1 id="page-title">MY INVESTIGATIONS_<span>YOUR PROBLEMS STAY YOURS.</span></h1>
 <p class="lede">Investigations are stored in this browser on this device using IndexedDB. problem.me does not receive a copy. Export important work as a <code>.problemme</code> file for backup or transfer.</p>
 <div class="hero-actions"><a class="button primary" href="investigation.html">START A NEW PROBLEM →</a><button id="import">IMPORT .PROBLEMME</button><input id="file" type="file" accept=".problemme,application/json,application/vnd.problemme+json" hidden></div>
@@ -25,6 +26,7 @@
 <div class="section-bar"><h2 id="library-title">LOCAL CASE FILES_</h2><span id="count">LOADING…</span></div>
 <div class="toolbar"><div><label for="search">SEARCH</label><input id="search" type="search" placeholder="Investigation name…"></div><div><label for="status">STATUS</label><select id="status"><option value="all">ALL</option><option value="open">OPEN</option><option value="verifying">VERIFYING</option><option value="resolved">RESOLVED</option><option value="archived">ARCHIVED</option></select></div></div>
 <p id="message" class="message" role="status" aria-live="polite">Opening local investigation storage…</p>
+<p id="unreadable" class="message" role="status" hidden></p>
 <div id="investigationList" class="investigation-list" tabindex="-1"></div>
 <div id="empty" class="empty" hidden><strong id="emptyTitle">NO LOCAL INVESTIGATIONS_</strong><p id="emptyCopy">Start a new problem, or import a <code>.problemme</code> file. Private Sessions do not appear here until you choose local save.</p><a class="button primary" href="investigation.html">START INVESTIGATION →</a></div>
 </section>

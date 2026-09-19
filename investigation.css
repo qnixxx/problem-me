@@ -5,4 +5,8 @@
 @media(max-width:640px){.online{display:none}.hero{grid-template-columns:1fr;padding:28px 0 22px}.consultant{display:none}.case-fields{grid-template-columns:minmax(0,1fr) 120px;gap:10px;padding:13px}.section-bar,.privacy-strip{padding:12px 13px}.section-bar>span,.stage-heading>span{display:none}.case-actions{padding:0 13px 13px;flex-wrap:wrap}.privacy-strip{align-items:stretch;flex-direction:column;gap:10px}.privacy-strip button{align-self:flex-start}.technique-tabs button{padding:12px 10px;gap:8px}.technique-tabs strong{font-size:.82rem}.technique-tabs small{font-size:.51rem}.tab-arrow{display:none}.cause-panel{grid-template-columns:1fr;gap:8px}.handoff-pair{grid-template-columns:1fr}.cause-copy p{margin-bottom:0}.file-menu-body{right:auto;left:0;width:min(270px,calc(100vw - 62px))}.file-menu{margin-left:0}.workspace-note{font-size:.52rem}.version{font-size:.55rem}.tool-stage{margin-top:24px}}
 @media(max-width:380px){.case-fields{grid-template-columns:1fr}.primary-actions{width:100%}.primary-actions button{flex:1}.back{font-size:.7rem}.brand{font-size:1.1rem}.note-divider{padding:0 3px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
-@media print{header,.case-actions,.privacy-strip,.technique-tabs,#causePanel,footer,.consultant{display:none}body{background:white;color:black}body:before{display:none}}
+#saveState{padding:0 16px 12px;margin:0;color:var(--yellow)}
+.file-menu-body{position:static;margin-top:6px;box-shadow:none}
+.cause-panel{margin-top:16px;min-width:0}.cause-controls{min-width:0}
+@media(max-width:640px){input,select{font-size:16px}button,summary{min-height:44px}.file-menu[open]{width:100%}.file-menu-body{position:static;width:100%;margin-top:6px;box-shadow:none}}
+@media print{header,.case-actions,.privacy-strip,.technique-tabs,#causePanel,#paretoPanel,footer,.consultant{display:none}body{background:white;color:black}body:before{display:none}}

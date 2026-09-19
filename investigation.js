@@ -16,6 +16,8 @@
   let saveTimer = null;
   let saveBlocked = false;
   let saveQueue = Promise.resolve();
+  let saveEpoch = 0;
+  let transitioning = false;
 
   const frames = {};
   const adapters = {};
@@ -29,7 +31,9 @@
     if (!frame || frame.hidden) return;
     const doc = frame.contentDocument;
     if (!doc?.body) return;
-    const height = Math.ceil(Math.max(doc.body.scrollHeight, doc.documentElement?.scrollHeight || 0));
+    // documentElement.scrollHeight is at least the iframe viewport height and
+    // prevents shrinking. Measure the intrinsic body, whose embedded min-height is 0.
+    const height = Math.ceil(doc.body.getBoundingClientRect().height);
     if (!Number.isFinite(height) || height < 1) return;
     const current = Math.round(parseFloat(frame.style.height) || 0);
     if (Math.abs(current - height) > 1) frame.style.height = `${height}px`;
@@ -46,12 +50,15 @@
   }
 
   function render() {
+    document.querySelectorAll('button,input,select').forEach(el => el.disabled = !ready || transitioning);
+    Object.values(frames).forEach(frame => { frame.inert = transitioning || !ready; });
     $('identity').textContent = `ID ${state.id} · Updated ${new Date(state.updatedAt).toLocaleString()}`;
     $('mode').textContent = privateMode ? 'START LOCAL SAVE' : 'ENTER PRIVATE SESSION';
-    $('save').disabled = !ready || privateMode || saveBlocked;
+    $('save').disabled = !ready || transitioning || privateMode || saveBlocked;
     $('privacy').textContent = privateMode
       ? "PRIVATE SESSION — kept in this page's memory. Refreshing or closing discards changes. Export to keep a copy."
-      : 'LOCAL SAVE — all three workspaces and the shared ledger auto-save in My Investigations using browser storage on this device. problem.me does not receive a copy.';
+      : 'LOCAL SAVE — auto-saved in this browser on this device. Browser storage is not a backup; export important work. problem.me does not receive a copy.';
+    $('saveState').textContent = privateMode ? 'NOT SAVED LOCALLY' : saveBlocked ? 'SAVE PAUSED — CONFLICT' : dirty ? 'UNSAVED CHANGES' : 'SAVED LOCALLY';
 
     M.TECHNIQUES.forEach(tool => { frames[tool].hidden = state.currentTechnique !== tool; });
     requestAnimationFrame(() => resizeFrame(frames[state.currentTechnique]));
@@ -71,7 +78,8 @@
       $('cause').append(option);
     }));
     if ([...$('cause').options].some(x => x.value === previous)) $('cause').value = previous;
-    $('examine').disabled = !ready || !$('cause').options.length;
+    $('examine').disabled = !ready || transitioning || !$('cause').options.length;
+    $('causePanel').hidden = state.currentTechnique !== 'fishbone' || !$('cause').options.length;
 
     const previousPareto = $('paretoFocus').value;
     $('paretoFocus').replaceChildren();
@@ -86,7 +94,8 @@
       $('paretoFocus').append(option);
     });
     if ([...$('paretoFocus').options].some(x => x.value === previousPareto)) $('paretoFocus').value = previousPareto;
-    const noPareto = !ready || !$('paretoFocus').options.length;
+    $('paretoPanel').hidden = state.currentTechnique !== 'pareto' || !ranked.length;
+    const noPareto = !ready || transitioning || !ranked.length;
     $('paretoWhy').disabled = noPareto;
     $('paretoFish').disabled = noPareto;
   }
@@ -134,23 +143,20 @@
     saveTimer = null;
     const snapshot = M.clone(state);
     const snapshotRevision = revision;
-    const snapshotText = encoded(snapshot);
+    const epoch = saveEpoch;
 
     const task = async () => {
       try {
-        const stored = await Store.get(snapshot.id);
-        const storedText = stored ? encoded(stored) : null;
-        if (storedText !== expectedText) {
-          saveBlocked = true;
-          throw new Error('The saved investigation changed in another tab. Export this work, or reopen the saved copy from My Investigations before continuing local saves.');
-        }
-        await Store.put(snapshot);
+        if (privateMode || saveBlocked || epoch !== saveEpoch) return false;
+        const snapshotText = encoded(snapshot);
+        await Store.put(snapshot, {expectedText, isCurrent:() => !privateMode && !saveBlocked && epoch === saveEpoch});
         expectedText = snapshotText;
         if (revision === snapshotRevision) dirty = false;
         updateUrlForSavedState();
         if (!quiet) tell('INVESTIGATION SAVED LOCALLY — three workspaces + shared ledger.');
         return true;
       } catch (error) {
+        if (error.code === 'CONFLICT') saveBlocked = true;
         tell(`NOT SAVED — ${error.message} Export to keep a copy.`);
         return false;
       } finally {
@@ -164,7 +170,7 @@
   }
 
   function changed(tool) {
-    if (!ready || applying) return;
+    if (!ready || applying || transitioning) return;
     const before = JSON.stringify(state);
     capture();
     if (tool) {
@@ -213,10 +219,8 @@
   }
 
   async function initializeStorage() {
-    let migration = null;
-    try { migration = await Store.migrateLegacy(M); }
-    catch (_) { /* Private Session remains usable if storage is unavailable. */ }
-
+    // A fresh Private Session must not trigger legacy writes or deletion.
+    // Migration belongs to My Investigations, an explicitly local-storage page.
     if (requestedId) {
       try {
         const stored = await Store.get(requestedId);
@@ -240,11 +244,25 @@
       }
     }
 
-    if (migration?.migrated || migration?.existing) {
-      tell('PREVIOUS SHARED PILOT MOVED TO MY INVESTIGATIONS — start fresh, import a file, or open your local investigations.');
-    } else {
-      tell('PRIVATE SESSION READY — start fresh, import a file, or start local save.');
-    }
+    tell('PRIVATE SESSION READY — start fresh, import a file, or start local save.');
+  }
+
+  async function stopSaving() {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    saveEpoch += 1; // invalidate queued snapshots before they reach IndexedDB
+    await saveQueue; // any transaction already committing settles before PRIVATE is shown
+  }
+
+  function exclusive(action) {
+    return async (...args) => {
+      if (!ready || transitioning) return;
+      transitioning = true;
+      render();
+      try { await action(...args); }
+      catch (error) { tell(`ACTION FAILED — ${error.message} Export to keep your work.`); }
+      finally { transitioning = false; render(); }
+    };
   }
 
   window.problemMePilot = {changed};
@@ -255,7 +273,7 @@
     frames[tool] = frame;
     frame.title = tool === '5-whys' ? '5 Whys workspace' : tool === 'fishbone' ? 'Fishbone workspace' : 'Pareto workspace';
     frame.hidden = tool !== state.currentTechnique;
-    frame.addEventListener('load', () => {
+    frame.addEventListener('load', async () => {
       const adapter = frame.contentWindow.investigationAdapter;
       if (!adapter) {
         tell('Workspace did not load. Check that all investigation files are hosted together.');
@@ -265,10 +283,12 @@
       const resize = () => resizeFrame(frame);
       new ResizeObserver(resize).observe(frame.contentDocument.body);
       if (Object.keys(adapters).length === M.TECHNIQUES.length && !ready) {
-        ready = true;
-        document.querySelectorAll('button,input,select').forEach(el => el.disabled = false);
+        transitioning = true;
         apply(state);
-        initializeStorage();
+        await initializeStorage();
+        ready = true;
+        transitioning = false;
+        render();
       }
       resize();
     });
@@ -291,14 +311,15 @@
   $('mode').onclick = async () => {
     capture();
     if (!privateMode) {
-      if (dirty && !saveBlocked) await persistSnapshot({quiet:true});
+      await stopSaving();
       privateMode = true;
+      clearSavedUrl();
       clearTimeout(saveTimer);
       saveTimer = null;
       render();
       tell(saveBlocked
         ? 'PRIVATE SESSION — local save was paused because another tab changed the saved copy. Your current work remains in memory; export it to keep it.'
-        : 'PRIVATE SESSION — the last saved local copy remains unchanged from this point forward.');
+        : 'PRIVATE SESSION — pending autosave cancelled. The last committed local copy remains; current changes stay in memory.');
       return;
     }
 
@@ -351,8 +372,7 @@
       if (file.size > M.LIMIT) throw new Error('File exceeds the 1 MiB limit.');
       const next = M.decode(await file.text());
       if (!confirmReplace()) return;
-      clearTimeout(saveTimer);
-      saveTimer = null;
+      await stopSaving();
       privateMode = true;
       expectedText = null;
       saveBlocked = false;
@@ -369,14 +389,16 @@
   $('open').onclick = async () => {
     capture();
     if (privateMode && dirty && !confirm('Private Session changes are not saved locally. Open My Investigations anyway?')) return;
-    if (!privateMode && dirty && !saveBlocked) await persistSnapshot({quiet:true});
+    if (!privateMode && dirty) {
+      const saved = await persistSnapshot({quiet:true});
+      if (!saved && !confirm('Your changes were NOT saved. Leave for My Investigations anyway? Export first to keep them.')) return;
+    }
     location.href = 'investigations.html';
   };
 
-  $('new').onclick = () => {
+  $('new').onclick = async () => {
     if (!confirmReplace()) return;
-    clearTimeout(saveTimer);
-    saveTimer = null;
+    await stopSaving();
     privateMode = true;
     expectedText = null;
     saveBlocked = false;
@@ -398,7 +420,8 @@
     }
     if (!confirm('Delete the local copy of this investigation from My Investigations? The current on-screen work will remain as a Private Session.')) return;
     try {
-      await Store.remove(state.id);
+      await stopSaving();
+      await Store.remove(state.id, {expectedText:encoded(stored)});
       expectedText = null;
       privateMode = true;
       saveBlocked = false;
@@ -460,6 +483,9 @@
     switchTo('fishbone');
     tell('PARETO CATEGORY SENT TO FISHBONE — map plausible causes before narrowing with evidence.');
   };
+
+  ['mode','save','open','new','delete'].forEach(id => { $(id).onclick = exclusive($(id).onclick); });
+  $('file').onchange = exclusive($('file').onchange);
 
   window.addEventListener('beforeunload', event => {
     if (!ready || !dirty) return;

@@ -5,6 +5,9 @@
   const Store = ProblemMeInvestigationStore;
   const $ = id => document.getElementById(id);
   let investigations = [];
+  let rawCount = 0;
+  let rawRecords = [];
+  let refreshGeneration = 0;
 
   function stamp(iso) {
     const date = new Date(iso);
@@ -131,7 +134,7 @@
           copy.createdAt = now;
           copy.updatedAt = now;
           copy.history = [...(copy.history || []).slice(-49), {at:now, technique:copy.currentTechnique, action:'duplicated'}];
-          await Store.put(safeInvestigation(copy));
+          await Store.put(safeInvestigation(copy), {expectedText:null});
           $('message').textContent = 'INVESTIGATION DUPLICATED LOCALLY_';
           await refresh();
         } catch (error) { $('message').textContent = `DUPLICATE FAILED — ${error.message}`; }
@@ -139,7 +142,9 @@
       actions.append(button('DELETE', 'danger', async () => {
         if (!confirm(`Delete the local investigation “${item.title.trim() || 'Untitled investigation'}”? Export first if you need a backup.`)) return;
         try {
-          await Store.remove(item.id);
+          const latest = await Store.get(item.id);
+          if (latest && M.encode(safeInvestigation(latest)) !== M.encode(item)) throw new Error('This case changed in another tab. Refresh before deleting.');
+          await Store.remove(item.id, {expectedText:latest ? M.encode(latest) : null});
           $('message').textContent = 'LOCAL INVESTIGATION DELETED_';
           await refresh();
         } catch (error) { $('message').textContent = `DELETE FAILED — ${error.message}`; }
@@ -151,13 +156,22 @@
   }
 
   async function refresh() {
+    const generation = ++refreshGeneration;
     try {
       const raw = await Store.list();
+      if (generation !== refreshGeneration) return;
+      rawCount = raw.length;
+      rawRecords = raw;
       investigations = [];
       for (const item of raw) {
         try { investigations.push(safeInvestigation(item)); }
-        catch (_) { /* Ignore corrupt local records rather than breaking the whole library. */ }
+        catch (_) { /* Keep unreadable records intact; report them below. */ }
       }
+      const unreadable = rawCount - investigations.length;
+      $('unreadable').hidden = !unreadable;
+      $('unreadable').textContent = `${unreadable} saved record(s) cannot be opened by this version. They have been kept intact. DELETE ALL also removes these records.`;
+      $('import').disabled = false;
+      $('clearAll').disabled = false;
       render();
       if (!$('message').textContent.includes('MIGRATED')) $('message').textContent = investigations.length
         ? 'LOCAL INVESTIGATIONS READY — stored only in this browser on this device.'
@@ -183,7 +197,7 @@
       const existing = await Store.get(next.id);
       if (existing && !confirm(`An investigation with this ID already exists locally. Replace “${existing.title || 'Untitled investigation'}” with the imported file?`)) return;
       next.updatedAt = new Date().toISOString();
-      await Store.put(safeInvestigation(next));
+      await Store.put(safeInvestigation(next), {expectedText:existing ? M.encode(existing) : null});
       $('message').textContent = existing ? 'IMPORTED FILE REPLACED THE LOCAL COPY_' : 'IMPORTED INTO MY INVESTIGATIONS_';
       await refresh();
     } catch (error) {
@@ -192,10 +206,10 @@
   });
 
   $('clearAll').addEventListener('click', async () => {
-    if (!investigations.length) { $('message').textContent = 'NO LOCAL INVESTIGATIONS TO DELETE_'; return; }
-    if (!confirm(`Delete all ${investigations.length} locally saved investigation${investigations.length === 1 ? '' : 's'} from this browser? Export anything important first. This cannot be undone.`)) return;
+    if (!rawCount) { $('message').textContent = 'NO LOCAL INVESTIGATIONS TO DELETE_'; return; }
+    if (!confirm(`Delete all ${rawCount} locally saved records, including any unreadable records, from this browser? Export anything important first. This cannot be undone.`)) return;
     try {
-      await Store.clear();
+      await Store.clear(rawRecords);
       $('message').textContent = 'ALL LOCAL INVESTIGATIONS DELETED_';
       await refresh();
     } catch (error) {
@@ -208,7 +222,10 @@
       const migration = await Store.migrateLegacy(M);
       if (migration.migrated) $('message').textContent = 'MIGRATED PREVIOUS SHARED PILOT INTO MY INVESTIGATIONS_';
       else if (migration.existing) $('message').textContent = 'PREVIOUS SHARED PILOT ALREADY EXISTS IN MY INVESTIGATIONS_';
+      else if (migration.reason === 'collision') $('message').textContent = 'MIGRATED COPY DIFFERS — the older pilot has been retained in localStorage; neither copy was overwritten.';
     } catch (_) {}
     await refresh();
   })();
+  window.addEventListener('focus', refresh);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
 })();

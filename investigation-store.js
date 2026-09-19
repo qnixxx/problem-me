@@ -32,7 +32,7 @@
       };
       request.onsuccess = () => {
         const db = request.result;
-        db.onversionchange = () => db.close();
+        db.onversionchange = () => { db.close(); dbPromise = null; };
         resolve(db);
       };
       request.onerror = () => {
@@ -43,7 +43,7 @@
         dbPromise = null;
         reject(new Error('Local investigation storage is blocked by another open problem.me tab.'));
       };
-    });
+    }).catch(error => { dbPromise = null; throw error; });
     return dbPromise;
   }
 
@@ -57,15 +57,57 @@
     return (await requestResult((await store('readonly')).get(id))) || null;
   }
 
-  async function put(value) {
+  // Compare and write in ONE transaction: other tabs cannot slip a write
+  // between the comparison and the mutation. Success means committed, not queued.
+  async function mutate(action, id, value, {expectedText, expectedRecords, isCurrent} = {}) {
+    const db = await open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const items = tx.objectStore(STORE_NAME);
+      let failure;
+      tx.oncomplete = () => resolve(value);
+      tx.onabort = () => reject(failure || tx.error || new Error('Local storage transaction aborted.'));
+      tx.onerror = () => {}; // onabort reports the final outcome.
+      const write = stored => {
+        try {
+          if (isCurrent && !isCurrent()) throw new Error('Save cancelled because the session changed.');
+          if (expectedRecords) {
+            const fingerprint = records => JSON.stringify(records.map(item => JSON.stringify(item)).sort());
+            if (fingerprint(stored) !== fingerprint(expectedRecords)) {
+              const error = new Error('The local library changed in another tab. Refresh and review before deleting all records.');
+              error.code = 'CONFLICT';
+              throw error;
+            }
+          }
+          if (expectedText !== undefined) {
+            const actual = stored ? root.ProblemMeInvestigation.encode(stored) : null;
+            if (actual !== expectedText) {
+              const error = new Error('The saved investigation changed in another tab. Export this work or reopen the saved copy.');
+              error.code = 'CONFLICT';
+              throw error;
+            }
+          }
+          if (action === 'put') items.put(value);
+          else if (action === 'delete') items.delete(id);
+          else items.clear();
+        } catch (error) { failure = error; tx.abort(); }
+      };
+      if (expectedText !== undefined || expectedRecords) {
+        const request = expectedRecords ? items.getAll() : items.get(id);
+        request.onsuccess = () => write(request.result);
+      } else write();
+    });
+  }
+
+  async function put(value, options) {
     if (!value || typeof value.id !== 'string' || !value.id) throw new Error('Investigation has no valid ID.');
-    await requestResult((await store('readwrite')).put(value));
+    await mutate('put', value.id, value, options);
     return value;
   }
 
-  async function remove(id) {
+  async function remove(id, options) {
     if (!id) return;
-    await requestResult((await store('readwrite')).delete(id));
+    await mutate('delete', id, undefined, options);
   }
 
   async function list() {
@@ -73,8 +115,8 @@
     return values.sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
   }
 
-  async function clear() {
-    await requestResult((await store('readwrite')).clear());
+  async function clear(expectedRecords) {
+    await mutate('clear', undefined, undefined, {expectedRecords});
   }
 
   async function count() {
@@ -90,8 +132,14 @@
     try {
       const item = model.decode(text);
       const existing = await get(item.id);
-      if (!existing) await put(item);
-      try { root.localStorage.removeItem(LEGACY_KEY); } catch (_) {}
+      if (!existing) await put(item, {expectedText:null});
+      // A same-ID record may contain different work. Never discard that legacy copy.
+      if (existing && model.encode(model.decode(model.encode(existing))) !== model.encode(item)) {
+        return {migrated:false, reason:'collision', id:item.id};
+      }
+      try {
+        if (root.localStorage.getItem(LEGACY_KEY) === text) root.localStorage.removeItem(LEGACY_KEY);
+      } catch (_) {}
       return {migrated:!existing, existing:Boolean(existing), id:item.id};
     } catch (error) {
       return {migrated:false, reason:'invalid', error};

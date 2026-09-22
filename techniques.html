@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Browse the problem.me visual problem-solving technique library — 5 Whys, Fishbone, Pareto Analysis and Kepner–Tregoe." />
+  <meta name="description" content="Browse the problem.me visual problem-solving technique library and field guides — 5 Whys, Fishbone, Pareto Analysis and Kepner–Tregoe." />
   <meta name="theme-color" content="#020805" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="Technique Library | problem.me" />
@@ -293,6 +293,20 @@
       html{scroll-behavior:auto}
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     }
+  
+    /* v0.9.2 field guides */
+    .guide-section{margin:36px 0 18px;border-top:1px solid var(--line);padding-top:24px}
+    .guide-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:12px}
+    .guide-head h2{margin:5px 0 0;color:var(--cream);font-size:1.25rem}
+    .guide-head p{max-width:620px;margin:0;color:var(--muted);font-size:.7rem}
+    .guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .guide-card{display:block;min-width:0;border:1px solid var(--line);background:var(--panel);padding:15px;color:var(--green);text-decoration:none}
+    .guide-card:hover{border-color:var(--yellow);color:var(--yellow)}
+    .guide-card small{display:block;color:var(--muted);font-size:.56rem;letter-spacing:.07em}
+    .guide-card strong{display:block;margin:5px 0;color:var(--cream);font-size:.9rem}
+    .guide-card span{display:block;color:var(--muted);font-size:.66rem;line-height:1.5}
+    .guide-card b{display:block;margin-top:10px;color:inherit;font-size:.62rem;font-weight:400}
+    @media(max-width:640px){.guide-head{align-items:flex-start;flex-direction:column}.guide-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -445,6 +459,20 @@ RISK    | DECIDE</pre>
       NO MATCHES FOUND_ Try a broader search or reset the filter to ALL.
     </div>
 
+
+    <section class="guide-section" aria-labelledby="guide-title">
+      <div class="guide-head">
+        <div><div class="prompt">&gt; read /field-guides</div><h2 id="guide-title">FIELD GUIDES_</h2></div>
+        <p>Short, practical notes on when each technique helps, where it fails, and what evidence should do next.</p>
+      </div>
+      <div class="guide-grid">
+        <a class="guide-card" href="articles/5-whys.html"><small>FIELD GUIDE #001</small><strong>5 Whys</strong><span>Build a causal chain without turning five into a ritual or assumptions into facts.</span><b>READ GUIDE →</b></a>
+        <a class="guide-card" href="articles/fishbone.html"><small>FIELD GUIDE #002</small><strong>Fishbone / Ishikawa</strong><span>Map plausible causes broadly, then let evidence narrow the branches.</span><b>READ GUIDE →</b></a>
+        <a class="guide-card" href="articles/pareto.html"><small>FIELD GUIDE #003</small><strong>Pareto Analysis</strong><span>Prioritize recurring impact without confusing frequency with causality.</span><b>READ GUIDE →</b></a>
+        <a class="guide-card" href="articles/kepner-tregoe.html"><small>FIELD GUIDE #004</small><strong>Kepner–Tregoe</strong><span>Keep decision criteria separate from problem diagnosis and verification.</span><b>READ GUIDE →</b></a>
+      </div>
+    </section>
+
     <div class="method-note">
       <div class="method-no">04</div>
       <div>
@@ -458,7 +486,7 @@ RISK    | DECIDE</pre>
 <footer>
   <div class="wrap footer-row">
     <span><strong class="footer-brand">problem.me</strong> — Same problems. Clearer thinking.</span>
-    <span><a href="index.html">home</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span>
+    <span><a href="index.html">home</a> · <a href="privacy.html">privacy</a> · <a href="mailto:stuck@problem.me">stuck@problem.me</a></span>
   </div>
 </footer>
 

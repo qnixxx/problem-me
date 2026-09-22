@@ -10,3 +10,5 @@
 .cause-panel{margin-top:16px;min-width:0}.cause-controls{min-width:0}
 @media(max-width:640px){input,select{font-size:16px}button,summary{min-height:44px}.file-menu[open]{width:100%}.file-menu-body{position:static;width:100%;margin-top:6px;box-shadow:none}}
 @media print{header,.case-actions,.privacy-strip,.technique-tabs,#causePanel,#paretoPanel,footer,.consultant{display:none}body{background:white;color:black}body:before{display:none}}
+
+.privacy-more{display:inline-block;margin-top:6px;color:var(--green);font-size:.58rem;text-decoration:none}.privacy-more:hover{color:var(--yellow)}

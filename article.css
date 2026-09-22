@@ -8,3 +8,44 @@
 @media(max-width:760px){.online{display:none}.hero{padding-top:34px}.hero-meta{grid-template-columns:1fr}.hero-meta div{border-right:0;border-bottom:1px solid var(--line)}.hero-meta div:last-child{border-bottom:0}.article-grid{grid-template-columns:1fr}.aside{position:static;grid-template-columns:1fr 1fr}.privacy-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.wrap{width:min(calc(100% - 20px),var(--max))}.brand{font-size:1.05rem}.back{font-size:.62rem}.aside{grid-template-columns:1fr}.mini-row,.truth-row{grid-template-columns:1fr}.mini-row strong,.truth-row strong{border-bottom:1px dashed var(--line)}.cta>*{width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important}}
+
+/* v0.9.2 mobile article alignment hotfix */
+html,body{max-width:100%;overflow-x:hidden}
+.article-grid,.article,.aside,.privacy-grid,.privacy-card,.truth-table,.truth-row,.rule{min-width:0;max-width:100%}
+.article section{scroll-margin-top:86px}
+.article p,.article li,.privacy-card p,.truth-row span,.rule{overflow-wrap:anywhere}
+
+@media(max-width:760px){
+  header{background:var(--bg)}
+  nav{min-height:58px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:0}
+  .brand{justify-self:start;min-width:0}
+  .back{justify-self:end;text-align:right;white-space:nowrap}
+  .article-grid{gap:16px}
+  .privacy-grid{gap:10px}
+  .article section{padding:20px 0;scroll-margin-top:70px}
+  .rule{width:100%;margin:14px 0;padding:13px 14px}
+}
+
+@media(max-width:520px){
+  .wrap{width:min(calc(100% - 24px),var(--max))}
+  .hero{padding:30px 0 24px}
+  h1{font-size:clamp(2.15rem,12vw,3.2rem);line-height:.9}
+  .lede{font-size:.9rem;line-height:1.6}
+  .privacy-card{padding:13px 14px}
+  .privacy-card h2{font-size:.82rem;line-height:1.35}
+  .privacy-card p{font-size:.72rem;line-height:1.55}
+  .article h2{font-size:1.05rem;line-height:1.25}
+  .article p{font-size:.82rem;line-height:1.6}
+  .article ul,.article ol{font-size:.8rem;line-height:1.55;padding-left:19px}
+  .truth-row strong,.truth-row span{padding:9px 10px}
+  .cta{margin:22px 0 38px}
+}
+
+@media(max-width:390px){
+  .wrap{width:min(calc(100% - 20px),var(--max))}
+  nav{gap:8px}
+  .brand{font-size:1rem}
+  .back{font-size:.6rem}
+  .article h2{font-size:1rem}
+  .rule{padding:12px}
+}

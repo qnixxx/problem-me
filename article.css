@@ -67,3 +67,24 @@ html,body{max-width:100%;overflow-x:hidden}
   nav{grid-template-columns:max-content minmax(0,1fr)}
   .back{min-width:0}
 }
+
+/* v0.9.2 header lockup reinforcement — applies to Field Guides + Privacy */
+.brand{
+  gap:0;
+  line-height:1;
+  vertical-align:middle;
+}
+.brand .blink{
+  line-height:1;
+  margin:0;
+  vertical-align:baseline;
+}
+@media(max-width:520px){
+  header nav{grid-template-columns:max-content minmax(0,1fr)}
+  header .brand{white-space:nowrap}
+  header .back{white-space:nowrap;overflow:hidden;text-overflow:clip}
+}
+@media(max-width:360px){
+  header .brand{font-size:.94rem}
+  header .back{font-size:.55rem}
+}

@@ -1,11 +1,9 @@
-problem.me v0.9.2 — article header logo fix
+problem.me v0.9.2 — shared article/privacy header lockup fix
 
 Deploy only:
   article.css
 
-What this fixes:
-- Keeps the blinking underscore attached to problem.me on narrow/mobile screens.
-- Treats problem.me_ as one non-wrapping brand lockup.
-- Preserves the right-side LIBRARY / BACK TO BASE navigation alignment.
+to the site root, replacing the current article.css.
 
-No HTML, JavaScript, storage, privacy, investigation, or schema changes.
+This applies to both the four Field Guide pages and privacy.html because they share article.css.
+No HTML or JavaScript changes are required.

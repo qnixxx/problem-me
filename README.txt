@@ -1,9 +1,18 @@
-problem.me v0.9.2 — shared article/privacy header lockup fix
+problem.me v0.9.2 — Content navigation UX patch
 
-Deploy only:
-  article.css
+Deploy/replace:
+- article.css
+- techniques.html
+- privacy.html
+- articles/5-whys.html
+- articles/fishbone.html
+- articles/pareto.html
+- articles/kepner-tregoe.html
 
-to the site root, replacing the current article.css.
-
-This applies to both the four Field Guide pages and privacy.html because they share article.css.
-No HTML or JavaScript changes are required.
+What changed:
+- Field Guides return to the Field Guides section, not the top of the Technique Library.
+- Added Previous / All Guides / Next navigation to every Field Guide.
+- Removed Privacy from the main article CTA row; Privacy remains available in the footer and contextual privacy notes.
+- Simplified Privacy-page header to HOME and reduced the main CTA row to investigation actions.
+- Added a Field Guides anchor on techniques.html.
+- Includes the latest mobile header/logo CSS fixes.

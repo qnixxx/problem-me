@@ -1,14 +1,11 @@
-problem.me v0.9.2 — mobile article alignment hotfix
+problem.me v0.9.2 — article header logo fix
 
 Deploy only:
   article.css
 
 What this fixes:
-- makes the sticky article header opaque on mobile so scrolled content no longer shows through it
-- aligns the mobile header using a two-column grid
-- adds safe anchor scroll offset below the sticky header
-- tightens mobile article/card spacing and typography
-- constrains cards, rule boxes and truth-table rows to the viewport
-- improves wrapping for long text/technical terms
+- Keeps the blinking underscore attached to problem.me on narrow/mobile screens.
+- Treats problem.me_ as one non-wrapping brand lockup.
+- Preserves the right-side LIBRARY / BACK TO BASE navigation alignment.
 
-No HTML, JavaScript, storage, schema or investigation behavior changes.
+No HTML, JavaScript, storage, privacy, investigation, or schema changes.

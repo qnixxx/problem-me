@@ -658,8 +658,7 @@
       background: var(--panel-2);
     }
 
-    .tech-link {
-      text-decoration: none;
+    .tech {
       transition: border-color .15s ease, transform .15s ease, background-color .15s ease;
     }
 
@@ -712,13 +711,79 @@
       white-space: normal;
     }
 
-    .open-guide {
-      display: block;
-      margin-top: 10px;
-      color: var(--green);
-      font-size: .72rem;
+    .tech-actions {
+      display: grid;
+      gap: 7px;
+      margin-top: 11px;
     }
 
+    .tech-actions a {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      color: var(--green);
+      text-decoration: none;
+      font-size: .68rem;
+      line-height: 1.3;
+    }
+
+    .tech-actions .tech-primary {
+      border-color: var(--green-2);
+      color: var(--cream);
+      background: rgba(33,214,122,.025);
+    }
+
+    .tech-actions .tech-guide {
+      color: var(--muted);
+      background: transparent;
+    }
+
+    .trust {
+      padding: 0 0 58px;
+    }
+
+    .trust-box {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      align-items: center;
+      gap: 22px;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      background: var(--panel-3);
+    }
+
+    .trust-box .prompt { margin-bottom: 6px; }
+
+    .trust-box h2 {
+      margin: 0;
+      color: var(--cream);
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      line-height: 1.1;
+    }
+
+    .trust-box p {
+      max-width: 72ch;
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .trust-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 12px;
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      text-decoration: none;
+      font-size: .7rem;
+      white-space: nowrap;
+    }
 
     .library-cta {
       display: flex;
@@ -792,10 +857,16 @@
         transform: translateY(-2px);
       }
 
-      .tech-link:hover {
+      .tech:hover {
         border-color: var(--green);
         background: #04140d;
         transform: translateY(-2px);
+      }
+
+      .tech-actions a:hover,
+      .trust-link:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
       }
     }
 
@@ -808,6 +879,8 @@
       .tech pre { font-size: clamp(.62rem, 1.8vw, .74rem); }
       .launch-box { grid-template-columns: 1fr; }
       .launch-state { justify-self: start; }
+      .trust-box { grid-template-columns: 1fr; }
+      .trust-link { justify-self: start; }
     }
 
     /* Phone */
@@ -1097,11 +1170,11 @@
               <div class="prompt">&gt; list /techniques --featured</div>
               <h2 id="techniques-title">Featured Case Files_</h2>
             </div>
-            <p>Four starting points. Each Case File now includes an interactive workspace for working on your own problem.</p>
+            <p>Open a Case File when you want to work. Read the Field Guide when you want to understand the method first.</p>
           </div>
 
           <div class="tech-grid">
-            <a class="tech tech-link" href="5-whys.html" aria-label="Open Case 001: 5 Whys">
+            <article class="tech">
               <pre aria-hidden="true">WHY?
   └─ WHY?
       └─ WHY?
@@ -1109,10 +1182,16 @@
               └─ WHY?</pre>
               <h3>5 Whys</h3>
               <p>Keep asking why until the symptom gives way to a cause worth investigating.</p>
-              <div class="tech-meta"><span class="badge">ROOT CAUSE / EASY</span><span class="open-guide">OPEN CASE + TOOL #001 →</span></div>
-            </a>
+              <div class="tech-meta">
+                <span class="badge">ROOT CAUSE / EASY</span>
+                <div class="tech-actions">
+                  <a class="tech-primary" href="5-whys.html">OPEN CASE + TOOL #001 <span aria-hidden="true">→</span></a>
+                  <a class="tech-guide" href="articles/5-whys.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
+                </div>
+              </div>
+            </article>
 
-            <a class="tech tech-link" href="fishbone.html" aria-label="Open Case 002: Ishikawa Fishbone">
+            <article class="tech">
               <pre aria-hidden="true"> People   Process
     \       /
 -----\-----/------&gt;
@@ -1120,10 +1199,16 @@
 Materials  Systems</pre>
               <h3>Ishikawa / Fishbone</h3>
               <p>Organize possible causes before the team chases the loudest theory.</p>
-              <div class="tech-meta"><span class="badge">CAUSES / EASY</span><span class="open-guide">OPEN CASE + TOOL #002 →</span></div>
-            </a>
+              <div class="tech-meta">
+                <span class="badge">CAUSES / EASY</span>
+                <div class="tech-actions">
+                  <a class="tech-primary" href="fishbone.html">OPEN CASE + TOOL #002 <span aria-hidden="true">→</span></a>
+                  <a class="tech-guide" href="articles/fishbone.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
+                </div>
+              </div>
+            </article>
 
-            <a class="tech tech-link" href="pareto.html" aria-label="Open Case 003: Pareto Analysis">
+            <article class="tech">
               <pre aria-hidden="true">█
 █   ▆
 █   ▆   ▄
@@ -1131,22 +1216,47 @@ Materials  Systems</pre>
 ──────────────</pre>
               <h3>Pareto Analysis</h3>
               <p>Focus effort on the relatively small number of causes creating most of the impact.</p>
-              <div class="tech-meta"><span class="badge">PRIORITIZE / EASY</span><span class="open-guide">OPEN CASE + TOOL #003 →</span></div>
-            </a>
+              <div class="tech-meta">
+                <span class="badge">PRIORITIZE / EASY</span>
+                <div class="tech-actions">
+                  <a class="tech-primary" href="pareto.html">OPEN CASE + TOOL #003 <span aria-hidden="true">→</span></a>
+                  <a class="tech-guide" href="articles/pareto.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
+                </div>
+              </div>
+            </article>
 
-            <a class="tech tech-link" href="kepner-tregoe.html" aria-label="Open Case 004: Kepner–Tregoe">
+            <article class="tech">
               <pre aria-hidden="true">MUSTS  | WANTS
 ------- | ------
 WEIGHT  | SCORE
 RISK    | DECIDE</pre>
               <h3>Kepner–Tregoe</h3>
               <p>Make complex decisions explicit: requirements first, weighted preferences next, risk before commitment.</p>
-              <div class="tech-meta"><span class="badge">DECISION / MEDIUM</span><span class="open-guide">OPEN CASE + TOOL #004 →</span></div>
-            </a>
+              <div class="tech-meta">
+                <span class="badge">DECISION / MEDIUM</span>
+                <div class="tech-actions">
+                  <a class="tech-primary" href="kepner-tregoe.html">OPEN CASE + TOOL #004 <span aria-hidden="true">→</span></a>
+                  <a class="tech-guide" href="articles/kepner-tregoe.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
+                </div>
+              </div>
+            </article>
           </div>
 
           <div class="library-cta">
             <a href="techniques.html">[ BROWSE THE TECHNIQUE LIBRARY → ]</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust" id="privacy" aria-labelledby="privacy-title">
+        <div class="wrap">
+          <div class="trust-box">
+            <div>
+              <div class="prompt">&gt; cat /privacy/README</div>
+              <h2 id="privacy-title">YOUR PROBLEMS STAY YOURS_</h2>
+              <p>Private Session, local browser storage, and portable <code>.problemme</code> files. See what problem.me stores, what it does not receive, and what you should never paste into a workspace.</p>
+            </div>
+            <a class="trust-link" href="privacy.html">[ HOW PRIVACY WORKS → ]</a>
           </div>
         </div>
       </section>
@@ -1158,7 +1268,7 @@ RISK    | DECIDE</pre>
               <div class="prompt">&gt; cat /status/launch.txt</div>
               <h2 id="launch-title">THE WORKSPACE IS ONLINE_</h2>
               <p>Four interactive techniques are live. The shared investigation workspace now keeps 5 Whys, Fishbone and Pareto together with one Evidence Ledger, local investigation storage, and portable .problemme export.</p>
-              <p><a href="investigation.html">[ OPEN INVESTIGATION WORKSPACE → ]</a> · <a href="investigations.html">[ MY INVESTIGATIONS ]</a> · <a href="features.html">[ FEATURE LOG ]</a> · <a href="privacy.html">[ PRIVACY ]</a></p>
+              <p><a href="investigation.html">[ OPEN INVESTIGATION WORKSPACE → ]</a> · <a href="investigations.html">[ MY INVESTIGATIONS ]</a> · <a href="features.html">[ FEATURE LOG ]</a></p>
             </div>
             <div class="launch-state"><span data-release-label data-prefix="V" data-suffix=" ONLINE">ONLINE</span><span class="blink-cursor" aria-hidden="true">_</span></div>
           </div>

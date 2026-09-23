@@ -99,12 +99,10 @@ html,body{max-width:100%;overflow-x:hidden}
 .guide-pager .guide-disabled{opacity:.42}.guide-pager a:hover strong{color:var(--yellow)}
 @media(max-width:560px){.guide-pager{grid-template-columns:1fr 1fr}.guide-pager .guide-all{grid-column:1/-1;grid-row:1;min-width:0;min-height:50px;border-left:0;border-bottom:1px solid var(--line)}.guide-pager .guide-prev,.guide-pager .guide-disabled:not(.guide-end){grid-column:1;grid-row:2}.guide-pager .guide-next,.guide-pager .guide-end{grid-column:2;grid-row:2;border-left:1px solid var(--line)}.guide-pager>a,.guide-pager>span{min-height:62px;padding:9px 10px}.guide-pager strong{font-size:.63rem}}
 
-/* v0.9.2 sticky knowledge header fix — keep article/privacy header pinned while scrolling */
-html,
-body{
-  /* overflow:hidden on a scrolling ancestor can disable position:sticky in mobile Safari. */
-  overflow-x:clip;
-}
+/* v0.9.2.1 sticky knowledge header fix — mobile Safari safe */
+/* Keep the root scroll container untouched. Horizontal overflow is handled by
+   the content guards above; changing body overflow can disable sticky on iOS. */
+html,body{overflow-x:visible}
 header{
   position:-webkit-sticky;
   position:sticky;
@@ -114,7 +112,19 @@ header{
   isolation:isolate;
   background:var(--bg);
 }
-@supports not (overflow:clip){
-  html{overflow-x:visible}
-  body{overflow-x:hidden}
+
+/* Mobile Safari has historically been inconsistent with sticky when page
+   overflow/compositing changes. Use a fixed app-bar on narrow screens so the
+   Privacy page and Field Guides behave identically. */
+@media(max-width:760px){
+  body{padding-top:58px}
+  header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+  }
+  header nav{min-height:58px}
+  .skip:focus{position:fixed;top:64px}
 }

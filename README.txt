@@ -1,11 +1,10 @@
-problem.me v0.9.2 — sticky article/privacy header fix
+problem.me v0.9.2 — Privacy/Field Guide sticky header fix
 
 Deploy only:
   article.css
 
-Fix:
-- Keeps the problem.me header pinned to the top while scrolling Field Guides and Privacy.
-- Replaces the mobile Safari-unfriendly overflow clipping that could disable position: sticky.
-- Preserves the existing mobile alignment, brand lockup and guide navigation fixes.
-
-No HTML, JavaScript, storage or schema changes.
+Change:
+- Keeps desktop sticky behavior.
+- Uses a fixed 58px top bar on mobile to avoid iOS Safari sticky failures.
+- Adds matching body offset so content does not sit underneath the header.
+- Applies to privacy.html and all Field Guide pages via the shared stylesheet.

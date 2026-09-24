@@ -1032,7 +1032,9 @@
       #site { display: block !important; }
     </style>
   </noscript>
-</head>
+<link rel="stylesheet" href="site-nav.css">
+<script src="site-nav.js" defer></script>
+<link rel="stylesheet" href="typography.css"></head>
 
 <body>
   <section id="boot" aria-label="problem.me boot sequence">
@@ -1061,13 +1063,14 @@
       <div class="wrap">
         <nav aria-label="Primary navigation">
           <a class="brand" href="#top" aria-label="problem.me home">problem.me<span class="blink-cursor" aria-hidden="true">_</span></a>
-          <div class="navlinks">
+          <div class="navlinks" data-menu-replaced>
             <a href="#mission">[01] Pathfinder</a>
             <a href="techniques.html">[02] Library</a>
             <a href="investigations.html">[03] Investigations</a>
             <a href="features.html">[04] Features</a>
           </div>
           <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version" data-release-label data-prefix=" / v"></span></div>
+          <button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button>
         </nav>
       </div>
     </header>

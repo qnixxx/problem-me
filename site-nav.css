@@ -1,0 +1,26 @@
+/* Shared, opt-in navigation. The native modal dialog owns focus and inertness. */
+.site-menu-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:8px 13px;border:1px solid #1f6f4d;background:#031009;color:#63ffb5;font:700 .8rem "Courier New",Courier,monospace;cursor:pointer;flex-shrink:0}
+.site-menu-button:hover{border-color:#ffe95b;color:#ffe95b}
+.site-menu-button:focus-visible,.site-drawer :focus-visible{outline:2px solid #ffe95b;outline-offset:3px}
+.site-menu-button[hidden]{display:none}
+[data-menu-replaced][hidden]{display:none!important}
+.site-drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(380px,calc(100% - 16px));max-width:none;height:100%;height:100dvh;max-height:none;box-sizing:border-box;padding:24px 20px;padding-top:max(24px,env(safe-area-inset-top));padding-bottom:max(24px,env(safe-area-inset-bottom));border:0;border-left:1px solid #1f6f4d;background:#020805;color:#63ffb5;font:16px/1.55 "Courier New",Courier,monospace;overflow-y:auto;overscroll-behavior:contain}
+.site-drawer::backdrop{background:rgba(0,5,2,.76)}
+.site-drawer .drawer-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.site-drawer h2{margin:0;color:#f2f0df;font-size:1.1rem;letter-spacing:0}
+.site-drawer .drawer-kicker{color:#86b79e;font-size:.7rem;margin:0 0 5px}
+.site-drawer .drawer-close{min-height:44px;padding:8px 10px;border:1px solid #1f6f4d;background:#031009;color:#f2f0df;font:inherit;font-size:.75rem;cursor:pointer}
+.site-drawer nav{display:grid;min-height:0;gap:8px;padding:0;align-items:stretch;justify-content:stretch}
+.site-drawer .drawer-link{display:block;min-height:48px;padding:13px 12px;border:1px solid transparent;color:#f2f0df;text-decoration:none;font:inherit;font-size:.9rem;text-align:left;background:transparent;cursor:pointer;overflow-wrap:anywhere}
+.site-drawer .drawer-link small{display:block;margin-top:4px;color:#86b79e;font-size:.75rem}
+.site-drawer .drawer-link:hover{background:#031009;border-color:#1f6f4d}
+.site-drawer .drawer-link.primary{border-color:#ffe95b;color:#ffe95b;background:#0b1208}
+.site-drawer .drawer-link[aria-current]{border-color:#1f6f4d;background:#031009;color:#63ffb5}
+.site-drawer .drawer-divider{height:1px;background:#1f6f4d;margin:12px 0}
+.site-drawer .drawer-note{margin-top:28px;padding-top:18px;border-top:1px dashed #1f6f4d;color:#86b79e;font-size:.8rem}
+.site-drawer .drawer-note strong{color:#ffe95b}
+.has-site-menu header .brand{display:inline-flex;white-space:nowrap;align-items:baseline;flex-shrink:0}
+.has-site-menu header{position:sticky;top:0;z-index:100;background:#020805}
+.has-site-menu header .statusline,.has-site-menu header .online{margin-left:auto}
+@media(max-width:640px){.has-site-menu header .statusline,.has-site-menu header .online{display:none}}
+@media print{.site-menu-button,.site-drawer{display:none!important}}

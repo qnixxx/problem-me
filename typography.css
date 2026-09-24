@@ -1,0 +1,51 @@
+/* Two local font roles: terminal identity + comfortable prose.
+   System fonts need no downloads, remote stylesheet or tracking. */
+:root{
+  --pm-font:"Courier New",Courier,monospace;
+  --pm-font-reading:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --pm-type-prose:1.0625rem;
+  --pm-type-brand:1.4rem;
+  --pm-type-nav:.8rem;
+  --pm-type-meta:.75rem;
+  --pm-type-lead:1.125rem;
+}
+body{font-family:var(--pm-font)}
+button,input,select,textarea,summary,code,pre{font-family:var(--pm-font)}
+h1,h2,h3,h4{font-family:var(--pm-font);font-weight:700}
+header .brand{font-family:var(--pm-font);font-size:var(--pm-type-brand);font-weight:700;line-height:1;letter-spacing:-.05em;display:inline-flex;align-items:baseline;white-space:nowrap;flex-shrink:0}
+header .brand .blink,header .brand .blink-cursor{font:inherit;letter-spacing:inherit;flex:0 0 auto}
+header .back,header .navlinks a,.site-menu-button{font-family:var(--pm-font);font-size:var(--pm-type-nav);font-weight:400;line-height:1.5;letter-spacing:0}
+header .online,header .statusline{font-family:var(--pm-font);font-size:var(--pm-type-meta);font-weight:400;line-height:1.5;letter-spacing:0}
+.hero .lede{font-family:var(--pm-font-reading);font-size:var(--pm-type-lead);font-weight:400;line-height:1.7;letter-spacing:0;max-width:65ch}
+.hero .prompt,.hero .case{font-family:var(--pm-font);font-size:var(--pm-type-meta);font-weight:400;line-height:1.45;letter-spacing:.08em}
+.site-drawer{font-family:var(--pm-font)}
+.site-drawer .drawer-link{font-size:var(--pm-type-nav);font-weight:400;line-height:1.5;letter-spacing:0}
+.site-drawer .drawer-link small,.site-drawer .drawer-kicker,.site-drawer .drawer-close{font-size:var(--pm-type-meta);font-weight:400;line-height:1.5;letter-spacing:0}
+/* Full sentences get a reading face. Terminal prompts/status labels stay mono. */
+:is(main,.workbench-intro,.fb-workbench-intro) p:where(:not(.prompt,.case,.kicker,.muted,.workspace-note)){
+  font-family:var(--pm-font-reading);font-size:var(--pm-type-prose);font-weight:400;
+  line-height:1.75;letter-spacing:0;color:#c9dfd2;overflow-wrap:anywhere;
+}
+/* Keep the lead prominent regardless of its surrounding page layout. */
+main .hero .lede{font-size:var(--pm-type-lead);line-height:1.7}
+.article :is(ul,ol),.release-card :is(ul,ol),.article .step span,.article .mini-row span,.article .truth-row span{
+  font-family:var(--pm-font-reading);font-size:var(--pm-type-prose);line-height:1.75;letter-spacing:0;color:#c9dfd2;
+}
+.article p,.article :is(ul,ol){max-width:68ch}
+.article p{margin-bottom:1.1em}
+.article li{margin-block:.6em}
+.article section{padding-block:30px}
+.article h2{line-height:1.4;margin-bottom:16px;letter-spacing:-.025em}
+.article h3{font-size:1rem;line-height:1.5;margin-top:24px}
+.article .step{padding:16px 14px}
+.article .rule{padding:18px}
+.toc a{font-size:.875rem;line-height:1.5}
+.privacy-card p{line-height:1.7}
+.site-drawer .drawer-link{font-size:.875rem}
+.site-drawer .drawer-link small,.site-drawer .drawer-note{font-family:var(--pm-font-reading);font-size:.9375rem;line-height:1.6;letter-spacing:0}
+/* A shared readability floor wins over legacy tool-specific form shorthands.
+   Keep this exception limited to editable text, including iOS focus sizing. */
+:root body :is(input,textarea,select):not([type="hidden"]){font-family:var(--pm-font-reading)!important;font-size:1rem!important;line-height:1.5}
+/* Keep CRT effects in the product shell, not as a film across long-form text. */
+body:has(.article)::before{display:none}
+@media(max-width:640px){:root{--pm-type-brand:1.25rem}}

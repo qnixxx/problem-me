@@ -11,10 +11,12 @@
 <script src="investigation-model.js" defer></script>
 <script src="investigation-store.js" defer></script>
 <script src="investigation.js" defer></script>
-</head>
+<link rel="stylesheet" href="site-nav.css">
+<script src="site-nav.js" defer></script>
+<link rel="stylesheet" href="typography.css"></head>
 <body>
 <a class="skip" href="#workspace">Skip to workspace</a>
-<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html">← [ LIBRARY ]</a><span class="online"><i class="dot" aria-hidden="true"></i>INVESTIGATION WORKSPACE</span></nav></header>
+<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" data-menu-replaced href="techniques.html">← [ LIBRARY ]</a><span class="online"><i class="dot" aria-hidden="true"></i>INVESTIGATION WORKSPACE</span><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></header>
 <main class="wrap">
 <section class="hero" aria-labelledby="page-title">
 <div><p class="prompt">&gt; /investigations/shared <span class="version">v0.9.2</span></p><h1 id="page-title">ONE PROBLEM.<span>CLEARER THINKING_</span></h1><p class="lede">Explore causes, drill into a causal chain, and rank recurring impact. Keep 5 Whys, Fishbone, Pareto, and one Evidence Ledger inside the same investigation.</p></div>

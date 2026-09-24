@@ -50,7 +50,7 @@
   }
 
   function render() {
-    document.querySelectorAll('button,input,select').forEach(el => el.disabled = !ready || transitioning);
+    document.querySelectorAll('main button,main input,main select').forEach(el => el.disabled = !ready || transitioning);
     Object.values(frames).forEach(frame => { frame.inert = transitioning || !ready; });
     $('identity').textContent = `ID ${state.id} · Updated ${new Date(state.updatedAt).toLocaleString()}`;
     $('mode').textContent = privateMode ? 'START LOCAL SAVE' : 'ENTER PRIVATE SESSION';
@@ -266,7 +266,7 @@
   }
 
   window.problemMePilot = {changed};
-  document.querySelectorAll('button,input,select').forEach(el => el.disabled = true);
+  document.querySelectorAll('main button,main input,main select').forEach(el => el.disabled = true);
 
   M.TECHNIQUES.forEach(tool => {
     const frame = document.createElement('iframe');

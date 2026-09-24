@@ -308,6 +308,7 @@
     .guide-card b{display:block;margin-top:10px;color:inherit;font-size:.62rem;font-weight:400}
     @media(max-width:640px){.guide-head{align-items:flex-start;flex-direction:column}.guide-grid{grid-template-columns:1fr}}
   </style>
+<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"></head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -316,9 +317,9 @@
   <div class="wrap">
     <nav aria-label="Library navigation">
       <a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a>
-      <a class="back" href="index.html#mission">← [ PATHFINDER ]</a>
+      <a data-menu-replaced class="back" href="index.html#mission">← [ PATHFINDER ]</a>
       <div class="online"><span class="dot" aria-hidden="true"></span>LIBRARY ONLINE</div>
-    </nav>
+    <button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav>
   </div>
 </header>
 

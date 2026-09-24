@@ -1,5 +1,8 @@
 (() => {
   'use strict';
+  // The parent investigation owns navigation; embedded tools get no drawer.
+  if(new URLSearchParams(location.search).get('investigation')==='1')return;
+  const root=new URL('.',document.currentScript?.src || location.href);
   const trigger=document.querySelector('[data-site-menu]');
   if(!trigger || typeof HTMLDialogElement==='undefined' || !HTMLDialogElement.prototype.showModal)return;
   const dialog=document.createElement('dialog');
@@ -16,24 +19,38 @@
       <a class="drawer-link" href="index.html">HOME</a>
     </nav><p class="drawer-note"><strong>CAPYBARA.EXE</strong><br>Find the tool you need. Keep the question in view.</p>`;
   document.body.append(dialog);
+  const links=[...dialog.querySelectorAll('a')];
+  links.forEach(link=>{
+    link.dataset.route=link.getAttribute('href');
+    if(new URL('.',location.href).pathname!==root.pathname)link.href=new URL(link.dataset.route,root).href;
+  });
   const page=location.pathname.split('/').pop() || 'index.html';
   if(page==='investigation.html'){
     const current=document.createElement('button');current.type='button';current.className='drawer-link';current.setAttribute('aria-current','page');
     current.textContent='← RETURN TO THIS INVESTIGATION';current.addEventListener('click',close);dialog.querySelector('nav').prepend(current);
-  } else {
-    dialog.querySelectorAll('a').forEach(link=>{if(link.getAttribute('href')===page){link.setAttribute('aria-current','page');link.addEventListener('click',event=>{event.preventDefault();close();});}});
   }
-  let previousOverflow='',locked=false;
+  function markCurrent(){
+    const guide=location.pathname.includes('/articles/');
+    const tool=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'].includes(page);
+    const section=guide || (page==='techniques.html' && location.hash==='#field-guides') ? 'techniques.html#field-guides' : tool ? 'techniques.html' : page;
+    links.forEach(link=>{
+      link.removeAttribute('aria-current');
+      if(page!=='investigation.html' && link.dataset.route===section)link.setAttribute('aria-current',guide||tool?'location':'page');
+    });
+  }
+  markCurrent();window.addEventListener('hashchange',markCurrent);
+  let previousOverflow='',locked=false,previousScroll=0;
   function release(){
     if(!locked)return;
     document.documentElement.style.overflow=previousOverflow;locked=false;
     trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true});
+    window.scrollTo({top:previousScroll,behavior:'instant'});
   }
   function close(){dialog.close();release();}
   trigger.setAttribute('aria-controls',dialog.id);trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-haspopup','dialog');
   trigger.addEventListener('click',()=>{
     if(dialog.open)return;
-    previousOverflow=document.documentElement.style.overflow;
+    previousOverflow=document.documentElement.style.overflow;previousScroll=window.scrollY;
     dialog.showModal();locked=true;document.documentElement.style.overflow='hidden';trigger.setAttribute('aria-expanded','true');
   });
   dialog.querySelector('.drawer-close').addEventListener('click',close);
@@ -55,7 +72,11 @@
   });
   // Anchors deliberately retain native navigation and beforeunload handling.
   // Closing first leaves the workspace usable when an unsaved-work warning is cancelled.
-  dialog.querySelectorAll('a:not([aria-current])').forEach(link=>link.addEventListener('click',close));
+  links.forEach(link=>link.addEventListener('click',event=>{
+    const destination=new URL(link.href);
+    if(destination.pathname===location.pathname && destination.search===location.search && destination.hash===location.hash)event.preventDefault();
+    close();
+  }));
   document.querySelectorAll('[data-menu-replaced]').forEach(el=>el.hidden=true);
   document.documentElement.classList.add('has-site-menu');trigger.hidden=false;
 })();

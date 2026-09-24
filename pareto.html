@@ -684,7 +684,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <script>if (new URLSearchParams(location.search).get('investigation') === '1') document.documentElement.classList.add('investigation-embedded');</script>
 <style>
-.investigation-embedded .shared-entry,.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
+.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
 .investigation-embedded .case-intro,.investigation-embedded .data-shell,.investigation-embedded .priority,
 .investigation-embedded .after,.investigation-embedded .lesson,.investigation-embedded .case-pager,
 .investigation-embedded .pm-handoff,.investigation-embedded .pt-privacy-panel,
@@ -700,11 +700,11 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 .investigation-embedded .pt-tool.is-private .pt-head{border-color:var(--line)}
 .investigation-embedded .pt-head strong{color:var(--green)}
 </style>
+<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"></head>
 <body>
-<p class="shared-entry" style="text-align:center;padding:12px"><a href="investigation.html">[ OPEN SHARED INVESTIGATION — 5 WHYS + FISHBONE + PARETO → ]</a></p>
 <a class="skip-link" href="#main-content">Skip to content</a>
-<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #003 OPEN</div></nav></div></header>
+<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #003 OPEN</div><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></div></header>
 <main id="main-content">
 <section class="hero"><div class="wrap"><div class="prompt">&gt; open /techniques/pareto --case=003</div><div class="case">CASE #003 // THE CHAOTIC CAPYBARA CAFÉ</div><h1>Pareto<span>Rank the pain.</span></h1><p class="lede">When everything seems important, count the recurring problems and rank them by impact. Pareto Analysis helps you focus on the few categories creating most of the trouble.</p><div class="meta"><div><small>PURPOSE</small><strong>PRIORITIZE</strong></div><div><small>DIFFICULTY</small><strong>EASY</strong></div><div><small>TIME</small><strong>20–45 MIN</strong></div><div><small>BEST FOR</small><strong>RECURRING ISSUES</strong></div></div></div></section>
 <section class="wrap case-intro"><div><div class="capy"><div class="mug">&lt;/&gt;</div><div class="body"></div><span class="leg leg-a"></span><span class="leg leg-b"></span><div class="head"><span class="ear"></span><span class="eye"></span><span class="nose"></span></div></div><div class="cap-status">STATUS: EVERYTHING IS ON FIRE ☕</div></div><div class="intro-copy"><div class="phase">PROBLEM_</div><h2>The café logged 100 incidents this week. ☕🍉🥄</h2><p>Capybara cannot fix all six categories at once. So instead of arguing about what feels worst, we turn the incident log into ranked evidence.</p></div></section>

@@ -20,7 +20,11 @@
 .site-drawer .drawer-note{margin-top:28px;padding-top:18px;border-top:1px dashed #1f6f4d;color:#86b79e;font-size:.8rem}
 .site-drawer .drawer-note strong{color:#ffe95b}
 .has-site-menu header .brand{display:inline-flex;white-space:nowrap;align-items:baseline;flex-shrink:0}
-.has-site-menu header{position:sticky;top:0;z-index:100;background:#020805}
+.has-site-menu,.has-site-menu body{overflow-x:clip}
+.has-site-menu{scroll-padding-top:0}
+.has-site-menu main,.has-site-menu main [id]{scroll-margin-top:calc(5rem + env(safe-area-inset-top,0px))}
+.has-site-menu header{position:sticky;top:0;z-index:100;background:#020805;padding-top:env(safe-area-inset-top,0px)}
+.has-site-menu header nav{display:flex;align-items:center;justify-content:space-between;min-height:64px;padding:8px 0;gap:12px}
 .has-site-menu header .statusline,.has-site-menu header .online{margin-left:auto}
 @media(max-width:640px){.has-site-menu header .statusline,.has-site-menu header .online{display:none}}
 @media print{.site-menu-button,.site-drawer{display:none!important}}

@@ -1042,7 +1042,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <script>if (new URLSearchParams(location.search).get('investigation') === '1') document.documentElement.classList.add('investigation-embedded');</script>
 <style>
-.investigation-embedded .shared-entry,.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
+.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
 .investigation-embedded .story,.investigation-embedded .case-intro,.investigation-embedded .workspace,
 .investigation-embedded .evidence,.investigation-embedded .causal,.investigation-embedded .resolution,
 .investigation-embedded .lesson,.investigation-embedded .case-pager,.investigation-embedded .pm-handoff,
@@ -1063,11 +1063,11 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 .investigation-embedded .fb-tool.is-private .fb-tool-head{border-color:var(--line)}
 .investigation-embedded .workspace-head strong,.investigation-embedded .fb-tool-head strong{color:var(--green)}
 </style>
+<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"></head>
 <body>
-<p class="shared-entry" style="text-align:center;padding:12px"><a href="investigation.html">[ OPEN INVESTIGATION WORKSPACE — 5 WHYS + FISHBONE + PARETO → ]</a></p>
 <a class="skip-link" href="#main-content">Skip to content</a>
-<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #002 OPEN</div></nav></div></header>
+<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem.me<span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #002 OPEN</div><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></div></header>
 <main id="main-content">
 <section class="hero"><div class="wrap"><div class="prompt">&gt; open /techniques/fishbone --case=002</div><div class="case">CASE #002 // THE MYSTERIOUS MUDDY POOL</div><h1>Fishbone<span>Map the suspects.</span></h1><p class="lede">When a problem could have many causes, don't chase the first theory. Ishikawa / Fishbone helps a group organize possibilities, see gaps, and decide what evidence to investigate.</p><div class="meta"><div><small>PURPOSE</small><strong>POSSIBLE CAUSES</strong></div><div><small>DIFFICULTY</small><strong>EASY</strong></div><div><small>TIME</small><strong>30–60 MIN</strong></div><div><small>BEST FOR</small><strong>MULTI-CAUSE PROBLEMS</strong></div></div></div></section>
 <section class="wrap case-intro"><div><div class="capy"><div class="body"></div><span class="leg leg-a"></span><span class="leg leg-b"></span><div class="head"><span class="ear"></span><span class="eye"></span><span class="nose"></span></div></div><div class="cap-status">STATUS: TOO MANY SUSPECTS</div></div><div class="intro-copy"><div class="phase">EFFECT_</div><h2>Capybara's clear pool has turned muddy. 🟫💧</h2><p>There is no obvious single cause. So instead of chasing one theory, we build a map of everything that could plausibly create the effect.</p></div></section>

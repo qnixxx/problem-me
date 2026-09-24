@@ -10,7 +10,8 @@
 .site-drawer h2{margin:0;color:#f2f0df;font-size:1.1rem;letter-spacing:0}
 .site-drawer .drawer-kicker{color:#86b79e;font-size:.7rem;margin:0 0 5px}
 .site-drawer .drawer-close{min-height:44px;padding:8px 10px;border:1px solid #1f6f4d;background:#031009;color:#f2f0df;font:inherit;font-size:.75rem;cursor:pointer}
-.site-drawer nav{display:grid;min-height:0;gap:8px;padding:0;align-items:stretch;justify-content:stretch}
+/* Own the grid tracks: legacy technique headers style every nav with columns. */
+.site-drawer nav{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row;grid-auto-rows:auto;min-height:0;gap:8px;padding:0;align-items:stretch;justify-content:stretch}
 .site-drawer .drawer-link{display:block;min-height:48px;padding:13px 12px;border:1px solid transparent;color:#f2f0df;text-decoration:none;font:inherit;font-size:.9rem;text-align:left;background:transparent;cursor:pointer;overflow-wrap:anywhere}
 .site-drawer .drawer-link small{display:block;margin-top:4px;color:#86b79e;font-size:.75rem}
 .site-drawer .drawer-link:hover{background:#031009;border-color:#1f6f4d}

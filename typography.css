@@ -14,6 +14,7 @@ button,input,select,textarea,summary,code,pre{font-family:var(--pm-font)}
 h1,h2,h3,h4{font-family:var(--pm-font);font-weight:700}
 header .brand{font-family:var(--pm-font);font-size:var(--pm-type-brand);font-weight:700;line-height:1;letter-spacing:-.05em;display:inline-flex;align-items:baseline;white-space:nowrap;flex-shrink:0}
 header .brand .blink,header .brand .blink-cursor{font:inherit;letter-spacing:inherit;flex:0 0 auto}
+@media(hover:hover) and (pointer:fine){header .brand:hover{color:var(--yellow,#ffe95b)}}
 header .back,header .navlinks a,.site-menu-button{font-family:var(--pm-font);font-size:var(--pm-type-nav);font-weight:400;line-height:1.5;letter-spacing:0}
 header .online,header .statusline{font-family:var(--pm-font);font-size:var(--pm-type-meta);font-weight:400;line-height:1.5;letter-spacing:0}
 .hero .lede{font-family:var(--pm-font-reading);font-size:var(--pm-type-lead);font-weight:400;line-height:1.7;letter-spacing:0;max-width:65ch}

@@ -276,8 +276,7 @@
       text-decoration: none;
     }
 
-    .navlinks a:hover,
-    .footer-row a:hover { color: var(--yellow); }
+    .navlinks a:hover { color: var(--yellow); }
 
     .statusline {
       flex: 0 0 auto;
@@ -868,25 +867,6 @@
       .lagoon-actions { grid-template-columns:minmax(0,1fr); }
     }
 
-    /* Footer */
-    footer {
-      padding: 22px 0 38px;
-      border-top: 1px solid rgba(99,255,181,.25);
-      color: var(--muted);
-      font-size: .8rem;
-    }
-
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .footer-row a {
-      color: var(--green);
-      text-decoration: none;
-    }
-
     @media (hover: hover) and (pointer: fine) {
       .mission-card:hover {
         border-color: var(--green);
@@ -1013,7 +993,6 @@
 
       .launch { padding: 44px 0 56px; }
 
-      .footer-row { flex-direction: column; gap: 8px; }
 
       .boot-body { padding: 16px; }
       .boot-bar,
@@ -1356,23 +1335,14 @@ RISK    | DECIDE</pre>
     <div class="footer-main">
       <div class="footer-identity">
         <a class="footer-home" href="index.html" aria-label="problem.me home">problem.me<span aria-hidden="true">_</span></a>
-        <p>Same problems.<br>Clearer thinking.</p>
+        <p>Same problems. Clearer thinking.</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <div>
-          <h2>Workspace</h2>
-          <ul>
-            <li><a href="investigation.html">New investigation</a></li>
-            <li><a href="investigations.html">My Investigations</a></li>
-          </ul>
-        </div>
-        <div>
-          <h2>Learn</h2>
-          <ul>
-            <li><a href="techniques.html">Technique Library</a></li>
-            <li><a href="techniques.html#field-guides">Field Guides</a></li>
-          </ul>
-        </div>
+      <nav class="footer-nav" aria-label="Explore problem.me">
+        <ul>
+          <li><a href="investigations.html">My Investigations</a></li>
+          <li><a href="techniques.html">Technique Library</a></li>
+          <li><a href="techniques.html#field-guides">Field Guides</a></li>
+        </ul>
       </nav>
     </div>
     <ul class="footer-utility" aria-label="Product information">

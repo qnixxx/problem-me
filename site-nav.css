@@ -30,25 +30,28 @@
 @media(max-width:640px){.has-site-menu header .statusline,.has-site-menu header .online{display:none}}
 @media print{.site-menu-button,.site-drawer{display:none!important}}
 
-/* One footer hierarchy on every page; isolated from legacy nav/list styles. */
-footer.site-footer{margin-top:0;padding:40px 0 20px;border-top:1px solid #1f6f4d;background:#020b06;color:#86b79e;text-align:left}
+/* Compact shared footer. Own layout explicitly; never inherit page nav grids. */
+footer.site-footer{margin-top:0;padding:24px 0 16px;border-top:1px solid #1f6f4d;background:#020805;color:#86b79e;text-align:left}
 footer.site-footer>.wrap{display:block}
-.site-footer .footer-main{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:40px;align-items:start}
+.site-footer .footer-main{display:flex;align-items:center;justify-content:space-between;gap:16px 32px}
 .site-footer .footer-identity{min-width:0}
-.site-footer .footer-home{display:inline-flex;align-items:center;min-height:44px;color:#63ffb5;font:700 1.4rem/1 "Courier New",Courier,monospace;letter-spacing:-.05em;text-decoration:none}
-.site-footer .footer-identity p{margin:8px 0 0;color:#86b79e;font:400 1rem/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.site-footer .footer-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;min-height:0;gap:24px;padding:0;align-items:start;justify-content:stretch}
-.site-footer .footer-nav>div{min-width:0}
-.site-footer .footer-nav h2{margin:0 0 8px;padding:0;color:#86b79e;font:700 .75rem/1.6 "Courier New",Courier,monospace;letter-spacing:.08em;text-transform:uppercase}
-.site-footer .footer-nav ul,.site-footer .footer-utility{list-style:none;margin:0;padding:0}
+.site-footer .footer-home{display:inline-flex;align-items:center;min-height:44px;color:#63ffb5;font:700 1.25rem/1 "Courier New",Courier,monospace;letter-spacing:-.05em;text-decoration:none}
+.site-footer .footer-identity p{margin:0;color:#86b79e;font:400 .9375rem/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.site-footer .footer-nav{display:block;min-height:0;padding:0;min-width:0}
+.site-footer .footer-nav ul,.site-footer .footer-utility{display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;list-style:none;margin:0;padding:0}
+.site-footer .footer-nav ul{justify-content:flex-end}
 .site-footer .footer-nav li,.site-footer .footer-utility li{margin:0;padding:0;min-width:0}
 .site-footer .footer-nav a,.site-footer .footer-utility a{display:flex;align-items:center;min-height:44px;padding:8px 0;color:#f2f0df;font:400 .9375rem/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-decoration:none;overflow-wrap:anywhere}
-.site-footer .footer-utility{display:flex;flex-wrap:wrap;gap:0 28px;border-top:1px solid #1f6f4d;margin-top:28px;padding-top:12px}
+.site-footer .footer-utility{border-top:1px solid #153d2c;margin-top:20px;padding-top:8px}
 .site-footer .footer-utility a{color:#86b79e;font-size:.875rem}
 .site-footer a:focus-visible{outline:2px solid #ffe95b;outline-offset:4px}
 @media(hover:hover) and (pointer:fine){.site-footer a:hover{color:#ffe95b;text-decoration:underline;text-underline-offset:.25em}}
-@media(max-width:760px){
-  footer.site-footer{padding-top:28px}
-  .site-footer .footer-main{grid-template-columns:minmax(0,1fr);gap:28px}
-  .site-footer .footer-nav{gap:20px}
+@media(max-width:960px){
+  .site-footer .footer-main{display:block}
+  .site-footer .footer-nav{margin-top:12px}
+  .site-footer .footer-nav ul{justify-content:flex-start}
+}
+@media(max-width:420px){
+  .site-footer .footer-nav ul{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+  .site-footer .footer-utility{margin-top:12px}
 }

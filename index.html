@@ -804,31 +804,68 @@
       font-size: .78rem;
     }
 
-    /* Launch status */
+    /* Thinking Lagoon: a self-contained workspace entry point. */
     .launch { padding: 55px 0 72px; }
-
-    .launch-box {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 24px;
-      padding: 30px;
-      background: var(--panel-2);
+    .launch-box { background: var(--panel-2); }
+    .lagoon-topbar {
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      gap:12px;padding:14px 22px;border-bottom:1px solid var(--line);
+      color:var(--muted);font-size:.7rem;letter-spacing:.06em;
     }
-
-    .launch h2 { color: var(--cream); }
-
-    .launch p {
-      max-width: 66ch;
-      margin: .55rem 0 0;
-      color: var(--muted);
+    .launch-state { color:var(--yellow);white-space:nowrap; }
+    .launch-state::before { content:"";display:inline-block;width:7px;height:7px;
+      margin-right:9px;border-radius:50%;background:var(--green); }
+    .lagoon-grid { display:grid;grid-template-columns:minmax(220px,.85fr) minmax(0,1.4fr); }
+    .lagoon-scene {
+      margin:0;min-width:0;display:flex;flex-direction:column;justify-content:center;
+      padding:28px 24px;border-right:1px solid var(--line);
+      background:radial-gradient(ellipse at 50% 40%,rgba(33,214,122,.1),transparent 65%),
+        radial-gradient(rgba(99,255,181,.13) .7px,transparent .7px);
+      background-size:auto,12px 12px;
     }
-
-    .launch-state {
-      padding: 11px 14px;
-      border: 1px solid var(--yellow);
-      color: var(--yellow);
-      white-space: nowrap;
+    .lagoon-scene svg { width:100%;max-width:320px;height:auto;display:block;margin:0 auto; }
+    .lagoon-scene figcaption { margin-top:12px;text-align:center; }
+    .lagoon-scene strong { display:block;color:var(--yellow);font-size:.85rem;letter-spacing:.08em; }
+    .lagoon-scene span { display:block;margin-top:7px;color:var(--muted);font-size:.7rem;line-height:1.6; }
+    .lagoon-copy { min-width:0;padding:30px; }
+    .lagoon-copy .prompt { font-size:.7rem;color:var(--green);margin-bottom:12px; }
+    .launch h2 { color:var(--cream);font-size:clamp(1.6rem,3.4vw,2.5rem);line-height:1.12; }
+    .lagoon-copy > p { margin:16px 0 22px;max-width:52ch; }
+    .lagoon-actions { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }
+    .lagoon-actions a {
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      min-height:48px;padding:13px 14px;border:1px solid var(--line);
+      font-size:.75rem;line-height:1.5;color:var(--cream);text-decoration:none;
+    }
+    .lagoon-actions .lagoon-start {
+      grid-column:1/-1;border-color:var(--yellow);color:var(--yellow);
+      background:rgba(255,233,91,.04);font-weight:700;font-size:.85rem;
+    }
+    .lagoon-actions a span:last-child { flex-shrink:0; }
+    .lagoon-copy .lagoon-save-note { margin:10px 0 0;font-size:.8rem;line-height:1.6;color:var(--muted); }
+    .lagoon-briefing { margin-top:22px;border-top:1px dashed var(--line); }
+    .lagoon-briefing summary {
+      padding:14px 0;min-height:44px;cursor:pointer;color:var(--green);font-size:.73rem;line-height:1.6;
+    }
+    .lagoon-briefing p { margin:0 0 8px; }
+    .lagoon-actions a:focus-visible,.lagoon-briefing summary:focus-visible {
+      outline:2px solid var(--yellow);outline-offset:4px;
+    }
+    @media(hover:hover) and (pointer:fine) {
+      .lagoon-actions a:hover { border-color:var(--yellow);background:rgba(255,233,91,.08);color:var(--yellow); }
+      .lagoon-briefing summary:hover { color:var(--yellow); }
+    }
+    @media(max-width:760px) {
+      .lagoon-grid { grid-template-columns:1fr; }
+      .lagoon-scene { border-right:0;border-bottom:1px solid var(--line);padding:18px; }
+      .lagoon-scene svg { max-width:230px; }
+      .lagoon-scene figcaption { margin-top:0; }
+      .lagoon-copy { padding:24px; }
+    }
+    @media(max-width:420px) {
+      .lagoon-topbar { padding:12px 16px;font-size:.65rem; }
+      .lagoon-copy { padding:22px 16px; }
+      .lagoon-actions { grid-template-columns:minmax(0,1fr); }
     }
 
     /* Footer */
@@ -877,8 +914,6 @@
       .mission-grid,
       .tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .tech pre { font-size: clamp(.62rem, 1.8vw, .74rem); }
-      .launch-box { grid-template-columns: 1fr; }
-      .launch-state { justify-self: start; }
       .trust-box { grid-template-columns: 1fr; }
       .trust-link { justify-self: start; }
     }
@@ -977,8 +1012,6 @@
       .tech-meta { padding-top: 16px; }
 
       .launch { padding: 44px 0 56px; }
-      .launch-box { gap: 18px; padding: 20px; }
-      .launch-state { width: 100%; text-align: center; }
 
       .footer-row { flex-direction: column; gap: 8px; }
 
@@ -1013,7 +1046,6 @@
         font-size: clamp(.56rem, 2.8vw, .68rem);
       }
 
-      .launch-box { padding: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1267,13 +1299,53 @@ RISK    | DECIDE</pre>
       <section class="launch" id="launch" aria-labelledby="launch-title">
         <div class="wrap">
           <div class="launch-box frame">
-            <div>
-              <div class="prompt">&gt; cat /status/launch.txt</div>
-              <h2 id="launch-title">THE WORKSPACE IS ONLINE_</h2>
-              <p>Four interactive techniques are live. The shared investigation workspace now keeps 5 Whys, Fishbone and Pareto together with one Evidence Ledger, local investigation storage, and portable .problemme export.</p>
-              <p><a href="investigation.html">[ OPEN INVESTIGATION WORKSPACE → ]</a> · <a href="investigations.html">[ MY INVESTIGATIONS ]</a> · <a href="features.html">[ FEATURE LOG ]</a></p>
+            <div class="lagoon-topbar">
+              <span>STATION 01 / THINKING LAGOON</span>
+              <span class="launch-state" data-release-label data-prefix="V" data-suffix=" ONLINE">ONLINE</span>
             </div>
-            <div class="launch-state"><span data-release-label data-prefix="V" data-suffix=" ONLINE">ONLINE</span><span class="blink-cursor" aria-hidden="true">_</span></div>
+            <div class="lagoon-grid">
+              <figure class="lagoon-scene">
+                <svg viewBox="0 0 320 240" aria-hidden="true" focusable="false">
+                  <!-- A quiet capybara hot spring, drawn locally in phosphor lines. -->
+                  <g fill="none" stroke="#1f6f4d" stroke-width="1">
+                    <circle cx="160" cy="114" r="94" stroke-dasharray="3 7"/>
+                    <path d="M160 10v18M160 202v18M54 114h18M248 114h18"/>
+                    <ellipse cx="160" cy="191" rx="133" ry="30"/>
+                    <ellipse cx="160" cy="191" rx="112" ry="20"/>
+                  </g>
+                  <g fill="none" stroke="#63ffb5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M90 178c-16-41 4-76 45-76h40c38 0 51 35 45 70" fill="#062016"/>
+                    <path d="M156 130V93c0-23 17-34 41-34 26 0 45 13 45 35v24c0 20-18 30-41 30h-17" fill="#062016"/>
+                    <path d="M173 66c-11-20-28-10-23 7l9 8M221 65c8-15 23-7 18 7" fill="#062016"/>
+                    <path d="M188 98l10 2M222 97l8-1M224 118c-5 5-13 5-18 2"/>
+                    <path d="M233 110h5M105 169l3 13M137 172v12"/>
+                    <path d="M62 184c22 11 62 12 89 9M174 195c31 0 65-4 81-12"/>
+                    <path d="M80 207c48 12 108 12 158-1" opacity=".55"/>
+                  </g>
+                  <circle cx="198" cy="52" r="12" fill="#ffe95b"/>
+                  <path d="M198 40c1-8 9-10 15-8-3 6-8 9-15 8" fill="#21d67a"/>
+                  <g fill="none" stroke="#86b79e" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M76 130c-13-12 12-19 0-33M57 159c-12-12 10-18 0-30M267 152c-12-12 10-18 0-30"/>
+                  </g>
+                </svg>
+                <figcaption><strong>CAPYBARA.EXE</strong><span>Soaking. Observing. Not jumping to conclusions.</span></figcaption>
+              </figure>
+              <div class="lagoon-copy">
+                <div class="prompt">&gt; lower the panic. raise the evidence.</div>
+                <h2 id="launch-title">THE WORKSPACE IS ONLINE_</h2>
+                <p>Bring one tangled problem. Explore it with 5 Whys, Fishbone and Pareto, connected by a shared Evidence Ledger.</p>
+                <div class="lagoon-actions">
+                  <a class="lagoon-start" href="investigation.html"><span>START AN INVESTIGATION</span><span aria-hidden="true">→</span></a>
+                  <a href="investigations.html"><span>MY INVESTIGATIONS</span><span aria-hidden="true">↗</span></a>
+                  <a href="features.html"><span>FEATURE LOG</span><span aria-hidden="true">↗</span></a>
+                </div>
+                <p class="lagoon-save-note">Starts a Private Session. Save locally or export a .problemme file when you choose.</p>
+                <details class="lagoon-briefing">
+                  <summary>REQUEST A CAPYBARA BRIEFING</summary>
+                  <p>“The water is warm. Your first explanation is still a hypothesis. Before diving in: what happened, what did you expect, and what evidence would change your mind?”</p>
+                </details>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -29,3 +29,16 @@
 .has-site-menu header .statusline,.has-site-menu header .online{margin-left:auto}
 @media(max-width:640px){.has-site-menu header .statusline,.has-site-menu header .online{display:none}}
 @media print{.site-menu-button,.site-drawer{display:none!important}}
+
+/* Shared footer shell. Keep each page's content width and destinations. */
+footer.site-footer{padding:24px 0 32px;font-size:.8rem;line-height:1.6}
+footer.site-footer>.wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);align-items:start;gap:12px 32px}
+footer.site-footer>.wrap>span:first-child{min-width:0;padding:11px 0;overflow-wrap:anywhere}
+footer.site-footer .footer-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:0 20px;min-width:0}
+footer.site-footer .footer-links a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:10px 0;color:var(--green,#63ffb5);line-height:1.6;text-decoration:none;overflow-wrap:anywhere}
+footer.site-footer .footer-links a:focus-visible{outline:2px solid var(--yellow,#ffe95b);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){footer.site-footer .footer-links a:hover{color:var(--yellow,#ffe95b)}}
+@media(max-width:960px){
+  footer.site-footer>.wrap{grid-template-columns:minmax(0,1fr);gap:4px}
+  footer.site-footer .footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));justify-content:start;gap:0 16px}
+}

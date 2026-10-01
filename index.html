@@ -381,7 +381,6 @@
     .hero-art {
       position: relative;
       min-width: 0;
-      min-height: 410px;
       overflow: hidden;
       padding: 22px;
       background: var(--panel-2);
@@ -397,9 +396,9 @@
 
     .capy-wrap {
       position: relative;
-      min-height: 320px;
+      min-height: 235px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
       margin-top: 18px;
     }
@@ -530,10 +529,8 @@
     }
 
     .capy-info {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 4;
+      position: relative;
+      margin-top: 18px;
       padding: 8px 10px;
       border: 1px solid var(--line);
       background: rgba(2,8,5,.9);
@@ -542,15 +539,17 @@
       letter-spacing: .06em;
     }
 
-    .capy-info span { display: block; white-space: nowrap; }
+    .capy-info span { display: block; overflow-wrap: anywhere; }
     .capy-blink-note { color: var(--yellow); }
     .capy-status { color: var(--green); }
     .capy-caption { color: var(--muted); }
 
     .mini-status {
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      margin-top: 18px;
       padding: 12px 14px;
       border: 1px solid var(--line);
       background: rgba(2,8,5,.86);
@@ -560,7 +559,7 @@
 
     .mini-status strong {
       display: block;
-      margin-bottom: 4px;
+      margin: 0;
       color: var(--yellow);
     }
 
@@ -936,9 +935,8 @@
       }
 
       .capy-wrap {
-        min-height: 290px;
+        min-height: 220px;
         margin-top: 8px;
-        padding-bottom: 44px;
         overflow: visible;
       }
 
@@ -1010,8 +1008,8 @@
       .status-dot { width: 7px; height: 7px; margin-right: 4px; }
 
       .hero-art-top { font-size: .875rem; }
-      .capy-wrap { min-height: 270px; padding-bottom: 34px; }
-      .capy { transform: scale(.84); margin-bottom: -36px; }
+      .capy-wrap { min-height: 200px; }
+      .capy { transform: scale(.78); margin-bottom: -48px; }
       .capy-info { padding: 7px 8px; font-size: .875rem; }
 
       .mission-card { min-height: 140px; padding: 14px 14px 46px; }
@@ -1108,17 +1106,19 @@
 
           <div class="hero-art frame">
             <div class="hero-art-top">
-              <span>REASONING LAYER / BUILD 006</span>
+              <span>CAPYBARA TERMINAL</span>
               <span>STATUS: ACTIVE</span>
             </div>
 
-            <div class="capy-wrap" role="img" aria-label="Retro line-art capybara beside a steaming coffee mug">
-              <div class="capy" aria-hidden="true">
                 <div class="capy-info">
                   <span class="capy-blink-note">CAPYBARA.EXE / CALM MODE</span>
                   <span class="capy-status" id="capyStatus">STATUS: UNBOTHERED</span>
                   <span class="capy-caption">BLINK CYCLE: 4.8s</span>
                 </div>
+
+            <div class="capy-wrap" role="img" aria-label="Retro line-art capybara beside a steaming coffee mug">
+              <div class="capy" aria-hidden="true">
+
                 <span class="steam">~</span>
                 <span class="steam s2">~</span>
                 <div class="mug">&lt;/&gt;</div>
@@ -1129,7 +1129,7 @@
 
             <div class="mini-status">
               <strong>MISSION PATH</strong>
-              CHOOSE<br />MAP<br />TEST<br />VERIFY<br />ACT_
+              <span>CHOOSE</span><span>MAP</span><span>TEST</span><span>VERIFY</span><span>ACT_</span>
             </div>
           </div>
         </div>

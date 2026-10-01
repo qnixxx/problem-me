@@ -28,6 +28,19 @@ let browser;
    const fields=await page.locator('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),textarea,select').evaluateAll(els=>els.filter(el=>el.getClientRects().length).map(el=>({id:el.id,size:parseFloat(getComputedStyle(el).fontSize)})));
    for(const field of fields)assert(field.size>=16,route+' field '+field.id+' too small');
    assert.equal(result.overflow,false,route+' overflow');
+   if(['fishbone.html','pareto.html','kepner-tregoe.html'].includes(route)) {
+    const sections=await page.locator('main > section.wrap').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {name:el.className,left:r.left,right:document.documentElement.clientWidth-r.right};}));
+    for(const section of sections)assert(Math.abs(section.left-section.right)<2,route+' off-center '+section.name);
+   }
+   if(route==='index.html') {
+    const boxes=await page.locator('.hero-art').evaluate(el=>{
+     const box=s=>{const r=el.querySelector(s).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right};};
+     return {info:box('.capy-info'),art:box('.capy'),path:box('.mini-status')};
+    });
+    assert(boxes.info.bottom<=boxes.art.top,route+' label overlaps mascot');
+    assert(boxes.art.bottom<=boxes.path.top,route+' mission overlaps mascot');
+   }
+
   }
   console.log(`PASS ${width}px: shared typography and no overflow on all ${routes.length} pages`);
  }

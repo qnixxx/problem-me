@@ -29,7 +29,7 @@ a{color:inherit;text-underline-offset:.2em}
 .prompt,.kicker{font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .case{margin-top:9px;color:var(--yellow);font-size:.875rem;letter-spacing:.07em;text-transform:uppercase}
 h1{margin:11px 0 14px;color:var(--cream);font-size:clamp(2.45rem,7vw,5.2rem);line-height:1;letter-spacing:-.06em;text-transform:uppercase}
-h1 span{display:block;color:var(--green);font-size:.46em;line-height:1.05;margin-top:.2em}
+h1 span{display:block;color:var(--green);font-size:clamp(1.125rem,2.5vw,1.5rem);letter-spacing:normal;line-height:1.5;margin-top:.6em}
 .lede{max-width:780px;margin:0;color:var(--text);font-size:1rem}
 .hero-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);background:var(--panel);margin-top:24px}
 .hero-meta div{padding:11px 13px;border-right:1px solid var(--line)}

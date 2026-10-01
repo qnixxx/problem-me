@@ -55,3 +55,8 @@ footer.site-footer>.wrap{display:block}
   .site-footer .footer-nav ul{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
   .site-footer .footer-utility{margin-top:12px}
 }
+
+/* Match the header cursor; keep its width so the footer never shifts. */
+.site-footer .footer-home>span{display:inline-block;animation:pm-footer-cursor .8s steps(1,end) infinite}
+@keyframes pm-footer-cursor{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.site-footer .footer-home>span{animation:none;opacity:1}}

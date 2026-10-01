@@ -59,6 +59,8 @@ body::before,body::after{display:none}
 :root body :is(h1,h2,h3,h4){overflow-wrap:anywhere}
 :root body .hero h1{line-height:1.1}
 :root body .hero h1 span{line-height:1.15}
+/* Field-guide subtitles are sentences, not tightly tracked display titles. */
+:root body:has(.article) .hero h1 span{line-height:1.5;letter-spacing:normal}
 :root body :is(input,textarea)::placeholder{color:#a2c5b2;opacity:1}
 :root body :is(button:disabled,.case-pager .pager-disabled){opacity:1;color:#86b79e;border-color:#365846;cursor:not-allowed}
 .section-bar,.stage-heading{flex-wrap:wrap}

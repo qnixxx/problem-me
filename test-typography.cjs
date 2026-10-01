@@ -20,7 +20,7 @@ let browser;
    assert.equal(result.body.font,'"Courier New", Courier, monospace',route);
    assert(result.brand,route+' header brand');assert.equal(result.brand.font,result.body.font,route);assert.equal(result.brand.size,width<=640?'20px':'22.4px',route);assert.equal(result.brand.weight,'700',route);
    if(result.lead){assert.equal(result.lead.size,'18px',route);assert(result.lead.font.includes('system-ui'),route);}
-   if(result.meta)assert.equal(result.meta.size,'12px',route);
+   if(result.meta)assert.equal(result.meta.size,'14px',route);
    if(route.startsWith('articles/')||route==='privacy.html'){
     const prose=await page.locator('.article p').first().evaluate(el=>{const s=getComputedStyle(el);return {font:s.fontFamily,size:parseFloat(s.fontSize),line:parseFloat(s.lineHeight)};});
     assert(prose.font.includes('system-ui'),route+' reading face');assert(prose.size>=17,route+' prose size');assert(prose.line/prose.size>=1.7,route+' leading');

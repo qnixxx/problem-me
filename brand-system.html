@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#010704">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex,follow">
+  <meta name="description" content="Preview the next visual identity for problem.me: capybara-terminal brand colours, readable typography, components, and technique cards.">
+  <title>Capybara Terminal — Brand System Preview | problem.me</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="brand-v2.css">
+  <style>
+    :root{--pm-font:"Courier New",Courier,monospace;--pm-font-reading:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font:16px/1.6 var(--pm-font);background:#010704}
+    button,input{font:inherit}
+    a{color:inherit}
+    .pm-skip{position:absolute;left:12px;top:-100px;z-index:50;padding:12px;background:#35ff91;color:#010704}
+    .pm-skip:focus{top:12px}
+    [id]{scroll-margin-top:90px}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body class="pm-v2 pm-brand-reference">
+<a href="#main" class="pm-skip">Skip to content</a>
+<header class="pm-reference-header">
+  <div class="pm-reference-shell pm-reference-nav">
+    <a class="pm-wordmark" href="index.html" aria-label="problem.me home">problem<span>.me<i aria-hidden="true">_</i></span></a>
+    <nav class="pm-reference-links" aria-label="Brand reference navigation">
+      <a href="#palette">Colours</a>
+      <a href="#components">Components</a>
+      <a href="#techniques">Techniques</a>
+      <a aria-current="page" href="brand-system.html">Preview</a>
+      <a class="pm-action-link" href="investigation.html">Open Toolkit →</a>
+    </nav>
+  </div>
+</header>
+<main class="pm-reference-shell" id="main">
+  <section class="pm-reference-hero" aria-labelledby="preview-title">
+    <div>
+      <div class="pm-kicker">&gt; DESIGN SYSTEM / CAPYBARA.EXE / v2.0 PREVIEW</div>
+      <h1 id="preview-title">Same problems.<span>Clearer thinking.</span></h1>
+      <p class="pm-reference-lede">A calmer way to solve difficult problems. A friendly capybara, focused terminal interfaces, vivid green actions, and typography you can actually read.</p>
+      <div class="pm-button-row"><a href="investigation.html" class="pm-button pm-button--primary">Open Toolkit →</a><a href="techniques.html" class="pm-button">Explore Techniques →</a></div>
+      <p class="pm-demo-meta">VISUAL PREVIEW · INTERACTIONS REMAIN LOCAL · EXISTING SITE PRESERVED</p>
+    </div>
+    <figure class="pm-reference-figure">
+      <img src="problem-me-social-preview-1200x630.jpg" width="1200" height="630" alt="Smiling brown capybara with black and green headphones, typing on a terminal laptop" loading="eager" decoding="async">
+      <figcaption>&gt; CAPYBARA.EXE — CALM MODE / STATUS: UNBOTHERED_</figcaption>
+    </figure>
+  </section>
+  <section class="pm-reference-section" id="palette" aria-labelledby="palette-heading">
+    <div class="pm-section-heading"><div><div class="pm-kicker">01 / THE PALETTE</div><h2 id="palette-heading">Colour with purpose.</h2></div><p>Neon leads the eye. Cream carries headlines. Jade keeps longer passages comfortable.</p></div>
+    <div class="pm-swatch-grid">
+      <div class="pm-swatch"><span class="pm-swatch-color" style="background:#010704"></span><div class="pm-swatch-info"><strong>Ink</strong><code>#010704</code></div></div>
+      <div class="pm-swatch"><span class="pm-swatch-color" style="background:#061810"></span><div class="pm-swatch-info"><strong>Forest</strong><code>#061810</code></div></div>
+      <div class="pm-swatch"><span class="pm-swatch-color" style="background:#35ff91"></span><div class="pm-swatch-info"><strong>Neon green</strong><code>#35FF91</code></div></div>
+      <div class="pm-swatch"><span class="pm-swatch-color" style="background:#faf5e2"></span><div class="pm-swatch-info"><strong>Warm cream</strong><code>#FAF5E2</code></div></div>
+      <div class="pm-swatch"><span class="pm-swatch-color" style="background:#d18a49"></span><div class="pm-swatch-info"><strong>Capybara</strong><code>#D18A49</code></div></div>
+    </div>
+  </section>
+  <section class="pm-reference-section" id="components" aria-labelledby="components-heading">
+    <div class="pm-section-heading"><div><div class="pm-kicker">02 / TYPOGRAPHY &amp; COMPONENTS</div><h2 id="components-heading">Built for focus.</h2></div><p>Terminal personality with a readable hierarchy. No decorative effects over body text.</p></div>
+    <div class="pm-layout-two">
+      <div class="pm-card"><span class="pm-label">DISPLAY / MONOSPACE</span><div class="pm-sample-headline">Find the <span>signal.</span></div><p class="pm-sample-body">Clear ideas come from good questions, not louder dashboards.</p><span class="pm-label">BODY / SYSTEM TEXT</span><div class="pm-sample-body">Keep evidence separate from assumptions. Move through a useful technique at your own pace, in your own browser.</div></div>
+      <div class="pm-card"><span class="pm-label">ACTIONS / FORMS</span><h3>Ask a better question.</h3><label class="pm-label" for="demo-question">Your problem</label><input class="pm-field" id="demo-question" type="text" placeholder="What's happening?" autocomplete="off"><div class="pm-button-row"><a class="pm-button pm-button--primary" href="investigation.html">Start Investigation →</a><a class="pm-button" href="privacy.html">Privacy first</a></div><p class="pm-demo-meta">This is a style preview: the input is not saved or submitted.</p></div>
+    </div>
+  </section>
+  <section class="pm-reference-section" id="techniques" aria-labelledby="techniques-heading">
+    <div class="pm-section-heading"><div><div class="pm-kicker">03 / LIVE TECHNIQUE PATTERNS</div><h2 id="techniques-heading">Four real frameworks.</h2></div><p>All examples link to published working tools. Filter this preview to test the components.</p></div>
+    <div class="pm-filterbar" role="group" aria-label="Filter technique card examples">
+      <button type="button" data-pm-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-pm-filter="cause" aria-pressed="false">Understand causes</button>
+      <button type="button" data-pm-filter="prioritize" aria-pressed="false">Prioritize</button>
+      <button type="button" data-pm-filter="decide" aria-pressed="false">Decide</button>
+    </div>
+    <div class="pm-tech-grid" id="pm-card-grid">
+      <a class="pm-tech-card" href="5-whys.html" data-pm-category="cause"><span class="pm-kicker">CASE #001</span><h3>5 Whys</h3><span aria-hidden="true" class="pm-tech-art">WHY? ↳ WHY?</span><p>Follow the cause beneath the symptom.</p><span class="pm-tech-link">OPEN CASE →</span></a>
+      <a class="pm-tech-card" href="fishbone.html" data-pm-category="cause"><span class="pm-kicker">CASE #002</span><h3>Fishbone</h3><span aria-hidden="true" class="pm-tech-art">＜═◇═＞</span><p>Map the possibilities before choosing one theory.</p><span class="pm-tech-link">OPEN CASE →</span></a>
+      <a class="pm-tech-card" href="pareto.html" data-pm-category="prioritize"><span class="pm-kicker">CASE #003</span><h3>Pareto</h3><span aria-hidden="true" class="pm-tech-art">▁▃▆█</span><p>See what matters most, not just what makes noise.</p><span class="pm-tech-link">OPEN CASE →</span></a>
+      <a class="pm-tech-card" href="kepner-tregoe.html" data-pm-category="decide"><span class="pm-kicker">CASE #004</span><h3>Kepner–Tregoe</h3><span aria-hidden="true" class="pm-tech-art">□→◇→✓</span><p>Make structured choices with clear criteria.</p><span class="pm-tech-link">OPEN CASE →</span></a>
+    </div>
+    <p id="pm-filter-status" class="pm-sample-status" aria-live="polite">4 techniques shown</p>
+    <p id="pm-filter-empty" class="pm-empty" hidden>No examples match this filter.</p>
+  </section>
+  <section class="pm-reference-section" aria-labelledby="principles-heading">
+    <div class="pm-section-heading"><div><div class="pm-kicker">04 / PRODUCT RULES</div><h2 id="principles-heading">Calm by design. Private by default.</h2></div></div>
+    <div class="pm-layout-two"><div class="pm-card"><h3>Respect the product</h3><p>The redesign preserves the actual techniques, privacy behaviour, browser-based investigations and evidence tools. Illustrations support understanding; they never replace functional controls.</p></div><div class="pm-card"><h3>Ship safely</h3><p>This page demonstrates the new brand without restyling the live homepage or investigation workspaces. Each page gets its own reviewed migration and responsive tests.</p></div></div>
+  </section>
+</main>
+<footer class="pm-reference-footer"><div class="pm-reference-shell pm-reference-footer-inner"><div><a class="pm-wordmark" href="index.html">problem<span>.me<i aria-hidden="true">_</i></span></a><p>Different problems. A calmer you. © problem.me</p></div><div><a href="techniques.html">Technique Library</a> · <a href="privacy.html">Privacy</a> · <a href="index.html">Current Site</a></div></div></footer>
+<script src="brand-v2.js" defer></script>
+</body></html>

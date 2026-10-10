@@ -1,0 +1,49 @@
+{
+  "title": "problem.me Capybara Terminal v2 — design tokens",
+  "version": "2.0.0-alpha.1",
+  "theme": "capybara-terminal",
+  "colors": {
+    "ink": "#010704",
+    "night": "#020c07",
+    "deep": "#04160d",
+    "panel": "#061810",
+    "green": "#35ff91",
+    "glow": "#08e87a",
+    "border": "#158d52",
+    "cream": "#faf5e2",
+    "reading": "#d0e7d8",
+    "muted": "#99c7ac",
+    "capybara": "#d18a49"
+  },
+  "typography": {
+    "identity": "Courier New, Courier, monospace",
+    "reading": "system-ui, sans-serif"
+  },
+  "radius": {
+    "panel": "15px",
+    "button": "9px"
+  },
+  "components": [
+    "pm-wordmark",
+    "pm-reference-hero",
+    "pm-card",
+    "pm-button",
+    "pm-button--primary",
+    "pm-field",
+    "pm-tech-card",
+    "pm-filterbar",
+    "pm-kicker"
+  ],
+  "mascot": {
+    "asset": "problem-me-social-preview-1200x630.jpg",
+    "alt": "Calm capybara at a terminal laptop"
+  },
+  "integration": {
+    "bodyClass": "pm-v2",
+    "style": "brand-v2.css",
+    "script": "brand-v2.js",
+    "noRemoteDependencies": true,
+    "noStorageSideEffects": true
+  },
+  "principle": "Design reference only. Migrate existing pages in independently tested releases."
+}

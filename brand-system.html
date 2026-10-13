@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="pm-theme">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,9 @@
   <meta name="description" content="Preview the next visual identity for problem.me: capybara-terminal brand colours, readable typography, components, and technique cards.">
   <title>Capybara Terminal — Brand System Preview | problem.me</title>
   <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="site-nav.css">
+  <link rel="stylesheet" href="typography.css">
+  <script src="site-nav.js" defer></script>
   <link rel="stylesheet" href="brand-v2.css">
   <style>
     :root{--pm-font:"Courier New",Courier,monospace;--pm-font-reading:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -23,20 +26,9 @@
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
-<body class="pm-v2 pm-brand-reference">
+<body class="pm-v2 pm-app pm-brand-reference">
 <a href="#main" class="pm-skip">Skip to content</a>
-<header class="pm-reference-header">
-  <div class="pm-reference-shell pm-reference-nav">
-    <a class="pm-wordmark" href="index.html" aria-label="problem.me home">problem<span>.me<i aria-hidden="true">_</i></span></a>
-    <nav class="pm-reference-links" aria-label="Brand reference navigation">
-      <a href="#palette">Colours</a>
-      <a href="#components">Components</a>
-      <a href="#techniques">Techniques</a>
-      <a aria-current="page" href="brand-system.html">Preview</a>
-      <a class="pm-action-link" href="investigation.html">Open Toolkit →</a>
-    </nav>
-  </div>
-</header>
+<header class="pm-reference-header"><nav class="pm-reference-shell" aria-label="Primary navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced href="techniques.html">Technique Library</a><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></header>
 <main class="pm-reference-shell" id="main">
   <section class="pm-reference-hero" aria-labelledby="preview-title">
     <div>
@@ -44,7 +36,7 @@
       <h1 id="preview-title">Same problems.<span>Clearer thinking.</span></h1>
       <p class="pm-reference-lede">A calmer way to solve difficult problems. A friendly capybara, focused terminal interfaces, vivid green actions, and typography you can actually read.</p>
       <div class="pm-button-row"><a href="investigation.html" class="pm-button pm-button--primary">Open Toolkit →</a><a href="techniques.html" class="pm-button">Explore Techniques →</a></div>
-      <p class="pm-demo-meta">VISUAL PREVIEW · INTERACTIONS REMAIN LOCAL · EXISTING SITE PRESERVED</p>
+      <p class="pm-demo-meta">VISUAL PREVIEW · INTERACTIONS REMAIN LOCAL · VISUAL ROLLOUT / REVIEW BUILD</p>
     </div>
     <figure class="pm-reference-figure">
       <img src="problem-me-social-preview-1200x630.jpg" width="1200" height="630" alt="Smiling brown capybara with black and green headphones, typing on a terminal laptop" loading="eager" decoding="async">
@@ -90,6 +82,27 @@
     <div class="pm-layout-two"><div class="pm-card"><h3>Respect the product</h3><p>The redesign preserves the actual techniques, privacy behaviour, browser-based investigations and evidence tools. Illustrations support understanding; they never replace functional controls.</p></div><div class="pm-card"><h3>Ship safely</h3><p>This page demonstrates the new brand without restyling the live homepage or investigation workspaces. Each page gets its own reviewed migration and responsive tests.</p></div></div>
   </section>
 </main>
-<footer class="pm-reference-footer"><div class="pm-reference-shell pm-reference-footer-inner"><div><a class="pm-wordmark" href="index.html">problem<span>.me<i aria-hidden="true">_</i></span></a><p>Different problems. A calmer you. © problem.me</p></div><div><a href="techniques.html">Technique Library</a> · <a href="privacy.html">Privacy</a> · <a href="index.html">Current Site</a></div></div></footer>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-main">
+      <div class="footer-identity">
+        <a class="footer-home" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span aria-hidden="true">_</span></a>
+        <p>Same problems. Clearer thinking.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Explore problem.me">
+        <ul>
+          <li><a href="investigations.html">My Investigations</a></li>
+          <li><a href="techniques.html">Technique Library</a></li>
+          <li><a href="techniques.html#field-guides">Field Guides</a></li>
+        </ul>
+      </nav>
+    </div>
+    <ul class="footer-utility" aria-label="Product information">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="features.html">Feature Log</a></li>
+      <li><a href="mailto:stuck@problem.me">Contact</a></li>
+    </ul>
+  </div>
+</footer>
 <script src="brand-v2.js" defer></script>
 </body></html>

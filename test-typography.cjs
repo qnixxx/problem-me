@@ -35,10 +35,10 @@ let browser;
    if(route==='index.html') {
     const boxes=await page.locator('.hero-art').evaluate(el=>{
      const box=s=>{const r=el.querySelector(s).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right};};
-     return {info:box('.capy-info'),art:box('.capy'),path:box('.mini-status')};
+     return {info:box('.capy-info'),art:box('.pm-mascot-image'),path:box('.mini-status')};
     });
-    assert(boxes.info.bottom<=boxes.art.top,route+' label overlaps mascot');
-    assert(boxes.art.bottom<=boxes.path.top,route+' mission overlaps mascot');
+    assert(boxes.art.bottom<=boxes.info.top,route+' caption overlaps mascot');
+    assert(boxes.info.bottom<=boxes.path.top,route+' mission overlaps caption');
    }
 
   }

@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="pm-theme">
 <head>
   <meta charset="utf-8" />
   <!-- Change only this value for future homepage release labels. -->
   <meta name="application-version" content="1.0.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="problem.me — interactive problem-solving tools for clearer thinking. Choose a technique, follow the evidence, and work through real problems locally in your browser." />
-  <meta name="theme-color" content="#020805" />
+  <meta name="theme-color" content="#010704" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="problem.me — Same problems. Clearer thinking." />
   <meta property="og:description" content="Visual problem-solving techniques with interactive workspaces, evidence tracking, private sessions, connected technique handoffs, and memorable Capybara Case Files." />
@@ -400,140 +400,6 @@
       gap: 12px;
       color: var(--muted);
       font-size: .875rem;
-    }
-
-    .capy-wrap {
-      position: relative;
-      min-height: 235px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    .capy {
-      position: relative;
-      width: 330px;
-      height: 235px;
-      flex: 0 0 auto;
-    }
-
-    .capy-body {
-      position: absolute;
-      left: 82px;
-      bottom: 25px;
-      width: 210px;
-      height: 132px;
-      border: 3px solid var(--green);
-      border-radius: 46% 45% 35% 34%;
-      background: repeating-linear-gradient(0deg, rgba(99,255,181,.05) 0 2px, transparent 2px 5px);
-      box-shadow: 0 0 15px rgba(99,255,181,.12);
-    }
-
-    .capy-head {
-      position: absolute;
-      top: 20px;
-      right: 3px;
-      width: 148px;
-      height: 105px;
-      border: 3px solid var(--green);
-      border-radius: 42% 52% 43% 48%;
-      background: var(--panel);
-    }
-
-    .capy-ear {
-      position: absolute;
-      top: -19px;
-      left: 24px;
-      width: 31px;
-      height: 31px;
-      border: 3px solid var(--green);
-      border-radius: 50%;
-      background: var(--panel);
-    }
-
-    .capy-eye {
-      position: absolute;
-      top: 38px;
-      left: 55px;
-      width: 15px;
-      height: 6px;
-      background: var(--green);
-      transform-origin: center;
-      animation: capyBlink 4.8s steps(1, end) infinite;
-    }
-
-    .capy-nose {
-      position: absolute;
-      top: 50px;
-      right: 18px;
-      width: 17px;
-      height: 10px;
-      border-right: 3px solid var(--green);
-      border-bottom: 3px solid var(--green);
-      border-radius: 0 0 9px 0;
-    }
-
-    .capy-smile {
-      position: absolute;
-      top: 68px;
-      right: 30px;
-      width: 28px;
-      height: 15px;
-      border-bottom: 3px solid var(--green);
-      border-radius: 50%;
-    }
-
-    .capy-leg {
-      position: absolute;
-      bottom: -17px;
-      width: 30px;
-      height: 25px;
-      border: 3px solid var(--green);
-      border-top: 0;
-    }
-
-    .capy-leg.one { left: 35px; }
-    .capy-leg.two { right: 35px; }
-
-    .mug {
-      position: absolute;
-      left: 13px;
-      bottom: 24px;
-      width: 72px;
-      height: 67px;
-      display: grid;
-      place-items: center;
-      border: 3px solid var(--green);
-      border-radius: 3px 3px 13px 13px;
-      color: var(--green);
-      font-weight: 700;
-    }
-
-    .mug::after {
-      content: "";
-      position: absolute;
-      top: 14px;
-      right: -25px;
-      width: 22px;
-      height: 30px;
-      border: 3px solid var(--green);
-      border-left: 0;
-      border-radius: 0 15px 15px 0;
-    }
-
-    .steam {
-      position: absolute;
-      left: 35px;
-      bottom: 103px;
-      color: var(--green);
-      font-size: 1.4rem;
-      animation: steamDrift 2.2s ease-out infinite;
-    }
-
-    .steam.s2 {
-      left: 53px;
-      animation-delay: .8s;
     }
 
     .capy-info {
@@ -942,13 +808,7 @@
         gap: 8px 14px;
       }
 
-      .capy-wrap {
-        min-height: 220px;
-        margin-top: 8px;
-        overflow: visible;
-      }
-
-      .capy {
+  .capy {
         transform: scale(.9);
         transform-origin: top center;
         margin-bottom: -22px;
@@ -1016,8 +876,7 @@
       .status-dot { width: 7px; height: 7px; margin-right: 4px; }
 
       .hero-art-top { font-size: .875rem; }
-      .capy-wrap { min-height: 200px; }
-      .capy { transform: scale(.78); margin-bottom: -48px; }
+  .capy { transform: scale(.78); margin-bottom: -48px; }
       .capy-info { padding: 7px 8px; font-size: .875rem; }
 
       .mission-card { min-height: 140px; padding: 14px 14px 46px; }
@@ -1051,9 +910,10 @@
   </noscript>
 <link rel="stylesheet" href="site-nav.css">
 <script src="site-nav.js" defer></script>
-<link rel="stylesheet" href="typography.css"></head>
+<link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
+</head>
 
-<body>
+<body class="pm-v2 pm-app pm-home">
   <section id="boot" aria-label="problem.me boot sequence">
     <div class="boot-shell">
       <div class="boot-bar">
@@ -1079,7 +939,7 @@
     <header>
       <div class="wrap">
         <nav aria-label="Primary navigation">
-          <a class="brand" href="#top" aria-label="problem.me home">problem.me<span class="blink-cursor" aria-hidden="true">_</span></a>
+          <a class="brand" href="#top" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span class="blink-cursor" aria-hidden="true">_</span></a>
           <div class="navlinks" data-menu-replaced>
             <a href="#mission">[01] Pathfinder</a>
             <a href="techniques.html">[02] Library</a>
@@ -1097,9 +957,10 @@
         <div class="wrap hero-grid">
           <div>
             <div class="prompt">&gt; problem_solver.exe / ready</div>
-            <h1 id="hero-title">Better tools <span>for tough problems.</span></h1>
-            <p class="lede">problem.me is a visual problem-solving workspace — learn a technique, use it on a real problem, separate evidence from assumptions, and move to the next useful method.</p>
+            <h1 id="hero-title">Same problems.<span>Clearer thinking.</span></h1>
+            <p class="lede">A calm place to untangle a difficult problem. Follow the evidence, explore possible causes and find your next useful step — at your own pace, on your own device.</p>
 
+            <div class="pm-home-actions"><a class="pm-button pm-button--primary" href="investigation.html">Start an investigation <span aria-hidden="true">→</span></a><a class="pm-button" href="techniques.html">Explore the techniques</a></div>
             <div class="terminal-prompt" aria-label="Animated mission prompt">
               <span class="chev" aria-hidden="true">&gt;</span>
               <span id="typedMission"></span>
@@ -1112,34 +973,12 @@
             </div>
           </div>
 
-          <div class="hero-art frame">
-            <div class="hero-art-top">
-              <span>CAPYBARA TERMINAL</span>
-              <span>STATUS: ACTIVE</span>
-            </div>
-
-                <div class="capy-info">
-                  <span class="capy-blink-note">CAPYBARA.EXE / CALM MODE</span>
-                  <span class="capy-status" id="capyStatus">STATUS: UNBOTHERED</span>
-                  <span class="capy-caption">BLINK CYCLE: 4.8s</span>
-                </div>
-
-            <div class="capy-wrap" role="img" aria-label="Retro line-art capybara beside a steaming coffee mug">
-              <div class="capy" aria-hidden="true">
-
-                <span class="steam">~</span>
-                <span class="steam s2">~</span>
-                <div class="mug">&lt;/&gt;</div>
-                <div class="capy-body"><span class="capy-leg one"></span><span class="capy-leg two"></span></div>
-                <div class="capy-head"><span class="capy-ear"></span><span class="capy-eye"></span><span class="capy-nose"></span><span class="capy-smile"></span></div>
-              </div>
-            </div>
-
-            <div class="mini-status">
-              <strong>MISSION PATH</strong>
-              <span>CHOOSE</span><span>MAP</span><span>TEST</span><span>VERIFY</span><span>ACT_</span>
-            </div>
-          </div>
+          <figure class="hero-art pm-mascot-terminal">
+            <div class="hero-art-top"><span>CAPYBARA.EXE</span><span>● CALM MODE</span></div>
+            <img class="pm-mascot-image" src="assets/capybara-terminal.jpeg" width="1536" height="1024" alt="A smiling golden capybara wearing green-lit headphones, working at a terminal laptop" fetchpriority="high" decoding="async">
+            <figcaption class="capy-info"><strong>Less panic. More perspective.</strong><span class="capy-status" id="capyStatus">STATUS: UNBOTHERED</span></figcaption>
+            <div class="mini-status"><strong>YOUR NEXT STEP</strong><span>OBSERVE</span><span>QUESTION</span><span>TEST_</span></div>
+          </figure>
         </div>
       </section>
 
@@ -1342,7 +1181,7 @@ RISK    | DECIDE</pre>
   <div class="wrap">
     <div class="footer-main">
       <div class="footer-identity">
-        <a class="footer-home" href="index.html" aria-label="problem.me home">problem.me<span aria-hidden="true">_</span></a>
+        <a class="footer-home" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span aria-hidden="true">_</span></a>
         <p>Same problems. Clearer thinking.</p>
       </div>
       <nav class="footer-nav" aria-label="Explore problem.me">

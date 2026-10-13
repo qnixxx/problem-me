@@ -1,19 +1,21 @@
-# problem.me — Capybara Terminal v2 / design-system preview
+# problem.me — Capybara Terminal v2
 
-**Deliverable 01 of 07**. This is an opt-in visual foundation and public reference page. The current homepage, case files and investigation tools remain unchanged.
+The existing design reference is now extended into a site-wide **review build** on `design/capybara-terminal-rollout`. Production remains on `main` until review and browser verification.
 
-## Files
-- `brand-system.html`: visual reference, desktop/mobile
-- `brand-v2.css`: namespaced theme and reusable tokens/components, activated only by body.pm-v2
-- `brand-v2.js`: accessible local filter demo on the reference page
-- `brand-schema.json`: machine-readable tokens and component catalogue
-- Reuses the already published `problem-me-social-preview-1200x630.jpg` featuring the approved capybara logo.
+## Design
 
-## Tokens
-Ink #010704; night #020c07; neon #35ff91; cream #faf5e2; body #d0e7d8; muted #99c7ac; outline #158d52; mascot #d18a49.
+Near-black backgrounds, neon green actions, cream headings, jade reading text, and warm amber details. The supplied capybara artwork leads the homepage; existing schematic mascots retain their educational poses with warm brown fills. Courier remains the terminal identity; system sans-serif remains the reading face. Fonts and assets are served locally.
 
-## Integration contract
-Load `brand-v2.css` on each migrated page after existing base styles, then add `pm-v2` to that page's body only after responsive and functional tests. Existing tools, local IndexedDB/session state, evidence, exports and privacy features retain their current owners. Do not bulk-enable v2 across existing pages.
+## Integration
 
-## Verification gates
-Check mobile widths, zoom, focus, reduced motion, colour contrast, filter buttons and all existing tool behaviours before rolling out to the homepage (deliverable 02).
+`brand-v2.css` is loaded after each page's existing styles. `html.pm-theme` maps legacy colour tokens; `body.pm-v2.pm-app` enables shared component treatments. The application section is screen-only to preserve existing report printing. Embedded workspaces retain their zero-minimum-height rules. No viewport height, persistent storage, or application behavior is added.
+
+The existing reference components and filter demo stay in `brand-v2.css` / `brand-v2.js`. All public pages, including the reference, now use the existing shared menu and footer.
+
+## Assets
+
+`assets/capybara-terminal.jpeg` is the user's original 1536 × 1024 artwork, copied unchanged. Its intrinsic dimensions reserve space before loading. `problem-me-social-preview-1200x630.jpg` remains the social image. `build-release.py` packages both.
+
+## Verification
+
+See `FACELIFT-REVIEW.md` for executed checks, browser limitations and the review checklist. The application version remains 1.0.0, investigation schema remains 3, and no data migration is introduced.

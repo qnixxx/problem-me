@@ -1,5 +1,5 @@
 {
-  "title": "problem.me Capybara Terminal v2 — design tokens",
+  "title": "problem.me Capybara Terminal v2 \u2014 design tokens",
   "version": "2.0.0-alpha.1",
   "theme": "capybara-terminal",
   "colors": {
@@ -13,7 +13,9 @@
     "cream": "#faf5e2",
     "reading": "#d0e7d8",
     "muted": "#99c7ac",
-    "capybara": "#d18a49"
+    "capybara": "#d18a49",
+    "line": "#337c55",
+    "accent": "#f4ca85"
   },
   "typography": {
     "identity": "Courier New, Courier, monospace",
@@ -35,7 +37,7 @@
     "pm-kicker"
   ],
   "mascot": {
-    "asset": "problem-me-social-preview-1200x630.jpg",
+    "asset": "assets/capybara-terminal.jpeg",
     "alt": "Calm capybara at a terminal laptop"
   },
   "integration": {
@@ -45,5 +47,5 @@
     "noRemoteDependencies": true,
     "noStorageSideEffects": true
   },
-  "principle": "Design reference only. Migrate existing pages in independently tested releases."
+  "principle": "Site-wide review build. Publish only after responsive and functional browser validation."
 }

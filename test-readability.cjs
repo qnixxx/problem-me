@@ -13,4 +13,7 @@ let minimum=Infinity;
 for(const ink of ['#c9dfd2','#86b79e','#63ffb5','#ffe95b','#f2f0df','#a2c5b2','#668b79'])for(const bg of ['#020805','#031009','#062015']){
  const ratio=(luminance(ink)+.05)/(luminance(bg)+.05);assert(ratio>=4.5,`${ink} on ${bg}: ${ratio}`);minimum=Math.min(minimum,ratio);
 }
+for(const ink of ['#faf5e2','#d0e7d8','#99c7ac','#35ff91','#f4ca85'])for(const bg of ['#010704','#020c07','#061810']){
+ const ratio=(luminance(ink)+.05)/(luminance(bg)+.05);assert(ratio>=4.5,`${ink} on ${bg}: ${ratio}`);minimum=Math.min(minimum,ratio);
+}
 console.log(`PASS ${declarations} explicit CSS sizes have a 14px minimum; core text palette contrast >= ${minimum.toFixed(2)}:1. Rendered/opacity/zoom checks require a browser.`);

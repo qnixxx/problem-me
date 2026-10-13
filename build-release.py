@@ -18,8 +18,9 @@ class Page(HTMLParser):
         for key in ('href', 'src'):
             if key in attrs: self.links.append(attrs[key])
 
-files = sorted(p for p in ROOT.glob('*') if p.suffix in ('.html', '.css', '.js', '.ico'))
+files = sorted(p for p in ROOT.glob('*') if p.suffix in ('.html', '.css', '.js', '.ico', '.jpg', '.jpeg', '.png', '.svg', '.webp'))
 files += sorted((ROOT/'articles').glob('*.html'))
+files += sorted(p for p in (ROOT/'assets').rglob('*') if p.is_file())
 relative = {p.relative_to(ROOT).as_posix() for p in files}
 pages = {}
 for p in files:

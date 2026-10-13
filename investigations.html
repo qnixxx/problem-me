@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="pm-theme">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#020805">
+<meta name="theme-color" content="#010704">
 <meta name="description" content="Your local problem.me investigations. Stored in this browser on this device, with portable .problemme export and import.">
 <title>My Investigations | problem.me</title>
 <link rel="stylesheet" href="investigations.css">
@@ -12,10 +12,11 @@
 <script src="investigation-store.js" defer></script>
 <script src="investigations.js" defer></script>
 <link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
-<link rel="stylesheet" href="typography.css"></head>
-<body>
+<link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
+</head>
+<body class="pm-v2 pm-app">
 <a class="skip" href="#investigationList">Skip to investigations</a>
-<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem.me<span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="investigation.html">+ [ NEW INVESTIGATION ]</a><span class="online"><i class="dot" aria-hidden="true"></i>LOCAL WORKSPACE</span><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></header>
+<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="investigation.html">+ [ NEW INVESTIGATION ]</a><span class="online"><i class="dot" aria-hidden="true"></i>LOCAL WORKSPACE</span><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></header>
 <main class="wrap">
 <section class="hero" aria-labelledby="page-title">
 <p class="prompt">&gt; /my-investigations <span class="version">v1.0.0</span></p>
@@ -38,7 +39,7 @@
   <div class="wrap">
     <div class="footer-main">
       <div class="footer-identity">
-        <a class="footer-home" href="index.html" aria-label="problem.me home">problem.me<span aria-hidden="true">_</span></a>
+        <a class="footer-home" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span aria-hidden="true">_</span></a>
         <p>Same problems. Clearer thinking.</p>
       </div>
       <nav class="footer-nav" aria-label="Explore problem.me">

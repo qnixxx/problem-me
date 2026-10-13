@@ -695,7 +695,7 @@
         radial-gradient(rgba(99,255,181,.13) .7px,transparent .7px);
       background-size:auto,12px 12px;
     }
-    .lagoon-scene svg { width:100%;max-width:320px;height:auto;display:block;margin:0 auto; }
+    .lagoon-scene .lagoon-mascot { width:100%;max-width:460px;height:auto;display:block;margin:0 auto;border-radius:12px; }
     .lagoon-scene figcaption { margin-top:12px;text-align:center; }
     .lagoon-scene strong { display:block;color:var(--yellow);font-size:.875rem;letter-spacing:.08em; }
     .lagoon-scene span { display:block;margin-top:7px;color:var(--muted);font-size:.875rem;line-height:1.6; }
@@ -730,8 +730,8 @@
     @media(max-width:760px) {
       .lagoon-grid { grid-template-columns:1fr; }
       .lagoon-scene { border-right:0;border-bottom:1px solid var(--line);padding:18px; }
-      .lagoon-scene svg { max-width:230px; }
-      .lagoon-scene figcaption { margin-top:0; }
+      .lagoon-scene .lagoon-mascot { max-width:360px; }
+      .lagoon-scene figcaption { margin-top:12px; }
       .lagoon-copy { padding:24px; }
     }
     @media(max-width:420px) {
@@ -1131,29 +1131,7 @@ RISK    | DECIDE</pre>
             </div>
             <div class="lagoon-grid">
               <figure class="lagoon-scene">
-                <svg viewBox="0 0 320 240" aria-hidden="true" focusable="false">
-                  <!-- A quiet capybara hot spring, drawn locally in phosphor lines. -->
-                  <g fill="none" stroke="#1f6f4d" stroke-width="1">
-                    <circle cx="160" cy="114" r="94" stroke-dasharray="3 7"/>
-                    <path d="M160 10v18M160 202v18M54 114h18M248 114h18"/>
-                    <ellipse cx="160" cy="191" rx="133" ry="30"/>
-                    <ellipse cx="160" cy="191" rx="112" ry="20"/>
-                  </g>
-                  <g fill="none" stroke="#63ffb5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M90 178c-16-41 4-76 45-76h40c38 0 51 35 45 70" fill="#062016"/>
-                    <path d="M156 130V93c0-23 17-34 41-34 26 0 45 13 45 35v24c0 20-18 30-41 30h-17" fill="#062016"/>
-                    <path d="M173 66c-11-20-28-10-23 7l9 8M221 65c8-15 23-7 18 7" fill="#062016"/>
-                    <path d="M188 98l10 2M222 97l8-1M224 118c-5 5-13 5-18 2"/>
-                    <path d="M233 110h5M105 169l3 13M137 172v12"/>
-                    <path d="M62 184c22 11 62 12 89 9M174 195c31 0 65-4 81-12"/>
-                    <path d="M80 207c48 12 108 12 158-1" opacity=".55"/>
-                  </g>
-                  <circle cx="198" cy="52" r="12" fill="#ffe95b"/>
-                  <path d="M198 40c1-8 9-10 15-8-3 6-8 9-15 8" fill="#21d67a"/>
-                  <g fill="none" stroke="#86b79e" stroke-width="1.5" stroke-linecap="round">
-                    <path d="M76 130c-13-12 12-19 0-33M57 159c-12-12 10-18 0-30M267 152c-12-12 10-18 0-30"/>
-                  </g>
-                </svg>
+                <img class="lagoon-mascot" src="assets/capybara-soaking.webp" width="1448" height="1086" alt="A contented golden capybara soaking in glowing green water, with a citrus fruit balanced on its head" loading="lazy" decoding="async">
                 <figcaption><strong>CAPYBARA.EXE</strong><span>Soaking. Observing. Not jumping to conclusions.</span></figcaption>
               </figure>
               <div class="lagoon-copy">

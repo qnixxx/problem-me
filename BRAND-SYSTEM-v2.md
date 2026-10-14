@@ -4,7 +4,7 @@ The existing design reference is now extended into a site-wide **review build** 
 
 ## Design
 
-Near-black backgrounds, neon green actions, cream headings, jade reading text, and warm amber details. The supplied capybara artwork leads the homepage; existing schematic mascots retain their educational poses with warm brown fills. Courier remains the terminal identity; system sans-serif remains the reading face. Fonts and assets are served locally.
+Near-black backgrounds, neon green actions, cream headings, jade reading text, and warm amber details. The supplied capybara artwork leads the homepage; 21 smaller mascot instances use three transparent illustrated poses: coffee companion, investigator and analyst. Case props and meaningful labels remain HTML. Courier remains the terminal identity; system sans-serif remains the reading face. Fonts and assets are served locally.
 
 ## Integration
 
@@ -14,7 +14,7 @@ The existing reference components and filter demo stay in `brand-v2.css` / `bran
 
 ## Assets
 
-`assets/capybara-terminal.jpeg` is the user's original 1536 × 1024 artwork, copied unchanged. Its intrinsic dimensions reserve space before loading. `problem-me-social-preview-1200x630.jpg` remains the social image. `build-release.py` packages both.
+`assets/capybara-terminal.jpeg` is the user's original 1536 × 1024 artwork, copied unchanged. Its intrinsic dimensions reserve space before loading. The smaller mascot family uses local alpha-preserving WebP files (`capybara-coffee.webp`, `capybara-investigator.webp`, `capybara-analyst.webp`), also with reserved image dimensions. `problem-me-social-preview-1200x630.jpg` remains the social image. `build-release.py` packages both.
 
 ## Verification
 

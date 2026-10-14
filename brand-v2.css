@@ -160,11 +160,6 @@ body.pm-v2 .pm-reference-footer a:hover{color:var(--pm-green)}
   body.pm-app :is(button:disabled,.button[aria-disabled="true"]) {background:var(--pm-night);color:var(--pm-muted);border-color:var(--line)}
   :root body.pm-app :focus-visible {outline-color:var(--pm-cream)}
 
-  /* The small schematic mascot remains part of the teaching diagrams. */
-  body.pm-app :is(.capy,.capy-art) :is(.body,.head,.ear) {background:#80502b;border-color:var(--pm-capybara)}
-  body.pm-app :is(.capy,.capy-art) .leg {border-color:var(--pm-capybara)}
-  body.pm-app :is(.capy,.capy-art) .eye {background:var(--pm-cream)}
-  body.pm-app :is(.capy,.capy-art) .nose {border-color:var(--pm-cream)}
   body.pm-app .lagoon-scene {border-radius:15px 0 0 15px;background:radial-gradient(ellipse at center,#123723,var(--pm-night) 70%)}
 
   /* Homepage: one primary action, one calm illustration, no competing animation. */
@@ -206,3 +201,18 @@ body.pm-v2 .pm-reference-footer a:hover{color:var(--pm-green)}
   body.pm-app .lagoon-scene {border-radius:0}
   html.investigation-embedded body.pm-app .wrap {width:100%}
 }
+
+/* Illustrated mascot family. Keep intrinsic square dimensions to reserve space
+   before lazy loading, and let labels participate in normal document flow. */
+body.pm-app :is(.capy,.capy-art).pm-illustrated {
+  position:relative;display:grid;justify-items:center;gap:8px;
+  width:160px;max-width:100%;height:auto;min-height:0;
+  margin-inline:auto;transform:none;flex-shrink:1;
+}
+body.pm-app .pm-illustrated::after {content:none}
+body.pm-app .pm-illustrated>img {display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain}
+body.pm-app .pm-mascot-label {position:static;display:block;width:100%;text-align:center;font-size:.875rem;line-height:1.5;color:var(--yellow)}
+body.pm-app .pa-mascot {flex-direction:column;gap:8px}
+body.pm-app .pa-mascot>.clipboard {order:2;flex-direction:row;flex-wrap:wrap;justify-content:center;max-width:100%}
+body.pm-app .pa-mascot>.capy {order:1}
+@media(max-width:760px){body.pm-app .capy-card .pm-illustrated{width:108px}}

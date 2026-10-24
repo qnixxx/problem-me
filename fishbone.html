@@ -1065,6 +1065,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
+<script src="handoff.js"></script><script src="draft-store-guard.js"></script>
 </head>
 <body class="pm-v2 pm-app">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -1507,7 +1508,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   function safeLoad() {
     if (embedded) return;
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      const saved = JSON.parse(ProblemMeDraftStore.read(STORAGE_KEY));
       if (!saved || typeof saved !== 'object') return;
       const next = makeDefaultState();
       next.effect = typeof saved.effect === 'string' ? saved.effect : '';
@@ -1537,7 +1538,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
       return;
     }
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      ProblemMeDraftStore.save(STORAGE_KEY, JSON.stringify(state));
       actionStatus.textContent = 'AUTO-SAVED LOCALLY_';
     } catch (_) {
       actionStatus.textContent = 'LOCAL SAVE UNAVAILABLE_';
@@ -1913,7 +1914,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     if (!window.confirm(message)) return;
     state = makeDefaultState();
     if (!privateMode) {
-      try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+      try { ProblemMeDraftStore.remove(STORAGE_KEY); } catch (_) {}
     }
     syncStaticFields();
     renderAll();
@@ -1974,7 +1975,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
   function loadLedger() {
     if (new URLSearchParams(location.search).get('investigation') === '1') return;
     try {
-      const saved = JSON.parse(localStorage.getItem(LEDGER_KEY));
+      const saved = JSON.parse(ProblemMeDraftStore.read(LEDGER_KEY));
       if (Array.isArray(saved) && saved.length) {
         ledger = saved.slice(0,MAX_ROWS).map(x => ({type:normalizeType(x?.type), text:typeof x?.text==='string'?x.text:''}));
       }
@@ -1986,7 +1987,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
       return;
     }
     try {
-      localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
+      ProblemMeDraftStore.save(LEDGER_KEY, JSON.stringify(ledger));
       statusEl.textContent = 'LEDGER AUTO-SAVED_';
     } catch (_) {
       statusEl.textContent = 'LEDGER SAVE UNAVAILABLE_';
@@ -2073,7 +2074,7 @@ A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</
     if (!confirm('Clear this evidence ledger?')) return;
     ledger = [{type:'fact',text:''}];
     if (!isPrivate()) {
-      try { localStorage.removeItem(LEDGER_KEY); } catch (_) {}
+      try { ProblemMeDraftStore.remove(LEDGER_KEY); } catch (_) {}
     }
     renderLedger();
     statusEl.textContent = isPrivate() ? 'PRIVATE LEDGER CLEARED_' : 'LEDGER CLEARED_';
@@ -2123,11 +2124,12 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW CAUSE WITH 5 WHYS →',seed
   }
   function goHandoff(btn) {
     if (btn.disabled) return;
-    const params = new URLSearchParams();
-    params.set('pm_from', SOURCE);
-    params.set('pm_seed', btn.dataset.seed || '');
-    if (isPrivate()) params.set('pm_private','1');
-    location.href = `${btn.dataset.target}#${params.toString()}`;
+    void ProblemMeHandoff.navigate({
+      target:btn.dataset.target,
+      seed:btn.dataset.seed || '',
+      from:SOURCE,
+      privateMode:isPrivate()
+    });
   }
   handoffOne.addEventListener('click', () => goHandoff(handoffOne));
   handoffTwo.addEventListener('click', () => goHandoff(handoffTwo));
@@ -2143,27 +2145,23 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW CAUSE WITH 5 WHYS →',seed
 
   function consumeIncomingHandoff() {
     if (new URLSearchParams(location.search).get('investigation') === '1') return;
-    if (!location.hash || !location.hash.includes('pm_seed=')) return;
-    const params = new URLSearchParams(location.hash.slice(1));
-    const seed = params.get('pm_seed') || '';
-    const from = params.get('pm_from') || 'another technique';
-    if (!seed) return;
-
-    if (params.get('pm_private') === '1' && !isPrivate()) {
-      privateBtn?.click();
+    const incoming = ProblemMeHandoff.take();
+    if (!incoming) return;
+    if (incoming.privateMode && !isPrivate()) privateBtn?.click();
+    if (!incoming.seed) {
+      if (pageStatus) pageStatus.textContent = 'PRIVATE HANDOFF READY — PASTE COPIED TEXT_';
+      return;
     }
-
     const field = document.getElementById('fbEffect');
     if (field) {
       const current = (field.value || '').trim();
-      const useIt = !current || confirm(`A handoff from ${from} is ready:\n\n"${seed}"\n\nReplace the current starting field with this context?`);
+      const useIt = !current || confirm(`A handoff from ${incoming.from} is ready:\n\n"${incoming.seed}"\n\nReplace the current starting field with this context?`);
       if (useIt) {
-        field.value = seed;
+        field.value = incoming.seed;
         field.dispatchEvent(new Event('input', {bubbles:true}));
         if (pageStatus) pageStatus.textContent = 'HANDOFF RECEIVED_';
       }
     }
-    history.replaceState(null,'',location.pathname + location.search);
   }
 
   window.problemMeEvidence = {

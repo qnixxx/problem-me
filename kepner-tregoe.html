@@ -801,6 +801,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
+<script src="handoff.js"></script><script src="draft-store-guard.js"></script>
 </head>
 <body class="pm-v2 pm-app">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -1266,10 +1267,10 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
     }catch(e){return {ok:false,count:0}}
   }
 
-  function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&typeof x==='object')state=normalize(x)}catch(e){}}
+  function load(){try{const x=JSON.parse(ProblemMeDraftStore.read(KEY));if(x&&typeof x==='object')state=normalize(x)}catch(e){}}
   function normalize(x){const s=blankState();s.active=x.active==='problem'?'problem':'decision';const d=x.decision||{};s.decision.objective=typeof d.objective==='string'?d.objective:'';if(Array.isArray(d.alternatives)){s.decision.alternatives=d.alternatives.slice(0,MAX_ALT).map((a,i)=>({name:typeof a?.name==='string'?a.name:`Option ${String.fromCharCode(65+i)}`,risk:typeof a?.risk==='string'?a.risk:''}));while(s.decision.alternatives.length<MIN_ALT)s.decision.alternatives.push({name:`Option ${String.fromCharCode(65+s.decision.alternatives.length)}`,risk:''})}const ac=s.decision.alternatives.length;if(Array.isArray(d.musts)){s.decision.musts=d.musts.slice(0,MAX_MUST).map(m=>({name:typeof m?.name==='string'?m.name:'',results:Array.from({length:ac},(_,i)=>['pass','fail','untested'].includes(m?.results?.[i])?m.results[i]:'untested')}));if(!s.decision.musts.length)s.decision.musts=[{name:'',results:Array(ac).fill('untested')}]};if(Array.isArray(d.wants)){s.decision.wants=d.wants.slice(0,MAX_WANT).map(w=>({name:typeof w?.name==='string'?w.name:'',weight:num(w?.weight,1,10)||1,scores:Array.from({length:ac},(_,i)=>num(w?.scores?.[i],0,10))}));if(!s.decision.wants.length)s.decision.wants=[{name:'',weight:10,scores:Array(ac).fill(0)}]};const p=x.problem||{};s.problem.deviation=typeof p.deviation==='string'?p.deviation:'';dims.forEach(k=>{s.problem.dimensions[k]={is:typeof p.dimensions?.[k]?.is==='string'?p.dimensions[k].is:'',isnot:typeof p.dimensions?.[k]?.isnot==='string'?p.dimensions[k].isnot:''}});s.problem.changes=typeof p.changes==='string'?p.changes:'';if(Array.isArray(p.causes)){s.problem.causes=p.causes.slice(0,MAX_CAUSE).map(c=>({name:typeof c?.name==='string'?c.name:'',tests:{what:fit(c?.tests?.what),where:fit(c?.tests?.where),when:fit(c?.tests?.when),extent:fit(c?.tests?.extent),change:fit(c?.tests?.change)}}));while(s.problem.causes.length<MIN_CAUSE)s.problem.causes.push(newCause())}s.problem.verification=typeof p.verification==='string'?p.verification:'';s.problem.notes=typeof p.notes==='string'?p.notes:'';return s}
   function fit(v){return ['fit','no','unknown'].includes(v)?v:'unknown'}
-  function save(){if(privateMode){els.actionStatus.textContent='PRIVATE SESSION — NOT SAVED_';return}try{localStorage.setItem(KEY,JSON.stringify(state));els.actionStatus.textContent='AUTO-SAVED LOCALLY_'}catch(e){els.actionStatus.textContent='LOCAL SAVE UNAVAILABLE_'}}
+  function save(){if(privateMode){els.actionStatus.textContent='PRIVATE SESSION — NOT SAVED_';return}try{ProblemMeDraftStore.save(KEY, JSON.stringify(state));els.actionStatus.textContent='AUTO-SAVED LOCALLY_'}catch(e){els.actionStatus.textContent='LOCAL SAVE UNAVAILABLE_'}}
   function setTab(which){state.active=which;const d=which==='decision';els.decisionTab.setAttribute('aria-selected',String(d));els.problemTab.setAttribute('aria-selected',String(!d));els.decisionPanel.classList.toggle('active',d);els.problemPanel.classList.toggle('active',!d);els.decisionPanel.hidden=!d;els.problemPanel.hidden=d;save()}
   els.decisionTab.addEventListener('click',()=>setTab('decision'));els.problemTab.addEventListener('click',()=>setTab('problem'));
 
@@ -1316,7 +1317,7 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
     window.dispatchEvent(new Event('pm-clear-all'));
   });
 
-  $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.',privateMode?'Private Session — not saved by problem.me':'Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>{renderPdf();window.print()});$('ktResetBtn').addEventListener('click',()=>{const q=privateMode?'Reset this Private Session? The previously saved local Kepner–Tregoe draft, if any, will remain untouched.':'Reset both local Kepner–Tregoe workspaces?';if(!confirm(q))return;state=blankState();if(!privateMode){try{localStorage.removeItem(KEY)}catch(e){}}sync();els.actionStatus.textContent=privateMode?'PRIVATE SESSION RESET — NOT SAVED_':'DRAFT RESET_'})
+  $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.',privateMode?'Private Session — not saved by problem.me':'Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>{renderPdf();window.print()});$('ktResetBtn').addEventListener('click',()=>{const q=privateMode?'Reset this Private Session? The previously saved local Kepner–Tregoe draft, if any, will remain untouched.':'Reset both local Kepner–Tregoe workspaces?';if(!confirm(q))return;state=blankState();if(!privateMode){try{ProblemMeDraftStore.remove(KEY)}catch(e){}}sync();els.actionStatus.textContent=privateMode?'PRIVATE SESSION RESET — NOT SAVED_':'DRAFT RESET_'})
   window.addEventListener('beforeprint',renderPdf);
   load();sync();renderPdf();renderPrivacy();
 })();
@@ -1358,7 +1359,7 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
   }
   function loadLedger() {
     try {
-      const saved = JSON.parse(localStorage.getItem(LEDGER_KEY));
+      const saved = JSON.parse(ProblemMeDraftStore.read(LEDGER_KEY));
       if (Array.isArray(saved) && saved.length) {
         ledger = saved.slice(0,MAX_ROWS).map(x => ({type:normalizeType(x?.type), text:typeof x?.text==='string'?x.text:''}));
       }
@@ -1370,7 +1371,7 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
       return;
     }
     try {
-      localStorage.setItem(LEDGER_KEY, JSON.stringify(ledger));
+      ProblemMeDraftStore.save(LEDGER_KEY, JSON.stringify(ledger));
       statusEl.textContent = 'LEDGER AUTO-SAVED_';
     } catch (_) {
       statusEl.textContent = 'LEDGER SAVE UNAVAILABLE_';
@@ -1457,7 +1458,7 @@ The best-fitting explanation is still only a hypothesis until the evidence verif
     if (!confirm('Clear this evidence ledger?')) return;
     ledger = [{type:'fact',text:''}];
     if (!isPrivate()) {
-      try { localStorage.removeItem(LEDGER_KEY); } catch (_) {}
+      try { ProblemMeDraftStore.remove(LEDGER_KEY); } catch (_) {}
     }
     renderLedger();
     statusEl.textContent = isPrivate() ? 'PRIVATE LEDGER CLEARED_' : 'LEDGER CLEARED_';
@@ -1509,11 +1510,12 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW BEST FIT → 5 WHYS',seed},
   }
   function goHandoff(btn) {
     if (btn.disabled) return;
-    const params = new URLSearchParams();
-    params.set('pm_from', SOURCE);
-    params.set('pm_seed', btn.dataset.seed || '');
-    if (isPrivate()) params.set('pm_private','1');
-    location.href = `${btn.dataset.target}#${params.toString()}`;
+    void ProblemMeHandoff.navigate({
+      target:btn.dataset.target,
+      seed:btn.dataset.seed || '',
+      from:SOURCE,
+      privateMode:isPrivate()
+    });
   }
   handoffOne.addEventListener('click', () => goHandoff(handoffOne));
   handoffTwo.addEventListener('click', () => goHandoff(handoffTwo));
@@ -1528,27 +1530,24 @@ return {seed,one:{target:'5-whys.html',label:'FOLLOW BEST FIT → 5 WHYS',seed},
   });
 
   function consumeIncomingHandoff() {
-    if (!location.hash || !location.hash.includes('pm_seed=')) return;
-    const params = new URLSearchParams(location.hash.slice(1));
-    const seed = params.get('pm_seed') || '';
-    const from = params.get('pm_from') || 'another technique';
-    if (!seed) return;
-
-    if (params.get('pm_private') === '1' && !isPrivate()) {
-      privateBtn?.click();
+    if (new URLSearchParams(location.search).get('investigation') === '1') return;
+    const incoming = ProblemMeHandoff.take();
+    if (!incoming) return;
+    if (incoming.privateMode && !isPrivate()) privateBtn?.click();
+    if (!incoming.seed) {
+      if (pageStatus) pageStatus.textContent = 'PRIVATE HANDOFF READY — PASTE COPIED TEXT_';
+      return;
     }
-
     const field = document.getElementById('ktDeviation');
     if (field) {
       const current = (field.value || '').trim();
-      const useIt = !current || confirm(`A handoff from ${from} is ready:\n\n"${seed}"\n\nReplace the current starting field with this context?`);
+      const useIt = !current || confirm(`A handoff from ${incoming.from} is ready:\n\n"${incoming.seed}"\n\nReplace the current starting field with this context?`);
       if (useIt) {
-        field.value = seed;
+        field.value = incoming.seed;
         field.dispatchEvent(new Event('input', {bubbles:true}));
         if (pageStatus) pageStatus.textContent = 'HANDOFF RECEIVED_';
       }
     }
-    history.replaceState(null,'',location.pathname + location.search);
   }
 
   loadLedger();

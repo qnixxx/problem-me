@@ -204,8 +204,8 @@
     try {
       ProblemMeDraftStore.save(STORAGE_KEY, JSON.stringify(state));
       actionStatus.textContent = 'AUTO-SAVED LOCALLY_';
-    } catch (_) {
-      actionStatus.textContent = 'LOCAL SAVE UNAVAILABLE_';
+    } catch (error) {
+      actionStatus.textContent = error?.code === 'CONFLICT' ? 'AUTO-SAVE PAUSED — ANOTHER TAB CHANGED THIS DRAFT_' : 'LOCAL SAVE UNAVAILABLE_';
     }
   }
 

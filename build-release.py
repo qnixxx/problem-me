@@ -41,7 +41,7 @@ for p in files:
             assert unquote(url.fragment) in pages[target].ids, f'{p.name}: missing anchor {ref}'
         links += 1
 version = re.search(r'name="application-version" content="([^"]+)"', (ROOT/'index.html').read_text())[1]
-assert version == '1.0.1'
+assert version == '1.0.2'
 assert f"appVersion:'{version}'" in (ROOT/'investigation-model.js').read_text()
 print(f'PASS {len(pages)} HTML pages: unique IDs and {links} local references/anchors; {len(files)} runtime files complete')
 if '--check' not in sys.argv:

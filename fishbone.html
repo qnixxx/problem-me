@@ -1065,7 +1065,8 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-<script src="handoff.js"></script><script src="draft-store-guard.js"></script>
+<script src="handoff.js"></script><script src="draft-store-guard.js"></script><script src="private-default.js"></script>
+<style>.fb-privacy-actions [hidden]{display:none!important}</style>
 </head>
 <body class="pm-v2 pm-app">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -1113,27 +1114,27 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       <h2 id="fb-tool-title">TRY IT YOURSELF_</h2>
       <p>Put your own effect at the fish's head, map possible causes across six editable families, then mark each hypothesis as evidence weakens or strengthens it.</p>
     </div>
-    <div class="fb-local" id="fbLocalMode"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
+    <div class="fb-local" id="fbLocalMode"><strong>PRIVATE SESSION</strong><br>not saved on this device</div>
   </div>
 
-  <div class="fb-tool">
+  <div class="fb-tool is-private">
     <div class="fb-tool-head">
       <strong>FISHBONE WORKSPACE / YOUR CASE</strong>
       <span>MAP → TEST → NARROW</span>
     </div>
 
 
-    <div class="fb-privacy-panel" id="fbPrivacyPanel">
+    <div class="fb-privacy-panel is-private" id="fbPrivacyPanel">
       <div class="fb-privacy-head">
         <div class="fb-privacy-mode">
           <span class="fb-privacy-led" aria-hidden="true"></span>
           <div>
-            <strong id="fbPrivacyTitle">LOCAL SAVE ACTIVE_</strong>
-            <span id="fbPrivacyCopy">Changes are auto-saved in this browser on this device.</span>
+            <strong id="fbPrivacyTitle">PRIVATE SESSION ACTIVE_</strong>
+            <span id="fbPrivacyCopy">Your work stays in this page only. To keep it, export or explicitly start Local Save.</span>
           </div>
         </div>
         <div class="fb-privacy-actions">
-          <button class="fb-btn primary" id="fbPrivateBtn" type="button" aria-pressed="false">PRIVATE SESSION</button>
+          <button class="fb-btn primary" id="fbPrivateBtn" type="button" aria-pressed="true">START LOCAL SAVE</button><button class="fb-btn" id="fbRestoreSavedBtn" type="button" hidden>OPEN SAVED DRAFT</button>
           <button class="fb-btn danger" id="fbClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button>
         </div>
       </div>
@@ -1237,7 +1238,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
         <button class="pm-reasoning-btn primary" id="pmHandoffOne" type="button">NEXT TECHNIQUE</button>
         <button class="pm-reasoning-btn" id="pmHandoffTwo" type="button">ALTERNATIVE NEXT TECHNIQUE</button>
       </div>
-      <p class="pm-handoff-note">Context is passed in the URL fragment, which is not sent to the web server, then removed from the address bar after the receiving tool reads it.</p>
+      <p class="pm-handoff-note">Private handoffs use an explicit clipboard copy and manual paste. With Local Save, a one-time token transfers context without putting your text in the URL.</p>
     </div>
   </aside>
 </section>

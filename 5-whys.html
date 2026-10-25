@@ -1156,7 +1156,8 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-<script src="handoff.js"></script><script src="draft-store-guard.js"></script>
+<script src="handoff.js"></script><script src="draft-store-guard.js"></script><script src="private-default.js"></script>
+<style>.privacy-actions [hidden]{display:none!important}</style>
 </head>
 <body class="pm-v2 pm-app">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -1185,7 +1186,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     <div class="workbench-intro">
       <div class="prompt">&gt; run /tools/5-whys --interactive</div>
       <h2 id="workbench-title">TRY IT YOURSELF_</h2>
-      <p>Use the same logic on your own problem. Choose local auto-save or switch to a Private Session that does not save the investigation to localStorage.</p>
+      <p>Use the same logic on your own problem. Start privately. Your changes stay in page memory unless you explicitly turn on Local Save.</p>
     </div>
 
 
@@ -1233,25 +1234,25 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
     </section>
 
 
-    <div class="workspace-shell" id="workspaceShell">
+    <div class="workspace-shell is-private" id="workspaceShell">
       <div class="workspace-head">
-        <strong>5 WHYS WORKSPACE / LOCAL DRAFT</strong>
-        <span id="saveModeLabel">AUTO-SAVE: ON</span>
+        <strong>5 WHYS WORKSPACE / YOUR CASE</strong>
+        <span id="saveModeLabel">AUTO-SAVE: OFF / PRIVATE</span>
       </div>
 
       <div class="workspace-grid">
         <form class="form-pane" id="fiveWhysForm" autocomplete="off">
-          <div class="privacy-panel" id="privacyPanel">
+          <div class="privacy-panel is-private" id="privacyPanel">
             <div class="privacy-head">
               <div class="privacy-mode">
                 <span class="privacy-led" id="privacyLed" aria-hidden="true"></span>
                 <div>
-                  <strong id="privacyModeTitle">LOCAL SAVE ACTIVE_</strong>
-                  <span id="privacyModeCopy">Changes are auto-saved in this browser on this device.</span>
+                  <strong id="privacyModeTitle">PRIVATE SESSION ACTIVE_</strong>
+                  <span id="privacyModeCopy">Your work stays in this page only. To keep it, export or explicitly start Local Save.</span>
                 </div>
               </div>
               <div class="privacy-actions">
-                <button class="tool-btn primary" id="privateSessionBtn" type="button" aria-pressed="false">PRIVATE SESSION</button>
+                <button class="tool-btn primary" id="privateSessionBtn" type="button" aria-pressed="true">START LOCAL SAVE</button><button class="tool-btn" id="restoreSaved5WhysBtn" type="button" hidden>OPEN SAVED DRAFT</button>
                 <button class="tool-btn danger" id="clearLocalDataBtn" type="button">CLEAR ALL LOCAL DATA</button>
               </div>
             </div>
@@ -1287,7 +1288,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
             <textarea id="notesInput" name="notes" placeholder="What supports or challenges this chain?"></textarea>
           </div>
 
-          <div class="save-note"><strong id="saveNoteTitle">LOCAL ONLY_</strong><span id="saveNoteText">The draft is stored with localStorage. Clearing browser/site data will remove it.</span></div>
+          <div class="save-note"><strong id="saveNoteTitle">NOT SAVED_</strong><span id="saveNoteText">Your Private Session is not saved. Export or start Local Save before leaving.</span></div>
         </form>
 
         <aside class="live-pane" aria-label="Live 5 Whys chain preview">
@@ -1357,7 +1358,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
         <button class="pm-reasoning-btn primary" id="pmHandoffOne" type="button">NEXT TECHNIQUE</button>
         <button class="pm-reasoning-btn" id="pmHandoffTwo" type="button">ALTERNATIVE NEXT TECHNIQUE</button>
       </div>
-      <p class="pm-handoff-note">Context is passed in the URL fragment, which is not sent to the web server, then removed from the address bar after the receiving tool reads it.</p>
+      <p class="pm-handoff-note">Private handoffs use an explicit clipboard copy and manual paste. With Local Save, a one-time token transfers context without putting your text in the URL.</p>
     </div>
   </aside>
 </section>

@@ -5,6 +5,7 @@
   const clone = value => JSON.parse(JSON.stringify(value));
   const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
   const strings = (obj, keys) => record(obj) && keys.every(key => typeof obj[key] === 'string');
+  const validId = id => typeof id === 'string' && id.length >= 1 && id.length <= 128 && /^[a-zA-Z0-9][a-zA-Z0-9._:-]*$/.test(id);
   const date = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) && Number.isFinite(Date.parse(value));
   function blank(tool) {
     if (tool === '5-whys') return {problem:'',root:'',countermeasure:'',notes:'',whys:Array.from({length:5},()=>({text:'',verify:false}))};
@@ -26,7 +27,7 @@
   }
   function validate(obj) {
     if (!record(obj) || obj.schema !== 'problem.me/investigation' || ![1,2,3].includes(obj.schemaVersion)) throw Error('Unsupported investigation format.');
-    if (!strings(obj,['appVersion','id','title','status']) || !obj.id.trim() || obj.title.length > 80
+    if (!strings(obj,['appVersion','id','title','status']) || !validId(obj.id) || obj.title.length > 80
         || !['open','verifying','resolved','archived'].includes(obj.status) || !date(obj.createdAt) || !date(obj.updatedAt)) throw Error('Invalid investigation details.');
     const supported = obj.schemaVersion === 1 ? ['5-whys'] : obj.schemaVersion === 2 ? ['5-whys','fishbone'] : TECHNIQUES;
     if (!supported.includes(obj.currentTechnique) || !Array.isArray(obj.techniquesUsed)
@@ -42,13 +43,13 @@
     if (new TextEncoder().encode(text).length > LIMIT) throw Error('File exceeds the 1 MiB limit.');
     const obj = clone(validate(JSON.parse(text)));
     obj.schemaVersion = 3;
-    obj.appVersion = '1.0.0';
+    obj.appVersion = '1.0.1';
     TECHNIQUES.forEach(tool => { if (!obj.toolData[tool]) obj.toolData[tool] = blank(tool); });
     return obj;
   }
   function fresh() {
     const now = new Date().toISOString();
-    return {schema:'problem.me/investigation',schemaVersion:3,appVersion:'1.0.0',
+    return {schema:'problem.me/investigation',schemaVersion:3,appVersion:'1.0.1',
       id:root.crypto.randomUUID(),title:'',status:'open',createdAt:now,updatedAt:now,
       currentTechnique:'5-whys',techniquesUsed:['5-whys'],history:[],
       toolData:Object.fromEntries(TECHNIQUES.map(t=>[t,blank(t)])),evidence:[]};
@@ -59,5 +60,5 @@
     if (new TextEncoder().encode(text).length > LIMIT) throw Error('Investigation exceeds 1 MiB. Shorten the content before saving or exporting.');
     return text;
   }
-  root.ProblemMeInvestigation = {TECHNIQUES,LIMIT,clone,blank,validate,decode,fresh,encode};
+  root.ProblemMeInvestigation = {TECHNIQUES,LIMIT,validId,clone,blank,validate,decode,fresh,encode};
 })(globalThis);

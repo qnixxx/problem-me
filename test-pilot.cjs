@@ -8,7 +8,7 @@ const M = ctx.ProblemMeInvestigation;
 let checks = 0;
 function check(name, fn) { fn(); checks++; console.log('PASS', name); }
 check('JavaScript syntax: runtime scripts and all HTML inline scripts', () => {
-  for (const folder of ['', 'articles']) for (const name of fs.readdirSync(path.join(__dirname, folder))) {
+  for (const folder of ['', 'articles', 'runtime']) for (const name of fs.readdirSync(path.join(__dirname, folder))) {
     const file = path.join(__dirname, folder, name);
     if (name.endsWith('.js')) new vm.Script(fs.readFileSync(file, 'utf8'));
     if (name.endsWith('.html')) for (const m of fs.readFileSync(file, 'utf8').matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)) new vm.Script(m[1]);
@@ -28,7 +28,7 @@ for (const version of [1, 2]) check(`schema ${version} migrates without losing o
   s.toolData['5-whys'].notes = 'Keep this'; s.evidence = [{type:'test',text:'original evidence'}];
   const original = JSON.stringify(s), migrated = M.decode(original);
   assert.equal(migrated.id, s.id); assert.equal(migrated.createdAt, s.createdAt);
-  assert.equal(migrated.schemaVersion, 3); assert.equal(migrated.appVersion, '1.0.0');
+  assert.equal(migrated.schemaVersion, 3); assert.equal(migrated.appVersion, '1.0.1');
   assert.equal(migrated.toolData['5-whys'].notes, 'Keep this');
   assert.deepEqual(migrated.evidence, s.evidence);
   assert.equal(migrated.toolData.pareto.rows.length, 6);

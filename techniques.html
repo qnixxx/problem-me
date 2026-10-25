@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" class="pm-theme">
-<head>
+<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Browse the problem.me visual problem-solving technique library and field guides — 5 Whys, Fishbone, Pareto Analysis and Kepner–Tregoe." />
@@ -507,41 +507,6 @@ RISK    | DECIDE</pre>
   </div>
 </footer>
 
-<script>
-(() => {
-  const buttons = [...document.querySelectorAll('.filter')];
-  const cards = [...document.querySelectorAll('.tech-card')];
-  const search = document.getElementById('techSearch');
-  const count = document.getElementById('resultCount');
-  const empty = document.getElementById('emptyState');
-  let active = 'all';
-
-  function applyFilters() {
-    const query = search.value.trim().toLowerCase();
-    let shown = 0;
-
-    cards.forEach(card => {
-      const categoryMatch = active === 'all' || card.dataset.category === active;
-      const searchMatch = !query || card.dataset.search.includes(query) || card.textContent.toLowerCase().includes(query);
-      const visible = categoryMatch && searchMatch;
-      card.hidden = !visible;
-      if (visible) shown++;
-    });
-
-    count.textContent = shown;
-    empty.classList.toggle('visible', shown === 0);
-  }
-
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      active = button.dataset.filter;
-      buttons.forEach(btn => btn.setAttribute('aria-pressed', String(btn === button)));
-      applyFilters();
-    });
-  });
-
-  search.addEventListener('input', applyFilters);
-})();
-</script>
+<script src="runtime/techniques-1.js"></script>
 </body>
 </html>

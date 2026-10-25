@@ -222,6 +222,11 @@
     // A fresh Private Session must not trigger legacy writes or deletion.
     // Migration belongs to My Investigations, an explicitly local-storage page.
     if (requestedId) {
+      if (!M.validId(requestedId)) {
+        tell('INVALID INVESTIGATION ID — starting a new Private Session.');
+        clearSavedUrl();
+        return;
+      }
       try {
         const stored = await Store.get(requestedId);
         if (!stored) {

@@ -26,6 +26,7 @@ const cases=[
    const context=await browser.newContext(),page=await context.newPage();
    page.on('dialog',dialog=>dialog.accept());
    await page.goto(base+test.url);
+   if(test.url==='kepner-tregoe.html')await page.locator('#ktProblemTab').click();
    assert.equal(await page.locator('#'+test.toggle).getAttribute('aria-pressed'),'true',test.url+' must be private');
    assert.equal(await page.locator('#'+test.restore).isVisible(),false,'no saved data');
    await page.locator('#'+test.field).fill('Transient private change');
@@ -37,6 +38,7 @@ const cases=[
     localStorage.setItem(ledger,evidence);
    },{key:test.key,ledger:test.ledger,original,evidence});
    await page.reload();
+   if(test.url==='kepner-tregoe.html')await page.locator('#ktProblemTab').click();
    assert.equal(await page.locator('#'+test.field).inputValue(),'',
     test.url+' must not auto-load an older draft');
    assert.equal(await page.locator('[data-pm-text="0"]').inputValue(),'',

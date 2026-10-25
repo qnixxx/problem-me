@@ -17,6 +17,7 @@ const server=http.createServer((req,res)=>{
   const normal=await browser.newContext(),page=await normal.newPage();
   page.on('dialog',d=>d.accept());
   await page.goto(base+'5-whys.html');
+  await page.locator('#privateSessionBtn').click(); // Explicitly opt in: exercise token handoff.
   await page.locator('#problemInput').fill('A private-value-like root cause <example>');
   await page.locator('#pmHandoffOne').click();
   await page.waitForURL(url=>url.pathname.endsWith('/fishbone.html'));
@@ -40,7 +41,7 @@ const server=http.createServer((req,res)=>{
   const privatePage=await priv.newPage();
   privatePage.on('dialog',d=>d.accept());
   await privatePage.goto(base+'5-whys.html');
-  await privatePage.locator('#privateSessionBtn').click();
+  assert.equal(await privatePage.locator('#privateSessionBtn').getAttribute('aria-pressed'),'true'); // Private by default.
   await privatePage.locator('#problemInput').fill('Private clipboard starting point');
   await privatePage.locator('#pmHandoffOne').click();
   await privatePage.waitForURL(url=>url.pathname.endsWith('/fishbone.html'));

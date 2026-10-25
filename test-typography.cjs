@@ -17,6 +17,12 @@ let browser;
     const style=selector=>{const el=document.querySelector(selector);if(!el)return null;const s=getComputedStyle(el);return {font:s.fontFamily,size:s.fontSize,weight:s.fontWeight};};
     return {body:style('body'),brand:style('header .brand'),lead:style('.hero .lede'),meta:style('.hero .prompt'),overflow:document.documentElement.scrollWidth>innerWidth+1};
    });
+   // The memory-only experimental board deliberately uses its own system UI face.
+   if(route==='board-experiment.html'){
+     assert.equal(result.body.font,'system-ui, sans-serif',route+' experimental font');
+     assert.equal(result.overflow,false,route+' overflow');
+     continue;
+   }
    assert.equal(result.body.font,'"Courier New", Courier, monospace',route);
    assert(result.brand,route+' header brand');assert.equal(result.brand.font,result.body.font,route);assert.equal(result.brand.size,width<=640?'20px':'22.4px',route);assert.equal(result.brand.weight,'700',route);
    if(result.lead){assert.equal(result.lead.size,'18px',route);assert(result.lead.font.includes('system-ui'),route);}

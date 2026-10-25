@@ -47,6 +47,7 @@ const cases=[
    await page.locator('#'+test.field).fill('New private work');
    assert.equal(await page.evaluate(key=>localStorage.getItem(key),test.key),original);
    await page.locator('#'+test.restore).click();
+   if(test.url==='kepner-tregoe.html')await page.locator('#ktProblemTab').click(); // Restored draft can open Decision Analysis first.
    assert.equal(await page.locator('#'+test.field).inputValue(),test.expected,
     test.url+' explicit restore');
    assert.equal(await page.locator('[data-pm-text="0"]').inputValue(),'Old fact');

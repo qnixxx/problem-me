@@ -34,6 +34,9 @@
   const privacyTitle = document.getElementById('fbPrivacyTitle');
   const privacyCopy = document.getElementById('fbPrivacyCopy');
   const privateBtn = document.getElementById('fbPrivateBtn');
+  const restoreBtn = document.getElementById('fbRestoreSavedBtn');
+  const savedKeys = [STORAGE_KEY, 'problem-me:evidence:fishbone:v1'];
+  const updateRestoreButton = () => ProblemMePrivateDefault.showRestore(restoreBtn, savedKeys, privateMode);
   const clearDataBtn = document.getElementById('fbClearDataBtn');
 
   const pdfCount = document.getElementById('fbPdfCount');
@@ -46,7 +49,7 @@
   const pdfNotes = document.getElementById('fbPdfNotes');
 
   const embedded = new URLSearchParams(location.search).get('investigation') === '1';
-  let privateMode = embedded;
+  let privateMode = true;
   let state = makeDefaultState();
 
 
@@ -118,12 +121,14 @@
     if (privateMode) {
       privacyTitle.textContent = 'PRIVATE SESSION ACTIVE_';
       privacyCopy.textContent = 'problem.me will not write changes from this session to localStorage. Refreshing or closing this tab discards private changes; an older saved draft, if any, remains untouched.';
-      privateBtn.textContent = 'RETURN TO LOCAL SAVE';
+      privateBtn.textContent = 'START LOCAL SAVE';
+      updateRestoreButton();
       localMode.innerHTML = '<strong>PRIVATE SESSION</strong><br>not saved on this device';
     } else {
       privacyTitle.textContent = 'LOCAL SAVE ACTIVE_';
       privacyCopy.textContent = 'Changes are auto-saved in this browser on this device.';
-      privateBtn.textContent = 'PRIVATE SESSION';
+      privateBtn.textContent = 'ENTER PRIVATE SESSION';
+      updateRestoreButton();
       localMode.innerHTML = '<strong>LOCAL WORKSPACE</strong><br>saved on this device';
     }
   }
@@ -169,8 +174,8 @@
     return ['untested','no','likely','confirmed'].includes(value) ? value : 'untested';
   }
 
-  function safeLoad() {
-    if (embedded) return;
+  function safeLoad(force = false) {
+    if (embedded || (privateMode && !force)) return;
     try {
       const saved = JSON.parse(ProblemMeDraftStore.read(STORAGE_KEY));
       if (!saved || typeof saved !== 'object') return;
@@ -549,12 +554,23 @@
       actionStatus.textContent = 'PRIVATE SESSION — NOT SAVED_';
       return;
     }
-    if (!window.confirm('Return to local save? The investigation currently on screen will be written to this device.')) return;
+    if (!ProblemMePrivateDefault.confirmLocalSave(savedKeys)) return;
     privateMode = false;
     renderPrivacyMode();
     save();
   });
 
+  restoreBtn.addEventListener('click', () => {
+    if (embedded || !privateMode) return;
+    if (!ProblemMePrivateDefault.hasSaved(savedKeys)) { updateRestoreButton(); return; }
+    if (!confirm('Open your saved Fishbone draft and Evidence Ledger in this Private Session? Current unsaved work on screen will be replaced. Nothing will be saved until you choose Local Save.')) return;
+    state = makeDefaultState();
+    safeLoad(true);
+    syncStaticFields();
+    renderAll();
+    window.dispatchEvent(new Event('pm-restore-saved-draft'));
+    actionStatus.textContent = 'SAVED DRAFT OPENED PRIVATELY — NOT RE-SAVED_';
+  });
   clearDataBtn.addEventListener('click', () => {
     if (embedded) return;
     if (!window.confirm('Delete all standalone problem.me technique drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this Fishbone form? My Investigations are managed separately. This cannot be undone.')) return;
@@ -569,6 +585,7 @@
     renderPrivacyMode();
     actionStatus.textContent = result.count ? `LOCAL DATA CLEARED — ${result.count} ITEM${result.count === 1 ? '' : 'S'}_` : 'NO SAVED LOCAL DATA FOUND_';
     window.dispatchEvent(new Event('pm-clear-all'));
+    updateRestoreButton();
   });
 
   resetBtn.addEventListener('click', () => {

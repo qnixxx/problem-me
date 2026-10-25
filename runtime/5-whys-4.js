@@ -341,7 +341,13 @@
   ['input','change'].forEach(type => document.addEventListener(type, render));
   document.addEventListener('click', () => setTimeout(render, 0));
 
-  readActiveSnapshotMeta();
+  window.addEventListener('pm-restore-saved-draft', () => {
+    readActiveSnapshotMeta();
+    nameInput.value = meta.title;
+    statusSelect.value = meta.status;
+    render();
+  });
+  if (!isPrivate()) readActiveSnapshotMeta();
   nameInput.value = meta.title;
   statusSelect.value = meta.status;
   render();

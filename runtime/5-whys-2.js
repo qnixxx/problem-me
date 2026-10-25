@@ -28,6 +28,9 @@
   const privacyModeTitle = document.getElementById('privacyModeTitle');
   const privacyModeCopy = document.getElementById('privacyModeCopy');
   const privateSessionBtn = document.getElementById('privateSessionBtn');
+  const restoreBtn = document.getElementById('restoreSaved5WhysBtn');
+  const savedKeys = [STORAGE_KEY, 'problem-me:evidence:5-whys:v1'];
+  const updateRestoreButton = () => ProblemMePrivateDefault.showRestore(restoreBtn, savedKeys, privateMode);
   const clearLocalDataBtn = document.getElementById('clearLocalDataBtn');
   const saveNoteTitle = document.getElementById('saveNoteTitle');
   const saveNoteText = document.getElementById('saveNoteText');
@@ -44,7 +47,7 @@
   const pdfFooterMode = document.getElementById('pdfFooterMode');
 
   const embedded = new URLSearchParams(location.search).get('investigation') === '1';
-  let privateMode = embedded;
+  let privateMode = true;
 
   function blankState() {
     return {
@@ -58,8 +61,8 @@
 
   let state = blankState();
 
-  function safeLoad() {
-    if (embedded) return;
+  function safeLoad(force = false) {
+    if (embedded || (privateMode && !force)) return;
     try {
       const saved = JSON.parse(ProblemMeDraftStore.read(STORAGE_KEY));
       if (!saved || typeof saved !== 'object') return;
@@ -112,14 +115,16 @@
       saveModeLabel.textContent = 'AUTO-SAVE: OFF / PRIVATE';
       privacyModeTitle.textContent = 'PRIVATE SESSION ACTIVE_';
       privacyModeCopy.textContent = 'problem.me will not write changes from this session to localStorage. Refreshing or closing this tab discards private changes; an older saved draft, if any, remains untouched.';
-      privateSessionBtn.textContent = 'RETURN TO LOCAL SAVE';
+      privateSessionBtn.textContent = 'START LOCAL SAVE';
+      updateRestoreButton();
       saveNoteTitle.textContent = 'NOT SAVED_';
       saveNoteText.textContent = 'Private Session keeps this investigation in page memory only and does not write it to localStorage. Copy or Print happens only when you choose those actions.';
     } else {
       saveModeLabel.textContent = 'AUTO-SAVE: ON';
       privacyModeTitle.textContent = 'LOCAL SAVE ACTIVE_';
       privacyModeCopy.textContent = 'Changes are auto-saved in this browser on this device.';
-      privateSessionBtn.textContent = 'PRIVATE SESSION';
+      privateSessionBtn.textContent = 'ENTER PRIVATE SESSION';
+      updateRestoreButton();
       saveNoteTitle.textContent = 'LOCAL ONLY_';
       saveNoteText.textContent = 'The draft is stored with localStorage. Clearing browser/site data will remove it.';
     }
@@ -302,12 +307,22 @@
       return;
     }
 
-    if (!window.confirm('Return to local save? The investigation currently on screen will be written to this device.')) return;
+    if (!ProblemMePrivateDefault.confirmLocalSave(savedKeys)) return;
     privateMode = false;
     renderPrivacyMode();
     save();
   });
 
+  restoreBtn.addEventListener('click', () => {
+    if (embedded || !privateMode) return;
+    if (!ProblemMePrivateDefault.hasSaved(savedKeys)) { updateRestoreButton(); return; }
+    if (!confirm('Open your saved 5 Whys draft and Evidence Ledger in this Private Session? Current unsaved work on screen will be replaced. Nothing will be saved until you choose Local Save.')) return;
+    state = blankState();
+    safeLoad(true);
+    syncFormFromState();
+    window.dispatchEvent(new Event('pm-restore-saved-draft'));
+    actionStatus.textContent = 'SAVED DRAFT OPENED PRIVATELY — NOT RE-SAVED_';
+  });
   clearLocalDataBtn.addEventListener('click', () => {
     if (embedded) return;
     const ok = window.confirm('Delete all standalone problem.me technique drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear this 5 Whys form? My Investigations are managed separately. This cannot be undone.');
@@ -324,6 +339,7 @@
     renderPrivacyMode();
     actionStatus.textContent = result.count ? `LOCAL DATA CLEARED — ${result.count} ITEM${result.count === 1 ? '' : 'S'}_` : 'NO SAVED LOCAL DATA FOUND_';
     window.dispatchEvent(new Event('pm-clear-all'));
+    updateRestoreButton();
   });
 
   resetBtn.addEventListener('click', () => {

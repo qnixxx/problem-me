@@ -30,9 +30,12 @@
     title:$('ktPrivacyTitle'),
     copy:$('ktPrivacyCopy'),
     privateBtn:$('ktPrivateBtn'),
-    clearBtn:$('ktClearDataBtn')
+    clearBtn:$('ktClearDataBtn'),
+    restoreBtn:$('ktRestoreSavedBtn')
   };
-  let privateMode=false;
+  let privateMode=true;
+  const savedKeys = [KEY, 'problem-me:evidence:kepner-tregoe:v1'];
+  const updateRestoreButton = () => ProblemMePrivateDefault.showRestore(privacyEls.restoreBtn, savedKeys, privateMode);
 
   const els={decisionTab:$('ktDecisionTab'),problemTab:$('ktProblemTab'),decisionPanel:$('ktDecisionPanel'),problemPanel:$('ktProblemPanel'),objective:$('ktObjective'),alts:$('ktAlternatives'),must:$('ktMustTable'),want:$('ktWantTable'),risks:$('ktRisks'),decisionStatus:$('ktDecisionStatus'),decisionMeta:$('ktDecisionMeta'),decisionRanking:$('ktDecisionRanking'),decisionCallout:$('ktDecisionCallout'),decisionTip:$('ktDecisionTip'),deviation:$('ktDeviation'),dimensions:$('ktDimensions'),changes:$('ktChanges'),causes:$('ktCauses'),verification:$('ktVerification'),paNotes:$('ktPaNotes'),problemStatus:$('ktProblemStatus'),problemMeta:$('ktProblemMeta'),causeRanking:$('ktCauseRanking'),problemCallout:$('ktProblemCallout'),problemTip:$('ktProblemTip'),actionStatus:$('ktActionStatus')};
 
@@ -131,12 +134,12 @@
     if(privateMode){
       privacyEls.title.textContent='PRIVATE SESSION ACTIVE_';
       privacyEls.copy.textContent='problem.me will not write changes from this session to localStorage. Refreshing or closing this tab discards private changes; an older saved draft, if any, remains untouched.';
-      privacyEls.privateBtn.textContent='RETURN TO LOCAL SAVE';
+      privacyEls.privateBtn.textContent='START LOCAL SAVE';updateRestoreButton();
       privacyEls.localMode.innerHTML='<strong>PRIVATE SESSION</strong><br>not saved on this device';
     }else{
       privacyEls.title.textContent='LOCAL SAVE ACTIVE_';
       privacyEls.copy.textContent='Changes are auto-saved in this browser on this device.';
-      privacyEls.privateBtn.textContent='PRIVATE SESSION';
+      privacyEls.privateBtn.textContent='ENTER PRIVATE SESSION';updateRestoreButton();
       privacyEls.localMode.innerHTML='<strong>LOCAL WORKSPACE</strong><br>saved on this device';
     }
   }
@@ -149,7 +152,7 @@
     }catch(e){return {ok:false,count:0}}
   }
 
-  function load(){try{const x=JSON.parse(ProblemMeDraftStore.read(KEY));if(x&&typeof x==='object')state=normalize(x)}catch(e){}}
+  function load(force=false){if(privateMode&&!force)return;try{const x=JSON.parse(ProblemMeDraftStore.read(KEY));if(x&&typeof x==='object')state=normalize(x)}catch(e){}}
   function normalize(x){const s=blankState();s.active=x.active==='problem'?'problem':'decision';const d=x.decision||{};s.decision.objective=typeof d.objective==='string'?d.objective:'';if(Array.isArray(d.alternatives)){s.decision.alternatives=d.alternatives.slice(0,MAX_ALT).map((a,i)=>({name:typeof a?.name==='string'?a.name:`Option ${String.fromCharCode(65+i)}`,risk:typeof a?.risk==='string'?a.risk:''}));while(s.decision.alternatives.length<MIN_ALT)s.decision.alternatives.push({name:`Option ${String.fromCharCode(65+s.decision.alternatives.length)}`,risk:''})}const ac=s.decision.alternatives.length;if(Array.isArray(d.musts)){s.decision.musts=d.musts.slice(0,MAX_MUST).map(m=>({name:typeof m?.name==='string'?m.name:'',results:Array.from({length:ac},(_,i)=>['pass','fail','untested'].includes(m?.results?.[i])?m.results[i]:'untested')}));if(!s.decision.musts.length)s.decision.musts=[{name:'',results:Array(ac).fill('untested')}]};if(Array.isArray(d.wants)){s.decision.wants=d.wants.slice(0,MAX_WANT).map(w=>({name:typeof w?.name==='string'?w.name:'',weight:num(w?.weight,1,10)||1,scores:Array.from({length:ac},(_,i)=>num(w?.scores?.[i],0,10))}));if(!s.decision.wants.length)s.decision.wants=[{name:'',weight:10,scores:Array(ac).fill(0)}]};const p=x.problem||{};s.problem.deviation=typeof p.deviation==='string'?p.deviation:'';dims.forEach(k=>{s.problem.dimensions[k]={is:typeof p.dimensions?.[k]?.is==='string'?p.dimensions[k].is:'',isnot:typeof p.dimensions?.[k]?.isnot==='string'?p.dimensions[k].isnot:''}});s.problem.changes=typeof p.changes==='string'?p.changes:'';if(Array.isArray(p.causes)){s.problem.causes=p.causes.slice(0,MAX_CAUSE).map(c=>({name:typeof c?.name==='string'?c.name:'',tests:{what:fit(c?.tests?.what),where:fit(c?.tests?.where),when:fit(c?.tests?.when),extent:fit(c?.tests?.extent),change:fit(c?.tests?.change)}}));while(s.problem.causes.length<MIN_CAUSE)s.problem.causes.push(newCause())}s.problem.verification=typeof p.verification==='string'?p.verification:'';s.problem.notes=typeof p.notes==='string'?p.notes:'';return s}
   function fit(v){return ['fit','no','unknown'].includes(v)?v:'unknown'}
   function save(){if(privateMode){els.actionStatus.textContent='PRIVATE SESSION — NOT SAVED_';return}try{ProblemMeDraftStore.save(KEY, JSON.stringify(state));els.actionStatus.textContent='AUTO-SAVED LOCALLY_'}catch(e){els.actionStatus.textContent=e?.code==='CONFLICT'?'AUTO-SAVE PAUSED — ANOTHER TAB CHANGED THIS DRAFT_':'LOCAL SAVE UNAVAILABLE_'}}
@@ -187,8 +190,19 @@
     if(!privateMode){
       privateMode=true;renderPrivacy();els.actionStatus.textContent='PRIVATE SESSION — NOT SAVED_';return;
     }
-    if(!confirm('Return to local save? Both workspaces currently on screen will be written to this device.'))return;
+    if(!ProblemMePrivateDefault.confirmLocalSave(savedKeys))return;
     privateMode=false;renderPrivacy();save();
+  });
+  privacyEls.restoreBtn.addEventListener('click',()=>{
+    if(!privateMode)return;
+    if(!ProblemMePrivateDefault.hasSaved(savedKeys)){updateRestoreButton();return}
+    if(!confirm('Open saved Kepner–Tregoe draft and Evidence Ledger privately? This replaces unsaved work on screen, but writes nothing to storage.'))return;
+    state=blankState();
+    load(true);
+    sync();
+    renderPdf();
+    window.dispatchEvent(new Event('pm-restore-saved-draft'));
+    els.actionStatus.textContent='SAVED DRAFT OPENED PRIVATELY — NOT RE-SAVED_';
   });
   privacyEls.clearBtn.addEventListener('click',()=>{
     if(!confirm('Delete all locally saved problem.me drafts in this browser — including 5 Whys, Fishbone, Pareto and Kepner–Tregoe — and clear both Kepner–Tregoe workspaces? This cannot be undone.'))return;
@@ -196,7 +210,7 @@
     if(!result.ok){els.actionStatus.textContent='LOCAL DATA CLEAR FAILED_';return}
     state=blankState();sync();renderPrivacy();
     els.actionStatus.textContent=result.count?`LOCAL DATA CLEARED — ${result.count} ITEM${result.count===1?'':'S'}_`:'NO SAVED LOCAL DATA FOUND_';
-    window.dispatchEvent(new Event('pm-clear-all'));
+    window.dispatchEvent(new Event('pm-clear-all'));updateRestoreButton();
   });
 
   $('ktCopyBtn').addEventListener('click',async()=>{const text=['problem.me — Kepner–Tregoe summary','',...decisionSummary(),'','----------------','',...problemSummary(),'','Reminder: scores and fit rankings support judgment; they do not manufacture certainty.',privateMode?'Private Session — not saved by problem.me':'Generated locally at problem.me'].join('\n');try{await navigator.clipboard.writeText(text);els.actionStatus.textContent='SUMMARY COPIED_'}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');els.actionStatus.textContent='SUMMARY COPIED_'}catch(_){els.actionStatus.textContent='COPY FAILED_'}ta.remove()}});$('ktPrintBtn').addEventListener('click',()=>{renderPdf();window.print()});$('ktResetBtn').addEventListener('click',()=>{const q=privateMode?'Reset this Private Session? The previously saved local Kepner–Tregoe draft, if any, will remain untouched.':'Reset both local Kepner–Tregoe workspaces?';if(!confirm(q))return;state=blankState();if(!privateMode){try{ProblemMeDraftStore.remove(KEY)}catch(e){}}sync();els.actionStatus.textContent=privateMode?'PRIVATE SESSION RESET — NOT SAVED_':'DRAFT RESET_'})

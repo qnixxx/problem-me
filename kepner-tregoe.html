@@ -801,7 +801,8 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 </style>
 <link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-<script src="handoff.js"></script><script src="draft-store-guard.js"></script>
+<script src="handoff.js"></script><script src="draft-store-guard.js"></script><script src="private-default.js"></script>
+<style>.kt-privacy-actions [hidden]{display:none!important}</style>
 </head>
 <body class="pm-v2 pm-app">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -836,16 +837,16 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
       <h2 id="kt-tool-title">TRY IT YOURSELF_</h2>
       <p>Use Decision Analysis when you need to choose between alternatives. Use Problem Analysis when something has deviated from normal and you need to explain why.</p>
     </div>
-    <div class="kt-local" id="ktLocalMode"><strong>LOCAL WORKSPACE</strong><br>saved on this device</div>
+    <div class="kt-local" id="ktLocalMode"><strong>PRIVATE SESSION</strong><br>not saved on this device</div>
   </div>
 
-  <div class="kt-shell">
+  <div class="kt-shell is-private">
     <div class="kt-shell-head"><strong>KEPNER–TREGOE WORKSPACE / YOUR CASE</strong><span>STRUCTURE → COMPARE → VERIFY</span></div>
 
-    <div class="kt-privacy-panel" id="ktPrivacyPanel">
+    <div class="kt-privacy-panel is-private" id="ktPrivacyPanel">
       <div class="kt-privacy-head">
-        <div class="kt-privacy-mode"><span class="kt-privacy-led" aria-hidden="true"></span><div><strong id="ktPrivacyTitle">LOCAL SAVE ACTIVE_</strong><span id="ktPrivacyCopy">Changes are auto-saved in this browser on this device.</span></div></div>
-        <div class="kt-privacy-actions"><button class="kt-btn primary" id="ktPrivateBtn" type="button" aria-pressed="false">PRIVATE SESSION</button><button class="kt-btn danger" id="ktClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button></div>
+        <div class="kt-privacy-mode"><span class="kt-privacy-led" aria-hidden="true"></span><div><strong id="ktPrivacyTitle">PRIVATE SESSION ACTIVE_</strong><span id="ktPrivacyCopy">Your work stays in this page only. To keep it, export or explicitly start Local Save.</span></div></div>
+        <div class="kt-privacy-actions"><button class="kt-btn primary" id="ktPrivateBtn" type="button" aria-pressed="true">START LOCAL SAVE</button><button class="kt-btn" id="ktRestoreSavedBtn" type="button" hidden>OPEN SAVED DRAFT</button><button class="kt-btn danger" id="ktClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button></div>
       </div>
       <p class="kt-privacy-warning"><strong>CAPYBARA PRIVACY NOTE_</strong> Keep passwords, API keys, access tokens and credentials out of the workspace. Private Session controls problem.me storage; it is not a secret vault. <a href="privacy.html">HOW PRIVACY WORKS →</a></p>
     </div>
@@ -957,7 +958,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
         <button class="pm-reasoning-btn primary" id="pmHandoffOne" type="button">NEXT TECHNIQUE</button>
         <button class="pm-reasoning-btn" id="pmHandoffTwo" type="button">ALTERNATIVE NEXT TECHNIQUE</button>
       </div>
-      <p class="pm-handoff-note">Context is passed in the URL fragment, which is not sent to the web server, then removed from the address bar after the receiving tool reads it.</p>
+      <p class="pm-handoff-note">Private handoffs use an explicit clipboard copy and manual paste. With Local Save, a one-time token transfers context without putting your text in the URL.</p>
     </div>
   </aside>
 </section>

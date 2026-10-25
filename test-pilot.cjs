@@ -28,7 +28,7 @@ for (const version of [1, 2]) check(`schema ${version} migrates without losing o
   s.toolData['5-whys'].notes = 'Keep this'; s.evidence = [{type:'test',text:'original evidence'}];
   const original = JSON.stringify(s), migrated = M.decode(original);
   assert.equal(migrated.id, s.id); assert.equal(migrated.createdAt, s.createdAt);
-  assert.equal(migrated.schemaVersion, 3); assert.equal(migrated.appVersion, '1.0.1');
+  assert.equal(migrated.schemaVersion, 3); assert.equal(migrated.appVersion, '1.0.2');
   assert.equal(migrated.toolData['5-whys'].notes, 'Keep this');
   assert.deepEqual(migrated.evidence, s.evidence);
   assert.equal(migrated.toolData.pareto.rows.length, 6);

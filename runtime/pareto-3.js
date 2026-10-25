@@ -31,8 +31,9 @@
   function normalizeType(x) {
     return ['fact','assumption','test','result'].includes(x) ? x : 'fact';
   }
-  function loadLedger() {
+  function loadLedger(force = false) {
     if (new URLSearchParams(location.search).get('investigation') === '1') return;
+    if (isPrivate() && !force) return;
     try {
       const saved = JSON.parse(ProblemMeDraftStore.read(LEDGER_KEY));
       if (Array.isArray(saved) && saved.length) {
@@ -158,6 +159,12 @@
     }, 0);
   });
 
+  window.addEventListener('pm-restore-saved-draft', () => {
+    ledger = [{type:'fact', text:''}];
+    loadLedger(true);
+    renderLedger();
+    statusEl.textContent = 'SAVED EVIDENCE OPENED PRIVATELY — NOT RE-SAVED_';
+  });
   window.addEventListener('pm-clear-all', () => {
     ledger = [{type:'fact',text:''}];
     renderLedger();

@@ -43,6 +43,8 @@ const routes=[
         if(overflow>2){
           const elements=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(el=>({el,r:el.getBoundingClientRect()})).filter(({r})=>r.width>0&&(r.right>innerWidth+2||r.left<-2)).slice(0,20).map(({el,r})=>({tag:el.tagName,id:el.id,cls:typeof el.className==='string'?el.className:'',text:(el.textContent||'').trim().slice(0,45),left:Math.round(r.left),right:Math.round(r.right),width:Math.round(r.width)})));
           console.log('OVERFLOW DETAILS '+route+' '+width+'px: '+JSON.stringify(elements));
+          const inner=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(el=>el.clientWidth>0&&el.scrollWidth>el.clientWidth+5).slice(0,22).map(el=>({tag:el.tagName,id:el.id,cls:typeof el.className==='string'?el.className:'',text:(el.textContent||'').trim().slice(0,55),client:el.clientWidth,scroll:el.scrollWidth,wordWrap:getComputedStyle(el).overflowWrap,whiteSpace:getComputedStyle(el).whiteSpace})));
+          console.log('ELEMENT SCROLL DETAIL '+route+' '+width+'px: '+JSON.stringify(inner));
         }
         assert(overflow<=2,route+' overflow at width '+width+' by '+overflow+'px');
         assert.equal(await page.locator('img:not([src])').count(),0,route+' image sources');

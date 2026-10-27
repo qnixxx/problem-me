@@ -27,3 +27,6 @@ img{max-width:100%;height:auto}p{margin:0 0 1.15em}.wrap{width:min(1190px,calc(1
 /* Tiny-screen typography must never widen the document. */
 .case-hero,.case-hero>div,.room-inner>div{min-width:0}.case-hero h1,.room h2,.closing h2{overflow-wrap:anywhere;word-break:normal}
 .breadcrumb{flex-wrap:wrap}.breadcrumb>*{min-width:0}
+
+/* Terminal path labels can be longer than a 320px viewport. */
+.eyebrow,.room-code,.kicker{overflow-wrap:anywhere;word-break:normal}

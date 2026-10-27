@@ -1,0 +1,8 @@
+/* Preserve original terminal theme. Make navigation visible without tracking/drawers. */
+@media(max-width:820px){body.pm-home header nav{flex-wrap:wrap;gap:6px 12px;padding:10px 0}body.pm-home .navlinks{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:2px 14px;order:3;flex-basis:100%}body.pm-home .navlinks a{min-height:34px;font-size:.75rem}body.pm-home .statusline{margin-left:auto;font-size:.72rem}}
+@media(max-width:420px){body.pm-home .navlinks{gap:2px 10px}body.pm-home .navlinks a{font-size:.7rem}}
+body.pm-home .prompt,body.pm-home .capy-info{overflow-wrap:anywhere}
+
+/* The original Lagoon header can wrap at 320px. */
+body.pm-home .lagoon-topbar{flex-wrap:wrap;gap:6px 16px}
+body.pm-home .lagoon-topbar>*{min-width:0;overflow-wrap:anywhere}

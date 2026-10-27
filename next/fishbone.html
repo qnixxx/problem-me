@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en" class="pm-theme">
+<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
+  <meta charset="utf-8" /><meta name="robots" content="noindex,nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002 — a read-only illustrated case study." />
+  <meta name="theme-color" content="#010704" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:title" content="Ishikawa / Fishbone — Capybara Case #002 | problem.me" />
+  <meta property="og:description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002, then use the interactive Fishbone workspace to map and test possible causes for your own problem." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://problem.me/fishbone.html" />
+  <link rel="canonical" href="https://problem.me/fishbone.html" />
+  <title>Ishikawa / Fishbone — Capybara Case #002 | problem.me</title>
+<style>
+/* Shared visual tokens: canonical problem.me Case File palette + typography */
+:root{--bg:#020805;--panel:#031009;--surface-deep:#020d08;--surface-low:#020a06;--green:#63ffb5;--green2:#21d67a;--yellow:#ffe95b;--cream:#f2f0df;--muted:#86b79e;--text:#b9e4ce;--text2:#a9d7c0;--line:#1f6f4d;--grid:#164b35;--axis:#497b64;--dim:#668b79;--bad:#ff9f7d;--highlight-bg:#0a1207;--bar-fill:#0b3d29;--bar-hot:#123f22;--max:1040px}*{box-sizing:border-box}html{background:var(--bg);color:var(--green);font-family:"Courier New",Courier,monospace}body{margin:0;font-family:"Courier New",Courier,monospace;background:radial-gradient(circle at 50% 10%,#062015 0,var(--bg) 46%);min-height:100vh}.wrap{width:min(calc(100% - 32px),var(--max));margin:auto}a{color:inherit}.top{border-bottom:1px solid var(--line);padding:15px 0}.top .wrap{display:flex;justify-content:space-between;gap:16px}.back{font-size:.875rem;text-decoration:none}.online{font-size:.875rem;color:var(--muted)}.hero{padding:48px 0 28px}.prompt,.case,.phase{font-size:.875rem;color:var(--yellow)}h1{font-size:clamp(2.4rem,8vw,5.6rem);margin:8px 0 10px;line-height:.9;color:var(--cream)}h1 span{display:block;color:var(--green);font-size:.24em;margin-top:16px}.lede{max-width:760px;color:var(--text);line-height:1.65}.meta{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin-top:26px}.meta div{padding:12px;border-right:1px solid var(--line)}.meta div:last-child{border:0}.meta small{display:block;color:var(--muted);font-size:.875rem}.meta strong{font-size:.875rem;color:var(--cream)}
+.case-intro{display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center;padding:26px 0 34px}.intro-copy h2{color:var(--cream);margin:5px 0 8px}.intro-copy p{color:var(--text);line-height:1.6;margin:0}.capy{width:118px;height:76px;position:relative;margin:auto;transform-origin:center bottom}.body{position:absolute;left:9px;bottom:16px;width:78px;height:46px;border:2px solid var(--green);border-radius:46%}.leg{position:absolute;bottom:0;width:18px;height:16px;border:2px solid var(--green);border-top:0}.leg-a{left:25px}.leg-b{left:61px}.head{position:absolute;right:2px;top:10px;width:55px;height:42px;border:2px solid var(--green);border-radius:45%;background:var(--panel)}.ear{position:absolute;top:-9px;left:9px;width:14px;height:14px;border:2px solid var(--green);border-radius:50%;background:var(--panel)}.eye{position:absolute;left:21px;top:16px;width:7px;height:2px;background:var(--green);transform:rotate(-8deg)}.nose{position:absolute;right:7px;top:20px;width:7px;height:5px;border-right:2px solid var(--green);border-bottom:2px solid var(--green)}.cap-status{text-align:center;color:var(--yellow);font-size:.875rem;margin-top:8px}
+.workspace{border:1px solid var(--line);background:var(--surface-deep);padding:22px;margin:0 auto 34px;overflow:hidden}.workspace-head{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:12px;margin-bottom:14px}.workspace-head strong{color:var(--cream);font-size:.875rem}.workspace-head span{color:var(--yellow);font-size:.875rem}.fish-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:var(--line) transparent;padding:4px 0 8px}.fishbone-svg{display:block;width:100%;min-width:900px;height:auto}.fishbone-svg .spine-line,.fishbone-svg .rib,.fishbone-svg .twig,.fishbone-svg .tail{fill:none;stroke:var(--green);stroke-width:2;vector-effect:non-scaling-stroke}.fishbone-svg .rib{stroke:var(--line);stroke-width:2}.fishbone-svg .twig{stroke:var(--grid);stroke-width:1.5}.fishbone-svg .hot-rib{stroke:var(--yellow);stroke-width:2.5}.fishbone-svg .head-shape{fill:var(--panel);stroke:var(--green);stroke-width:2;vector-effect:non-scaling-stroke}.fishbone-svg .eye-dot{fill:var(--yellow)}.fishbone-svg text{font-family:"Courier New",Courier,monospace}.fishbone-svg .cat{fill:var(--yellow);font-size:14px;font-weight:700}.fishbone-svg .hyp{fill:var(--text2);font-size:14px}.fishbone-svg .no{fill:var(--dim);font-size:14px}.fishbone-svg .hot{fill:var(--yellow);font-size:14px;font-weight:700}.fishbone-svg .effect-title{fill:var(--cream);font-size:14px;font-weight:700}.fishbone-svg .effect-sub{fill:var(--muted);font-size:14px}.fishbone-svg .tail-label{fill:var(--muted);font-size:14px}.fishbone-svg .scan{fill:var(--yellow);font-size:14px}.fishbone-svg .cap-line{fill:none;stroke:var(--green);stroke-width:2;vector-effect:non-scaling-stroke}.fishbone-svg .cap-fill{fill:var(--surface-deep)}.fish-key{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding-top:8px;color:var(--muted);font-size:.875rem}.fish-key b{color:var(--yellow)}.swipe-hint{display:none;text-align:center;color:var(--yellow);font-size:.875rem;margin:2px 0 8px}.fish-note{text-align:center;color:var(--text2);font-size:.875rem;line-height:1.5;margin:4px auto 0;max-width:760px}.fish-note strong{color:var(--cream)}.evidence{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 34px}.check{border-left:2px solid var(--line);padding:12px 14px;background:#031009;font-size:.875rem;color:var(--text)}.check b{color:var(--cream)}.check span{float:right;color:var(--yellow)}.causal{border:1px solid var(--yellow);background:var(--highlight-bg);padding:26px;margin:0 0 30px;text-align:center}.causal h2{color:var(--cream);font-size:1.1rem;margin:5px 0 20px}.chain{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}.node{border:1px solid var(--line);padding:11px 13px;color:var(--text);font-size:.875rem}.chain .arr{color:var(--yellow)}.resolution{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);padding:26px 0;margin-bottom:30px}.resolution h2{color:var(--cream);margin:4px 0 8px}.resolution p{color:var(--text);margin:0;line-height:1.6}.lesson{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0 60px}.box{border:1px solid var(--line);padding:20px;background:#031009}.box h3{margin:0 0 12px;color:var(--cream);font-size:1rem}.translation{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;font-size:.875rem;padding:6px 0;border-bottom:1px dashed rgba(99,255,181,.18)}.translation:last-child{border:0}.translation span:nth-child(2){color:var(--yellow)}.rule{font-size:.9rem;color:var(--text);line-height:1.55}.rule strong{color:var(--yellow)}footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:.875rem}.next{display:flex;justify-content:space-between;gap:14px;align-items:center}.next a{color:var(--cream)}
+@media(max-width:760px){.online{display:none}.hero{padding-top:36px}.meta{grid-template-columns:1fr 1fr}.meta div:nth-child(2){border-right:0}.meta div:nth-child(-n+2){border-bottom:1px solid var(--line)}.case-intro{grid-template-columns:1fr;text-align:center}.workspace{padding:14px}.workspace-head{flex-direction:column}.fishbone-svg{min-width:820px}.swipe-hint{display:block}.evidence{grid-template-columns:1fr}.resolution{grid-template-columns:1fr;text-align:center}.lesson{grid-template-columns:1fr}.next{flex-direction:column;align-items:flex-start;gap:8px}}
+@media(max-width:390px){.wrap{width:min(calc(100% - 22px),var(--max))}.fishbone-svg{min-width:780px}.translation{font-size:.875rem}}
+
+/* Shared case-file polish — v0.2.1 */
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);color-scheme:dark}
+body{min-height:100vh;min-height:100svh;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::after{content:"";position:fixed;inset:0;z-index:98;pointer-events:none;background:radial-gradient(circle at center,transparent 56%,rgba(0,0,0,.38) 100%)}
+a{text-underline-offset:.2em}
+:where(a,button):focus-visible{outline:2px solid var(--yellow);outline-offset:4px}
+.skip-link{position:fixed;top:10px;left:10px;z-index:120;padding:8px 10px;border:1px solid var(--yellow);background:var(--bg);color:var(--cream);font-size:.875rem;text-decoration:none;transform:translateY(-180%);transition:transform .15s ease}.skip-link:focus{transform:translateY(0)}
+header{position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(99,255,181,.24);background:rgba(2,8,5,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+nav{min-height:58px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;padding:10px 0}
+.brand{justify-self:start;color:var(--green);font-size:1.16rem;font-weight:700;text-decoration:none;white-space:nowrap}.back{justify-self:center;color:var(--cream);font-size:.875rem;text-decoration:none;white-space:nowrap}.online{justify-self:end;color:var(--muted);font-size:.875rem;white-space:nowrap}.dot{display:inline-block;width:7px;height:7px;margin-right:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(99,255,181,.65)}
+.blink{animation:sharedBlink .8s steps(1,end) infinite}@keyframes sharedBlink{50%{opacity:0}}
+.wrap{min-width:0}.hero h1,h1,h2,h3,p,strong,span{overflow-wrap:break-word}.meta{grid-template-columns:repeat(4,minmax(0,1fr))}.meta>div{min-width:0}.meta strong{display:block;line-height:1.35}.capy{flex:0 0 auto}
+.lesson>*,.case-intro>*,.resolution>*,.priority>*,.after>*,.decision>*,.pa-intro>*{min-width:0}.matrix-scroll,.chart-scroll,.fish-scroll{overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+footer{margin-top:12px;border-top:1px solid rgba(99,255,181,.22);color:var(--muted)}.next{display:flex;align-items:center;justify-content:space-between;gap:16px 24px}.next>span{min-width:0}.footer-brand{color:var(--cream)}.next a{color:var(--green);text-decoration:none}
+@media(hover:hover) and (pointer:fine){.brand:hover,.back:hover,.next a:hover{color:var(--yellow)}}
+@media(max-width:760px){.wrap{width:min(calc(100% - 22px),var(--max))}nav{grid-template-columns:1fr auto;gap:10px}.brand{font-size:1.08rem}.back{justify-self:end;font-size:.875rem}.online{display:none}.hero{padding-top:34px}.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.meta div:nth-child(2){border-right:0}.meta div:nth-child(-n+2){border-bottom:1px solid var(--line)}.next{align-items:flex-start;flex-direction:column;gap:8px}}
+@media(max-width:420px){.wrap{width:min(calc(100% - 18px),var(--max))}nav{min-height:54px}.brand{font-size:1rem}.back{font-size:.875rem}.meta div{padding:9px 10px}.meta small{font-size:.875rem}.meta strong{font-size:.875rem}footer{font-size:.875rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+.workspace{border-color:var(--line);box-shadow:inset 0 0 28px rgba(33,214,122,.025)}.fish-scroll{scrollbar-gutter:stable}.fishbone-svg{max-width:none}.fish-key span{display:inline-flex;align-items:center;gap:4px}.check{min-width:0;overflow:hidden}.check span{margin-left:12px}
+@media(max-width:760px){.workspace{padding:12px}.fish-scroll{margin-inline:-2px}.fishbone-svg{min-width:800px}.fish-note{text-align:left}.check{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start}.check span{float:none;margin-left:0;text-align:right}.resolution{grid-template-columns:1fr;text-align:center}.lesson{grid-template-columns:1fr}}
+@media(max-width:420px){.fishbone-svg{min-width:760px}.workspace-head strong,.workspace-head span{line-height:1.4}.causal{padding:20px 14px}.chain{gap:8px}.node{padding:9px 10px}.box{padding:16px}.translation{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:6px;font-size:.875rem}}
+
+/* Unified case-file header shell — matches canonical homepage */
+:root{--shell-max:1160px}
+.header-wrap{width:min(calc(100% - 32px),var(--shell-max));margin-inline:auto;min-width:0}
+header nav{min-height:70px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;padding:0}
+header .brand{justify-self:start;flex:0 0 auto;color:var(--green);font-size:1.4rem;font-weight:700;letter-spacing:-.05em;text-decoration:none;white-space:nowrap}
+header .back{justify-self:center;min-height:44px;display:inline-flex;align-items:center;color:var(--cream);font-size:.875rem;text-decoration:none;white-space:nowrap}
+header .online{justify-self:end;color:var(--muted);font-size:.875rem;white-space:nowrap}
+header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(99,255,181,.8)}
+@media(hover:hover) and (pointer:fine){header .brand:hover,header .back:hover{color:var(--yellow)}}
+@media(max-width:640px){.header-wrap{width:min(calc(100% - 20px),var(--shell-max))}header nav{min-height:58px;grid-template-columns:1fr auto;gap:12px}header .brand{font-size:1.25rem}header .back{justify-self:end;font-size:.875rem}header .online{display:none}}
+@media(max-width:390px){header nav{gap:8px}header .back{font-size:.875rem}}
+
+/* Unified Case File hero identity — canonical */
+.hero{padding:50px 0 28px}
+.hero .prompt{margin:0;color:var(--muted);font-family:"Courier New",Courier,monospace;font-size:.875rem;font-weight:400;line-height:1.45;letter-spacing:.08em;text-transform:uppercase}
+.hero .case{display:block;margin:10px 0 0;padding:0;border:0;color:var(--yellow);font-family:"Courier New",Courier,monospace;font-size:.875rem;font-weight:400;line-height:1.45;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{margin:12px 0 16px;color:var(--cream);font-family:"Courier New",Courier,monospace;font-size:clamp(2.8rem,8vw,6.2rem);font-weight:700;line-height:.86;letter-spacing:-.065em;text-transform:uppercase}
+.hero h1 span{display:block;margin:.18em 0 0;color:var(--green);font-family:inherit;font-size:.52em;font-weight:700;line-height:.98;letter-spacing:-.035em;text-transform:uppercase}
+@media(max-width:640px){.hero{padding:36px 0 24px}.hero .prompt,.hero .case{font-size:.875rem;letter-spacing:.065em}.hero h1{font-size:clamp(2.45rem,13vw,4.4rem);line-height:.88;margin-top:10px}.hero h1 span{font-size:.48em;line-height:1.02}}
+@media(max-width:390px){.hero .prompt,.hero .case{font-size:.875rem}.hero h1{font-size:clamp(2.25rem,12.5vw,3.75rem)}}
+
+
+/* v0.3 case navigation — shared across every Case File */
+.case-pager{
+  width:min(calc(100% - 32px),var(--max));
+  margin:0 auto 34px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:stretch;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.case-pager a{
+  min-width:0;
+  min-height:72px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:3px;
+  padding:12px 14px;
+  color:var(--green);
+  text-decoration:none;
+}
+.case-pager a + a{border-left:1px solid var(--line)}
+.case-pager .pager-all{
+  min-width:170px;
+  align-items:center;
+  text-align:center;
+  color:var(--cream);
+}
+.case-pager .pager-next{
+  align-items:flex-end;
+  text-align:right;
+}
+.case-pager small{
+  color:var(--muted);
+  font-size:.875rem;
+  letter-spacing:.08em;
+}
+.case-pager strong{
+  max-width:100%;
+  color:inherit;
+  font-size:.875rem;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+.case-pager .pager-disabled{
+  min-height:72px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:12px 14px;
+  color:var(--dim,var(--muted));
+  opacity:.42;
+}
+.case-pager .pager-disabled:last-child{
+  align-items:flex-end;
+  text-align:right;
+}
+@media(hover:hover) and (pointer:fine){
+  .case-pager a:hover{
+    background:rgba(99,255,181,.035);
+    color:var(--yellow);
+  }
+}
+@media(max-width:640px){
+  .case-pager{
+    width:min(calc(100% - 20px),var(--max));
+    grid-template-columns:1fr 1fr;
+  }
+  .case-pager .pager-all{
+    grid-column:1/-1;
+    grid-row:1;
+    min-width:0;
+    min-height:52px;
+    border-left:0;
+    border-bottom:1px solid var(--line);
+  }
+  .case-pager .pager-prev,
+  .case-pager .pager-disabled:first-child{
+    grid-column:1;
+    grid-row:2;
+  }
+  .case-pager .pager-next,
+  .case-pager .pager-disabled:last-child{
+    grid-column:2;
+    grid-row:2;
+    border-left:1px solid var(--line);
+  }
+  .case-pager a,
+  .case-pager .pager-disabled{min-height:68px;padding:10px}
+  .case-pager strong{font-size:.875rem}
+}
+
+
+/* v0.4 interactive Fishbone workspace */
+.fb-workbench{
+  width:min(calc(100% - 32px),var(--max));
+  margin:14px auto 42px;
+}
+.fb-workbench-intro{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:20px;
+  align-items:end;
+  padding:26px 0 16px;
+  border-top:1px dashed var(--line);
+}
+.fb-workbench-intro h2{
+  margin:6px 0 7px;
+  color:var(--cream);
+  font-size:clamp(1.55rem,4vw,2.35rem);
+}
+.fb-workbench-intro p{
+  max-width:760px;
+  margin:0;
+  color:var(--text);
+  font-size:.875rem;
+}
+.fb-local{
+  color:var(--muted);
+  font-size:.875rem;
+  text-align:right;
+  white-space:nowrap;
+}
+.fb-local strong{color:var(--green)}
+
+.fb-tool{
+  border:1px solid var(--line);
+  background:var(--surface-deep);
+}
+.fb-tool-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding:11px 14px;
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:.875rem;
+}
+.fb-tool-head strong{color:var(--green)}
+.fb-tool-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
+  min-width:0;
+}
+.fb-editor{
+  min-width:0;
+  padding:16px;
+  border-right:1px solid var(--line);
+}
+.fb-live{
+  min-width:0;
+  padding:16px;
+  background:var(--surface-low);
+}
+.fb-field{margin-bottom:16px}
+.fb-field:last-child{margin-bottom:0}
+.fb-label{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:6px;
+  color:var(--yellow);
+  font-size:.875rem;
+  letter-spacing:.04em;
+}
+.fb-label small{
+  color:var(--muted);
+  font-size:.875rem;
+  font-weight:400;
+}
+.fb-tool input[type="text"],
+.fb-tool textarea,
+.fb-tool select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--panel);
+  color:var(--cream);
+  font-family:inherit;
+  font-size:.875rem;
+}
+.fb-tool input[type="text"]{
+  min-height:42px;
+  padding:9px 10px;
+}
+.fb-tool textarea{
+  min-height:78px;
+  resize:vertical;
+  padding:10px;
+  line-height:1.45;
+}
+.fb-tool select{
+  min-height:38px;
+  padding:7px 30px 7px 8px;
+}
+.fb-tool input::placeholder,
+.fb-tool textarea::placeholder{color:#5e8974}
+.fb-tool input:focus,
+.fb-tool textarea:focus,
+.fb-tool select:focus{
+  outline:1px solid var(--yellow);
+  outline-offset:1px;
+  border-color:var(--yellow);
+}
+
+.fb-categories{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.fb-category{
+  min-width:0;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.fb-category-head{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:8px;
+  align-items:center;
+  padding:9px 10px;
+  border-bottom:1px solid var(--line);
+}
+.fb-cat-no{
+  color:var(--yellow);
+  font-size:.875rem;
+}
+.fb-category-head input{
+  min-width:0;
+  min-height:36px!important;
+  padding:7px 8px!important;
+  color:var(--cream)!important;
+  font-weight:700;
+}
+.fb-causes{padding:8px}
+.fb-cause-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 104px;
+  gap:7px;
+  margin-bottom:7px;
+}
+.fb-cause-row:last-child{margin-bottom:0}
+.fb-cause-row input{min-width:0}
+.fb-cause-row select{
+  font-size:.875rem;
+  color:var(--muted);
+}
+.fb-cause-row[data-status="no"] select{color:var(--dim)}
+.fb-cause-row[data-status="likely"] select{color:var(--yellow)}
+.fb-cause-row[data-status="confirmed"] select{color:var(--green)}
+.fb-cat-actions{
+  display:flex;
+  gap:6px;
+  padding:0 8px 8px;
+}
+.fb-mini-btn,
+.fb-btn{
+  border:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  color:var(--green);
+  font-family:inherit;
+  cursor:pointer;
+}
+.fb-mini-btn{
+  min-height:34px;
+  padding:6px 8px;
+  font-size:.875rem;
+}
+.fb-mini-btn:disabled,
+.fb-btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+.fb-summary-fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.fb-summary-fields .wide{grid-column:1/-1}
+
+.fb-live-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:start;
+  margin-bottom:10px;
+}
+.fb-live-head strong{
+  color:var(--cream);
+  font-size:.875rem;
+}
+.fb-status{
+  color:var(--yellow);
+  font-size:.875rem;
+  text-align:right;
+}
+.fb-map-scroll{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-inline:contain;
+  padding:3px 0 8px;
+}
+.fb-live-svg{
+  display:block;
+  width:100%;
+  min-width:760px;
+  height:auto;
+}
+.fb-live-svg .spine,
+.fb-live-svg .rib,
+.fb-live-svg .twig,
+.fb-live-svg .tail{
+  fill:none;
+  stroke:var(--green);
+  stroke-width:2;
+  vector-effect:non-scaling-stroke;
+}
+.fb-live-svg .rib{stroke:var(--line)}
+.fb-live-svg .twig{stroke:var(--grid);stroke-width:1.4}
+.fb-live-svg .rib-likely,
+.fb-live-svg .twig-likely{stroke:var(--yellow)}
+.fb-live-svg .rib-confirmed,
+.fb-live-svg .twig-confirmed{stroke:var(--green);stroke-width:2.7}
+.fb-live-svg .rib-no,
+.fb-live-svg .twig-no{stroke:var(--dim);opacity:.55}
+.fb-live-svg .head-shape{fill:var(--panel);stroke:var(--green);stroke-width:2}
+.fb-live-svg text{font-family:"Courier New",Courier,monospace}
+.fb-live-svg .cat{fill:var(--yellow);font-size:14px;font-weight:700}
+.fb-live-svg .cause{fill:var(--text2);font-size:14px}
+.fb-live-svg .cause-no{fill:var(--dim)}
+.fb-live-svg .cause-likely{fill:var(--yellow)}
+.fb-live-svg .cause-confirmed{fill:var(--green);font-weight:700}
+.fb-live-svg .effect{fill:var(--cream);font-size:14px;font-weight:700}
+.fb-live-svg .small{fill:var(--muted);font-size:14px}
+.fb-live-svg .cap-line{fill:none;stroke:var(--green);stroke-width:2;vector-effect:non-scaling-stroke}
+.fb-live-svg .cap-fill{fill:var(--surface-low)}
+.fb-map-key{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px 13px;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:.875rem;
+}
+.fb-map-key b{color:var(--yellow)}
+.fb-tip{
+  margin-top:12px;
+  padding:11px 12px;
+  border-left:2px solid var(--yellow);
+  background:var(--panel);
+  color:var(--text);
+  font-size:.875rem;
+  line-height:1.5;
+}
+.fb-tip strong{color:var(--yellow)}
+
+.fb-tool-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:14px 16px;
+  border-top:1px solid var(--line);
+}
+.fb-btn{
+  min-height:42px;
+  padding:8px 11px;
+  font-size:.875rem;
+}
+.fb-btn.primary{
+  border-color:var(--yellow);
+  color:var(--yellow);
+}
+.fb-btn.danger{color:var(--bad)}
+.fb-action-status{
+  margin-left:auto;
+  align-self:center;
+  color:var(--muted);
+  font-size:.875rem;
+}
+.fb-privacy{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:.875rem;
+}
+.fb-privacy strong{color:var(--green)}
+
+@media(hover:hover) and (pointer:fine){
+  .fb-mini-btn:hover,
+  .fb-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+}
+
+@media(max-width:820px){
+  .fb-workbench-intro{grid-template-columns:1fr}
+  .fb-local{text-align:left}
+  .fb-tool-grid{grid-template-columns:1fr}
+  .fb-editor{border-right:0;border-bottom:1px solid var(--line)}
+}
+
+@media(max-width:640px){
+  .fb-workbench{width:min(calc(100% - 20px),var(--max))}
+  .fb-tool-head{flex-direction:column;gap:3px}
+  .fb-categories{grid-template-columns:1fr}
+  .fb-summary-fields{grid-template-columns:1fr}
+  .fb-summary-fields .wide{grid-column:auto}
+  .fb-live-svg{min-width:720px}
+  .fb-tool-actions{padding:12px}
+  .fb-btn{flex:1 1 calc(50% - 8px)}
+  .fb-action-status{width:100%;margin-left:0}
+}
+@media(max-width:390px){
+  .fb-workbench{width:min(calc(100% - 18px),var(--max))}
+  .fb-editor,.fb-live{padding:12px}
+  .fb-cause-row{grid-template-columns:minmax(0,1fr) 96px}
+  .fb-cause-row select{font-size:.875rem}
+  .fb-live-svg{min-width:680px}
+}
+
+@media print{
+  body::before,body::after,header,.hero,.case-intro,.workspace,.evidence,.causal,.resolution,.lesson,.case-pager,footer,.fb-workbench-intro,.fb-tool-actions,.fb-privacy{display:none!important}
+  body{background:#fff!important;color:#111!important}
+  .fb-workbench{width:100%!important;margin:0!important}
+  .fb-tool{border:0!important;background:#fff!important}
+  .fb-tool-head{border-color:#aaa!important;color:#444!important;padding:0 0 12px!important}
+  .fb-tool-head strong{color:#111!important}
+  .fb-tool-grid{grid-template-columns:1fr!important}
+  .fb-editor{border:0!important;padding:0 0 16px!important}
+  .fb-live{background:#fff!important;padding:0!important}
+  .fb-category,.fb-tool input,.fb-tool textarea,.fb-tool select,.fb-tip{background:#fff!important;color:#111!important;border-color:#aaa!important}
+  .fb-live-svg .head-shape{fill:#fff!important}
+  .fb-live-svg .cap-fill{fill:#fff!important}
+  .fb-live-svg .cat,.fb-live-svg .effect,.fb-live-svg .cause,.fb-live-svg .cause-likely,.fb-live-svg .cause-confirmed,.fb-live-svg .small{fill:#111!important}
+  .fb-live-svg .spine,.fb-live-svg .rib,.fb-live-svg .twig,.fb-live-svg .tail,.fb-live-svg .cap-line{stroke:#222!important}
+}
+
+
+/* v0.5.2 Fishbone print/PDF report */
+.fb-pdf-report{
+  display:none;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:var(--surface-low);
+}
+.fb-pdf-inner{padding:22px}
+.fb-pdf-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:start;
+  padding-bottom:16px;
+  border-bottom:1px dashed rgba(99,255,181,.2);
+}
+.fb-pdf-kicker{
+  color:var(--yellow);
+  font-size:.875rem;
+  letter-spacing:.06em;
+}
+.fb-pdf-head h2{
+  margin:8px 0 7px;
+  color:var(--cream);
+  font-size:1.9rem;
+  line-height:1;
+}
+.fb-pdf-head p{
+  max-width:650px;
+  margin:0;
+  color:var(--text);
+  font-size:.875rem;
+  line-height:1.55;
+}
+.fb-pdf-capy{
+  min-width:238px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.fb-pdf-capy pre{
+  margin:0;
+  color:var(--green);
+  font-size:.875rem;
+  line-height:1.08;
+}
+.fb-pdf-capy-note{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:.875rem;
+  line-height:1.45;
+}
+.fb-pdf-meta{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0;
+}
+.fb-pdf-meta .box,
+.fb-pdf-section,
+.fb-pdf-summary,
+.fb-pdf-family{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.fb-pdf-meta .box{padding:11px 12px}
+.fb-pdf-meta small,
+.fb-pdf-section small,
+.fb-pdf-summary small{
+  display:block;
+  color:var(--muted);
+  font-size:.875rem;
+  letter-spacing:.05em;
+}
+.fb-pdf-meta strong{
+  display:block;
+  margin-top:4px;
+  color:var(--cream);
+  font-size:.875rem;
+  line-height:1.4;
+}
+.fb-pdf-section{
+  margin-bottom:14px;
+  padding:14px;
+}
+.fb-pdf-effect{
+  color:var(--cream);
+  font-size:1rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.fb-pdf-diagram{
+  margin-top:12px;
+  overflow:hidden;
+}
+.fb-pdf-diagram svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-width:0!important;
+}
+.fb-pdf-families{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:14px;
+}
+.fb-pdf-family{padding:12px}
+.fb-pdf-family h3{
+  margin:0 0 8px;
+  color:var(--yellow);
+  font-size:.875rem;
+}
+.fb-pdf-family ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.fb-pdf-family li{
+  padding:6px 0;
+  border-bottom:1px dashed rgba(99,255,181,.14);
+  color:var(--text);
+  font-size:.875rem;
+  line-height:1.42;
+}
+.fb-pdf-family li:last-child{border-bottom:0}
+.fb-pdf-badge{
+  display:inline-block;
+  min-width:72px;
+  margin-right:7px;
+  color:var(--muted);
+  font-size:.875rem;
+}
+.fb-pdf-badge.likely{color:var(--yellow)}
+.fb-pdf-badge.confirmed{color:var(--green);font-weight:700}
+.fb-pdf-badge.no{color:var(--dim)}
+.fb-pdf-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  overflow:hidden;
+}
+.fb-pdf-summary > div{
+  min-width:0;
+  padding:14px;
+  border-right:1px solid var(--line);
+}
+.fb-pdf-summary > div:last-child{border-right:0}
+.fb-pdf-summary strong{
+  display:block;
+  color:var(--cream);
+  font-size:.88rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.fb-pdf-summary p{
+  margin:7px 0 0;
+  color:var(--text);
+  font-size:.875rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+.fb-pdf-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px dashed rgba(99,255,181,.2);
+  color:var(--muted);
+  font-size:.875rem;
+  line-height:1.5;
+}
+.fb-pdf-footer strong{color:var(--yellow)}
+
+@media(max-width:640px){
+  .fb-pdf-head{grid-template-columns:1fr}
+  .fb-pdf-capy{min-width:0}
+  .fb-pdf-meta{grid-template-columns:1fr}
+  .fb-pdf-families{grid-template-columns:1fr}
+  .fb-pdf-summary{grid-template-columns:1fr}
+  .fb-pdf-summary > div{border-right:0;border-bottom:1px solid var(--line)}
+  .fb-pdf-summary > div:last-child{border-bottom:0}
+}
+
+@media print{
+  .fb-tool{display:none!important}
+  .fb-pdf-report{
+    display:block!important;
+    border:0!important;
+    background:#fff!important;
+    margin:0!important;
+  }
+  .fb-pdf-inner{padding:0!important}
+  .fb-pdf-head,
+  .fb-pdf-footer{border-color:#999!important}
+  .fb-pdf-capy,
+  .fb-pdf-meta .box,
+  .fb-pdf-section,
+  .fb-pdf-summary,
+  .fb-pdf-family{
+    background:#fff!important;
+    border-color:#aaa!important;
+  }
+  .fb-pdf-kicker,
+  .fb-pdf-family h3,
+  .fb-pdf-footer strong{color:#111!important}
+  .fb-pdf-head h2,
+  .fb-pdf-effect,
+  .fb-pdf-meta strong,
+  .fb-pdf-summary strong{color:#111!important}
+  .fb-pdf-head p,
+  .fb-pdf-meta small,
+  .fb-pdf-section small,
+  .fb-pdf-summary small,
+  .fb-pdf-summary p,
+  .fb-pdf-capy-note,
+  .fb-pdf-footer,
+  .fb-pdf-family li{color:#444!important}
+  .fb-pdf-capy pre{color:#222!important}
+  .fb-pdf-badge,
+  .fb-pdf-badge.likely,
+  .fb-pdf-badge.confirmed,
+  .fb-pdf-badge.no{color:#222!important}
+  .fb-pdf-diagram .head-shape{fill:#fff!important}
+  .fb-pdf-diagram .cap-fill{fill:#fff!important}
+  .fb-pdf-diagram .cat,
+  .fb-pdf-diagram .effect,
+  .fb-pdf-diagram .cause,
+  .fb-pdf-diagram .cause-likely,
+  .fb-pdf-diagram .cause-confirmed,
+  .fb-pdf-diagram .small{fill:#111!important}
+  .fb-pdf-diagram .cause-no{fill:#666!important}
+  .fb-pdf-diagram .spine,
+  .fb-pdf-diagram .rib,
+  .fb-pdf-diagram .twig,
+  .fb-pdf-diagram .tail,
+  .fb-pdf-diagram .cap-line{stroke:#222!important}
+}
+
+
+/* v0.5.3 privacy parity */
+.fb-privacy-panel{
+  margin:14px 16px 0;
+  padding:13px;
+  border:1px solid var(--line);
+  background:rgba(99,255,181,.018);
+}
+.fb-privacy-panel.is-private{
+  border-color:var(--yellow);
+  box-shadow:inset 3px 0 0 var(--yellow);
+  background:rgba(255,233,91,.018);
+}
+.fb-privacy-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.fb-privacy-mode{
+  min-width:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+}
+.fb-privacy-led{
+  width:8px;height:8px;margin-top:5px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 8px rgba(99,255,181,.7);
+}
+.fb-privacy-panel.is-private .fb-privacy-led{
+  background:var(--yellow);box-shadow:0 0 8px rgba(255,233,91,.7);
+}
+.fb-privacy-mode strong{display:block;color:var(--cream);font-size:.875rem;line-height:1.35}
+.fb-privacy-mode span:last-child{display:block;margin-top:3px;color:var(--muted);font-size:.875rem;line-height:1.45}
+.fb-privacy-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.fb-privacy-actions .fb-btn{min-height:36px;padding:7px 9px;font-size:.875rem}
+.fb-privacy-warning{
+  margin:11px 0 0;padding-top:10px;border-top:1px dashed rgba(99,255,181,.17);
+  color:var(--muted);font-size:.875rem;line-height:1.5
+}
+.fb-privacy-warning strong{color:var(--yellow)}
+.fb-tool.is-private .fb-tool-head{border-bottom-color:rgba(255,233,91,.55)}
+.fb-tool.is-private .fb-tool-head strong{color:var(--yellow)}
+@media(max-width:620px){
+  .fb-privacy-head{flex-direction:column}
+  .fb-privacy-actions{width:100%;justify-content:flex-start}
+  .fb-privacy-actions .fb-btn{flex:1 1 calc(50% - 7px)}
+}
+@media(max-width:390px){.fb-privacy-actions .fb-btn{flex-basis:100%}}
+@media print{.fb-privacy-panel{display:none!important}}
+
+
+/* v0.6 reasoning layer — Evidence Ledger + Technique Handoffs */
+.pm-reasoning{
+  width:min(calc(100% - 32px),var(--max,1120px));
+  margin:18px auto 40px;
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);
+  gap:14px;
+}
+.pm-evidence,
+.pm-handoff{
+  border:1px solid var(--line);
+  background:var(--surface-low,#020a06);
+}
+.pm-evidence-head,
+.pm-handoff-head{
+  padding:13px 14px;
+  border-bottom:1px solid var(--line);
+}
+.pm-evidence-head{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+}
+.pm-evidence-kicker,
+.pm-handoff-kicker{
+  color:var(--yellow);
+  font-size:.875rem;
+  letter-spacing:.05em;
+}
+.pm-evidence-head h3,
+.pm-handoff h3{
+  margin:5px 0 0;
+  color:var(--cream);
+  font-size:.9rem;
+  line-height:1.3;
+}
+.pm-evidence-head p,
+.pm-handoff p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:.875rem;
+  line-height:1.5;
+}
+.pm-evidence-counts{
+  flex:0 0 auto;
+  color:var(--muted);
+  font-size:.875rem;
+  text-align:right;
+  line-height:1.55;
+}
+.pm-evidence-counts strong{color:var(--green)}
+.pm-evidence-rows{padding:10px 12px 4px}
+.pm-evidence-row{
+  display:grid;
+  grid-template-columns:118px minmax(0,1fr) 34px;
+  gap:7px;
+  margin-bottom:7px;
+}
+.pm-evidence-row select,
+.pm-evidence-row input{
+  width:100%;
+  min-width:0;
+  min-height:38px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--panel);
+  color:var(--cream);
+  font:inherit;
+  font-size:.875rem;
+}
+.pm-evidence-row select{padding:7px 27px 7px 8px}
+.pm-evidence-row input{padding:8px 9px}
+.pm-evidence-row input::placeholder{color:#5e8974}
+.pm-evidence-row select:focus,
+.pm-evidence-row input:focus{
+  outline:1px solid var(--yellow);
+  outline-offset:1px;
+  border-color:var(--yellow);
+}
+.pm-evidence-row[data-type="fact"] select{color:var(--green)}
+.pm-evidence-row[data-type="assumption"] select{color:var(--yellow)}
+.pm-evidence-row[data-type="test"] select{color:#b9e4ce}
+.pm-evidence-row[data-type="result"] select{color:var(--cream)}
+.pm-evidence-remove{
+  min-height:38px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--bad);
+  font:inherit;
+  cursor:pointer;
+}
+.pm-evidence-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  padding:8px 12px 12px;
+}
+.pm-reasoning-btn{
+  min-height:36px;
+  padding:7px 9px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  color:var(--green);
+  font:inherit;
+  font-size:.875rem;
+  cursor:pointer;
+}
+.pm-reasoning-btn.primary{
+  border-color:var(--yellow);
+  color:var(--yellow);
+}
+.pm-reasoning-btn.danger{color:var(--bad)}
+.pm-reasoning-btn:disabled{
+  opacity:.38;
+  cursor:not-allowed;
+}
+.pm-evidence-tip{
+  margin:0 12px 12px;
+  padding:9px 10px;
+  border-left:2px solid var(--yellow);
+  background:var(--panel);
+  color:var(--muted);
+  font-size:.875rem;
+  line-height:1.5;
+}
+.pm-evidence-tip strong{color:var(--yellow)}
+.pm-ledger-status{
+  margin-left:auto;
+  align-self:center;
+  color:var(--muted);
+  font-size:.875rem;
+}
+.pm-handoff{
+  display:flex;
+  flex-direction:column;
+}
+.pm-handoff-body{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  padding:14px;
+}
+.pm-handoff-seed{
+  margin:12px 0;
+  padding:10px 11px;
+  border:1px dashed var(--line);
+  background:var(--panel);
+}
+.pm-handoff-seed small{
+  display:block;
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:.875rem;
+}
+.pm-handoff-seed strong{
+  display:block;
+  color:var(--cream);
+  font-size:.875rem;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.pm-handoff-actions{
+  display:grid;
+  gap:8px;
+  margin-top:auto;
+}
+.pm-handoff-actions .pm-reasoning-btn{
+  width:100%;
+  min-height:42px;
+  text-align:left;
+  line-height:1.35;
+}
+.pm-handoff-note{
+  margin-top:10px!important;
+  color:var(--muted)!important;
+  font-size:.875rem!important;
+}
+.pm-evidence-print{
+  display:none;
+}
+@media(hover:hover) and (pointer:fine){
+  .pm-reasoning-btn:hover,
+  .pm-evidence-remove:hover{
+    border-color:var(--yellow);
+    color:var(--yellow);
+  }
+}
+@media(max-width:820px){
+  .pm-reasoning{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .pm-reasoning{width:min(calc(100% - 20px),var(--max,1120px))}
+  .pm-evidence-head{flex-direction:column}
+  .pm-evidence-counts{text-align:left}
+  .pm-evidence-row{grid-template-columns:104px minmax(0,1fr) 34px}
+  .pm-evidence-actions .pm-reasoning-btn{flex:1 1 calc(50% - 7px)}
+}
+@media(max-width:390px){
+  .pm-reasoning{width:min(calc(100% - 18px),var(--max,1120px))}
+  .pm-evidence-row{grid-template-columns:1fr 34px}
+  .pm-evidence-row select{grid-column:1/-1}
+  .pm-evidence-actions .pm-reasoning-btn{flex-basis:100%}
+}
+@media print{
+  .pm-reasoning{display:none!important}
+  .pm-evidence-print{
+    display:block!important;
+    width:100%!important;
+    margin:18px 0 0!important;
+    break-before:auto;
+    break-inside:avoid;
+  }
+  .pm-evidence-print h3{
+    margin:0 0 8px;
+    color:#111!important;
+    font:700 12pt "Courier New",Courier,monospace;
+  }
+  .pm-evidence-print p{
+    margin:0 0 10px;
+    color:#444!important;
+    font:9pt/1.45 "Courier New",Courier,monospace;
+  }
+  .pm-evidence-print table{
+    width:100%;
+    border-collapse:collapse;
+    font:8.5pt/1.35 "Courier New",Courier,monospace;
+  }
+  .pm-evidence-print th,
+  .pm-evidence-print td{
+    padding:6px 7px;
+    border:1px solid #aaa;
+    color:#222!important;
+    text-align:left;
+    vertical-align:top;
+  }
+  .pm-evidence-print th{
+    background:#f3f3f3!important;
+  }
+}
+
+</style>
+
+<style>
+.investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
+.investigation-embedded .story,.investigation-embedded .case-intro,.investigation-embedded .workspace,
+.investigation-embedded .evidence,.investigation-embedded .causal,.investigation-embedded .resolution,
+.investigation-embedded .lesson,.investigation-embedded .case-pager,.investigation-embedded .pm-handoff,
+.investigation-embedded .privacy-panel,.investigation-embedded .fb-privacy-panel,
+.investigation-embedded .investigation-panel,.investigation-embedded .workbench-intro,
+.investigation-embedded .fb-workbench-intro,.investigation-embedded .save-note,
+.investigation-embedded .fb-privacy,.investigation-embedded #saveModeLabel,
+.investigation-embedded #fbLocalMode {display:none!important}
+.investigation-embedded body::before,.investigation-embedded body::after{display:none}
+/* Align the embedded tool and shared ledger with the outer investigation. */
+.investigation-embedded,
+.investigation-embedded body{min-height:0!important;height:auto!important}
+.investigation-embedded body{background:var(--bg)}
+.investigation-embedded .workbench,.investigation-embedded .fb-workbench{width:100%;max-width:none;margin:0;padding:0}
+.investigation-embedded .wrap{width:100%;max-width:none}
+.investigation-embedded .pm-reasoning{width:100%;max-width:none;grid-template-columns:minmax(0,1fr);margin:16px 0 24px}
+.investigation-embedded .workspace-shell.is-private .workspace-head,
+.investigation-embedded .fb-tool.is-private .fb-tool-head{border-color:var(--line)}
+.investigation-embedded .workspace-head strong,.investigation-embedded .fb-tool-head strong{color:var(--green)}
+</style>
+<link rel="stylesheet" href="../site-nav.css">
+<link rel="stylesheet" href="../typography.css"><link rel="stylesheet" href="../brand-v2.css">
+
+<style>.fb-privacy-actions [hidden]{display:none!important}</style>
+</head>
+<body class="pm-v2 pm-app">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html">← [ ALL CASES ]</a><span class="online">READ-ONLY CASE STUDY</span></nav></div></header>
+<main id="main-content">
+<section class="hero"><div class="wrap"><div class="prompt">&gt; open /techniques/fishbone --case=002</div><div class="case">CASE #002 // THE MYSTERIOUS MUDDY POOL</div><h1>Fishbone<span>Map the suspects.</span></h1><p class="lede">When a problem could have many causes, don't chase the first theory. Ishikawa / Fishbone helps a group organize possibilities, see gaps, and decide what evidence to investigate.</p><div class="meta"><div><small>PURPOSE</small><strong>POSSIBLE CAUSES</strong></div><div><small>DIFFICULTY</small><strong>EASY</strong></div><div><small>TIME</small><strong>30–60 MIN</strong></div><div><small>BEST FOR</small><strong>MULTI-CAUSE PROBLEMS</strong></div></div></div></section>
+<section class="wrap case-intro"><div><div class="capy pm-illustrated"><img src="../assets/capybara-investigator.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: TOO MANY SUSPECTS</div></div><div class="intro-copy"><div class="phase">EFFECT_</div><h2>Capybara's clear pool has turned muddy. 🟫💧</h2><p>There is no obvious single cause. So instead of chasing one theory, we build a map of everything that could plausibly create the effect.</p></div></section>
+<section class="wrap workspace"><div class="workspace-head"><strong>ISHIKAWA WORKSPACE / CASE #002</strong><span>HYPOTHESES ≠ EVIDENCE</span></div><div class="swipe-hint">← SWIPE THE WHOLE FISH →</div><div class="fish-scroll" aria-label="Fishbone cause map for the muddy pool"><svg class="fishbone-svg" viewBox="0 0 1000 540" role="img" aria-labelledby="fishTitle fishDesc"><title id="fishTitle">Fishbone diagram of possible causes of Capybara's muddy pool</title><desc id="fishDesc">Six cause families branch into the muddy pool effect. Maintenance and equipment are highlighted by evidence.</desc>
+<!-- tail + spine -->
+<path class="tail" d="M88 270 L30 220 L48 270 L30 320 Z"/><line class="spine-line" x1="48" y1="270" x2="850" y2="270"/><text class="tail-label" x="28" y="344">START WIDE</text>
+<!-- top ribs -->
+<line class="rib" x1="250" y1="270" x2="155" y2="105"/><line class="rib" x1="500" y1="270" x2="405" y2="105"/><line class="rib" x1="750" y1="270" x2="655" y2="105"/>
+<!-- bottom ribs -->
+<line class="rib hot-rib" x1="250" y1="270" x2="155" y2="435"/><line class="rib hot-rib" x1="500" y1="270" x2="405" y2="435"/><line class="rib" x1="750" y1="270" x2="655" y2="435"/>
+<!-- hypothesis twigs top -->
+<line class="twig" x1="193" y1="171" x2="126" y2="171"/><line class="twig" x1="218" y1="214" x2="151" y2="214"/>
+<line class="twig" x1="443" y1="171" x2="376" y2="171"/><line class="twig" x1="468" y1="214" x2="401" y2="214"/>
+<line class="twig" x1="693" y1="171" x2="626" y2="171"/><line class="twig" x1="718" y1="214" x2="651" y2="214"/>
+<!-- hypothesis twigs bottom -->
+<line class="twig" x1="193" y1="369" x2="126" y2="369"/><line class="twig" x1="218" y1="326" x2="151" y2="326"/>
+<line class="twig hot-rib" x1="443" y1="369" x2="376" y2="369"/><line class="twig hot-rib" x1="468" y1="326" x2="401" y2="326"/>
+<line class="twig" x1="693" y1="369" x2="626" y2="369"/><line class="twig" x1="718" y1="326" x2="651" y2="326"/>
+<!-- category labels -->
+<text class="cat" x="94" y="84">🌧 WEATHER</text><text class="hyp" x="72" y="164">heavy rain</text><text class="no" x="72" y="180">[NO]</text><text class="hyp" x="97" y="207">runoff</text><text class="no" x="97" y="223">[NO]</text>
+<text class="cat" x="338" y="84">🌱 VEGETATION</text><text class="hyp" x="316" y="164">bank erosion</text><text class="no" x="316" y="180">[NO]</text><text class="hyp" x="341" y="207">dead plants</text><text class="no" x="341" y="223">[NO]</text>
+<text class="cat" x="604" y="84">🐦 ANIMALS</text><text class="hyp" x="566" y="164">digging</text><text class="no" x="566" y="180">[NO]</text><text class="hyp" x="591" y="207">unusual activity</text><text class="no" x="591" y="223">[NO]</text>
+<text class="cat" x="76" y="468">🧹 MAINTENANCE</text><text class="hot" x="62" y="365">cleaning missed [!!!]</text><text class="hyp" x="87" y="322">schedule gap</text>
+<text class="cat" x="351" y="468">⚙ EQUIPMENT</text><text class="hot" x="322" y="365">filter clogged [!!!]</text><text class="hot" x="347" y="322">low flow [!!!]</text>
+<text class="cat" x="610" y="468">🚰 WATER</text><text class="hyp" x="562" y="365">sediment supply</text><text class="no" x="562" y="381">[NO]</text><text class="hyp" x="587" y="322">source change</text><text class="no" x="587" y="338">[NO]</text>
+<!-- fish head = effect -->
+<path class="head-shape" d="M850 205 Q940 205 972 270 Q940 335 850 335 Q882 270 850 205 Z"/><circle class="eye-dot" cx="938" cy="244" r="4"/><text class="effect-title" x="878" y="270">🟫 MUDDY</text><text class="effect-title" x="888" y="289">POOL</text><text class="effect-sub" x="897" y="308">EFFECT</text>
+<!-- capybara investigator near tail -->
+<g transform="translate(62 242) scale(.55)"><ellipse class="cap-line cap-fill" cx="76" cy="56" rx="60" ry="34"/><rect class="cap-line cap-fill" x="40" y="83" width="20" height="24"/><rect class="cap-line cap-fill" x="91" y="83" width="20" height="24"/><ellipse class="cap-line cap-fill" cx="126" cy="45" rx="38" ry="30"/><circle class="cap-line cap-fill" cx="112" cy="17" r="10"/><line class="cap-line" x1="126" y1="42" x2="132" y2="42"/><path class="cap-line" d="M150 49 l9 5 l-9 5"/></g><text class="scan" x="58" y="382">CAPYBARA.EXE</text><text class="scan" x="58" y="398">SCANNING BRANCHES...</text>
+</svg></div><div class="fish-key"><span>[NO] evidence weakens branch</span><span><b>[!!!]</b> evidence strengthens branch</span></div><p class="fish-note"><strong>Read it like a fish:</strong> the head is the effect. Big bones are cause families. Small bones are hypotheses. The skeleton forces us to search broadly before evidence narrows the investigation.</p></section>
+<section class="wrap"><div class="phase">EVIDENCE PASS_</div><div class="evidence"><div class="check"><b>🌧️ Recent heavy rain?</b><span>[NO]</span></div><div class="check"><b>🐦 Unusual animal activity?</b><span>[NO]</span></div><div class="check"><b>⚙️ Filter flow normal?</b><span>[NO → CHECK]</span></div><div class="check"><b>🧹 Cleaning completed?</b><span>[MISSED]</span></div></div>
+<div class="causal"><div class="phase">CONTRIBUTING PATH FOUND_</div><h2>The diagram told us where to look. Evidence told us what mattered.</h2><div class="chain"><span class="node">MISSED MAINTENANCE</span><span class="arr">→</span><span class="node">CLOGGED FILTER</span><span class="arr">→</span><span class="node">LOW FLOW</span><span class="arr">→</span><span class="node">MUDDY POOL</span></div></div>
+<div class="resolution"><div><div class="capy pm-illustrated"><img src="../assets/capybara-coffee.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: WATER ACCEPTABLE AGAIN ☕</div></div><div><div class="phase">RESULT_</div><h2>Clean the filter. Restore the maintenance control.</h2><p>The other branches stay documented instead of being forgotten. Fishbone helped Capybara think broadly; testing narrowed the map to a supported causal path.</p></div></div>
+<div class="lesson"><div class="box"><h3>REAL WORLD TRANSLATION_</h3><div class="translation"><span>Muddy pool</span><span>→</span><span>Your effect/problem</span></div><div class="translation"><span>Main bones</span><span>→</span><span>Cause categories</span></div><div class="translation"><span>Small branches</span><span>→</span><span>Hypotheses</span></div><div class="translation"><span>[NO] / [!!!]</span><span>→</span><span>Evidence</span></div></div><div class="box"><h3>REMEMBER_</h3><p class="rule"><strong>A Fishbone does not prove root cause.</strong> Its job is to stop tunnel vision: organize plausible causes, expose gaps, then investigate the branches with data and observation.</p></div></div></section>
+
+
+<section class="wrap" aria-label="Continue learning"><p class="rule"><strong>READ-ONLY PREVIEW_</strong> The full original example above is preserved. No visitor data entry or local saving is available on this page.</p><div class="cta"><a class="button primary" href="articles/fishbone.html">READ THE FIELD GUIDE →</a><a class="button" href="techniques.html">ALL FOUR TECHNIQUES ↗</a></div></section></main><nav class="case-pager" aria-label="Case file navigation"><a class="pager-prev" href="5-whys.html">← PREVIOUS CASE</a><a class="pager-all" href="techniques.html">ALL TECHNIQUES</a><a class="pager-next" href="pareto.html">NEXT CASE →</a></nav><footer class="site-footer"><div class="wrap"><div class="footer-main"><div class="footer-identity"><a class="footer-home" href="index.html">problem<em class="brand-accent">.me</em>_</a><p>Same problems. Clearer thinking.</p></div><nav class="footer-nav" aria-label="Footer"><ul><li><a href="techniques.html">Technique Library</a></li><li><a href="techniques.html#field-guides">Field Guides</a></li><li><a href="../privacy.html">Current privacy notes</a></li></ul></nav></div></div></footer></body></html>

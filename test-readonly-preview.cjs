@@ -46,7 +46,7 @@ const routes=[
      console.log('OVERFLOW '+route+' '+width+': '+JSON.stringify(offenders));
     }
     assert(overflow<=2,route+' horizontal overflow at '+width+': '+overflow+'px');
-    if(route.startsWith('next/') && /next\\/(5-whys|fishbone|pareto|kepner-tregoe)\\.html$/.test(route)){
+    if(['next/5-whys.html','next/fishbone.html','next/pareto.html','next/kepner-tregoe.html'].includes(route)){
      const result=await page.evaluate(()=>{
        const close=document.querySelector('.readonly-close');
        const links=[...document.querySelectorAll('.readonly-actions .readonly-action')];

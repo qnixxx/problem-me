@@ -46,6 +46,29 @@ const routes=[
      console.log('OVERFLOW '+route+' '+width+': '+JSON.stringify(offenders));
     }
     assert(overflow<=2,route+' horizontal overflow at '+width+': '+overflow+'px');
+    if(route.startsWith('next/') && /next\\/(5-whys|fishbone|pareto|kepner-tregoe)\\.html$/.test(route)){
+     const result=await page.evaluate(()=>{
+       const close=document.querySelector('.readonly-close');
+       const links=[...document.querySelectorAll('.readonly-actions .readonly-action')];
+       const pager=[...document.querySelectorAll('.readonly-pager a')];
+       const box=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+       return {close:close&&box(close),links:links.map(box),pager:pager.map(box),sectionCount:document.querySelectorAll('.readonly-close').length};
+     });
+     assert.equal(result.sectionCount,1,route+' has one read-only conclusion');
+     assert.equal(result.links.length,2,route+' has two distinct follow-up actions');
+     for(const link of result.links){
+       assert(link.height>=44,route+' tap target meets 44px');
+       assert(link.x>=result.close.x-1&&link.right<=result.close.right+1,route+' link fits conclusion box');
+     }
+     const overlap=(a,b)=>a.x<b.right-1&&b.x<a.right-1&&a.y<b.bottom-1&&b.y<a.bottom-1;
+     assert(!overlap(result.links[0],result.links[1]),route+' follow-up actions must not overlap at '+width+'px');
+     for(let i=0;i<result.pager.length;i++)for(let j=i+1;j<result.pager.length;j++)
+       assert(!overlap(result.pager[i],result.pager[j]),route+' pager items must not overlap at '+width+'px');
+     if(width<=390){
+       assert(result.links[1].y>=result.links[0].bottom+8,route+' mobile follow-up links must stack with a visible gap');
+       for(const item of result.pager)assert(item.height>=44,route+' pager link tap area');
+     }
+    }
     const broken=await page.locator('img').evaluateAll(async images=>{
       await Promise.all(images.map(img=>new Promise(resolve=>{
        img.loading='eager';if(img.complete){resolve();return;}

@@ -42,7 +42,17 @@ const routes=[
         const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
         assert(overflow<=2,route+' overflow at width '+width+' by '+overflow+'px');
         assert.equal(await page.locator('img:not([src])').count(),0,route+' image sources');
-        assert.equal(await page.locator('img').evaluateAll(imgs=>imgs.every(img=>img.complete&&img.naturalWidth>0)),true,route+' images load');
+        const broken=await page.locator('img').evaluateAll(async imgs=>{
+          // Lazy images below the fold need an explicit load before checking naturalWidth.
+          await Promise.all(imgs.map(img=>new Promise(resolve=>{
+            img.loading='eager';
+            if(img.complete){resolve();return;}
+            img.addEventListener('load',resolve,{once:true});
+            img.addEventListener('error',resolve,{once:true});
+          })));
+          return imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.src);
+        });
+        assert.deepEqual(broken,[],route+' images load');
       }
       assert.deepEqual(errors,[],'runtime errors at '+width);
       assert.deepEqual(external,[],'external network requests at '+width);

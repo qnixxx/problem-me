@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import json, hashlib, re, sys, zipfile
 ROOT=Path(__file__).resolve().parent
-VERSION='2.0.0'
+VERSION='2.0.1'
 class Page(HTMLParser):
     def __init__(self, source):
         super().__init__();self.ids=set();self.links=[];self.scripts=[];self.inputs=[];self.source=source

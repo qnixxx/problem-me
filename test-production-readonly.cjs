@@ -14,7 +14,7 @@ const server=http.createServer((req,res)=>{
 });
 const routes=['index.html','techniques.html','5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
-'privacy.html','features.html','investigation.html','investigations.html','board-experiment.html','brand-system.html'];
+'privacy.html','features.html','casebook/','casebook/melon-cart.html','casebook/picnic-ants.html','casebook/garden-water.html','casebook/reading-nook.html','investigation.html','investigations.html','board-experiment.html','brand-system.html'];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 (async()=>{
  await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
@@ -73,11 +73,19 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.deepEqual(errors,[],'script errors at '+width);
    assert.deepEqual(missing,[],'missing content at '+width);
    assert.deepEqual(external,[],'external network calls at '+width);
+   await page.goto(base+'/casebook/');
+   assert.equal(await page.locator('.cb-card').count(),4,'four new casebook cards');
+   for(const slug of ['melon-cart','picnic-ants','garden-water','reading-nook']){
+     await page.goto(base+'/casebook/'+slug+'.html');
+     assert.equal(await page.locator('.cb-chapter').count(),4,slug+' complete method story');
+     assert.equal(await page.locator('.cb-end .cb-btn').count(),2,slug+' guide and next story links');
+   }
    await page.goto(base+'/index.html');
    assert.equal(await page.locator('.readonly-skip-link[href="#top"]').count(),1,'homepage keyboard Skip link');
    await page.locator('.readonly-skip-link').focus();
    assert.equal(await page.locator('.readonly-skip-link').evaluate(el=>getComputedStyle(el).top),'10px','Skip link appears when focused');
 
+   assert.equal(await page.locator('#casebook .cb-home-card').count(),4,'homepage casebook cards');
    assert.equal(await page.locator('#mission .mission-card').count(),4,'homepage paths');
    assert.equal(await page.locator('#techniques .tech').count(),4,'homepage case cards');
    await page.goto(base+'/techniques.html');

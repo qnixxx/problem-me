@@ -49,6 +49,16 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
       return imgs.filter(img=>!img.complete||!img.naturalWidth).map(img=>img.src);
     });
     assert.deepEqual(broken,[],route+' images');
+    if(route.startsWith('articles/')){
+      const rects=await page.locator('.readonly-guide-actions .readonly-guide-action').evaluateAll(links=>links.map(link=>{
+        const r=link.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height};
+      }));
+      assert.equal(rects.length,2,route+' two guide actions');
+      assert(rects.every(r=>r.height>=44),route+' guide tap targets');
+      const [a,b]=rects;
+      assert(!(a.x<b.right-1&&b.x<a.right-1&&a.y<b.bottom-1&&b.y<a.bottom-1),route+' guide links overlap');
+      if(width<=390)assert(b.y>=a.bottom+8,route+' guide actions must be stacked on mobile');
+    }
     if(cases.includes(route)){
       const rectangles=await page.locator('.readonly-actions a').evaluateAll(links=>links.map(link=>{
         const r=link.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};
@@ -64,6 +74,10 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.deepEqual(missing,[],'missing content at '+width);
    assert.deepEqual(external,[],'external network calls at '+width);
    await page.goto(base+'/index.html');
+   assert.equal(await page.locator('.readonly-skip-link[href="#top"]').count(),1,'homepage keyboard Skip link');
+   await page.locator('.readonly-skip-link').focus();
+   assert.equal(await page.locator('.readonly-skip-link').evaluate(el=>getComputedStyle(el).top),'10px','Skip link appears when focused');
+
    assert.equal(await page.locator('#mission .mission-card').count(),4,'homepage paths');
    assert.equal(await page.locator('#techniques .tech').count(),4,'homepage case cards');
    await page.goto(base+'/techniques.html');

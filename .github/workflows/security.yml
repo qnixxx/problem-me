@@ -15,6 +15,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 build-release.py --check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node test-content-polish.cjs
   browser:
     runs-on: ubuntu-latest
     steps:

@@ -23,6 +23,7 @@ class Page(HTMLParser):
         assert not any(k.startswith('on') for k in attrs),f"{self.source}: inline event handler"
 files=sorted(p for p in ROOT.iterdir() if p.is_file() and p.suffix in ('.html','.css','.js','.ico','.jpg','.jpeg','.png','.svg','.webp'))
 files+=sorted((ROOT/'articles').glob('*.html'))
+files += [ROOT/'robots.txt', ROOT/'sitemap.xml']
 files+=sorted((ROOT/'runtime').glob('*.js'))
 files+=sorted(p for p in (ROOT/'assets').rglob('*') if p.is_file())
 relative={p.relative_to(ROOT).as_posix() for p in files}

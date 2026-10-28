@@ -49,6 +49,42 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
       return imgs.filter(img=>!img.complete||!img.naturalWidth).map(img=>img.src);
     });
     assert.deepEqual(broken,[],route+' images');
+    if(route==='casebook/'){
+      const geometry=await page.evaluate(()=>{
+        const h=document.querySelector('.cb-hero'),copy=h?.firstElementChild,art=h?.querySelector('img');
+        const title=h?.querySelector('h1'),lead=h?.querySelector('.lead'),nav=document.querySelector('.cb-header .cb-nav'),header=document.querySelector('.cb-header');
+        const b=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+        return {hero:b(h),copy:b(copy),art:b(art),header:b(header),nav:b(nav),title:b(title),
+          headingSize:parseFloat(getComputedStyle(title).fontSize),leadFamily:getComputedStyle(lead).fontFamily,
+          columns:getComputedStyle(h).gridTemplateColumns,
+          scanline:getComputedStyle(document.body,'::before').display,
+          navItems:[...nav.querySelectorAll('a')].filter(a=>getComputedStyle(a).display!=='none').length};
+      });
+      assert(geometry.hero.width<=width-14,'casebook hero fits viewport');
+      assert(geometry.art.width>=200,'casebook art remains legible');
+      assert.equal(geometry.scanline,'none','casebook must use shared non-CRT body rendering');
+      assert(geometry.nav.right<=width+2,'casebook nav fits viewport');
+      if(width<=390){
+        assert(geometry.art.y>=geometry.copy.bottom+12,'mobile hero art must sit below complete text, not alongside it');
+        assert(geometry.copy.width>=width-40,'mobile text should occupy the readable page width');
+        assert(geometry.headingSize<=42,'mobile title must have restrained core-site scale');
+        assert(geometry.navItems>=1,'mobile site navigation available');
+      }else{
+        assert(geometry.art.x>geometry.copy.x+geometry.copy.width-5,'desktop hero artwork beside intro');
+      }
+      assert(!/Courier|monospace/i.test(geometry.leadFamily),'casebook lead should share original site system reading font');
+    }
+    if(route.startsWith('casebook/') && route!=='casebook/'){
+      const pageLayout=await page.evaluate(()=>{
+        const hero=document.querySelector('.cb-storyhero'),copy=hero?.firstElementChild,art=hero?.querySelector('.picture'),toc=document.querySelector('.cb-toc');
+        const b=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,bottom:r.bottom,right:r.right,width:r.width};};
+        return {copy:b(copy),art:b(art),toc:b(toc),mainWidth:document.querySelector('.cb-story-layout')?.getBoundingClientRect().width};
+      });
+      if(width<=390){
+        assert(pageLayout.art.y>=pageLayout.copy.bottom+12,route+' mobile illustration below complete story intro');
+        assert(pageLayout.copy.width>=width-40,route+' mobile heading uses readable width');
+      }
+    }
     if(route.startsWith('articles/')){
       const rects=await page.locator('.readonly-guide-actions .readonly-guide-action').evaluateAll(links=>links.map(link=>{
         const r=link.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,height:r.height};

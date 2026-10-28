@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" class="pm-theme">
 <head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="robots" content="noindex,nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Learn Pareto Analysis visually with Capybara Case #003, then use the interactive Pareto workspace to rank your own recurring problems and focus on the vital few." />
+  <meta name="description" content="Learn Pareto Analysis visually with Capybara Case #003 — a read-only illustrated case study." />
   <meta name="theme-color" content="#010704" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="Pareto Analysis — Capybara Case #003 | problem.me" />
@@ -682,7 +682,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 }
 
 </style>
-<script src="runtime/pareto-1.js"></script>
+
 <style>
 .investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
 .investigation-embedded .case-intro,.investigation-embedded .data-shell,.investigation-embedded .priority,
@@ -700,17 +700,17 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 .investigation-embedded .pt-tool.is-private .pt-head{border-color:var(--line)}
 .investigation-embedded .pt-head strong{color:var(--green)}
 </style>
-<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
+<link rel="stylesheet" href="site-nav.css">
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-<script src="handoff.js"></script><script src="draft-store-guard.js"></script><script src="private-default.js"></script>
+
 <style>.pt-privacy-actions [hidden]{display:none!important}</style>
-</head>
-<body class="pm-v2 pm-app">
+<link rel="stylesheet" href="readonly.css"></head>
+<body class="pm-v2 pm-app pm-readonly-case">
 <a class="skip-link" href="#main-content">Skip to content</a>
-<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #003 OPEN</div><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></div></header>
+<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html">← [ ALL CASES ]</a><span class="online">READ-ONLY CASE STUDY</span></nav></div></header>
 <main id="main-content">
 <section class="hero"><div class="wrap"><div class="prompt">&gt; open /techniques/pareto --case=003</div><div class="case">CASE #003 // THE CHAOTIC CAPYBARA CAFÉ</div><h1>Pareto<span>Rank the pain.</span></h1><p class="lede">When everything seems important, count the recurring problems and rank them by impact. Pareto Analysis helps you focus on the few categories creating most of the trouble.</p><div class="meta"><div><small>PURPOSE</small><strong>PRIORITIZE</strong></div><div><small>DIFFICULTY</small><strong>EASY</strong></div><div><small>TIME</small><strong>20–45 MIN</strong></div><div><small>BEST FOR</small><strong>RECURRING ISSUES</strong></div></div></div></section>
-<section class="wrap case-intro"><div><div class="capy pm-illustrated"><img src="assets/capybara-analyst.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: EVERYTHING IS ON FIRE ☕</div></div><div class="intro-copy"><div class="phase">PROBLEM_</div><h2>The café logged 100 incidents this week. ☕🍉🥄</h2><p>Capybara cannot fix all six categories at once. So instead of arguing about what feels worst, we turn the incident log into ranked evidence.</p></div></section>
+<section class="wrap case-intro"><div><div class="capy pm-illustrated"><img src="assets/"capybara-analyst.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: EVERYTHING IS ON FIRE ☕</div></div><div class="intro-copy"><div class="phase">PROBLEM_</div><h2>The café logged 100 incidents this week. ☕🍉🥄</h2><p>Capybara cannot fix all six categories at once. So instead of arguing about what feels worst, we turn the incident log into ranked evidence.</p></div></section>
 <section class="wrap data-shell"><div class="data-head"><strong>PARETO CONSOLE / 100 INCIDENTS</strong><span>MODE: COUNT → RANK → CUMULATE</span></div><div class="data-grid"><aside class="incident-feed"><h3>RAW INCIDENT TAPE_</h3><div class="tape">
 <div class="tape-row"><span>#01</span><span>dropped watermelon</span><b>🍉</b></div><div class="tape-row"><span>#02</span><span>cold coffee</span><b>☕</b></div><div class="tape-row"><span>#03</span><span>missing spoons</span><b>🥄</b></div><div class="tape-row"><span>#04</span><span>dropped watermelon</span><b>🍉</b></div><div class="tape-row"><span>#05</span><span>long queue</span><b>⏳</b></div><div class="tape-row"><span>#06</span><span>wrong order</span><b>🧾</b></div><div class="tape-row"><span>#07</span><span>dropped watermelon</span><b>🍉</b></div><div class="tape-row"><span>#08</span><span>cold coffee</span><b>☕</b></div><div class="tape-row"><span>#09</span><span>chair squeak</span><b>🪑</b></div><div class="tape-row"><span>#10</span><span>dropped watermelon</span><b>🍉</b></div><div class="tape-row"><span>...</span><span>90 more incidents</span><b>▦</b></div>
 </div><div class="feed-note">CAPYBARA.EXE: anecdotes are noisy. Categories make the pattern visible.</div></aside><div class="dashboard"><h3>RANKED INCIDENTS + CUMULATIVE IMPACT_</h3><div class="chart-scroll"><svg class="pareto-svg" viewBox="0 0 760 460" role="img" aria-labelledby="ptitle pdesc"><title id="ptitle">Pareto chart of 100 café incidents</title><desc id="pdesc">Dropped watermelon, cold coffee and missing spoons account for eighty percent of incidents.</desc>
@@ -724,165 +724,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 <text class="svg-label" transform="translate(120 412) rotate(35)">watermelon</text><text class="svg-label" transform="translate(225 412) rotate(35)">cold coffee</text><text class="svg-label" transform="translate(326 412) rotate(35)">spoons</text><text class="svg-label" transform="translate(430 412) rotate(35)">queue</text><text class="svg-label" transform="translate(530 412) rotate(35)">wrong order</text><text class="svg-label" transform="translate(632 412) rotate(35)">chair</text>
 </svg></div><div class="insight"><div class="stat hot"><small>TOP 3 CATEGORIES</small><strong>80%</strong></div><div class="stat"><small>ALL OTHER CATEGORIES</small><strong>20%</strong></div><div class="stat"><small>FIRST TARGET</small><strong>🍉 42</strong></div></div></div></div></section>
 <section class="wrap priority"><div><div class="phase">PRIORITY SIGNAL_</div><h2>Three categories create four-fifths of the incidents.</h2><p>The 80/20 rule is a useful heuristic, not a law. Here the data happens to land exactly at 80% after the first three categories.</p></div><div class="arrow-big">→</div><div class="fix-list"><div class="fix"><span>1. Dropped watermelon 🍉</span><span>42%</span></div><div class="fix"><span>2. Cold coffee ☕</span><span>25%</span></div><div class="fix"><span>3. Missing spoons 🥄</span><span>13%</span></div></div></section>
-<section class="wrap after"><div><div class="capy pm-illustrated"><img src="assets/capybara-analyst.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: FIXING THE VITAL FEW</div></div><div><div class="phase">ACTION_</div><h2>Start where the bars are tallest.</h2><p>Capybara fixes the watermelon handling process first, then coffee temperature, then spoon replenishment. The squeaky chair can remain dramatically squeaky for another day.</p></div></section>
+<section class="wrap after"><div><div class="capy pm-illustrated"><img src="assets/"capybara-analyst.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: FIXING THE VITAL FEW</div></div><div><div class="phase">ACTION_</div><h2>Start where the bars are tallest.</h2><p>Capybara fixes the watermelon handling process first, then coffee temperature, then spoon replenishment. The squeaky chair can remain dramatically squeaky for another day.</p></div></section>
 <section class="wrap lesson"><div class="box"><h3>REAL WORLD TRANSLATION_</h3><div class="translation"><span>Café incidents</span><span>→</span><span>Defects / tickets / failures</span></div><div class="translation"><span>Categories</span><span>→</span><span>Recurring cause types</span></div><div class="translation"><span>Bars</span><span>→</span><span>Frequency or impact</span></div><div class="translation"><span>Cumulative line</span><span>→</span><span>Share of total impact</span></div></div><div class="box"><h3>REMEMBER_</h3><p class="rule"><strong>Pareto prioritizes; it does not explain causality.</strong> A tall bar tells you where the impact is concentrated, not why that category occurs. After choosing a priority, use a causal technique such as 5 Whys or Fishbone to investigate it.</p></div></section>
 
-<section class="ptw" aria-labelledby="pt-title"><div class="ptw-intro"><div><div class="prompt">&gt; run /tools/pareto --interactive</div><h2 id="pt-title">TRY IT YOURSELF_</h2><p>Enter recurring categories and their counts or impact values. The workspace ranks them automatically, calculates cumulative contribution, and shows where your focus threshold is reached.</p></div><div class="ptw-local" id="ptLocalMode"><strong>PRIVATE SESSION</strong><br>not saved on this device</div></div>
-<div class="pt-tool is-private"><div class="pt-head"><strong>PARETO WORKSPACE / YOUR DATA</strong><span>COUNT → RANK → CUMULATE → PRIORITIZE</span></div>
-<div class="pt-privacy-panel is-private" id="ptPrivacyPanel">
-  <div class="pt-privacy-head">
-    <div class="pt-privacy-mode"><span class="pt-privacy-led" aria-hidden="true"></span><div><strong id="ptPrivacyTitle">PRIVATE SESSION ACTIVE_</strong><span id="ptPrivacyCopy">Your work stays in this page only. To keep it, export or explicitly start Local Save.</span></div></div>
-    <div class="pt-privacy-actions"><button class="pt-btn primary" id="ptPrivateBtn" type="button" aria-pressed="true">START LOCAL SAVE</button><button class="pt-btn" id="ptRestoreSavedBtn" type="button" hidden>OPEN SAVED DRAFT</button><button class="pt-btn danger" id="ptClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button></div>
-  </div>
-  <p class="pt-privacy-warning"><strong>CAPYBARA PRIVACY NOTE_</strong> Keep passwords, API keys, access tokens and credentials out of the workspace. Private Session controls problem.me storage; it is not a secret vault. <a href="privacy.html">HOW PRIVACY WORKS →</a></p>
-</div>
-<div class="pt-grid"><div class="pt-edit">
-<div class="pt-settings"><div class="pt-field"><div class="pt-label"><label for="ptAnalysis">ANALYSIS_</label></div><input id="ptAnalysis" placeholder="Example: Support tickets — September"></div><div class="pt-field"><div class="pt-label"><label for="ptUnit">UNIT_</label></div><input id="ptUnit" placeholder="incidents"></div><div class="pt-field"><div class="pt-label"><label for="ptThreshold">FOCUS %_</label></div><input id="ptThreshold" type="number" min="50" max="100" inputmode="numeric"></div></div>
-<div class="pt-label"><span>RAW CATEGORIES_</span><small>Pareto will sort them</small></div><div class="pt-rowhead" aria-hidden="true"><span>#</span><span>CATEGORY</span><span>VALUE</span><span></span></div><div id="ptRows"></div><div class="pt-actions"><button class="pt-btn" id="ptAdd" type="button">+ CATEGORY</button><button class="pt-btn" id="ptSample" type="button">LOAD CAFÉ SAMPLE</button></div>
-<div class="pt-summary"><div class="pt-field"><div class="pt-label"><label for="ptAction">FIRST ACTION / INVESTIGATION_</label></div><textarea id="ptAction" placeholder="What will you do with the highest-priority category?"></textarea></div><div class="pt-field wide"><div class="pt-label"><label for="ptNotes">NOTES / DATA QUALITY_</label></div><textarea id="ptNotes" placeholder="Time window, source, exclusions, severity assumptions..."></textarea></div></div><p class="pt-privacy"><strong>PRIVACY:</strong> this draft stays in your browser's local storage. Nothing is uploaded.</p></div>
-<aside class="pt-live"><div class="pt-livehead"><strong>LIVE PARETO_</strong><span class="pt-status" id="ptStatus">STATUS: WAITING FOR DATA</span></div><div class="pt-scroll"><svg class="pt-svg" id="ptSvg" viewBox="0 0 920 520" role="img" aria-label="Live Pareto chart"></svg></div><div class="pt-stats"><div class="pt-stat hot"><small>FOCUS SET</small><strong id="ptFocus">—</strong></div><div class="pt-stat"><small>TOTAL</small><strong id="ptTotal">0</strong></div><div class="pt-stat"><small>FIRST TARGET</small><strong id="ptFirst">—</strong></div></div><div class="pt-rank"><div class="pt-rankhead"><strong>RANKED DATA_</strong><span id="ptMeta">0 categories</span></div><div class="pt-rlist" id="ptRank"></div></div><div class="pt-tip" id="ptTip"><strong>TIP:</strong> Use one consistent measure across all categories.</div></aside></div><div class="pt-bottom"><button class="pt-btn primary" id="ptCopy" type="button">COPY SUMMARY</button><button class="pt-btn" id="ptPrint" type="button">PRINT / SAVE PDF</button><button class="pt-btn danger" id="ptReset" type="button">RESET DRAFT</button><span class="pt-msg" id="ptMsg">AUTO-SAVE READY_</span></div></div></section>
-
-
-
-<section class="pm-reasoning" aria-label="Reasoning tools">
-  <section class="pm-evidence" aria-labelledby="pmEvidenceTitle">
-    <div class="pm-evidence-head">
-      <div>
-        <div class="pm-evidence-kicker">REASONING LAYER_</div>
-        <h3 id="pmEvidenceTitle">EVIDENCE LEDGER_</h3>
-        <p>Separate what you know from what you think. Facts, assumptions, tests and results stay visible while the investigation evolves.</p>
-      </div>
-      <div class="pm-evidence-counts" id="pmEvidenceCounts">NO EVIDENCE LOGGED</div>
-    </div>
-    <div class="pm-evidence-rows" id="pmEvidenceRows"></div>
-    <div class="pm-evidence-actions">
-      <button class="pm-reasoning-btn primary" id="pmEvidenceAdd" type="button">+ EVIDENCE</button>
-      <button class="pm-reasoning-btn" id="pmEvidenceCopy" type="button">COPY LEDGER</button>
-      <button class="pm-reasoning-btn danger" id="pmEvidenceClear" type="button">CLEAR LEDGER</button>
-      <span class="pm-ledger-status" id="pmEvidenceStatus">LEDGER READY_</span>
-    </div>
-    <div class="pm-evidence-tip" id="pmEvidenceTip"><strong>CAPYBARA.EXE:</strong> Claims are cheaper than evidence. Log what you actually know.</div>
-  </section>
-
-  <aside class="pm-handoff" aria-labelledby="pmHandoffTitle">
-    <div class="pm-handoff-head">
-      <div class="pm-handoff-kicker">CONNECTED THINKING_</div>
-      <h3 id="pmHandoffTitle">NEXT MOVE_</h3>
-      <p id="pmHandoffCopy">Use the current finding as the starting point for the next technique.</p>
-    </div>
-    <div class="pm-handoff-body">
-      <div class="pm-handoff-seed">
-        <small>STARTING POINT</small>
-        <strong id="pmHandoffSeed">Complete more of the investigation to create a useful handoff.</strong>
-      </div>
-      <div class="pm-handoff-actions">
-        <button class="pm-reasoning-btn primary" id="pmHandoffOne" type="button">NEXT TECHNIQUE</button>
-        <button class="pm-reasoning-btn" id="pmHandoffTwo" type="button">ALTERNATIVE NEXT TECHNIQUE</button>
-      </div>
-      <p class="pm-handoff-note">Private handoffs use an explicit clipboard copy and manual paste. With Local Save, a one-time token transfers context without putting your text in the URL.</p>
-    </div>
-  </aside>
-</section>
-
-<section class="pm-evidence-print" id="pmEvidencePrint" aria-hidden="true">
-  <h3>EVIDENCE LEDGER_</h3>
-  <p>Facts, assumptions, tests and results recorded during this investigation.</p>
-  <table>
-    <thead><tr><th>TYPE</th><th>EVIDENCE / NOTE</th></tr></thead>
-    <tbody id="pmEvidencePrintRows"></tbody>
-  </table>
-</section>
-
-
-<section class="pt-pdf-report" id="ptPdfReport" aria-hidden="true">
-  <div class="pt-pdf-inner">
-    <div class="pt-pdf-head">
-      <div>
-        <div class="pt-pdf-kicker">problem.me // Pareto export</div>
-        <h2>CAPYBARA PRIORITY REPORT_</h2>
-        <p>A ranked view of where the pain is concentrated, how quickly cumulative impact builds, and which categories deserve attention first.</p>
-      </div>
-      <div class="pt-pdf-capy" aria-hidden="true">
-        <pre>      __
-  ___/  \___
- /  •    •  \__
-|      ▿       _)
- \___  ☕  ___/
-     \____/
-      /  \</pre>
-        <div class="pt-pdf-capy-note">CAPYBARA.EXE NOTE_: “The 80/20 rule is not a diet. I checked.”</div>
-      </div>
-    </div>
-
-    <div class="pt-pdf-meta">
-      <div class="box"><small>ANALYSIS</small><strong id="ptPdfAnalysis">Pareto investigation</strong></div>
-      <div class="box"><small>TOTAL</small><strong id="ptPdfTotal">0</strong></div>
-      <div class="box"><small>FOCUS SET</small><strong id="ptPdfFocus">—</strong></div>
-      <div class="box"><small>GENERATED</small><strong id="ptPdfGenerated">—</strong></div>
-    </div>
-
-    <div class="pt-pdf-section">
-      <small>LIVE PARETO / RANKED IMPACT</small>
-      <div class="pt-pdf-title" id="ptPdfHeadline">No category data yet.</div>
-      <div class="pt-pdf-chart" id="ptPdfChart"></div>
-    </div>
-
-    <div class="pt-pdf-rank">
-      <div class="pt-pdf-rank-head">
-        <span>RANK</span><span>CATEGORY</span><span>VALUE</span><span>SHARE</span><span>CUMULATIVE</span>
-      </div>
-      <div id="ptPdfRank"></div>
-    </div>
-
-    <div class="pt-pdf-summary">
-      <div>
-        <small>FIRST TARGET</small>
-        <strong id="ptPdfFirst">Not defined.</strong>
-        <p id="ptPdfAction">FIRST ACTION / INVESTIGATION:
-Not defined.</p>
-      </div>
-      <div>
-        <small>DATA QUALITY / NOTES</small>
-        <strong id="ptPdfThreshold">Focus threshold: 80%</strong>
-        <p id="ptPdfNotes">Not defined.</p>
-      </div>
-    </div>
-
-    <div class="pt-pdf-footer">
-      <span><strong>problem.me</strong> — same problems, clearer thinking.</span>
-      <span>CAPYBARA RULE_: Pareto prioritizes. It does not prove causality.</span>
-    </div>
-  </div>
-</section>
-
-</main>
-<nav class="case-pager" aria-label="Case File navigation"><a class="pager-prev" href="fishbone.html"><small>← PREVIOUS</small><strong>CASE #002 / FISHBONE</strong></a><a class="pager-all" href="techniques.html"><small>LIBRARY</small><strong>ALL TECHNIQUES</strong></a><a class="pager-next" href="kepner-tregoe.html"><small>NEXT →</small><strong>CASE #004 / KEPNER–TREGOE</strong></a></nav>
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-main">
-      <div class="footer-identity">
-        <a class="footer-home" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span aria-hidden="true">_</span></a>
-        <p>Same problems. Clearer thinking.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Explore problem.me">
-        <ul>
-          <li><a href="investigations.html">My Investigations</a></li>
-          <li><a href="techniques.html">Technique Library</a></li>
-          <li><a href="techniques.html#field-guides">Field Guides</a></li>
-        </ul>
-      </nav>
-    </div>
-    <ul class="footer-utility" aria-label="Product information">
-      <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="features.html">Feature Log</a></li>
-    </ul>
-  </div>
-</footer>
-
-<script src="runtime/pareto-2.js"></script>
-
-
-<script src="runtime/pareto-3.js"></script>
-
-<script src="investigation-bridge.js"></script>
-</body></html>
+<section class="wrap readonly-close" aria-label="Continue learning"><p class="readonly-summary"><strong>CASE STUDY COMPLETE_</strong> The full original example above is preserved. No visitor data entry or local saving is available on this page.</p><div class="readonly-actions"><a class="readonly-action readonly-action--primary" href="articles/pareto.html">READ THE FIELD GUIDE →</a><a class="readonly-action readonly-action--secondary" href="techniques.html">ALL FOUR TECHNIQUES ↗</a></div></section></main><nav class="case-pager readonly-pager" aria-label="Case file navigation"><a class="pager-prev" href="fishbone.html">← PREVIOUS CASE</a><a class="pager-all" href="techniques.html">ALL TECHNIQUES</a><a class="pager-next" href="kepner-tregoe.html">NEXT CASE →</a></nav><footer class="site-footer"><div class="wrap"><div class="footer-main"><div class="footer-identity"><a class="footer-home" href="index.html">problem<em class="brand-accent">.me</em>_</a><p>Same problems. Clearer thinking.</p></div><nav class="footer-nav" aria-label="Footer"><ul><li><a href="techniques.html">Technique Library</a></li><li><a href="techniques.html#field-guides">Field Guides</a></li><li><a href="privacy.html">Current privacy notes</a></li></ul></nav></div></div></footer></body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" class="pm-theme">
 <head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="robots" content="noindex,nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002, then use the interactive Fishbone workspace to map and test possible causes for your own problem." />
+  <meta name="description" content="Learn Ishikawa / Fishbone visually with Capybara Case #002 — a read-only illustrated case study." />
   <meta name="theme-color" content="#010704" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="Ishikawa / Fishbone — Capybara Case #002 | problem.me" />
@@ -1040,7 +1040,7 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 }
 
 </style>
-<script src="runtime/fishbone-1.js"></script>
+
 <style>
 .investigation-embedded header,.investigation-embedded footer,.investigation-embedded .hero,
 .investigation-embedded .story,.investigation-embedded .case-intro,.investigation-embedded .workspace,
@@ -1063,14 +1063,14 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 .investigation-embedded .fb-tool.is-private .fb-tool-head{border-color:var(--line)}
 .investigation-embedded .workspace-head strong,.investigation-embedded .fb-tool-head strong{color:var(--green)}
 </style>
-<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
+<link rel="stylesheet" href="site-nav.css">
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-<script src="handoff.js"></script><script src="draft-store-guard.js"></script><script src="private-default.js"></script>
+
 <style>.fb-privacy-actions [hidden]{display:none!important}</style>
-</head>
-<body class="pm-v2 pm-app">
+<link rel="stylesheet" href="readonly.css"></head>
+<body class="pm-v2 pm-app pm-readonly-case">
 <a class="skip-link" href="#main-content">Skip to content</a>
-<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="techniques.html" aria-label="Open technique library">← [ LIBRARY ]</a><div class="online"><span class="dot" aria-hidden="true"></span>CASE #002 OPEN</div><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></div></header>
+<header><div class="header-wrap"><nav aria-label="Case navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a class="back" href="techniques.html">← [ ALL CASES ]</a><span class="online">READ-ONLY CASE STUDY</span></nav></div></header>
 <main id="main-content">
 <section class="hero"><div class="wrap"><div class="prompt">&gt; open /techniques/fishbone --case=002</div><div class="case">CASE #002 // THE MYSTERIOUS MUDDY POOL</div><h1>Fishbone<span>Map the suspects.</span></h1><p class="lede">When a problem could have many causes, don't chase the first theory. Ishikawa / Fishbone helps a group organize possibilities, see gaps, and decide what evidence to investigate.</p><div class="meta"><div><small>PURPOSE</small><strong>POSSIBLE CAUSES</strong></div><div><small>DIFFICULTY</small><strong>EASY</strong></div><div><small>TIME</small><strong>30–60 MIN</strong></div><div><small>BEST FOR</small><strong>MULTI-CAUSE PROBLEMS</strong></div></div></div></section>
 <section class="wrap case-intro"><div><div class="capy pm-illustrated"><img src="assets/capybara-investigator.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async"></div><div class="cap-status">STATUS: TOO MANY SUSPECTS</div></div><div class="intro-copy"><div class="phase">EFFECT_</div><h2>Capybara's clear pool has turned muddy. 🟫💧</h2><p>There is no obvious single cause. So instead of chasing one theory, we build a map of everything that could plausibly create the effect.</p></div></section>
@@ -1107,238 +1107,4 @@ header .dot{width:8px;height:8px;display:inline-block;margin-right:6px;border-ra
 <div class="lesson"><div class="box"><h3>REAL WORLD TRANSLATION_</h3><div class="translation"><span>Muddy pool</span><span>→</span><span>Your effect/problem</span></div><div class="translation"><span>Main bones</span><span>→</span><span>Cause categories</span></div><div class="translation"><span>Small branches</span><span>→</span><span>Hypotheses</span></div><div class="translation"><span>[NO] / [!!!]</span><span>→</span><span>Evidence</span></div></div><div class="box"><h3>REMEMBER_</h3><p class="rule"><strong>A Fishbone does not prove root cause.</strong> Its job is to stop tunnel vision: organize plausible causes, expose gaps, then investigate the branches with data and observation.</p></div></div></section>
 
 
-<section class="fb-workbench" aria-labelledby="fb-tool-title">
-  <div class="fb-workbench-intro">
-    <div>
-      <div class="prompt">&gt; run /tools/fishbone --interactive</div>
-      <h2 id="fb-tool-title">TRY IT YOURSELF_</h2>
-      <p>Put your own effect at the fish's head, map possible causes across six editable families, then mark each hypothesis as evidence weakens or strengthens it.</p>
-    </div>
-    <div class="fb-local" id="fbLocalMode"><strong>PRIVATE SESSION</strong><br>not saved on this device</div>
-  </div>
-
-  <div class="fb-tool is-private">
-    <div class="fb-tool-head">
-      <strong>FISHBONE WORKSPACE / YOUR CASE</strong>
-      <span>MAP → TEST → NARROW</span>
-    </div>
-
-
-    <div class="fb-privacy-panel is-private" id="fbPrivacyPanel">
-      <div class="fb-privacy-head">
-        <div class="fb-privacy-mode">
-          <span class="fb-privacy-led" aria-hidden="true"></span>
-          <div>
-            <strong id="fbPrivacyTitle">PRIVATE SESSION ACTIVE_</strong>
-            <span id="fbPrivacyCopy">Your work stays in this page only. To keep it, export or explicitly start Local Save.</span>
-          </div>
-        </div>
-        <div class="fb-privacy-actions">
-          <button class="fb-btn primary" id="fbPrivateBtn" type="button" aria-pressed="true">START LOCAL SAVE</button><button class="fb-btn" id="fbRestoreSavedBtn" type="button" hidden>OPEN SAVED DRAFT</button>
-          <button class="fb-btn danger" id="fbClearDataBtn" type="button">CLEAR ALL LOCAL DATA</button>
-        </div>
-      </div>
-      <p class="fb-privacy-warning"><strong>CAPYBARA PRIVACY NOTE_</strong> Keep passwords, API keys, access tokens and credentials out of the workspace. Private Session controls problem.me storage; it is not a secret vault. <a href="privacy.html">HOW PRIVACY WORKS →</a></p>
-    </div>
-
-    <div class="fb-tool-grid">
-      <div class="fb-editor">
-        <div class="fb-field">
-          <div class="fb-label">
-            <label for="fbEffect">EFFECT / PROBLEM_</label>
-            <small>observable, specific, neutral</small>
-          </div>
-          <textarea id="fbEffect" placeholder="Example: Customer payments fail intermittently after 14:00"></textarea>
-        </div>
-
-        <div class="fb-label">
-          <span>CAUSE FAMILIES_</span>
-          <small>rename any category to fit your problem</small>
-        </div>
-        <div class="fb-categories" id="fbCategories"></div>
-
-        <div class="fb-summary-fields">
-          <div class="fb-field">
-            <div class="fb-label"><label for="fbSupported">BEST-SUPPORTED HYPOTHESIS_</label></div>
-            <textarea id="fbSupported" placeholder="What currently fits the evidence best?"></textarea>
-          </div>
-          <div class="fb-field">
-            <div class="fb-label"><label for="fbNextTest">NEXT VERIFICATION STEP_</label></div>
-            <textarea id="fbNextTest" placeholder="What observation, test, or data would confirm or reject it?"></textarea>
-          </div>
-          <div class="fb-field wide">
-            <div class="fb-label"><label for="fbNotes">EVIDENCE / NOTES_</label></div>
-            <textarea id="fbNotes" placeholder="Facts, timestamps, measurements, links, contradictions..."></textarea>
-          </div>
-        </div>
-
-
-      </div>
-
-      <aside class="fb-live" aria-label="Live Fishbone preview">
-        <div class="fb-live-head">
-          <strong>LIVE EVIDENCE MAP_</strong>
-          <span class="fb-status" id="fbStatus">STATUS: WAITING FOR EFFECT</span>
-        </div>
-        <div class="fb-map-scroll">
-          <svg class="fb-live-svg" id="fbLiveSvg" viewBox="0 0 1100 620" role="img" aria-label="Live Fishbone diagram generated from your entries"></svg>
-        </div>
-        <div class="fb-map-key">
-          <span>UNTESTED = neutral</span>
-          <span>[NO] = weakened</span>
-          <span><b>[LIKELY]</b> = supported</span>
-          <span>[CONFIRMED] = verified</span>
-        </div>
-        <div class="fb-tip" id="fbTip"><strong>TIP:</strong> Start by stating the effect without embedding your preferred explanation.</div>
-      </aside>
-    </div>
-
-    <div class="fb-tool-actions">
-      <button class="fb-btn primary" id="fbCopyBtn" type="button">COPY SUMMARY</button>
-      <button class="fb-btn" id="fbPrintBtn" type="button">PRINT / SAVE PDF</button>
-      <button class="fb-btn danger" id="fbResetBtn" type="button">RESET DRAFT</button>
-      <span class="fb-action-status" id="fbActionStatus" aria-live="polite">AUTO-SAVE READY_</span>
-    </div>
-  </div>
-
-
-  
-<section class="pm-reasoning" aria-label="Reasoning tools">
-  <section class="pm-evidence" aria-labelledby="pmEvidenceTitle">
-    <div class="pm-evidence-head">
-      <div>
-        <div class="pm-evidence-kicker">REASONING LAYER_</div>
-        <h3 id="pmEvidenceTitle">EVIDENCE LEDGER_</h3>
-        <p>Separate what you know from what you think. Facts, assumptions, tests and results stay visible while the investigation evolves.</p>
-      </div>
-      <div class="pm-evidence-counts" id="pmEvidenceCounts">NO EVIDENCE LOGGED</div>
-    </div>
-    <div class="pm-evidence-rows" id="pmEvidenceRows"></div>
-    <div class="pm-evidence-actions">
-      <button class="pm-reasoning-btn primary" id="pmEvidenceAdd" type="button">+ EVIDENCE</button>
-      <button class="pm-reasoning-btn" id="pmEvidenceCopy" type="button">COPY LEDGER</button>
-      <button class="pm-reasoning-btn danger" id="pmEvidenceClear" type="button">CLEAR LEDGER</button>
-      <span class="pm-ledger-status" id="pmEvidenceStatus">LEDGER READY_</span>
-    </div>
-    <div class="pm-evidence-tip" id="pmEvidenceTip"><strong>CAPYBARA.EXE:</strong> Claims are cheaper than evidence. Log what you actually know.</div>
-  </section>
-
-  <aside class="pm-handoff" aria-labelledby="pmHandoffTitle">
-    <div class="pm-handoff-head">
-      <div class="pm-handoff-kicker">CONNECTED THINKING_</div>
-      <h3 id="pmHandoffTitle">NEXT MOVE_</h3>
-      <p id="pmHandoffCopy">Use the current finding as the starting point for the next technique.</p>
-    </div>
-    <div class="pm-handoff-body">
-      <div class="pm-handoff-seed">
-        <small>STARTING POINT</small>
-        <strong id="pmHandoffSeed">Complete more of the investigation to create a useful handoff.</strong>
-      </div>
-      <div class="pm-handoff-actions">
-        <button class="pm-reasoning-btn primary" id="pmHandoffOne" type="button">NEXT TECHNIQUE</button>
-        <button class="pm-reasoning-btn" id="pmHandoffTwo" type="button">ALTERNATIVE NEXT TECHNIQUE</button>
-      </div>
-      <p class="pm-handoff-note">Private handoffs use an explicit clipboard copy and manual paste. With Local Save, a one-time token transfers context without putting your text in the URL.</p>
-    </div>
-  </aside>
-</section>
-
-<section class="pm-evidence-print" id="pmEvidencePrint" aria-hidden="true">
-  <h3>EVIDENCE LEDGER_</h3>
-  <p>Facts, assumptions, tests and results recorded during this investigation.</p>
-  <table>
-    <thead><tr><th>TYPE</th><th>EVIDENCE / NOTE</th></tr></thead>
-    <tbody id="pmEvidencePrintRows"></tbody>
-  </table>
-</section>
-
-
-<section class="fb-pdf-report" id="fbPdfReport" aria-hidden="true">
-    <div class="fb-pdf-inner">
-      <div class="fb-pdf-head">
-        <div>
-          <div class="fb-pdf-kicker">problem.me // Fishbone export</div>
-          <h2>CAPYBARA CAUSE MAP_</h2>
-          <p>A printable evidence map of the possible causes behind your effect. Broad enough to prevent tunnel vision; structured enough to make the suspects uncomfortable.</p>
-        </div>
-        <div class="fb-pdf-capy" aria-hidden="true">
-          <pre>      __
-  ___/  \___
- /  •    •  \__
-|      ▿       _)
- \___      ___/
-     \____/
-      /  \</pre>
-          <div class="fb-pdf-capy-note">CAPYBARA.EXE NOTE_: “I checked every bone. None of them were snacks.”</div>
-        </div>
-      </div>
-
-      <div class="fb-pdf-meta">
-        <div class="box"><small>METHOD</small><strong>Fishbone / Ishikawa</strong></div>
-        <div class="box"><small>HYPOTHESES MAPPED</small><strong id="fbPdfCount">0</strong></div>
-        <div class="box"><small>GENERATED</small><strong id="fbPdfGenerated">—</strong></div>
-      </div>
-
-      <div class="fb-pdf-section">
-        <small>EFFECT / PROBLEM</small>
-        <div class="fb-pdf-effect" id="fbPdfEffect">Not defined.</div>
-        <div class="fb-pdf-diagram" id="fbPdfDiagram"></div>
-      </div>
-
-      <div class="fb-pdf-families" id="fbPdfFamilies"></div>
-
-      <div class="fb-pdf-summary">
-        <div>
-          <small>BEST-SUPPORTED HYPOTHESIS</small>
-          <strong id="fbPdfSupported">Not defined.</strong>
-          <p id="fbPdfNotes">EVIDENCE / NOTES:
-Not defined.</p>
-        </div>
-        <div>
-          <small>NEXT VERIFICATION STEP</small>
-          <strong id="fbPdfNextTest">Not defined.</strong>
-          <p>CAPYBARA TAKEAWAY:
-A Fishbone organizes hypotheses. Evidence earns the right to call one a cause.</p>
-        </div>
-      </div>
-
-      <div class="fb-pdf-footer">
-        <span><strong>problem.me</strong> — same problems, clearer thinking.</span>
-        <span>Generated locally in this browser.</span>
-      </div>
-    </div>
-  </section>
-
-</section>
-
-</main>
-<nav class="case-pager" aria-label="Case File navigation"><a class="pager-prev" href="5-whys.html"><small>← PREVIOUS</small><strong>CASE #001 / 5 WHYS</strong></a><a class="pager-all" href="techniques.html"><small>LIBRARY</small><strong>ALL TECHNIQUES</strong></a><a class="pager-next" href="pareto.html"><small>NEXT →</small><strong>CASE #003 / PARETO</strong></a></nav>
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-main">
-      <div class="footer-identity">
-        <a class="footer-home" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span aria-hidden="true">_</span></a>
-        <p>Same problems. Clearer thinking.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Explore problem.me">
-        <ul>
-          <li><a href="investigations.html">My Investigations</a></li>
-          <li><a href="techniques.html">Technique Library</a></li>
-          <li><a href="techniques.html#field-guides">Field Guides</a></li>
-        </ul>
-      </nav>
-    </div>
-    <ul class="footer-utility" aria-label="Product information">
-      <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="features.html">Feature Log</a></li>
-    </ul>
-  </div>
-</footer>
-
-<script src="runtime/fishbone-2.js"></script>
-
-
-<script src="runtime/fishbone-3.js"></script>
-
-<script src="investigation-bridge.js"></script>
-</body></html>
+<section class="wrap readonly-close" aria-label="Continue learning"><p class="readonly-summary"><strong>CASE STUDY COMPLETE_</strong> The full original example above is preserved. No visitor data entry or local saving is available on this page.</p><div class="readonly-actions"><a class="readonly-action readonly-action--primary" href="articles/fishbone.html">READ THE FIELD GUIDE →</a><a class="readonly-action readonly-action--secondary" href="techniques.html">ALL FOUR TECHNIQUES ↗</a></div></section></main><nav class="case-pager readonly-pager" aria-label="Case file navigation"><a class="pager-prev" href="5-whys.html">← PREVIOUS CASE</a><a class="pager-all" href="techniques.html">ALL TECHNIQUES</a><a class="pager-next" href="pareto.html">NEXT CASE →</a></nav><footer class="site-footer"><div class="wrap"><div class="footer-main"><div class="footer-identity"><a class="footer-home" href="index.html">problem<em class="brand-accent">.me</em>_</a><p>Same problems. Clearer thinking.</p></div><nav class="footer-nav" aria-label="Footer"><ul><li><a href="techniques.html">Technique Library</a></li><li><a href="techniques.html#field-guides">Field Guides</a></li><li><a href="privacy.html">Current privacy notes</a></li></ul></nav></div></div></footer></body></html>

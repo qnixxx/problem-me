@@ -1,8 +1,8 @@
-name: Security and regression checks
+name: Read-only production regression
 on:
-  push:
-    branches: [security/**]
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 permissions:
   contents: read
@@ -11,17 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-python@v5
         with:
-          node-version: '22'
-      - name: Security checks
-        run: node test-security.cjs
-      - name: Model and schema tests
-        run: node test-pilot.cjs
-      - name: Readability checks
-        run: node test-readability.cjs
-      - name: Runtime packaging check
-        run: python3 build-release.py --check
+          python-version: '3.12'
+      - run: python3 build-release.py --check
   browser:
     runs-on: ubuntu-latest
     steps:
@@ -31,8 +24,4 @@ jobs:
           node-version: '22'
       - run: npm install --no-save playwright@1.56.0
       - run: npx playwright install --with-deps chromium
-      - run: node test-private-default.cjs
-      - run: node test-security-browser.cjs
-      - run: node test-browser.cjs
-      - run: node test-nav.cjs
-      - run: node test-typography.cjs
+      - run: node test-production-readonly.cjs

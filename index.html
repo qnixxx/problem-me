@@ -3,13 +3,13 @@
 <head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
   <meta charset="utf-8" />
   <!-- Change only this value for future homepage release labels. -->
-  <meta name="application-version" content="1.0.2" />
+  <meta name="application-version" content="2.0.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="problem.me — interactive problem-solving tools for clearer thinking. Choose a technique, follow the evidence, and work through real problems locally in your browser." />
+  <meta name="description" content="problem.me — read-only illustrated articles about problem solving, evidence-first techniques, and playful capybara case examples. No visitor-submitted text." />
   <meta name="theme-color" content="#010704" />
   <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="problem.me — Same problems. Clearer thinking." />
-  <meta property="og:description" content="Visual problem-solving techniques with interactive workspaces, evidence tracking, private sessions, connected technique handoffs, and memorable Capybara Case Files." />
+  <meta property="og:description" content="Read-only problem-solving field guides and original illustrated Capybara Case Files." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://problem.me/" />
   <meta property="og:image" content="https://problem.me/problem-me-social-preview-1200x630.jpg" />
@@ -909,8 +909,8 @@
     </style>
   </noscript>
 <link rel="stylesheet" href="site-nav.css">
-<script src="site-nav.js" defer></script>
-<link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
+
+<link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css"><link rel="stylesheet" href="readonly.css">
 </head>
 
 <body class="pm-v2 pm-app pm-home">
@@ -940,14 +940,14 @@
       <div class="wrap">
         <nav aria-label="Primary navigation">
           <a class="brand" href="#top" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span class="blink-cursor" aria-hidden="true">_</span></a>
-          <div class="navlinks" data-menu-replaced>
+          <div class="navlinks">
             <a href="#mission">[01] Pathfinder</a>
             <a href="techniques.html">[02] Library</a>
-            <a href="investigations.html">[03] Investigations</a>
-            <a href="features.html">[04] Features</a>
+            <a href="techniques.html#field-guides">[03] Field Guides</a>
+            <a href="features.html">[04] HISTORY ↗</a>
           </div>
           <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version" data-release-label data-prefix=" / v"></span></div>
-          <button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button>
+          
         </nav>
       </div>
     </header>
@@ -956,11 +956,11 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="wrap hero-grid">
           <div>
-            <div class="prompt">&gt; problem_solver.exe / ready</div>
+            <div class="prompt">&gt; problem_solver.exe / reading_mode</div>
             <h1 id="hero-title">Same problems.<span>Clearer thinking.</span></h1>
-            <p class="lede">A calm place to untangle a difficult problem. Follow the evidence, explore possible causes and find your next useful step — at your own pace, on your own device.</p>
+            <p class="lede">A calm place to learn how problems get untangled. Explore four useful techniques, follow the evidence in illustrated examples, and leave with a clearer way to think.</p>
 
-            <div class="pm-home-actions"><a class="pm-button pm-button--primary" href="investigation.html">Start an investigation <span aria-hidden="true">→</span></a><a class="pm-button" href="techniques.html">Explore the techniques</a></div>
+            <div class="pm-home-actions"><a class="pm-button pm-button--primary" href="techniques.html">Explore the case files <span aria-hidden="true">→</span></a><a class="pm-button" href="techniques.html#field-guides">Read the field guides</a></div>
             <div class="terminal-prompt" aria-label="Animated mission prompt">
               <span class="chev" aria-hidden="true">&gt;</span>
               <span id="typedMission"></span>
@@ -987,9 +987,9 @@
           <div class="section-head">
             <div>
               <div class="prompt">&gt; pathfinder --start</div>
-              <h2 id="mission-title">What are you stuck on?_</h2>
+              <h2 id="mission-title">What would you like to understand?_</h2>
             </div>
-            <p>Start with the shape of the problem. We’ll point you to a useful first technique.</p>
+            <p>Choose a question that feels familiar. Each path leads to an illustrated article—not a form.</p>
           </div>
 
           <div class="mission-grid">
@@ -1031,7 +1031,7 @@
               <div class="prompt">&gt; list /techniques --featured</div>
               <h2 id="techniques-title">Featured Case Files_</h2>
             </div>
-            <p>Open a Case File when you want to work. Read the Field Guide when you want to understand the method first.</p>
+            <p>Explore the original capybara case examples, or read the complete Field Guide behind each technique.</p>
           </div>
 
           <div class="tech-grid">
@@ -1046,7 +1046,7 @@
               <div class="tech-meta">
                 <span class="badge">ROOT CAUSE / EASY</span>
                 <div class="tech-actions">
-                  <a class="tech-primary" href="5-whys.html">OPEN CASE + TOOL #001 <span aria-hidden="true">→</span></a>
+                  <a class="tech-primary" href="5-whys.html">EXPLORE CASE #001 <span aria-hidden="true">→</span></a>
                   <a class="tech-guide" href="articles/5-whys.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -1063,7 +1063,7 @@ Materials  Systems</pre>
               <div class="tech-meta">
                 <span class="badge">CAUSES / EASY</span>
                 <div class="tech-actions">
-                  <a class="tech-primary" href="fishbone.html">OPEN CASE + TOOL #002 <span aria-hidden="true">→</span></a>
+                  <a class="tech-primary" href="fishbone.html">EXPLORE CASE #002 <span aria-hidden="true">→</span></a>
                   <a class="tech-guide" href="articles/fishbone.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -1080,7 +1080,7 @@ Materials  Systems</pre>
               <div class="tech-meta">
                 <span class="badge">PRIORITIZE / EASY</span>
                 <div class="tech-actions">
-                  <a class="tech-primary" href="pareto.html">OPEN CASE + TOOL #003 <span aria-hidden="true">→</span></a>
+                  <a class="tech-primary" href="pareto.html">EXPLORE CASE #003 <span aria-hidden="true">→</span></a>
                   <a class="tech-guide" href="articles/pareto.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -1096,7 +1096,7 @@ RISK    | DECIDE</pre>
               <div class="tech-meta">
                 <span class="badge">DECISION / MEDIUM</span>
                 <div class="tech-actions">
-                  <a class="tech-primary" href="kepner-tregoe.html">OPEN CASE + TOOL #004 <span aria-hidden="true">→</span></a>
+                  <a class="tech-primary" href="kepner-tregoe.html">EXPLORE CASE #004 <span aria-hidden="true">→</span></a>
                   <a class="tech-guide" href="articles/kepner-tregoe.html">READ FIELD GUIDE <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -1114,8 +1114,8 @@ RISK    | DECIDE</pre>
           <div class="trust-box">
             <div>
               <div class="prompt">&gt; cat /privacy/README</div>
-              <h2 id="privacy-title">YOUR PROBLEMS STAY YOURS_</h2>
-              <p>Private Session, local browser storage, and portable <code>.problemme</code> files. See what problem.me stores, what it does not receive, and what you should never paste into a workspace.</p>
+              <h2 id="privacy-title">NO INPUT. JUST INSIGHT_</h2>
+              <p>This reading-only site uses no forms, saved investigations, analytics, or tracking cookies. Normal hosting requests still occur.</p>
             </div>
             <a class="trust-link" href="privacy.html">[ HOW PRIVACY WORKS → ]</a>
           </div>
@@ -1136,17 +1136,17 @@ RISK    | DECIDE</pre>
               </figure>
               <div class="lagoon-copy">
                 <div class="prompt">&gt; lower the panic. raise the evidence.</div>
-                <h2 id="launch-title">THE WORKSPACE IS ONLINE_</h2>
-                <p>Bring one tangled problem. Explore it with 5 Whys, Fishbone and Pareto, connected by a shared Evidence Ledger.</p>
+                <h2 id="launch-title">THE FIELD MANUAL IS ONLINE_</h2>
+                <p>Read the original explanations, worked examples and evidence checks for 5 Whys, Fishbone, Pareto and Kepner–Tregoe—without entering anything.</p>
                 <div class="lagoon-actions">
-                  <a class="lagoon-start" href="investigation.html"><span>START AN INVESTIGATION</span><span aria-hidden="true">→</span></a>
-                  <a href="investigations.html"><span>MY INVESTIGATIONS</span><span aria-hidden="true">↗</span></a>
-                  <a href="features.html"><span>FEATURE LOG</span><span aria-hidden="true">↗</span></a>
+                  <a class="lagoon-start" href="techniques.html"><span>EXPLORE ALL TECHNIQUES</span><span aria-hidden="true">→</span></a>
+                  <a href="techniques.html#field-guides"><span>READ FIELD GUIDES</span><span aria-hidden="true">↗</span></a>
+                  <a href="features.html"><span>CURRENT SITE</span><span aria-hidden="true">↗</span></a>
                 </div>
-                <p class="lagoon-save-note">Starts a Private Session. Save locally or export a .problemme file when you choose.</p>
+                <p class="lagoon-save-note">Read-only publication: no accounts, text fields, local saves or exports.</p>
                 <details class="lagoon-briefing">
-                  <summary>REQUEST A CAPYBARA BRIEFING</summary>
-                  <p>“The water is warm. Your first explanation is still a hypothesis. Before diving in: what happened, what did you expect, and what evidence would change your mind?”</p>
+                  <summary>READ A CAPYBARA BRIEFING</summary>
+                  <p>“The water is warm. A convincing explanation is still a hypothesis. Before drawing a conclusion, ask what the evidence actually shows.”</p>
                 </details>
               </div>
             </div>
@@ -1164,7 +1164,7 @@ RISK    | DECIDE</pre>
       </div>
       <nav class="footer-nav" aria-label="Explore problem.me">
         <ul>
-          <li><a href="investigations.html">My Investigations</a></li>
+          <li><a href="techniques.html">My Investigations</a></li>
           <li><a href="techniques.html">Technique Library</a></li>
           <li><a href="techniques.html#field-guides">Field Guides</a></li>
         </ul>
@@ -1180,6 +1180,6 @@ RISK    | DECIDE</pre>
 
   <script src="runtime/index-1.js"></script>
 
-  <script src="runtime/index-2.js"></script>
+  <script src="readonly-home.js"></script>
 </body>
 </html>

@@ -308,9 +308,9 @@
     .guide-card b{display:block;margin-top:10px;color:inherit;font-size:.875rem;font-weight:400}
     @media(max-width:640px){.guide-head{align-items:flex-start;flex-direction:column}.guide-grid{grid-template-columns:1fr}}
   </style>
-<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
+<link rel="stylesheet" href="site-nav.css">
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-</head>
+<link rel="stylesheet" href="readonly.css"></head>
 <body class="pm-v2 pm-app">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -318,9 +318,9 @@
   <div class="wrap">
     <nav aria-label="Library navigation">
       <a class="brand" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a>
-      <a data-menu-replaced class="back" href="index.html#mission">← [ PATHFINDER ]</a>
+      <a  class="back" href="index.html#mission">← [ PATHFINDER ]</a>
       <div class="online"><span class="dot" aria-hidden="true"></span>LIBRARY ONLINE</div>
-    <button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav>
+    </nav>
   </div>
 </header>
 
@@ -329,35 +329,17 @@
     <div class="wrap">
       <div class="prompt">&gt; list /techniques --all</div>
       <div class="case">PROBLEM.ME // TECHNIQUE LIBRARY</div>
-      <h1>Choose the tool.<span>Then follow the evidence.</span></h1>
-      <p class="lede">Browse the current Capybara Case Files by the kind of problem you need to solve. The library is intentionally small: four techniques, each explained visually and built around a different way of thinking.</p>
+      <h1>Explore the method.<span>Follow the evidence.</span></h1>
+      <p class="lede">Four original problem-solving techniques, illustrated with capybara examples and explained through evidence-first articles. Explore freely. There is nothing to type, submit or save.</p>
     </div>
   </section>
 
-  <section class="wrap controls" aria-label="Technique filters">
-    <div class="controls-head">
-      <strong>LIBRARY FILTERS</strong>
-      <span>FILTER LOCALLY / NO ACCOUNT / NO AI</span>
-    </div>
-    <div class="control-body">
-      <div class="search">
-        <label for="techSearch">Search techniques</label>
-        <input id="techSearch" type="search" placeholder="search: root cause, decision, recurring..." autocomplete="off" />
-      </div>
-      <div class="filters" role="group" aria-label="Filter by goal">
-        <button class="filter" type="button" data-filter="all" aria-pressed="true">ALL</button>
-        <button class="filter" type="button" data-filter="root-cause" aria-pressed="false">ROOT CAUSE</button>
-        <button class="filter" type="button" data-filter="possible-causes" aria-pressed="false">POSSIBLE CAUSES</button>
-        <button class="filter" type="button" data-filter="prioritize" aria-pressed="false">PRIORITIZE</button>
-        <button class="filter" type="button" data-filter="decide" aria-pressed="false">DECIDE</button>
-      </div>
-    </div>
-  </section>
+  
 
   <section class="wrap" aria-labelledby="library-title">
     <div class="library-status">
-      <span id="library-title"><strong id="resultCount">4</strong> CASE FILES SHOWN</span>
-      <span>LIVE: #001–#004</span>
+      <span id="library-title"><strong id="resultCount">4</strong> TECHNIQUES AND EXAMPLES</span>
+      <span>READ-ONLY: #001–#004</span>
     </div>
 
     <div class="library-grid" id="libraryGrid">
@@ -494,7 +476,7 @@ RISK    | DECIDE</pre>
       </div>
       <nav class="footer-nav" aria-label="Explore problem.me">
         <ul>
-          <li><a href="investigations.html">My Investigations</a></li>
+          <li><a href="index.html#techniques">Case Examples</a></li>
           <li><a href="techniques.html">Technique Library</a></li>
           <li><a href="techniques.html#field-guides">Field Guides</a></li>
         </ul>
@@ -507,6 +489,6 @@ RISK    | DECIDE</pre>
   </div>
 </footer>
 
-<script src="runtime/techniques-1.js"></script>
+
 </body>
 </html>

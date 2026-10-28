@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#010704">
-<meta name="description" content="problem.me feature log — a version-by-version record of how the visual problem-solving workspace has evolved.">
+<meta name="description" content="problem.me release history — from the original interactive project to the current read-only educational site.">
 <title>Feature Log | problem.me</title>
 <style>
 :root{color-scheme:dark;--bg:#020805;--panel:#031009;--surface:#020d08;--surface2:#020a06;--green:#63ffb5;--green2:#21d67a;--yellow:#ffe95b;--cream:#f2f0df;--muted:#86b79e;--text:#b9e4ce;--line:#1f6f4d;--bad:#ff9f7d;--max:980px}
@@ -16,16 +16,16 @@
 @media(max-width:640px){.wrap{width:min(calc(100% - 20px),var(--max))}.online{display:none}.hero{padding:38px 0 26px}.hero h1{font-size:clamp(2.5rem,13vw,4rem)}.summary{grid-template-columns:1fr}.summary div{border-right:0;border-bottom:1px solid var(--line)}.summary div:last-child{border-bottom:0}.timeline:before{left:10px}.release{grid-template-columns:1fr;gap:6px;padding-left:28px}.release:before{left:6px;top:21px}.release-tag{text-align:left;padding-top:8px;display:flex;gap:9px;align-items:baseline}.release-card ul{grid-template-columns:1fr}.section-head>span{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 </style>
-<link rel="stylesheet" href="site-nav.css"><script src="site-nav.js" defer></script>
+<link rel="stylesheet" href="site-nav.css">
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
 </head>
 <body class="pm-v2 pm-app">
 <a class="skip" href="#log">Skip to feature log</a>
-<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a data-menu-replaced class="back" href="index.html">← [ BACK TO BASE ]</a><span class="online"><i class="dot" aria-hidden="true"></i>BUILD HISTORY</span><button class="site-menu-button" data-site-menu type="button" hidden><span aria-hidden="true">☰</span> MENU</button></nav></header>
+<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a  class="back" href="index.html">← [ BACK TO BASE ]</a><span class="online"><i class="dot" aria-hidden="true"></i>BUILD HISTORY</span></nav></header>
 <main class="wrap">
-<section class="hero" aria-labelledby="page-title"><p class="prompt">&gt; cat /system/feature-log.txt <span class="version-now">CURRENT v1.0.2</span></p><h1 id="page-title">FEATURE LOG_<span>HOW PROBLEM.ME GOT HERE.</span></h1><p class="lede">A compact record of the meaningful product releases. Small fixes may ship between entries; this log tracks changes that altered what problem.me can actually do.</p><div class="summary"><div><small>CURRENT RELEASE</small><strong>v1.0.2</strong></div><div><small>STORAGE MODEL</small><strong>LOCAL-FIRST / INDEXEDDB</strong></div><div><small>CONNECTED WORKSPACE</small><strong>5 WHYS + FISHBONE + PARETO</strong></div></div></section>
-<section id="log" aria-labelledby="log-title"><div class="section-head"><h2 id="log-title">RELEASE HISTORY_</h2><span>NEWEST → OLDEST</span></div><div class="timeline">
-<article class="release current"><div class="release-tag"><strong>v1.0.2</strong><small>CURRENT</small></div><div class="release-card"><span class="badge current">PRIVATE BY DEFAULT</span><h3>Private first. Save when you choose.</h3><p>All four standalone techniques now start in Private Session, like a new shared investigation. Old drafts remain recoverable without silently loading or overwriting them.</p><ul><li>Private Session on every new standalone visit</li><li>No automatic loading or saving of previous standalone drafts</li><li>Explicit Local Save with an overwrite warning</li><li>Open Saved Draft without enabling persistence</li><li>Evidence Ledgers respect the Private default</li><li>No cookie consent pop-up or mandatory acknowledgment</li></ul></div></article><article class="release">
+<section class="hero" aria-labelledby="page-title"><p class="prompt">&gt; cat /system/feature-log.txt <span class="version-now">CURRENT v1.0.2</span></p><h1 id="page-title">FEATURE LOG_<span>HOW PROBLEM.ME GOT HERE.</span></h1><p class="lede">A record of major releases. Earlier interactive features below are historical and no longer offered on the live read-only site.</p><div class="summary"><div><small>CURRENT RELEASE</small><strong>v2.0.0</strong></div><div><small>STORAGE MODEL</small><strong>READ-ONLY / NO SAVED WORK</strong></div><div><small>CONNECTED WORKSPACE</small><strong>FOUR ILLUSTRATED CASE STUDIES</strong></div></div></section>
+<section id="log" aria-labelledby="log-title"><div class="section-head"><h2 id="log-title">RELEASE HISTORY_</h2><span>NEWEST → OLDEST</span></div><div class="timeline"><article class="release current"><div class="release-tag"><strong>v2.0.0</strong><small>CURRENT</small></div><div class="release-card"><span class="badge current">READ-ONLY EDITION</span><h3>Original Problem.me, now a static educational publication.</h3><p>The terminal aesthetic, colorful capybaras, four complete illustrated Case Files and all four Field Guides remain. The interactive workspaces, investigation library, local saves and data-entry routes have been retired from the production site.</p><ul><li>Read-only case studies and technique articles</li><li>No visitor-submitted information or saved investigations</li><li>No application cookies, analytics, third-party scripts or browser storage</li><li>Previous interactive release preserved in Git history on the rollback branch</li><li>Legacy workspace URLs now show informative read-only retirement notices</li></ul></div></article>
+<article class="release"><div class="release-tag"><strong>v1.0.2</strong><small>ARCHIVED</small></div><div class="release-card"><span class="badge">PRIVATE BY DEFAULT (HISTORICAL)</span><h3>Private first. Save when you choose.</h3><p>All four standalone techniques now start in Private Session, like a new shared investigation. Old drafts remain recoverable without silently loading or overwriting them.</p><ul><li>Private Session on every new standalone visit</li><li>No automatic loading or saving of previous standalone drafts</li><li>Explicit Local Save with an overwrite warning</li><li>Open Saved Draft without enabling persistence</li><li>Evidence Ledgers respect the Private default</li><li>No cookie consent pop-up or mandatory acknowledgment</li></ul></div></article><article class="release">
 <div class="release-tag"><strong>v1.0.1</strong><small>RELEASED</small></div>
 <div class="release-card"><span class="badge">SECURITY HARDENING</span><h3>Safer handoffs. Tighter browser defenses.</h3><p>Focuses on protecting user-entered investigation content while keeping the site static, local-first and account-free.</p><ul><li>No problem text in handoff URLs</li><li>Explicit copy-and-paste for Private Session handoffs</li><li>Content Security Policy and external scripts</li><li>Standalone draft overwrite detection</li><li>Stricter imported investigation IDs</li><li>Automated security regression checks</li></ul></div></article>
 <article class="release">
@@ -48,7 +48,7 @@
 <article class="release"><div class="release-tag"><strong>v0.3</strong><small>LIBRARY</small></div><div class="release-card"><span class="badge">INFORMATION ARCHITECTURE</span><h3>A proper Technique Library.</h3><p>The site stopped being only a homepage and became a navigable set of Case Files.</p><ul><li>Technique Library page</li><li>Four coordinated Case Files</li><li>Goal filters and local search</li><li>Previous / next Case navigation</li><li>Consistent technique metadata</li></ul></div></article>
 <article class="release"><div class="release-tag"><strong>v0.2.1</strong><small>POLISH</small></div><div class="release-card"><span class="badge">DESIGN SYSTEM</span><h3>The Case Files learned to speak the same language.</h3><p>Shared terminal styling, headers, responsive behavior and hero structure were standardized across techniques.</p><ul><li>Canonical palette and typography</li><li>Unified Case File header</li><li>Consistent hero identity</li><li>Mobile-responsive layouts</li><li>Accessibility and focus polish</li></ul></div></article>
 </div></section>
-<div class="note"><strong>LOGGING RULE_</strong> This page records meaningful product releases, not every commit or bug fix. The current architecture remains local-first: browser storage is convenient, while exported <code>.problemme</code> files are the portable backup.</div>
+<div class="note"><strong>LOGGING RULE_</strong> This page records meaningful product releases, not every commit or bug fix. The current site is read-only. Earlier releases documented below describe historical interactive functionality retained only in the archived Git version. Existing browser-local data from older versions is not automatically erased.</div>
 </main>
 <footer class="site-footer">
   <div class="wrap">
@@ -59,7 +59,7 @@
       </div>
       <nav class="footer-nav" aria-label="Explore problem.me">
         <ul>
-          <li><a href="investigations.html">My Investigations</a></li>
+          <li><a href="techniques.html">Technique Library</a></li>
           <li><a href="techniques.html">Technique Library</a></li>
           <li><a href="techniques.html#field-guides">Field Guides</a></li>
         </ul>

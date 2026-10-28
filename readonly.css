@@ -34,3 +34,22 @@ body.pm-readonly-case .readonly-pager a:hover{border-color:#63ffb5;color:#63ffb5
  body.pm-readonly-case .readonly-pager{flex-direction:column;gap:10px}
  body.pm-readonly-case .readonly-pager a{flex:0 0 auto;min-height:54px}
 }
+
+/* Retirement notices for older input-based public routes */
+body.pm-retired{margin:0;min-height:100vh;background:#020805;color:#b9e4ce;font-family:"Courier New",Courier,monospace}
+body.pm-retired .wrap{width:min(calc(100% - 32px),920px);margin-inline:auto}
+body.pm-retired header{border-bottom:1px solid #1f6f4d;background:#031009}
+body.pm-retired header nav{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;min-height:72px}
+body.pm-retired header a{color:#63ffb5;text-decoration:none}
+body.pm-retired .brand{font-size:1.45rem;font-weight:800}
+body.pm-retired main{padding:clamp(48px,9vw,100px) 0;min-height:60vh}
+body.pm-retired h1{color:#f2f0df;font-size:clamp(2rem,6vw,4rem);line-height:1.15;overflow-wrap:anywhere}
+body.pm-retired .prompt{color:#63ffb5}
+body.pm-retired .lede{color:#b9e4ce;font-size:clamp(1rem,2vw,1.25rem)}
+body.pm-retired .readonly-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+body.pm-retired .readonly-action{min-height:50px;display:flex;align-items:center;justify-content:center;padding:12px 16px;border:1px solid #63ffb5;border-radius:8px;text-decoration:none;text-align:center;font-weight:800;overflow-wrap:anywhere}
+body.pm-retired .readonly-action--primary{background:#63ffb5;color:#020805}
+body.pm-retired .readonly-action--secondary{background:#031009;color:#63ffb5}
+body.pm-retired footer{border-top:1px solid #1f6f4d;padding:24px 0;color:#86b79e}
+body.pm-retired footer a{color:#63ffb5}
+@media(max-width:640px){body.pm-retired .readonly-actions{flex-direction:column}body.pm-retired .readonly-action{width:100%}}

@@ -127,3 +127,11 @@ body.cb::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20
 @media(max-width:700px){.cb-wrap{width:min(calc(100% - 32px),var(--cb-max))}.cb-status{display:none}.cb-header .cb-wrap{padding:9px 0}.cb-hero{padding:47px 0 35px;gap:22px}.cb-section{padding:44px 0}.cb-section-head{display:block}.cb-grid{grid-template-columns:1fr}.cb-card p{min-height:0}.cb-guidebar .cb-wrap{display:block}.cb-guidebar .cb-btn{margin-top:15px}.cb-footer .cb-wrap{display:block}.cb-footer nav{margin-top:18px}.cb-storyhero{padding:26px 0 33px;gap:20px}.cb-brief{grid-template-columns:1fr}.cb-story-layout{display:block;padding-top:25px}.cb-toc{position:static;margin-bottom:35px}.cb-toc a{display:inline-block;margin-right:18px}.cb-evidence{grid-template-columns:1fr}.cb-actions .cb-btn{width:100%}.cb-bar{grid-template-columns:105px 1fr 44px;gap:8px;font-size:11px}.cb-chart{padding:13px}.cb-end{padding:22px}.cb-card-body{padding:20px}}
 @media(max-width:350px){.cb-nav a{font-size:11px}.cb-ribbon{font-size:10px}.cb-card-meta{font-size:10px}.cb-btn{font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Static Pareto bar widths; no inline style attributes or scripts. */
+.cb-bar .cb-w21{width:100%}
+.cb-bar .cb-w13{width:61.9048%}
+.cb-bar .cb-w8{width:38.0952%}
+.cb-bar .cb-w5{width:23.8095%}
+.cb-bar .cb-w3{width:14.2857%}
+.cb-tablewrap:focus-visible{outline:3px solid #ffe95b;outline-offset:2px}

@@ -3,7 +3,7 @@
 <head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
   <meta charset="utf-8" />
   <!-- Change only this value for future homepage release labels. -->
-  <meta name="application-version" content="2.0.0" />
+  <meta name="application-version" content="2.0.1" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="problem.me — read-only illustrated articles about problem solving, evidence-first techniques, and playful capybara case examples. No visitor-submitted text." />
   <meta name="theme-color" content="#010704" />
@@ -20,6 +20,7 @@
   <meta property="og:image:alt" content="problem.me capybara at the terminal. A calmer way to solve problems." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://problem.me/problem-me-social-preview-1200x630.jpg" />
+  <link rel="canonical" href="https://problem.me/"/>
   <title>problem.me — Same problems. Clearer thinking.</title>
 
   <style>
@@ -676,7 +677,7 @@
       font-size: .875rem;
     }
 
-    /* Thinking Lagoon: a self-contained workspace entry point. */
+    /* Thinking Lagoon: a read-only editorial entry point. */
     .launch { padding: 55px 0 72px; }
     .launch-box { background: var(--panel-2); }
     .lagoon-topbar {
@@ -936,6 +937,7 @@
   </section>
 
   <div id="site">
+    <a class="readonly-skip-link" href="#top">Skip to main content</a>
     <header>
       <div class="wrap">
         <nav aria-label="Primary navigation">
@@ -952,7 +954,7 @@
       </div>
     </header>
 
-    <main id="top">
+    <main id="top" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <div class="wrap hero-grid">
           <div>
@@ -1115,7 +1117,7 @@ RISK    | DECIDE</pre>
             <div>
               <div class="prompt">&gt; cat /privacy/README</div>
               <h2 id="privacy-title">NO INPUT. JUST INSIGHT_</h2>
-              <p>This reading-only site uses no forms, saved investigations, analytics, or tracking cookies. Normal hosting requests still occur.</p>
+              <p>This read-only site uses no forms, saved investigations, analytics, or tracking cookies. Normal hosting requests still occur.</p>
             </div>
             <a class="trust-link" href="privacy.html">[ HOW PRIVACY WORKS → ]</a>
           </div>
@@ -1141,7 +1143,7 @@ RISK    | DECIDE</pre>
                 <div class="lagoon-actions">
                   <a class="lagoon-start" href="techniques.html"><span>EXPLORE ALL TECHNIQUES</span><span aria-hidden="true">→</span></a>
                   <a href="techniques.html#field-guides"><span>READ FIELD GUIDES</span><span aria-hidden="true">↗</span></a>
-                  <a href="features.html"><span>CURRENT SITE</span><span aria-hidden="true">↗</span></a>
+                  <a href="features.html"><span>RELEASE HISTORY</span><span aria-hidden="true">↗</span></a>
                 </div>
                 <p class="lagoon-save-note">Read-only publication: no accounts, text fields, local saves or exports.</p>
                 <details class="lagoon-briefing">
@@ -1164,7 +1166,7 @@ RISK    | DECIDE</pre>
       </div>
       <nav class="footer-nav" aria-label="Explore problem.me">
         <ul>
-          <li><a href="techniques.html">My Investigations</a></li>
+          <li><a href="index.html#techniques">Case Studies</a></li>
           <li><a href="techniques.html">Technique Library</a></li>
           <li><a href="techniques.html#field-guides">Field Guides</a></li>
         </ul>

@@ -23,7 +23,7 @@ for(const p of pages){
  const html=fs.readFileSync(path.join(root,p),'utf8');
  const head=html.split('</head>')[0];
  assert(!pattern.test(head),p+' should be indexable');
- assert(head.includes('https://problem.me/'+(p==='index.html'?'':p)),p+' canonical or social URL');
+ assert(head.includes('https://problem.me/'+(p==='index.html'?'':p==='casebook/index.html'?'casebook/':p)),p+' canonical or social URL');
  assert(!/<(?:input|textarea|select|form)\b/i.test(html),p+' has visitor inputs');
  if(cases.includes(p)||guides.includes(p)){
    assert(/rel="canonical"/i.test(head),p+' canonical link');

@@ -135,3 +135,12 @@ body.cb::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20
 .cb-bar .cb-w5{width:23.8095%}
 .cb-bar .cb-w3{width:14.2857%}
 .cb-tablewrap:focus-visible{outline:3px solid #ffe95b;outline-offset:2px}
+
+/* Prevent intrinsic illustration dimensions and long terminal titles from
+   expanding the 320px / 390px viewport. Keep art intact and responsive. */
+.cb-hero>*,.cb-storyhero>*,.cb-story-layout>*,.cb-grid>*,.cb-wrap>*{min-width:0}
+.cb h1,.cb h2,.cb h3,.cb-prompt,.cb-label{overflow-wrap:anywhere}
+.cb-hero img,.cb-storyhero img{width:100%;height:auto;max-width:100%;object-fit:cover}
+.cb-hero img{aspect-ratio:12/7}
+.cb-storyhero .picture{min-width:0}
+@media(max-width:900px){.cb-hero,.cb-storyhero{grid-template-columns:minmax(0,1fr)}}

@@ -64,30 +64,3 @@ body.pm-readonly-guide .readonly-guide-action--secondary{background:#031009;colo
 body.pm-readonly-guide .readonly-guide-action:hover{border-color:#ffe95b}
 body.pm-readonly-guide .readonly-guide-action:focus-visible{outline:3px solid #ffe95b;outline-offset:3px}
 @media(max-width:640px){body.pm-readonly-guide .readonly-guide-actions{grid-template-columns:minmax(0,1fr)}body.pm-readonly-guide .readonly-guide-action{width:100%;min-height:52px}}
-
-/* v2.1 — Casebook teaser cards in the original home design */
-.cb-home-section{padding:66px 0 75px;border-top:1px solid #1f6f4d;background:radial-gradient(ellipse at 60% 15%,#082a17,#020805 72%)}
-.cb-home-section .wrap{min-width:0}
-.cb-home-section .section-head{margin-bottom:25px}
-.cb-home-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.cb-home-card{background:#04170d;border:1px solid #276d49;border-radius:8px;overflow:hidden;min-width:0;display:flex;flex-direction:column}
-.cb-home-card:hover{border-color:#63ffb5}
-.cb-home-visual{display:block;aspect-ratio:12/7;overflow:hidden;border-bottom:1px solid #276d49}
-.cb-home-visual img{display:block;width:100%;height:100%;object-fit:cover}
-.cb-home-body{padding:17px;display:flex;flex-direction:column;flex:1;gap:9px}
-.cb-home-label{font:800 10px/1.5 "Courier New",Courier,monospace;color:#63ffb5;letter-spacing:.04em}
-.cb-home-body h3{font-size:clamp(17px,1.65vw,23px);letter-spacing:-.05em;line-height:1.17;color:#f2f0df;margin:0}
-.cb-home-body h3 a{color:inherit;text-decoration:none}
-.cb-home-body h3 a:hover{color:#63ffb5}
-.cb-home-body p{font-size:12px;color:#a8c3b0;line-height:1.65;margin:0}
-.cb-home-go{margin-top:auto;padding-top:9px;color:#63ffb5;font:bold 12px/1.5 "Courier New",Courier,monospace;text-decoration:none}
-.cb-home-all{text-align:center;padding:24px 0 0}
-.cb-home-all a{display:inline-block;border:1px solid #63ffb5;color:#63ffb5;padding:13px 20px;text-decoration:none;font-size:13px;font-weight:bold}
-.cb-home-all a:hover{background:#63ffb5;color:#021009}
-.cb-library-promo{max-width:1160px;margin:40px auto 0;padding:27px;border:1px solid #276d49;border-radius:9px;background:#05190f}
-.cb-library-promo h2{margin:9px 0 13px;font-size:clamp(23px,3vw,35px);color:#f2f0df}
-.cb-library-promo p{color:#b9e4ce;font-size:14px}
-.cb-library-promo .cb-prompt{color:#63ffb5;font-size:11px}
-.cb-library-promo a{display:inline-flex;min-height:50px;align-items:center;padding:10px 15px;border:1px solid #63ffb5;color:#63ffb5;text-decoration:none;font-weight:bold;font-size:12px}
-@media(max-width:1000px){.cb-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){.cb-home-grid{grid-template-columns:1fr}.cb-home-section{padding:42px 0}.cb-home-body h3{font-size:23px}.cb-home-body{padding:20px}.cb-library-promo{margin:26px 12px 0;padding:20px}.cb-home-all a{width:100%}}

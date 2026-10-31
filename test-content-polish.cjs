@@ -35,6 +35,12 @@ for(const p of retired){
  assert(pattern.test(html.split('</head>')[0]),p+' retired page should be excluded from search');
  assert(!/<(?:input|textarea|select|form)\b/i.test(html),p+' obsolete input');
 }
+for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
+ const html=fs.readFileSync(path.join(root,'articles',slug+'.html'),'utf8');
+ assert(html.includes('capybara-'+slug+'-3d.webp'),'Field Guide must use its unique method illustration: '+slug);
+ assert(!html.includes('class="capy-art pm-illustrated" aria-hidden="true"'),'Artwork must be accessible: '+slug);
+ assert(fs.existsSync(path.join(root,'assets','capybara-'+slug+'-3d.webp')),'Method artwork file exists: '+slug);
+}
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
 assert(home.includes('application-version" content="2.0.1"'),'release metadata');

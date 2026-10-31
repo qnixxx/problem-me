@@ -41,6 +41,18 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
      console.log('OVERFLOW '+route+' '+width+'px '+JSON.stringify(details));
     }
     assert(overflow<=2,route+' horizontal overflow '+width+'px: '+overflow);
+    if(route.startsWith('articles/')){
+      const slug=route.split('/').pop().replace('.html','');
+      const artwork=await page.locator('.capy-card .pm-guide-3d-art img').evaluateAll(imgs=>imgs.map(img=>{
+        const rect=img.getBoundingClientRect();
+        return {name:new URL(img.currentSrc||img.src).pathname.split('/').pop(),alt:img.alt,width:rect.width,height:rect.height,loaded:img.complete&&img.naturalWidth>0};
+      }));
+      assert.equal(artwork.length,1,route+' exactly one 3D guide artwork');
+      assert.equal(artwork[0].name,'capybara-'+slug+'-3d.webp',route+' method-specific artwork');
+      assert(artwork[0].alt.length>35,route+' accessible image description');
+      assert(artwork[0].loaded,route+' artwork loaded');
+      assert(artwork[0].width>=150&&artwork[0].height>=90,route+' meaningful image dimensions');
+    }
     const broken=await page.locator('img').evaluateAll(async imgs=>{
       await Promise.all(imgs.map(img=>new Promise(ok=>{
         img.loading='eager';if(img.complete){ok();return;}

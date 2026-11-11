@@ -23,7 +23,8 @@ for(const p of pages){
  const head=html.split('</head>')[0];
  assert(!pattern.test(head),p+' should be indexable');
  assert(head.includes('https://problem.me/'+(p==='index.html'?'':p)),p+' canonical or social URL');
- assert(!/<(?:input|textarea|select|form)\b/i.test(html),p+' has visitor inputs');
+ assert(!/<(?:input|textarea|select|form|button|script)\b/i.test(html),p+' is static with no controls or scripts');
+ assert(head.includes("script-src 'none'") && head.includes("connect-src 'none'"),p+' script and outbound requests forbidden');
  if(cases.includes(p)||guides.includes(p)){
    assert(/rel="canonical"/i.test(head),p+' canonical link');
    assert(/property="og:description"/i.test(head),p+' sharing description');
@@ -31,9 +32,7 @@ for(const p of pages){
  }
 }
 for(const p of retired){
- const html=fs.readFileSync(path.join(root,p),'utf8');
- assert(pattern.test(html.split('</head>')[0]),p+' retired page should be excluded from search');
- assert(!/<(?:input|textarea|select|form)\b/i.test(html),p+' obsolete input');
+ assert(!fs.existsSync(path.join(root,p)),p+' retired route must not be published');
 }
 for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
  const html=fs.readFileSync(path.join(root,'articles',slug+'.html'),'utf8');
@@ -43,11 +42,12 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 }
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
-assert(home.includes('application-version" content="2.0.1"'),'release metadata');
-assert(feature.includes('CURRENT v2.0.1'),'release log version');
+assert(home.includes('application-version" content="2.0.2"'),'release metadata');
+assert(feature.includes('CURRENT v2.0.2'),'release log version');
 assert(!home.includes('My Investigations'),'obsolete footer link');
 assert(!home.includes('CURRENT SITE ↗'),'obsolete label');
 assert(home.includes('Skip to main content'),'keyboard Skip link');
-assert(fs.existsSync(path.join(root,'runtime/index-1.js')),'original boot visuals present');
+assert(!fs.existsSync(path.join(root,'readonly-home.js')),'homepage script removed');
+assert(!fs.existsSync(path.join(root,'runtime')),'runtime directory removed');
 assert(fs.existsSync(path.join(root,'assets/capybara-soaking.webp')),'original mascot present');
-console.log('PASS v2.0.1: crawlable educational pages, accurate case metadata, retired routes excluded, original identity intact.');
+console.log('PASS v2.0.2: crawlable educational pages, no inputs/scripts, retired routes absent, original identity intact.');

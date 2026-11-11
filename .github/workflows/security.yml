@@ -20,6 +20,7 @@ jobs:
           node-version: '22'
       - run: node test-content-polish.cjs
   browser:
+    # Playwright 1.56 does not support the current ubuntu-latest image.
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4

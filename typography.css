@@ -10,20 +10,17 @@
   --pm-type-lead:1.125rem;
 }
 body{font-family:var(--pm-font)}
-button,input,select,textarea,summary,code,pre{font-family:var(--pm-font)}
+summary,code,pre{font-family:var(--pm-font)}
 h1,h2,h3,h4{font-family:var(--pm-font);font-weight:700}
 header .brand{font-family:var(--pm-font);font-size:var(--pm-type-brand);font-weight:700;line-height:1;letter-spacing:-.05em;display:inline-flex;align-items:baseline;white-space:nowrap;flex-shrink:0}
 header .brand .blink,header .brand .blink-cursor{font:inherit;letter-spacing:inherit;flex:0 0 auto}
 @media(hover:hover) and (pointer:fine){header .brand:hover{color:var(--yellow,#ffe95b)}}
-header .back,header .navlinks a,.site-menu-button{font-family:var(--pm-font);font-size:var(--pm-type-nav);font-weight:400;line-height:1.5;letter-spacing:0}
+header .back,header .navlinks a{font-family:var(--pm-font);font-size:var(--pm-type-nav);font-weight:400;line-height:1.5;letter-spacing:0}
 header .online,header .statusline{font-family:var(--pm-font);font-size:var(--pm-type-meta);font-weight:400;line-height:1.5;letter-spacing:0}
 .hero .lede{font-family:var(--pm-font-reading);font-size:var(--pm-type-lead);font-weight:400;line-height:1.7;letter-spacing:0;max-width:65ch}
 .hero .prompt,.hero .case{font-family:var(--pm-font);font-size:var(--pm-type-meta);font-weight:400;line-height:1.45;letter-spacing:.08em}
-.site-drawer{font-family:var(--pm-font)}
-.site-drawer .drawer-link{font-size:var(--pm-type-nav);font-weight:400;line-height:1.5;letter-spacing:0}
-.site-drawer .drawer-link small,.site-drawer .drawer-kicker,.site-drawer .drawer-close{font-size:var(--pm-type-meta);font-weight:400;line-height:1.5;letter-spacing:0}
 /* Full sentences get a reading face. Terminal prompts/status labels stay mono. */
-:is(main,.workbench-intro,.fb-workbench-intro) p:where(:not(.prompt,.case,.kicker,.muted,.workspace-note)){
+main p:where(:not(.prompt,.case,.kicker,.muted,.workspace-note)){
   font-family:var(--pm-font-reading);font-size:var(--pm-type-prose);font-weight:400;
   line-height:1.75;letter-spacing:0;color:#c9dfd2;overflow-wrap:anywhere;
 }
@@ -42,11 +39,6 @@ main .hero .lede{font-size:var(--pm-type-lead);line-height:1.7}
 .article .rule{padding:18px}
 .toc a{font-size:.875rem;line-height:1.5}
 .privacy-card p{line-height:1.7}
-.site-drawer .drawer-link{font-size:.875rem}
-.site-drawer .drawer-link small,.site-drawer .drawer-note{font-family:var(--pm-font-reading);font-size:.9375rem;line-height:1.6;letter-spacing:0}
-/* A shared readability floor wins over legacy tool-specific form shorthands.
-   Keep this exception limited to editable text, including iOS focus sizing. */
-:root body :is(input,textarea,select):not([type="hidden"]){font-family:var(--pm-font-reading)!important;font-size:1rem!important;line-height:1.5}
 /* Keep CRT identity in the palette and artwork, without scanlines over text. */
 body::before,body::after{display:none}
 @media(max-width:640px){:root{--pm-type-brand:1.25rem}}
@@ -54,18 +46,17 @@ body::before,body::after{display:none}
 /* Shared text behavior: prose is spacious; compact labels remain legible.
    Use targeted rules for legacy IDs rather than shrinking text to fit panels. */
 :root body main p:not(.prompt,.case,.kicker){font-family:var(--pm-font-reading);font-size:var(--pm-type-prose);line-height:1.75;letter-spacing:0}
-:root body :is(button,summary,.button,.tool-btn){line-height:1.5;white-space:normal;overflow-wrap:anywhere}
-:root body :is(label,small,.muted,.workspace-note){line-height:1.6}
+:root body :is(summary,.button){line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+:root body :is(small,.muted){line-height:1.6}
 :root body :is(h1,h2,h3,h4){overflow-wrap:anywhere}
 :root body .hero h1{line-height:1.1}
 :root body .hero h1 span{line-height:1.15}
 /* Field-guide subtitles are sentences, not tightly tracked display titles. */
 :root body:has(.article) .hero h1 span{line-height:1.5;letter-spacing:normal}
-:root body :is(input,textarea)::placeholder{color:#a2c5b2;opacity:1}
-:root body :is(button:disabled,.case-pager .pager-disabled){opacity:1;color:#86b79e;border-color:#365846;cursor:not-allowed}
+:root body .case-pager .pager-disabled{opacity:1;color:#86b79e;border-color:#365846;cursor:not-allowed}
 .section-bar,.stage-heading{flex-wrap:wrap}
 /* Long labels and translated/browser-enlarged text can reflow without clipping. */
-:root body :is(.hero-meta,.meta,.privacy-strip,.technique-tabs) :is(strong,small,span){overflow-wrap:anywhere}
+:root body :is(.hero-meta,.meta) :is(strong,small,span){overflow-wrap:anywhere}
 :root body :focus-visible{outline:2px solid #ffe95b;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}
 
@@ -74,6 +65,4 @@ body::before,body::after{display:none}
 /* Diagram text uses SVG units. Preserve a 1:1 minimum scale inside the existing
    scroll containers instead of shrinking 14px labels to fit a phone screen. */
 .fishbone-svg{min-width:1000px}
-.fb-live-svg{min-width:1100px}
 .pareto-svg{min-width:760px}
-.pt-svg{min-width:920px}

@@ -14,7 +14,7 @@ const server=http.createServer((req,res)=>{
 });
 const routes=['index.html','techniques.html','5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
-'privacy.html','features.html','investigation.html','investigations.html','board-experiment.html','brand-system.html'];
+'privacy.html','features.html'];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 (async()=>{
  await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
@@ -33,8 +33,9 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
     await page.goto(base+'/'+route,{waitUntil:'load'});
     assert(await page.title(),route+' title');
     assert.equal(await page.locator('main').count(),1,route+' main landmark');
-    assert.equal(await page.locator('input,textarea,form,select,[contenteditable]').count(),0,route+' visitor input');
+    assert.equal(await page.locator('input,textarea,form,select,button,script,[contenteditable]').count(),0,route+' user input, button or script');
     assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0,route+' browser persistence');
+    assert.equal(await page.locator('html.investigation-embedded, .site-drawer, .workspace-shell, .pm-reasoning').count(),0,route+' retired interactive UI');
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     if(overflow>2){
      const details=await page.evaluate(()=>[...document.querySelectorAll('*')].filter(e=>e.clientWidth>0&&e.scrollWidth>e.clientWidth+3).slice(0,12).map(e=>({el:e.tagName,cls:e.className,width:e.clientWidth,scroll:e.scrollWidth,text:(e.textContent||'').trim().slice(0,35)})));
@@ -87,6 +88,8 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.deepEqual(external,[],'external network calls at '+width);
    await page.goto(base+'/index.html');
    assert.equal(await page.locator('.readonly-skip-link[href="#top"]').count(),1,'homepage keyboard Skip link');
+   assert(await page.locator('main#top').isVisible(),'homepage content visible immediately');
+   assert.equal(await page.locator('#boot').count(),0,'old boot gate absent');
    await page.locator('.readonly-skip-link').focus();
    assert.equal(await page.locator('.readonly-skip-link').evaluate(el=>getComputedStyle(el).top),'10px','Skip link appears when focused');
 

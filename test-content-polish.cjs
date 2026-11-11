@@ -6,7 +6,8 @@ const pages=[
 '5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
 'privacy.html','features.html',
-'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html'
+'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html',
+'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html'
 ];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 const guides=pages.filter(p=>p.startsWith('articles/'));
@@ -43,8 +44,8 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 }
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
-assert(home.includes('application-version" content="2.1.0"'),'release metadata');
-assert(feature.includes('CURRENT v2.1.0'),'release log version');
+assert(home.includes('application-version" content="2.2.0"'),'release metadata');
+assert(feature.includes('CURRENT v2.2.0'),'release log version');
 assert(!home.includes('My Investigations'),'obsolete footer link');
 assert(!home.includes('CURRENT SITE ↗'),'obsolete label');
 assert(home.includes('Skip to main content'),'keyboard Skip link');
@@ -69,4 +70,25 @@ for(const p of ['academy.html','foundations.html','choose-method.html','professi
  assert(html.includes('Skip to content'),'Academy keyboard skip '+p);
  assert(html.includes('href="academy.html"'),'Academy navigation '+p);
 }
-console.log('PASS v2.1.0: 18 indexable pages, Academy curriculum and no scripts/user-submission forms.');
+const labs=['lab-signin.html','lab-warehouse.html','lab-migration.html'];
+const labHub=fs.readFileSync(path.join(root,'evidence-lab.html'),'utf8');
+assert(home.includes('href="evidence-lab.html"'),'homepage Evidence Lab discovery');
+assert(academy.includes('05 / INVESTIGATE THE EVIDENCE'),'fifth Academy chapter');
+assert((academy.match(/class="ac-card"/g)||[]).length===11,'Academy has 11 learning and method cards');
+assert((labHub.match(/class="ev-case"/g)||[]).length===3,'Evidence Lab has three scenario cards');
+for(const p of labs){
+ const html=fs.readFileSync(path.join(root,p),'utf8');
+ assert(html.includes('href="evidence-lab.css"'),p+' Lab styling');
+ assert(html.includes('id="brief"'),p+' case brief');
+ assert(html.includes('id="debrief"'),p+' verification debrief');
+ for(const stage of ['stage1','stage2','stage3'])assert(html.includes('id="'+stage+'"'),p+' missing '+stage);
+ assert((html.match(/<details class="ev-branch(?: caution)?">/g)||[]).length===6,p+' six decision disclosures');
+ assert((html.match(/<details class="ev-evidence">/g)||[]).length===3,p+' three evidence packets');
+ assert((html.match(/<summary>/g)||[]).length===9,p+' native disclosure summaries');
+ assert((html.match(/href="#stage2"/g)||[]).length>=2,p+' decision progression');
+ assert((html.match(/href="#stage3"/g)||[]).length>=2,p+' decision progression');
+ assert((html.match(/href="#debrief"/g)||[]).length>=2,p+' debrief progression');
+ assert(html.includes('FICTIONAL'),p+' fictional data labeling');
+}
+assert(labHub.includes('href="lab-signin.html"')&&labHub.includes('href="lab-warehouse.html"')&&labHub.includes('href="lab-migration.html"'),'all three Lab routes discoverable');
+console.log('PASS v2.2.0: 22 indexable pages, three guided Evidence Labs, no scripts or visitor inputs.');

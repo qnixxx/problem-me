@@ -1,5 +1,5 @@
 """Validate and package the static, read-only Problem.me v2 site.
-No application frameworks, browser databases, cookies, trackers or editable workspaces.
+No JavaScript runtime, data-entry controls, application storage, cookies or editable workspaces.
 The v1.0.2 interactive implementation is preserved on the archive branch.
 """
 from pathlib import Path
@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import json, hashlib, re, sys, zipfile
 ROOT=Path(__file__).resolve().parent
-VERSION='2.0.1'
+VERSION='2.0.2'
 class Page(HTMLParser):
     def __init__(self, source):
         super().__init__();self.ids=set();self.links=[];self.scripts=[];self.inputs=[];self.source=source
@@ -24,7 +24,6 @@ class Page(HTMLParser):
 files=sorted(p for p in ROOT.iterdir() if p.is_file() and p.suffix in ('.html','.css','.js','.ico','.jpg','.jpeg','.png','.svg','.webp'))
 files+=sorted((ROOT/'articles').glob('*.html'))
 files += [ROOT/'robots.txt', ROOT/'sitemap.xml']
-files+=sorted((ROOT/'runtime').glob('*.js'))
 files+=sorted(p for p in (ROOT/'assets').rglob('*') if p.is_file())
 relative={p.relative_to(ROOT).as_posix() for p in files}
 pages={}
@@ -33,12 +32,14 @@ for p in files:
     source=p.read_text(encoding='utf-8')
     page=Page(p.relative_to(ROOT));page.feed(source);pages[p]=page
     assert not page.inputs,f'{p}: unexpected visitor input {page.inputs}'
-    assert "script-src 'self'" in source and "connect-src 'none'" in source, f'{p}: CSP missing'
-    assert all(src is not None and not src.startswith('http') for src in page.scripts),f'{p}: inline or external script'
+    assert '<button' not in source.lower(), f'{p}: buttons are disallowed in the read-only edition'
+    assert "script-src 'none'" in source and "connect-src 'none'" in source, f'{p}: read-only CSP missing'
+    assert not page.scripts,f'{p}: scripts are disallowed'
 assert (ROOT/'index.html').read_text().find('name="application-version" content="'+VERSION+'"')>=0
 assert not any(p.exists() for p in [ROOT/'investigation.js',ROOT/'handoff.js',ROOT/'private-default.js',ROOT/'investigation-store.js'])
 assert not (ROOT/'next').exists() and not (ROOT/'bureau').exists(),'Preview directories must not be deployed'
-assert [p.name for p in (ROOT/'runtime').glob('*.js')]==['index-1.js'],'Unexpected interactive runtime'
+assert not list(ROOT.glob('*.js')) and not (ROOT/'runtime').exists(), 'JavaScript runtime must not be published'
+assert not any((ROOT/p).exists() for p in ('investigation.html','investigations.html','board-experiment.html','brand-system.html')), 'Retired routes must not be published'
 links=0
 for p in files:
     refs=list(pages[p].links) if p in pages else []

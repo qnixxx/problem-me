@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
+<meta name="theme-color" content="#010704"><meta name="color-scheme" content="dark">
+<meta name="description" content="Learn how incidents, problems, workarounds and known errors relate; how to work through a problem management lifecycle and verify durable improvements.">
+<link rel="canonical" href="https://problem.me/foundations.html">
+<meta property="og:type" content="article"><meta property="og:title" content="Problem Management Fundamentals | problem.me"><meta property="og:description" content="Learn how incidents, problems, workarounds and known errors relate; how to work through a problem management lifecycle and verify durable improvements.">
+<meta property="og:url" content="https://problem.me/foundations.html"><meta property="og:image" content="https://problem.me/problem-me-social-preview-1200x630.jpg">
+<meta name="twitter:card" content="summary_large_image"><link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="academy.css"><title>Problem Management Fundamentals | problem.me</title>
+</head><body class="pm-academy">
+<a class="ac-skip" href="#main-content">Skip to content</a>
+<header class="ac-header"><nav class="ac-shell" aria-label="Academy navigation"><a class="ac-brand" href="index.html">problem<em style="font-style:normal;color:#35ff91">.me</em>_</a><div class="ac-nav"><a href="index.html">Home</a><a href="academy.html">Academy</a><a href="foundations.html" aria-current="page">Foundations</a><a href="choose-method.html">Choose a method</a><a href="professional-cases.html">Cases</a><a href="practice.html">Practice</a></div></nav></header>
+<main id="main-content">
+<section class="ac-hero"><div class="ac-shell "><div>
+<p class="ac-kicker">Academy / Chapter 01 / Foundations</p><h1>Understand the work.<span>Then investigate.</span></h1><p class="ac-lede">Problem management is not a longer incident ticket. Its job is to reduce the likelihood and impact of future disruption by understanding the causes and managing risk while resolution is still underway.</p>
+<div class="ac-actions"><a class="ac-link primary" href="academy.html">Academy overview →</a><a class="ac-link" href="choose-method.html">Choose a technique ↗</a></div></div>
+
+</div></section>
+<div class="ac-shell">
+<section class="ac-section" id="distinctions"><p class="ac-kicker">START WITH PRECISION_</p><h2>Four terms that should not be confused.</h2>
+<div class="ac-grid">
+<div class="ac-card"><h3>Incident</h3><p>An unplanned interruption or reduction in service quality. The immediate concern is safe restoration.</p><span class="ac-chip">WHAT HAPPENED</span></div>
+<div class="ac-card"><h3>Problem</h3><p>A cause, or potential cause, of one or more incidents. The focus is understanding and reducing recurring risk—not necessarily repairing the current interruption.</p><span class="ac-chip">WHY IT MAY RECUR</span></div>
+<div class="ac-card"><h3>Workaround</h3><p>A way to reduce or eliminate impact before a full resolution exists. It may be valuable without correcting the underlying cause.</p><span class="ac-chip">LESS HARM NOW</span></div>
+<div class="ac-card"><h3>Known error</h3><p>A problem that has been analysed but is not yet resolved. A documented workaround may accompany the record.</p><span class="ac-chip">KNOWLEDGE TO REUSE</span></div>
+</div>
+<div class="ac-note"><strong>EXAMPLE_</strong><p>A payment service fails every afternoon: the failed transactions are incidents. A competing report job exhausting connection capacity may be the problem. Scheduling the report later is a workaround; a verified capacity or concurrency correction may be the durable fix.</p></div>
+<p>This is a simplified educational summary of commonly used IT service-management terminology; use the definitions and processes adopted in your organization. The <a href="https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-problem-management-3688" rel="noopener noreferrer">PeopleCert practice description</a> emphasizes preventing incidents and managing workarounds and known errors.</p>
+</section>
+<section class="ac-section" id="lifecycle"><p class="ac-kicker">HOW AN INVESTIGATION MOVES_</p><h2>A practical problem management lifecycle.</h2>
+<div class="ac-steps">
+<div class="ac-step"><small>01 / DETECT</small><strong>Identify a pattern</strong><p>Cluster recurring incidents, high-impact failures, supplier signals or plausible future risks.</p></div>
+<div class="ac-step"><small>02 / FRAME</small><strong>Define the deviation</strong><p>State expected versus observed behaviour, scope, impact and what is still unknown.</p></div>
+<div class="ac-step"><small>03 / ANALYSE</small><strong>Test causes</strong><p>Choose a method; separate evidence, hypotheses and findings. Revisit contradictory data.</p></div>
+<div class="ac-step"><small>04 / CONTAIN</small><strong>Control impact</strong><p>Document a safe workaround, its limitations, the owner and a trigger for reassessment.</p></div>
+<div class="ac-step"><small>05 / IMPROVE</small><strong>Change the system</strong><p>Evaluate the chosen correction through the appropriate change, risk and release processes.</p></div>
+<div class="ac-step"><small>06 / VERIFY</small><strong>Learn and monitor</strong><p>Compare results against a baseline, observe long enough, and retain reusable knowledge.</p></div>
+</div>
+<p>These six learning moves are our teaching structure, not an official six-step ITIL process. Many organizations group their work under problem identification, problem control and error control.</p></section>
+<section class="ac-section" id="record"><p class="ac-kicker">QUALITY OF THE RECORD_</p><h2>A problem brief worth handing to another team.</h2>
+<div class="ac-table-wrap"><table class="ac-table"><thead><tr><th>Field</th><th>Good content</th><th>Common failure</th></tr></thead><tbody>
+<tr><td><strong>Observed deviation</strong></td><td>Checkout errors rise from below 0.2% to 8% between 14:00 and 14:08 UTC.</td><td>“Checkout is unreliable.”</td></tr>
+<tr><td><strong>Scope</strong></td><td>Production region A, weekdays, affected endpoint and time window.</td><td>“All customers seem affected.”</td></tr>
+<tr><td><strong>Evidence</strong></td><td>Timestamped request logs, connection metrics, deployment changes and replay tests.</td><td>“The team thinks the database is slow.”</td></tr>
+<tr><td><strong>Hypotheses</strong></td><td>Connection contention, application retry storm, network latency—each with a falsifiable test.</td><td>Only one favored explanation.</td></tr>
+<tr><td><strong>Workaround</strong></td><td>Stagger report job; owner, risk and rollback trigger documented.</td><td>Temporary fix confused with root cause.</td></tr>
+<tr><td><strong>Verification</strong></td><td>Error rate, peak concurrency and recurrence tracked for 14 comparable business days.</td><td>“Closed because it did not fail today.”</td></tr>
+</tbody></table></div></section>
+<section class="ac-section" id="evidence"><p class="ac-kicker">EVIDENCE OVER CERTAINTY_</p><h2>Three evidence labels to keep separate.</h2>
+<div class="ac-grid three">
+<div class="ac-card"><h3>Observed fact</h3><p>Something measured, logged or directly witnessed with context and provenance.</p><p><strong>Example:</strong> 29 database sessions waited on a specific lock.</p></div>
+<div class="ac-card"><h3>Inference</h3><p>An interpretation supported by several facts; confidence should be proportional to the support.</p><p><strong>Example:</strong> The scheduled report likely created the contention.</p></div>
+<div class="ac-card"><h3>Unverified hypothesis</h3><p>A plausible explanation awaiting a discriminating test, not a conclusion.</p><p><strong>Example:</strong> A new query plan may have lengthened the lock.</p></div>
+</div>
+<div class="ac-note"><strong>THE IMPORTANT QUESTION_</strong><p>What observation would make this explanation less likely? A method that only collects confirming examples is not a reliable investigation.</p></div></section>
+<section class="ac-section" id="verify"><p class="ac-kicker">CONTROL IS NOT PROOF_</p><h2>Design the verification before closing.</h2>
+<ul class="ac-list">
+<li><strong>Baseline:</strong> how often did the event recur and how severe was it before the change?</li>
+<li><strong>Expected result:</strong> specify which observable measure should improve and the threshold that matters.</li>
+<li><strong>Observation window:</strong> cover the normal recurrence cycle, including peak periods.</li>
+<li><strong>Confounders:</strong> record seasonal load, traffic shifts and simultaneous changes that might also explain improvement.</li>
+<li><strong>Ownership:</strong> name who reviews recurrence, workaround relevance and future signals.</li>
+<li><strong>Reusable learning:</strong> capture symptoms, supporting evidence, tested explanations and any remaining risks.</li>
+</ul>
+<h3>What should teams measure?</h3>
+<p>Review recurrence rate, time from detection to an actionable hypothesis, time to a safe workaround, confirmed reduction in impact and effectiveness of implemented controls. Avoid rewarding “number of problems closed” without checking whether they stayed closed.</p></section>
+<section class="ac-section" id="handoff"><p class="ac-kicker">PRACTICE POINT_</p><h2>Connect incident and problem work without confusing them.</h2>
+<p>During a live incident, restore safe service first. A problem investigation may begin in parallel when the risk justifies it, but should not delay urgent recovery. Afterwards, carry forward the incident chronology, impact, observed behavior, changed conditions and unresolved questions—not a preselected culprit.</p>
+<div class="ac-next"><div><strong>Next / Chapter 02: The Technique Pathfinder</strong><p>Use the evidence and question type to select an appropriate method.</p></div><a class="ac-link primary" href="choose-method.html">Choose the method →</a></div>
+<p class="ac-kicker">Reference</p><ol class="ac-sources"><li><a href="https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil4-practices-problem-management-3688" rel="noopener noreferrer">PeopleCert — ITIL 4 Practitioner: Problem Management</a>. This page is an independent interpretation, not an official syllabus.</li></ol></section></div>
+</main>
+<footer class="ac-footer"><div class="ac-shell"><a class="ac-brand" href="index.html">problem<span>.me</span>_</a><p>Same problems. Clearer thinking. Read-only education; no accounts, data entry or saved progress.</p>
+<nav aria-label="Footer"><a href="academy.html">Academy</a><a href="professional-cases.html">Professional cases</a><a href="practice.html">Practice</a><a href="glossary.html">Glossary</a><a href="techniques.html">Technique Library</a><a href="privacy.html">Privacy</a></nav></div></footer></body></html>

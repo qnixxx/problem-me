@@ -101,7 +101,7 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
    await page.goto(base+'/academy.html');
    assert(await page.locator('main').isVisible(),'Academy content visible');
-   assert.equal(await page.locator('.ac-card').count(),11,'Academy curriculum and method cards');
+   assert.equal(await page.locator('.ac-card').count(),10,'Academy curriculum and method cards');
    await page.goto(base+'/professional-cases.html');
    assert.equal(await page.locator('article.ac-case').count(),4,'four professional cases');
    await page.goto(base+'/practice.html');

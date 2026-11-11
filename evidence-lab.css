@@ -1,0 +1,88 @@
+/* problem.me Evidence Lab v2.2 — narrative links and native details only. */
+.ev-hero{border-bottom:1px solid #286744;padding:clamp(40px,7vw,76px) 0;background:radial-gradient(circle at 85% 26%,rgba(37,145,83,.13),transparent 50%)}
+.ev-hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:28px;align-items:center}
+.ev-hero h1{font:700 clamp(2.65rem,6vw,5rem)/1.07 "Courier New",Courier,monospace;color:#faf5e2;letter-spacing:-.055em;margin:12px 0 22px}
+.ev-hero h1 span{display:block;color:#35ff91}
+.ev-hero p{max-width:64ch}
+.ev-hero-art{margin:0;border:1px solid #326d4b;border-radius:16px;background:radial-gradient(circle at 50% 50%,#0b311c,#010704 75%);overflow:hidden}
+.ev-hero-art img{display:block;width:100%;height:auto;object-fit:contain}
+.ev-hero-art figcaption{padding:11px 15px;border-top:1px solid #285a3f;color:#b8d7c3;font:.76rem/1.5 "Courier New",monospace}
+.ev-strip{display:flex;flex-wrap:wrap;gap:8px 12px;margin:20px 0}
+.ev-chip{display:inline-flex;align-items:center;min-height:32px;border:1px solid #3a7856;border-radius:99px;padding:6px 11px;color:#b9dec7;font:700 .73rem/1.5 "Courier New",monospace}
+.ev-chip.emphasis{color:#f4ca85;border-color:#8d703d}
+.ev-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin:26px 0}
+.ev-case{padding:0;border-radius:15px;background:#06170f;border:1px solid #31734f;overflow:hidden;display:flex;flex-direction:column}
+.ev-case img{display:block;width:100%;height:158px;object-fit:contain;background:radial-gradient(circle,#0b321d,#010704)}
+.ev-case-body{padding:22px;display:flex;flex:1;flex-direction:column;gap:6px}
+.ev-case h3{color:#faf5e2;font:700 1.12rem/1.4 "Courier New",monospace;margin:6px 0}
+.ev-case p{margin:0 0 13px}
+.ev-case a{margin-top:auto;min-height:44px;display:inline-flex;align-items:center;color:#35ff91;font:700 .85rem/1.4 "Courier New",monospace;text-decoration:none}
+.ev-case a:hover{text-decoration:underline}
+.ev-method{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0 32px}
+.ev-method article{padding:17px;background:#06170f;border-top:3px solid #35ff91;border-radius:0 0 10px 10px}
+.ev-method strong{display:block;font:700 .93rem/1.4 "Courier New",monospace;color:#faf5e2;margin-bottom:8px}
+.ev-method p{margin:0}
+.ev-progress{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:18px 0 26px}
+.ev-progress a{font:700 .74rem/1.4 "Courier New",monospace;text-decoration:none;color:#bbd5c5;border:1px solid #286744;border-radius:7px;padding:9px 11px;min-height:44px;display:inline-flex;align-items:center}
+.ev-progress a:hover,.ev-progress a:focus-visible{border-color:#f4ca85;color:#f4ca85}
+.ev-dossier{padding:22px;background:#071910;border:1px solid #32754f;border-radius:15px;margin:25px 0}
+.ev-dossier h2{font:700 clamp(1.4rem,2.8vw,2rem)/1.2 "Courier New",monospace;color:#faf5e2;margin:9px 0}
+.ev-dossier p{margin:0 0 13px}
+.ev-kicker{font:700 .78rem/1.5 "Courier New",monospace;letter-spacing:.08em;color:#99c7ac;text-transform:uppercase}
+.ev-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:18px 0}
+.ev-stat{background:#0d2719;border:1px solid #316647;border-radius:9px;padding:13px;min-width:0}
+.ev-stat strong{display:block;color:#35ff91;font:700 clamp(1.15rem,2.5vw,1.65rem)/1.2 "Courier New",monospace;overflow-wrap:anywhere}
+.ev-stat span{display:block;font:700 .71rem/1.45 "Courier New",monospace;color:#a8cdb8;margin-top:6px}
+.ev-stage{padding:25px 24px;margin:28px 0 8px;background:#07180f;border:1px solid #306c49;border-radius:15px;scroll-margin-top:160px}
+.ev-stage h2{color:#faf5e2;font:700 clamp(1.4rem,3vw,1.85rem)/1.2 "Courier New",monospace;margin:8px 0 14px}
+.ev-stage h3{color:#f4ca85;font:700 1.03rem/1.4 "Courier New",monospace;margin:19px 0 10px}
+.ev-stage p{max-width:76ch}
+.ev-evidence{margin:16px 0;border:1px solid #31734f;background:#091c12;border-radius:10px;overflow:hidden}
+.ev-evidence summary{min-height:48px;display:flex;align-items:center;padding:12px 14px;cursor:pointer;color:#35ff91;font:700 .87rem/1.45 "Courier New",monospace}
+.ev-evidence summary::before{content:"▸";margin-right:10px;color:#f4ca85}
+.ev-evidence[open] summary::before{content:"▾"}
+.ev-evidence>div{padding:5px 16px 16px;border-top:1px solid #286744}
+.ev-evidence p{margin:13px 0}
+.ev-evidence ol,.ev-evidence ul{padding-left:20px}
+.ev-evidence li{margin:8px 0}
+.ev-evidence .ac-table-wrap{margin:10px 0}
+.ev-decision-label{font:700 .8rem/1.5 "Courier New",monospace;color:#f4ca85;margin:22px 0 12px}
+.ev-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ev-choice{display:flex;flex-direction:column;justify-content:center;gap:9px;padding:17px;min-height:93px;color:#f0f7f1!important;background:#102819;border:1px solid #377d54;border-radius:10px;text-decoration:none}
+.ev-choice:hover,.ev-choice:focus-visible{border-color:#f4ca85;background:#163723}
+.ev-choice small{font:700 .73rem/1.5 "Courier New",monospace;color:#a6d6b5}
+.ev-choice strong{font:700 .93rem/1.5 "Courier New",monospace;color:#faf5e2}
+.ev-outcome{margin:12px 0 0 0;padding:20px 22px;border-left:4px solid #6abf90;border-radius:0 11px 11px 0;background:#0c2216;scroll-margin-top:160px}
+.ev-outcome.caution{border-left-color:#f4ca85;background:#211d12}
+.ev-outcome:target,.ev-stage:target,.ev-debrief:target{outline:2px solid #f4ca85;outline-offset:3px}
+.ev-outcome h3{margin:4px 0 11px;color:#faf5e2;font:700 1rem/1.5 "Courier New",monospace}
+.ev-outcome p{max-width:74ch;margin:0 0 13px}
+.ev-outcome .ev-follow{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
+.ev-follow a{display:inline-flex;align-items:center;min-height:44px;padding:9px 13px;border:1px solid #41845c;border-radius:8px;color:#35ff91;text-decoration:none;font:700 .78rem/1.4 "Courier New",monospace}
+.ev-follow a:hover{border-color:#f4ca85}
+.ev-debrief{background:#06170f;border:1px solid #31734f;border-radius:15px;padding:24px;margin:40px 0;scroll-margin-top:160px}
+.ev-debrief h2{font:700 clamp(1.5rem,3vw,2.1rem)/1.2 "Courier New",monospace;color:#faf5e2;margin:8px 0 20px}
+.ev-debrief h3{color:#f4ca85;font:700 1rem/1.4 "Courier New",monospace}
+.ev-ledger{list-style:none;padding:0;margin:16px 0}
+.ev-ledger li{margin:0;padding:13px 0;border-bottom:1px solid #24583c}
+.ev-ledger strong{color:#faf5e2}
+.ev-legal{font-size:.91rem;color:#b7d2c1}
+@media(max-width:860px){.ev-hero-grid{grid-template-columns:1fr}.ev-hero-art{max-width:500px}.ev-cases,.ev-method{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.ev-cases,.ev-method,.ev-choices{grid-template-columns:1fr}.ev-stage,.ev-dossier,.ev-debrief{padding:17px}.ev-outcome{padding:17px}.ev-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ev-hero h1{font-size:clamp(2.3rem,11vw,3.6rem)}.ev-case img{height:130px}.ev-progress a{font-size:.71rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* Choice-to-outcome branching uses native disclosure, never visitor submission. */
+.ev-branch{margin:11px 0;border:1px solid #357553;border-radius:10px;background:#102719;overflow:hidden}
+.ev-branch summary{min-height:62px;display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 16px;color:#f5f6e9;font:700 .9rem/1.5 "Courier New",Courier,monospace;overflow-wrap:anywhere}
+.ev-branch summary::before{content:"◇";color:#35ff91;font-size:1.22rem;flex:none}
+.ev-branch[open] summary{border-bottom:1px solid #357553;background:#12321e}
+.ev-branch[open] summary::before{content:"◆"}
+.ev-branch-body{padding:16px 18px}
+.ev-branch-body p{margin:0 0 13px}
+.ev-branch-body strong{color:#f4ca85}
+.ev-branch-body a{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;color:#35ff91;border:1px solid #378458;border-radius:8px;text-decoration:none;font:700 .82rem/1.5 "Courier New",Courier,monospace}
+.ev-branch-body a:hover{border-color:#f4ca85}
+.ev-branch.caution{border-color:#746b47}.ev-branch.caution summary::before{color:#f4ca85}
+.ev-steps{list-style:decimal;padding-left:22px}.ev-steps li{margin:10px 0}
+.ev-outcome a{color:#35ff91}
+.ev-resource-link{font:700 .84rem/1.6 "Courier New",monospace;color:#35ff91!important}

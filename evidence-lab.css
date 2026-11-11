@@ -70,3 +70,19 @@
 @media(max-width:860px){.ev-hero-grid{grid-template-columns:1fr}.ev-hero-art{max-width:500px}.ev-cases,.ev-method{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.ev-cases,.ev-method,.ev-choices{grid-template-columns:1fr}.ev-stage,.ev-dossier,.ev-debrief{padding:17px}.ev-outcome{padding:17px}.ev-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ev-hero h1{font-size:clamp(2.3rem,11vw,3.6rem)}.ev-case img{height:130px}.ev-progress a{font-size:.71rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* Choice-to-outcome branching uses native disclosure, never visitor submission. */
+.ev-branch{margin:11px 0;border:1px solid #357553;border-radius:10px;background:#102719;overflow:hidden}
+.ev-branch summary{min-height:62px;display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 16px;color:#f5f6e9;font:700 .9rem/1.5 "Courier New",Courier,monospace;overflow-wrap:anywhere}
+.ev-branch summary::before{content:"◇";color:#35ff91;font-size:1.22rem;flex:none}
+.ev-branch[open] summary{border-bottom:1px solid #357553;background:#12321e}
+.ev-branch[open] summary::before{content:"◆"}
+.ev-branch-body{padding:16px 18px}
+.ev-branch-body p{margin:0 0 13px}
+.ev-branch-body strong{color:#f4ca85}
+.ev-branch-body a{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;color:#35ff91;border:1px solid #378458;border-radius:8px;text-decoration:none;font:700 .82rem/1.5 "Courier New",Courier,monospace}
+.ev-branch-body a:hover{border-color:#f4ca85}
+.ev-branch.caution{border-color:#746b47}.ev-branch.caution summary::before{color:#f4ca85}
+.ev-steps{list-style:decimal;padding-left:22px}.ev-steps li{margin:10px 0}
+.ev-outcome a{color:#35ff91}
+.ev-resource-link{font:700 .84rem/1.6 "Courier New",monospace;color:#35ff91!important}

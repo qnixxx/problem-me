@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" class="pm-theme">
-<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
+<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
   <meta charset="utf-8" />
   <!-- Change only this value for future homepage release labels. -->
-  <meta name="application-version" content="2.0.1" />
+  <meta name="application-version" content="2.0.2" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="problem.me — read-only illustrated articles about problem solving, evidence-first techniques, and playful capybara case examples. No visitor-submitted text." />
   <meta name="theme-color" content="#010704" />
@@ -141,106 +141,8 @@
       100% { transform: translateY(-12px); opacity: 0; }
     }
 
-    /* Boot */
-    #boot {
-      min-height: 100vh;
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 16px;
-      background: radial-gradient(circle at 50% 35%, rgba(27,100,69,.15), transparent 28rem), var(--bg);
-      transition: opacity .35s ease, transform .35s ease;
-    }
-
-    #boot.hidden {
-      position: absolute;
-      width: 100%;
-      opacity: 0;
-      transform: translateY(-8px);
-      pointer-events: none;
-    }
-
-    .boot-shell {
-      width: min(100%, 900px);
-      border: 1px solid var(--green-2);
-      background: var(--panel-3);
-      box-shadow: 0 0 30px rgba(33,214,122,.09);
-    }
-
-    .boot-bar,
-    .boot-footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: .875rem;
-    }
-
-    .boot-bar {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .boot-body { padding: 22px; }
-
-    .boot-logo {
-      margin-bottom: 18px;
-      color: var(--cream);
-      font-size: clamp(2.4rem, 7vw, 5rem);
-      font-weight: 700;
-      letter-spacing: -.07em;
-      animation: glow 2.4s ease-in-out infinite;
-    }
-
-    .boot-log {
-      min-height: 240px;
-      color: #a7dbc1;
-      font-size: .92rem;
-      white-space: pre-wrap;
-    }
-
-    .boot-line {
-      display: block;
-      margin: 4px 0;
-      overflow-wrap: anywhere;
-    }
-
-    .ok { color: var(--green); }
-    .warn { color: var(--yellow); }
-
-    .boot-progress {
-      height: 20px;
-      margin-top: 18px;
-      padding: 2px;
-      border: 1px solid var(--line);
-    }
-
-    .boot-progress > span {
-      display: block;
-      width: 0;
-      height: 100%;
-      background: var(--green);
-      transition: width .22s linear;
-    }
-
-    .boot-footer {
-      align-items: center;
-      margin-top: 15px;
-    }
-
-    .skip {
-      min-height: 44px;
-      padding: 8px 11px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--green);
-      cursor: pointer;
-    }
-
     /* Site chrome */
-    #site { display: none; }
-    #site.online { display: block; }
+    #site { display: block; }
 
     header {
       position: sticky;
@@ -903,39 +805,12 @@
     }
   </style>
 
-  <noscript>
-    <style>
-      #boot { display: none !important; }
-      #site { display: block !important; }
-    </style>
-  </noscript>
-<link rel="stylesheet" href="site-nav.css">
+  <link rel="stylesheet" href="site-nav.css">
 
 <link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css"><link rel="stylesheet" href="readonly.css">
 </head>
 
 <body class="pm-v2 pm-app pm-home">
-  <section id="boot" aria-label="problem.me boot sequence">
-    <div class="boot-shell">
-      <div class="boot-bar">
-        <span>problem.me BIOS<span data-release-label data-prefix=" / rev "></span></span>
-        <span>LIVE BUILD</span>
-      </div>
-
-      <div class="boot-body">
-        <div class="boot-logo">problem.me<span class="blink-cursor" aria-hidden="true">_</span></div>
-        <div id="bootLog" class="boot-log" aria-hidden="true"></div>
-        <div class="boot-progress" role="progressbar" aria-label="Boot progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <span id="bootProgress"></span>
-        </div>
-        <div class="boot-footer">
-          <span id="bootStatus" aria-live="polite">INITIALIZING...</span>
-          <button class="skip" id="skipBoot" type="button">SKIP BOOT [ENTER]</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div id="site">
     <a class="readonly-skip-link" href="#top">Skip to main content</a>
     <header>
@@ -948,7 +823,7 @@
             <a href="techniques.html#field-guides">[03] Field Guides</a>
             <a href="features.html">[04] HISTORY ↗</a>
           </div>
-          <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version" data-release-label data-prefix=" / v"></span></div>
+          <div class="statusline"><span class="status-dot" aria-hidden="true"></span>SYSTEM ONLINE<span class="status-version"> / v2.0.2</span></div>
           
         </nav>
       </div>
@@ -965,20 +840,14 @@
             <div class="pm-home-actions"><a class="pm-button pm-button--primary" href="techniques.html">Explore the case files <span aria-hidden="true">→</span></a><a class="pm-button" href="techniques.html#field-guides">Read the field guides</a></div>
             <div class="terminal-prompt" aria-label="Animated mission prompt">
               <span class="chev" aria-hidden="true">&gt;</span>
-              <span id="typedMission"></span>
+              <span>read a case. follow the evidence. think a little clearer.</span>
               <span class="blink-cursor" aria-hidden="true">_</span>
             </div>
-
-            <div class="easter">
-              Try a command: <button type="button" id="solveEverything">problem.me:~$ solve everything</button>
-              <div class="easter-output" id="easterOutput" aria-live="polite"></div>
-            </div>
           </div>
-
           <figure class="hero-art pm-mascot-terminal">
             <div class="hero-art-top"><span>CAPYBARA.EXE</span><span>● CALM MODE</span></div>
             <img class="pm-mascot-image" src="assets/capybara-terminal-unframed.webp" width="1448" height="1086" alt="A smiling golden capybara wearing green-lit headphones, working at a terminal laptop" fetchpriority="high" decoding="async">
-            <figcaption class="capy-info"><strong>Less panic. More perspective.</strong><span class="capy-status" id="capyStatus">STATUS: UNBOTHERED</span></figcaption>
+            <figcaption class="capy-info"><strong>Less panic. More perspective.</strong><span class="capy-status">STATUS: UNBOTHERED</span></figcaption>
             <div class="mini-status"><strong>YOUR NEXT STEP</strong><span>OBSERVE</span><span>QUESTION</span><span>TEST_</span></div>
           </figure>
         </div>
@@ -1129,7 +998,7 @@ RISK    | DECIDE</pre>
           <div class="launch-box frame">
             <div class="lagoon-topbar">
               <span>STATION 01 / THINKING LAGOON</span>
-              <span class="launch-state" data-release-label data-prefix="V" data-suffix=" ONLINE">ONLINE</span>
+              <span class="launch-state">V2.0.2 ONLINE</span>
             </div>
             <div class="lagoon-grid">
               <figure class="lagoon-scene">
@@ -1180,8 +1049,6 @@ RISK    | DECIDE</pre>
 </footer>
   </div>
 
-  <script src="runtime/index-1.js"></script>
-
-  <script src="readonly-home.js"></script>
+  
 </body>
 </html>

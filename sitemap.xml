@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://problem.me/</loc></url>
   <url><loc>https://problem.me/techniques.html</loc></url>
+  <url><loc>https://problem.me/academy.html</loc></url>
+  <url><loc>https://problem.me/foundations.html</loc></url>
+  <url><loc>https://problem.me/choose-method.html</loc></url>
+  <url><loc>https://problem.me/professional-cases.html</loc></url>
+  <url><loc>https://problem.me/practice.html</loc></url>
+  <url><loc>https://problem.me/glossary.html</loc></url>
   <url><loc>https://problem.me/5-whys.html</loc></url>
   <url><loc>https://problem.me/fishbone.html</loc></url>
   <url><loc>https://problem.me/pareto.html</loc></url>

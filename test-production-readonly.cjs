@@ -15,7 +15,8 @@ const server=http.createServer((req,res)=>{
 const routes=['index.html','techniques.html','5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
 'privacy.html','features.html',
-'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html'];
+'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html',
+'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html'];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 (async()=>{
  await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
@@ -101,7 +102,7 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
    await page.goto(base+'/academy.html');
    assert(await page.locator('main').isVisible(),'Academy content visible');
-   assert.equal(await page.locator('.ac-card').count(),10,'Academy curriculum and method cards');
+   assert.equal(await page.locator('.ac-card').count(),11,'Academy curriculum and method cards');
    await page.goto(base+'/professional-cases.html');
    assert.equal(await page.locator('article.ac-case').count(),4,'four professional cases');
    await page.goto(base+'/practice.html');
@@ -113,7 +114,26 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('.ac-term').count(),22,'Academy glossary');
    await page.goto(base+'/index.html');
    assert.equal(await page.locator('#academy-paths a[href="foundations.html"]').count(),1,'Academy homepage discovery');
-   console.log('PASS read-only Academy v2.1.0 at '+width+'px: '+routes.length+' routes, no input/storage/external requests, original capybaras');
+   await page.goto(base+'/evidence-lab.html');
+   assert.equal(await page.locator('.ev-case').count(),3,'Lab hub contains three investigations');
+   for(const lab of ['lab-signin.html','lab-warehouse.html','lab-migration.html']){
+     await page.goto(base+'/'+lab);
+     assert.equal(await page.locator('.ev-stage').count(),3,lab+' three stages');
+     assert.equal(await page.locator('.ev-evidence').count(),3,lab+' three evidence disclosures');
+     assert.equal(await page.locator('.ev-branch').count(),6,lab+' six branching choices');
+     assert.equal(await page.locator('#debrief').count(),1,lab+' debrief');
+     await page.locator('.ev-evidence summary').first().click();
+     assert(await page.locator('.ev-evidence').first().evaluate(e=>e.open),lab+' evidence disclosure opens');
+     await page.locator('.ev-branch summary').first().click();
+     assert(await page.locator('.ev-branch').first().evaluate(e=>e.open),lab+' decision disclosure opens');
+     assert.equal(await page.locator('.ev-branch').first().locator('a[href="#stage2"]').count(),1,lab+' first decision progresses to next stage');
+     assert.equal(await page.locator('form,input,textarea,select,button,script,[contenteditable]').count(),0,lab+' no interactive inputs');
+     assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0,lab+' no browser storage');
+   }
+   assert.deepEqual(errors,[],'Lab browser errors at '+width);
+   assert.deepEqual(missing,[],'Lab missing resources at '+width);
+   assert.deepEqual(external,[],'Lab external requests at '+width);
+   console.log('PASS read-only Evidence Lab v2.2.0 at '+width+'px: '+routes.length+' routes, no inputs, storage or external requests');
    await ctx.close();
   }
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}

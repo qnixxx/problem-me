@@ -14,7 +14,8 @@ const server=http.createServer((req,res)=>{
 });
 const routes=['index.html','techniques.html','5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
-'privacy.html','features.html'];
+'privacy.html','features.html',
+'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html'];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 (async()=>{
  await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
@@ -98,7 +99,21 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/techniques.html');
    assert.equal(await page.locator('.tech-card').count(),4,'library cases');
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
-   console.log('PASS read-only production at '+width+'px: '+routes.length+' routes, no input/storage/external requests, original capybaras');
+   await page.goto(base+'/academy.html');
+   assert(await page.locator('main').isVisible(),'Academy content visible');
+   assert.equal(await page.locator('.ac-card').count(),11,'Academy curriculum and method cards');
+   await page.goto(base+'/professional-cases.html');
+   assert.equal(await page.locator('article.ac-case').count(),4,'four professional cases');
+   await page.goto(base+'/practice.html');
+   assert.equal(await page.locator('.ac-quiz details').count(),8,'read-only practice self-checks');
+   await page.locator('.ac-quiz details').first().locator('summary').click();
+   assert(await page.locator('.ac-quiz details').first().getAttribute('open')!==null,'native disclosure works');
+   assert.equal(await page.locator('input,textarea,button,select,form,script').count(),0,'practice remains no-input');
+   await page.goto(base+'/glossary.html');
+   assert.equal(await page.locator('.ac-term').count(),22,'Academy glossary');
+   await page.goto(base+'/index.html');
+   assert.equal(await page.locator('#academy-paths a[href="foundations.html"]').count(),1,'Academy homepage discovery');
+   console.log('PASS read-only Academy v2.1.0 at '+width+'px: '+routes.length+' routes, no input/storage/external requests, original capybaras');
    await ctx.close();
   }
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}

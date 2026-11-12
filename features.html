@@ -1,75 +1,100 @@
 <!doctype html>
-<html lang="en" class="pm-theme">
-<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self'">
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#010704">
-<meta name="description" content="problem.me release history — from the original project to today’s Academy and Evidence Lab.">
-<title>Feature Log | problem.me</title>
+<meta name="color-scheme" content="dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
+<meta name="description" content="Explore the problem.me v1.0 learning experience: Problem Management Academy, Technique Library, illustrated Case Files, Evidence Lab and practical reasoning exercises.">
+<link rel="canonical" href="https://problem.me/features.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Explore problem.me — v1.0">
+<meta property="og:description" content="A place for clearer thinking. Explore problem management, practical techniques, illustrated case studies and guided investigations.">
+<meta property="og:url" content="https://problem.me/features.html">
+<meta property="og:image" content="https://problem.me/problem-me-social-preview-1200x630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="academy.css">
+<title>Explore problem.me | Features & Learning</title>
 <style>
-:root{color-scheme:dark;--bg:#020805;--panel:#031009;--surface:#020d08;--surface2:#020a06;--green:#63ffb5;--green2:#21d67a;--yellow:#ffe95b;--cream:#f2f0df;--muted:#86b79e;--text:#b9e4ce;--line:#1f6f4d;--bad:#ff9f7d;--max:980px}
-*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 8%,#062015 0,var(--bg) 42%);color:var(--green);font:16px/1.55 "Courier New",Courier,monospace}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 4px);opacity:.42}.wrap{width:min(calc(100% - 32px),var(--max));margin:auto}a{color:inherit;text-underline-offset:.2em}header{border-bottom:1px solid var(--line);background:rgba(2,8,5,.94);position:sticky;top:0;z-index:20}nav{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:700;font-size:1.3rem;text-decoration:none;letter-spacing:-.05em}.back{font-size:.875rem;color:var(--cream);text-decoration:none}.online{font-size:.875rem;color:var(--muted);white-space:nowrap}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green2);margin-right:7px;box-shadow:0 0 8px #21d67a80}.blink{animation:blink .8s steps(1,end) infinite}@keyframes blink{50%{opacity:0}}
-.hero{padding:56px 0 34px}.prompt,.kicker{color:var(--muted);font-size:.875rem;letter-spacing:.08em;text-transform:uppercase}.version-now{color:var(--yellow);border-left:1px solid var(--line);padding-left:10px;margin-left:8px}.hero h1{margin:12px 0 14px;color:var(--cream);font-size:clamp(2.7rem,8vw,5.6rem);line-height:.88;letter-spacing:-.065em;text-transform:uppercase}.hero h1 span{display:block;color:var(--green);font-size:.42em;line-height:1.05;margin-top:.24em;letter-spacing:-.025em}.lede{max-width:760px;margin:0;color:var(--text);font-size:.9rem}.summary{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);margin-top:28px;background:var(--surface)}.summary div{padding:13px 14px;border-right:1px solid var(--line)}.summary div:last-child{border-right:0}.summary small{display:block;color:var(--muted);font-size:.875rem}.summary strong{display:block;margin-top:3px;color:var(--cream);font-size:.875rem}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:14px}.section-head h2{margin:0;color:var(--cream);font-size:.9rem}.section-head span{color:var(--muted);font-size:.875rem}.timeline{position:relative;margin-bottom:52px}.timeline:before{content:"";position:absolute;left:58px;top:0;bottom:0;width:1px;background:var(--line)}.release{display:grid;grid-template-columns:116px minmax(0,1fr);gap:18px;position:relative;padding:0 0 16px}.release:before{content:"";position:absolute;left:54px;top:25px;width:9px;height:9px;background:var(--bg);border:2px solid var(--green);border-radius:50%;z-index:1}.release.current:before{border-color:var(--yellow);box-shadow:0 0 12px rgba(255,233,91,.5)}.release-tag{padding-top:17px;text-align:right}.release-tag strong{display:block;color:var(--green);font-size:.875rem}.release.current .release-tag strong{color:var(--yellow)}.release-tag small{display:block;color:var(--muted);font-size:.875rem;margin-top:2px}.release-card{border:1px solid var(--line);background:var(--surface);padding:17px 18px}.release.current .release-card{border-color:var(--yellow);box-shadow:inset 3px 0 0 var(--yellow)}.release-card h3{margin:0 0 7px;color:var(--cream);font-size:1rem}.release-card p{margin:0;color:var(--text);font-size:.875rem}.release-card ul{margin:12px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}.release-card li{position:relative;padding-left:14px;color:var(--muted);font-size:.875rem}.release-card li:before{content:"+";position:absolute;left:0;color:var(--green)}.release.current .release-card li:before{color:var(--yellow)}.badge{display:inline-block;margin-bottom:8px;padding:2px 6px;border:1px solid var(--line);color:var(--muted);font-size:.875rem}.badge.current{border-color:var(--yellow);color:var(--yellow)}
-.note{border:1px dashed var(--line);padding:15px 16px;margin:0 0 42px;color:var(--muted);font-size:.875rem;background:var(--surface2)}.note strong{color:var(--yellow)}footer{border-top:1px solid var(--line);padding:24px 0 34px;color:var(--muted);font-size:.875rem}footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}footer strong{color:var(--cream)}footer a{text-decoration:none}:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}.skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:6px;z-index:100;background:var(--bg);padding:9px}
-@media(hover:hover) and (pointer:fine){.brand:hover,.back:hover,footer a:hover{color:var(--yellow)}}
-@media(max-width:640px){.wrap{width:min(calc(100% - 20px),var(--max))}.online{display:none}.hero{padding:38px 0 26px}.hero h1{font-size:clamp(2.5rem,13vw,4rem)}.summary{grid-template-columns:1fr}.summary div{border-right:0;border-bottom:1px solid var(--line)}.summary div:last-child{border-bottom:0}.timeline:before{left:10px}.release{grid-template-columns:1fr;gap:6px;padding-left:28px}.release:before{left:6px;top:21px}.release-tag{text-align:left;padding-top:8px;display:flex;gap:9px;align-items:baseline}.release-card ul{grid-template-columns:1fr}.section-head>span{display:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+.feature-overview{background:radial-gradient(ellipse at 78% 0,rgba(35,111,64,.22),transparent 55%);border-bottom:1px solid #2f7650;padding:clamp(45px,8vw,85px) 0}
+.feature-overview-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(230px,.6fr);gap:36px;align-items:center}
+.feature-overview h1{font:700 clamp(2.9rem,6.5vw,5.25rem)/1.07 "Courier New",Courier,monospace;color:#faf5e2;letter-spacing:-.06em;margin:16px 0 19px}
+.feature-overview h1 span{display:block;color:#35ff91}
+.feature-overview p{max-width:70ch}
+.feature-overview figure{margin:0;overflow:hidden;border:1px solid #377551;border-radius:17px;background:radial-gradient(circle at 50% 42%,#12402a,#06150c 72%);padding:20px 16px 8px}
+.feature-overview figure img{display:block;object-fit:contain;width:100%;height:auto;max-height:330px}
+.feature-overview figcaption{color:#b4d8c2;padding:12px;text-align:center;font:700 .7rem/1.5 "Courier New",monospace}
+.feature-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.feature-stat{padding:16px 17px;background:#081c11;border:1px solid #31714e;border-radius:11px}
+.feature-stat strong{display:block;color:#35ff91;font:700 1.7rem/1.2 "Courier New",monospace}
+.feature-stat span{display:block;color:#b3d7c0;font:.76rem/1.6 "Courier New",monospace;margin-top:5px}
+.feature-paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin:25px 0}
+.feature-path{border:1px solid #377551;border-radius:14px;background:#071b11;padding:24px;min-width:0}
+.feature-path h3{font:700 1.18rem/1.4 "Courier New",monospace;margin:8px 0;color:#f6f2e2}
+.feature-path p{margin:0 0 18px}
+.feature-path a{color:#35ff91;font:700 .85rem/1.6 "Courier New",monospace;text-decoration:none}
+.feature-path a:hover{text-decoration:underline}
+.feature-link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:21px 0}
+.feature-link{background:#06170e;border:1px solid #34714f;border-radius:13px;padding:20px}
+.feature-link h3{color:#faf5e2;margin:0 0 10px;font:700 1rem/1.45 "Courier New",monospace}
+.feature-link p{margin:0 0 16px}
+.feature-link a{color:#35ff91;font:700 .82rem/1.5 "Courier New",monospace}
+.feature-principles{list-style:none;padding:0;margin:18px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.feature-principles li{padding:20px;border-top:3px solid #37de81;background:#091d12;border-radius:0 0 11px 11px}
+.feature-principles strong{display:block;color:#faf5e2;font:700 1rem/1.5 "Courier New",monospace;margin-bottom:8px}
+.feature-principles span{display:block;color:#c2ddcd}
+@media(max-width:860px){.feature-overview-grid{grid-template-columns:1fr}.feature-overview figure{max-width:430px}.feature-link-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.feature-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-paths,.feature-principles,.feature-link-grid{grid-template-columns:1fr}.feature-overview{padding:36px 0}.feature-overview h1{font-size:clamp(2.5rem,11.5vw,3.5rem)}.feature-path{padding:19px}}
 </style>
-<link rel="stylesheet" href="site-nav.css">
-<link rel="stylesheet" href="typography.css"><link rel="stylesheet" href="brand-v2.css">
-<link rel="canonical" href="https://problem.me/features.html" /></head>
-<body class="pm-v2 pm-app">
-<a class="skip" href="#log">Skip to feature log</a>
-<header><nav class="wrap" aria-label="Primary navigation"><a class="brand" href="index.html">problem<em class="brand-accent">.me</em><span class="blink" aria-hidden="true">_</span></a><a  class="back" href="index.html">← [ BACK TO BASE ]</a><span class="online"><i class="dot" aria-hidden="true"></i>BUILD HISTORY</span></nav></header>
-<main class="wrap">
-<section class="hero" aria-labelledby="page-title"><p class="prompt">&gt; cat /system/feature-log.txt <span class="version-now">CURRENT v2.2.2</span></p><h1 id="page-title">FEATURE LOG_<span>HOW PROBLEM.ME GOT HERE.</span></h1><p class="lede">A record of major releases, from early experiments to today's Academy and Evidence Lab.</p><div class="summary"><div><small>CURRENT RELEASE</small><strong>v2.2.2</strong></div><div><small>LEARNING EXPERIENCE</small><strong>CASE FILES + FIELD GUIDES</strong></div><div><small>READING CONTENT</small><strong>ACADEMY + GUIDED EVIDENCE LAB</strong></div></div></section>
-<section id="log" aria-labelledby="log-title"><div class="section-head"><h2 id="log-title">RELEASE HISTORY_</h2><span>NEWEST → OLDEST</span></div><div class="timeline"><article class="release current"><div class="release-tag"><strong>v2.2.2</strong><small>CURRENT</small></div><div class="release-card"><span class="badge current">EVIDENCE LAB REFINEMENT</span><h3>Stronger learning. Established capybara character.</h3><p>Restored the original investigator, analyst and coffee capybara illustrations in the Evidence Lab and reorganized the three simulations to explain what is known, what remains uncertain, and what would constitute a defensible finding.</p><ul><li>Reused established mascot art across the Lab cards and case pages</li><li>Evidence framing with observations, unknowns and method selection</li><li>Expanded reasoning workshops, alternative explanations and verification criteria</li><li>Improved mobile and desktop typography, hierarchy and image treatment</li><li>Preserved the existing learning paths and zero-data-entry architecture</li></ul><p><a href="evidence-lab.html">Explore the refined Evidence Lab →</a></p></div></article><article class="release"><div class="release-tag"><strong>v2.2.1</strong><small>PREVIOUS</small></div><div class="release-card"><span class="badge">EDITORIAL &amp; VISUAL POLISH</span><h3>More character. Clearer learning.</h3><p>Three new capybara illustrations now accompany the Evidence Lab investigations. Learning pages lead with techniques, evidence and curiosity rather than repeated technical announcements. The original visual identity and editorial curriculum are preserved.</p><ul><li>Distinct capybara scenes for service incidents, warehouse quality and decision analysis</li><li>Updated Evidence Lab cards and chapter illustrations</li><li>Cleaner homepage, Academy, case and exercise copy</li><li>Privacy details remain available on their dedicated page</li><li>Responsive illustration and accessibility regression checks retained</li></ul><p><a href="evidence-lab.html">Explore the refreshed Evidence Lab →</a></p></div></article><article class="release"><div class="release-tag"><strong>v2.2.0</strong><small>PREVIOUS</small></div><div class="release-card"><span class="badge">GUIDED EVIDENCE LAB</span><h3>Investigate the evidence, not the first explanation.</h3><p>A new read-only Evidence Lab contains three staged fictional investigations with inspectable records, branching explanations and verification-focused debriefs. All decisions are native HTML disclosures: nothing is entered, scored, transmitted or stored.</p><ul><li>A regional sign-in outage with comparative evidence and safe controls</li><li>A warehouse scanning investigation using error-rate denominators and controlled trials</li><li>A migration decision with mandatory requirements, weighted preferences and sensitivity analysis</li><li>Accessible, keyboard-operable native disclosures; mobile layout and no-script checks</li><li>New Academy chapter, homepage discovery, related learning links and searchable sitemap routes</li></ul><p><a href="evidence-lab.html">Explore the Evidence Lab →</a></p></div></article><article class="release"><div class="release-tag"><strong>v2.1.0</strong><small>PREVIOUS</small></div><div class="release-card"><span class="badge">PROBLEM MANAGEMENT ACADEMY</span><h3>From learning a technique to thinking like an investigator.</h3><p>A new read-only curriculum adds structured foundations, technique selection, four fictional professional case studies, eight reasoning self-checks and a 22-term glossary. The four original illustrated capybara cases and Field Guides remain.</p><ul><li>Two learning paths and a four-chapter curriculum</li><li>Incident, problem, workaround and known error fundamentals</li><li>Method-selection table and technique handoffs</li><li>Professional scenarios covering payments, warehouse quality, facilities and migration decisions</li><li>Native read-only disclosure answers, with no forms, scripts, saved progress or analytics</li><li>Six new pages linked from home and the library, with responsive layout and navigation checks</li></ul><p><a href="academy.html">Explore the Academy →</a></p></div></article><article class="release"><div class="release-tag"><strong>v2.0.2</strong><small>PREVIOUS</small></div><div class="release-card"><span class="badge">QUALITY &amp; TRUST</span><h3>Only reading. No visitor input.</h3><p>Removed the retired investigation forms, associated routes and browser application runtime. The homepage opens immediately without a boot gate, scripts or buttons. Educational case studies and Field Guides are unchanged.</p><ul><li>No forms, text fields, buttons or editable workspaces</li><li>Script-free Content Security Policy across public pages</li><li>Retired investigation and prototype URLs removed from the production tree</li><li>Unused legacy CSS and source artifacts cleared</li><li>Build and browser tests enforce the read-only boundary</li></ul></div></article><article class="release"><div class="release-tag"><strong>v2.0.1</strong><small>PREVIOUS</small></div><div class="release-card"><span class="badge current">READ-ONLY POLISH</span><h3>Less friction. Clearer pages.</h3><p>The original terminal and capybaras remain. Navigation, page previews and Field Guide actions now match the read-only experience.</p><ul><li>Accurate search and sharing metadata on all four Case Files</li><li>Homepage navigation labels and keyboard Skip link</li><li>Mobile-friendly Field Guide actions</li><li>Educational sitemap; retired tool routes excluded</li><li>Additional automated privacy and reading checks</li></ul></div></article><article class="release"><div class="release-tag"><strong>v2.0.0</strong><small>PREVIOUS</small></div><div class="release-card"><span class="badge">READ-ONLY EDITION</span><h3>Original Problem.me, now a static educational publication.</h3><p>The terminal aesthetic, colorful capybaras, four complete illustrated Case Files and all four Field Guides remain. The interactive workspaces, investigation library, local saves and data-entry routes have been retired from the production site.</p><ul><li>Read-only case studies and technique articles</li><li>No visitor-submitted information or saved investigations</li><li>No application cookies, analytics, third-party scripts or browser storage</li><li>Previous interactive release preserved in Git history on the rollback branch</li><li>Legacy workspace URLs were initially replaced by read-only retirement notices (removed in v2.0.2)</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v1.0.2</strong><small>ARCHIVED</small></div><div class="release-card"><span class="badge">PRIVATE BY DEFAULT (HISTORICAL)</span><h3>Private first. Save when you choose.</h3><p>All four standalone techniques now start in Private Session, like a new shared investigation. Old drafts remain recoverable without silently loading or overwriting them.</p><ul><li>Private Session on every new standalone visit</li><li>No automatic loading or saving of previous standalone drafts</li><li>Explicit Local Save with an overwrite warning</li><li>Open Saved Draft without enabling persistence</li><li>Evidence Ledgers respect the Private default</li><li>No cookie consent pop-up or mandatory acknowledgment</li></ul></div></article><article class="release">
-<div class="release-tag"><strong>v1.0.1</strong><small>RELEASED</small></div>
-<div class="release-card"><span class="badge">SECURITY HARDENING</span><h3>Safer handoffs. Tighter browser defenses.</h3><p>Focuses on protecting user-entered investigation content while keeping the site static, local-first and account-free.</p><ul><li>No problem text in handoff URLs</li><li>Explicit copy-and-paste for Private Session handoffs</li><li>Content Security Policy and external scripts</li><li>Standalone draft overwrite detection</li><li>Stricter imported investigation IDs</li><li>Automated security regression checks</li></ul></div></article>
-<article class="release">
-      <div class="release-tag"><strong>v1.0.0</strong><small>RELEASED</small></div>
-      <div class="release-card"><span class="badge">LOCAL-FIRST WORKSPACE</span>
-        <h3>One investigation. A clearer next step.</h3>
-        <p>The first stable release brings the existing workspace, learning layer and shared navigation together. CAPYBARA.EXE is ready; your conclusions still need evidence.</p>
-        <ul><li>5 Whys, Fishbone and Pareto with one Evidence Ledger</li><li>Private Sessions and browser-local investigations</li><li>Portable .problemme exports; schema 1, 2 and 3 compatibility</li><li>Four Field Guides and plain-language privacy notes</li><li>Shared navigation and readable mobile layouts</li><li>No accounts, cloud sync or AI reasoning engine</li></ul>
-      </div>
-    </article>
-    <article class="release"><div class="release-tag"><strong>v0.9.2</strong><small>RELEASED</small></div><div class="release-card"><span class="badge">KNOWLEDGE + PRIVACY</span><h3>Methods you can read. Privacy you can understand.</h3><p>The technique library gains practical field guides, while Capybara explains the boundaries of local storage, Private Session and portable exports.</p><ul><li>Four technique field guides</li><li>Dedicated plain-language privacy page</li><li>Capybara privacy notes in workspaces</li><li>Readable .problemme export warning</li><li>Local / Private Session boundaries explained</li><li>No investigation schema change</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.9.1</strong><small>STABILIZATION</small></div><div class="release-card"><span class="badge">STABILIZATION</span><h3>Safer saves. Clearer next steps.</h3><p>Shared Pareto joins the investigation flow, with stronger local-save and Private Session boundaries.</p><ul><li>Three connected techniques / schema 3</li><li>Pareto handoffs after data entry</li><li>Atomic conflict-safe local saves</li><li>Private Sessions leave saved copies intact</li><li>Safer legacy migration</li><li>Mobile and browser regression checks</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.8.1</strong><small>LOCAL LIBRARY</small></div><div class="release-card"><span class="badge">MY INVESTIGATIONS</span><h3>Multiple problems. One local library.</h3><p>The shared workspace became a real investigation library instead of a single saved pilot.</p><ul><li>IndexedDB investigation storage</li><li>My Investigations dashboard</li><li>Continue / duplicate / export / delete</li><li>Search and status filtering</li><li>Legacy pilot migration</li><li>Private Sessions remain unsaved</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.8</strong><small>SHARED PILOT</small></div><div class="release-card"><span class="badge">INVESTIGATION MODEL</span><h3>An investigation contains techniques.</h3><p>5 Whys and Fishbone moved inside one shared investigation with one reasoning trail.</p><ul><li>5 Whys + Fishbone in one case</li><li>Shared Evidence Ledger</li><li>Fishbone cause → 5 Whys handoff</li><li>Portable .problemme v2 files</li><li>Private / local workspace modes</li><li>Versioned investigation schema</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.7.1</strong><small>PILOT</small></div><div class="release-card"><span class="badge">PORTABLE CASE FILES</span><h3>Investigations become an object.</h3><p>The first named investigation pilot proved local save plus portable import/export using 5 Whys.</p><ul><li>Named investigation snapshot</li><li>.problemme export / import</li><li>Schema validation</li><li>Private-safe behavior</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.6</strong><small>REASONING</small></div><div class="release-card"><span class="badge">REASONING LAYER</span><h3>Keep evidence separate from assumptions.</h3><p>Every technique gained a shared reasoning pattern around the method itself.</p><ul><li>Evidence Ledger</li><li>FACT / ASSUMPTION / TEST / RESULT</li><li>Technique handoffs</li><li>Local-first context transfer</li><li>Capybara reasoning guidance</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.5.3</strong><small>PRIVACY</small></div><div class="release-card"><span class="badge">PRIVACY PARITY</span><h3>Private Session everywhere.</h3><p>All interactive techniques adopted the same explicit local/private storage behavior.</p><ul><li>Private Session mode</li><li>Local save remains opt-in/out</li><li>Clear All Local Data</li><li>Credential / token warnings</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.5.2</strong><small>REPORTS</small></div><div class="release-card"><span class="badge">EXPORT</span><h3>Turn the reasoning into a document.</h3><p>The interactive tools gained structured print and Save-to-PDF reports.</p><ul><li>Technique-specific PDF layouts</li><li>Evidence included in reports</li><li>Local generation in the browser</li><li>Print-friendly styling</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.4</strong><small>INTERACTIVE</small></div><div class="release-card"><span class="badge">TOOLS</span><h3>Case Files became usable workspaces.</h3><p>The four teaching techniques moved from examples into interactive tools for real problems.</p><ul><li>Interactive 5 Whys</li><li>Interactive Fishbone</li><li>Interactive Pareto</li><li>Interactive Kepner–Tregoe</li><li>Local browser drafts</li><li>Copy / reset / print actions</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.3</strong><small>LIBRARY</small></div><div class="release-card"><span class="badge">INFORMATION ARCHITECTURE</span><h3>A proper Technique Library.</h3><p>The site stopped being only a homepage and became a navigable set of Case Files.</p><ul><li>Technique Library page</li><li>Four coordinated Case Files</li><li>Goal filters and local search</li><li>Previous / next Case navigation</li><li>Consistent technique metadata</li></ul></div></article>
-<article class="release"><div class="release-tag"><strong>v0.2.1</strong><small>POLISH</small></div><div class="release-card"><span class="badge">DESIGN SYSTEM</span><h3>The Case Files learned to speak the same language.</h3><p>Shared terminal styling, headers, responsive behavior and hero structure were standardized across techniques.</p><ul><li>Canonical palette and typography</li><li>Unified Case File header</li><li>Consistent hero identity</li><li>Mobile-responsive layouts</li><li>Accessibility and focus polish</li></ul></div></article>
+</head>
+<body class="pm-academy">
+<a class="ac-skip" href="#main-content">Skip to content</a>
+<header class="ac-header"><nav class="ac-shell" aria-label="Primary navigation"><a class="ac-brand" href="index.html">problem<span>.me</span>_</a><div class="ac-nav"><a href="index.html">Home</a><a href="academy.html">Academy</a><a href="techniques.html">Techniques</a><a href="evidence-lab.html">Evidence Lab</a><a href="features.html" aria-current="page">Explore</a></div></nav></header>
+<main id="main-content">
+<section class="feature-overview" aria-labelledby="feature-title"><div class="ac-shell feature-overview-grid">
+<div>
+<p class="ac-kicker">&gt; problem.me / v1.0 / what's inside</p>
+<h1 id="feature-title">Learn the method.<span>See the difference.</span></h1>
+<p class="ac-lede">A thoughtful, visual place to learn problem management. Understand a problem, choose a technique, examine evidence, and build the habit of testing a conclusion before acting on it.</p>
+<div class="ac-actions"><a class="ac-link primary" href="academy.html">Start with the Academy →</a><a class="ac-link" href="evidence-lab.html">Explore the Evidence Lab ↗</a></div>
+</div>
+<figure><img src="assets/capybara-analyst.webp" width="480" height="480" alt="Orange capybara analyst studying a checklist with pencil" decoding="async"><figcaption>PROBLEM.ME / THINK CLEARER</figcaption></figure>
 </div></section>
-<div class="note"><strong>LOGGING RULE_</strong> This page records meaningful product releases, not every commit or bug fix. The current site is read-only. Earlier releases documented below describe historical interactive functionality retained only in the archived Git version. Existing browser-local data from older versions is not automatically erased.</div>
-</main>
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-main">
-      <div class="footer-identity">
-        <a class="footer-home" href="index.html" aria-label="problem.me home">problem<em class="brand-accent">.me</em><span aria-hidden="true">_</span></a>
-        <p>Same problems. Clearer thinking.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Explore problem.me">
-        <ul>
-          <li><a href="academy.html">Academy</a></li><li><a href="evidence-lab.html">Evidence Lab</a></li><li><a href="techniques.html">Technique Library</a></li>
-          <li><a href="techniques.html">Technique Library</a></li>
-          <li><a href="techniques.html#field-guides">Field Guides</a></li>
-        </ul>
-      </nav>
-    </div>
-    <ul class="footer-utility" aria-label="Product information">
-      <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="features.html">Feature Log</a></li>
-    </ul>
-  </div>
-</footer>
-</body>
-</html>
+<div class="ac-shell">
+<section class="ac-section" id="overview" aria-labelledby="overview-title">
+<p class="ac-kicker">THE LEARNING EXPERIENCE_</p><h2 id="overview-title">Everything you need to begin.</h2>
+<p class="ac-intro">Move from the fundamentals to applied investigations at your own pace. Each part connects to the next, without pretending one diagram can solve every problem.</p>
+<div class="feature-stats">
+<div class="feature-stat"><strong>05</strong><span>ACADEMY CHAPTERS</span></div>
+<div class="feature-stat"><strong>04</strong><span>CORE TECHNIQUES</span></div>
+<div class="feature-stat"><strong>03</strong><span>GUIDED LABS</span></div>
+<div class="feature-stat"><strong>08</strong><span>REASONING EXERCISES</span></div>
+</div>
+<div class="feature-paths">
+<article class="feature-path"><p class="ac-kicker">01 / LEARN</p><h3>Problem Management Academy</h3><p>Start with incidents, problems, workarounds and known errors. Learn to frame a deviation, compare evidence, evaluate causes and verify lasting improvement.</p><a href="academy.html">Explore five chapters →</a></article>
+<article class="feature-path"><p class="ac-kicker">02 / APPLY</p><h3>Evidence Lab</h3><p>Work through three professional fictional investigations. Examine evidence packets, consider competing explanations and explore the consequences of different decisions.</p><a href="evidence-lab.html">Investigate the scenarios →</a></article>
+<article class="feature-path"><p class="ac-kicker">03 / UNDERSTAND</p><h3>Technique Library</h3><p>Learn 5 Whys, Fishbone, Pareto and Kepner–Tregoe. Each technique has an illustrated capybara Case File and an evidence-focused Field Guide.</p><a href="techniques.html">Browse four techniques →</a></article>
+<article class="feature-path"><p class="ac-kicker">04 / TRANSFER</p><h3>Professional Case Files</h3><p>Study worked examples spanning service operations, warehouse quality, facilities and technology decisions. Compare what was observed with what still required proof.</p><a href="professional-cases.html">Study the investigations →</a></article>
+</div></section>
+<section class="ac-section" id="resources" aria-labelledby="resources-title"><p class="ac-kicker">TOOLS FOR THINKING_</p><h2 id="resources-title">Find the right next question.</h2>
+<div class="feature-link-grid">
+<div class="feature-link"><h3>Technique Pathfinder</h3><p>Decide which method is helpful for your question—and which limitations matter.</p><a href="choose-method.html">Choose your method →</a></div>
+<div class="feature-link"><h3>Reasoning Practice</h3><p>Eight thought exercises with worked explanations for testing your reasoning.</p><a href="practice.html">Practise your judgment →</a></div>
+<div class="feature-link"><h3>Problem Management Glossary</h3><p>Twenty-two plain-language definitions for core concepts and methods.</p><a href="glossary.html">Explore the terminology →</a></div>
+</div></section>
+<section class="ac-section" id="approach" aria-labelledby="approach-title"><p class="ac-kicker">THE PROBLEM.ME APPROACH_</p><h2 id="approach-title">Evidence before certainty.</h2>
+<p>Good problem management isn't about finding someone to blame or filling a template. It's a repeatable discipline of making uncertainty visible, testing explanations and checking whether improvements endure.</p>
+<ul class="feature-principles">
+<li><strong>Be precise</strong><span>Describe the deviation and the conditions under which it occurs.</span></li>
+<li><strong>Stay curious</strong><span>Compare competing hypotheses and deliberately seek disconfirming evidence.</span></li>
+<li><strong>Verify results</strong><span>Separate containment from lasting control, with meaningful baselines and observation windows.</span></li>
+</ul>
+<div class="ac-next"><div><strong>Ready to explore problem management?</strong><p>Begin with the foundations, then follow a method into an illustrated case.</p></div><a class="ac-link primary" href="foundations.html">Start learning →</a></div>
+</section>
+</div></main>
+<footer class="ac-footer"><div class="ac-shell"><a class="ac-brand" href="index.html">problem<span>.me</span>_</a><p>Same problems. Clearer thinking.</p>
+<nav aria-label="Footer"><a href="academy.html">Academy</a><a href="techniques.html">Technique Library</a><a href="evidence-lab.html">Evidence Lab</a><a href="features.html">What's Inside</a><a href="privacy.html">Privacy</a></nav></div></footer>
+</body></html>

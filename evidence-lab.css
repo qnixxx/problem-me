@@ -1,4 +1,4 @@
-/* problem.me Evidence Lab v2.2 — narrative links and native details only. */
+/* Evidence Lab: narrative links and native details */
 .ev-hero{border-bottom:1px solid #286744;padding:clamp(40px,7vw,76px) 0;background:radial-gradient(circle at 85% 26%,rgba(37,145,83,.13),transparent 50%)}
 .ev-hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:28px;align-items:center}
 .ev-hero h1{font:700 clamp(2.65rem,6vw,5rem)/1.07 "Courier New",Courier,monospace;color:#faf5e2;letter-spacing:-.055em;margin:12px 0 22px}
@@ -87,7 +87,7 @@
 .ev-outcome a{color:#35ff91}
 .ev-resource-link{font:700 .84rem/1.6 "Courier New",monospace;color:#35ff91!important}
 
-/* v2.2.2 editorial refactor: stronger hierarchy and better treatment of established art */
+/* Case study layout, established mascot art and reasoning panels */
 .ev-hero-art{position:relative;box-shadow:0 20px 58px rgba(0,0,0,.22)}
 .ev-hero-art img{padding:16px 18px 0;box-sizing:border-box}
 .ev-case{transition:border-color .16s ease,transform .16s ease}

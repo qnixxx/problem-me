@@ -1,4 +1,4 @@
-/* Academy v2.1: static, read-only, no scripts or form controls */
+/* Academy: shared static educational layouts */
 body.pm-academy{margin:0;background:radial-gradient(ellipse at 72% 0,rgba(24,113,62,.16),transparent 50%),#010704;color:#cfe5d7;font:400 1rem/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
 body.pm-academy *{box-sizing:border-box}body.pm-academy a{color:inherit;text-underline-offset:.23em}body.pm-academy :focus-visible{outline:3px solid #f4ca85;outline-offset:3px}
 .ac-shell{width:min(calc(100% - 36px),1120px);margin:auto}

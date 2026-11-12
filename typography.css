@@ -44,7 +44,7 @@ body::before,body::after{display:none}
 @media(max-width:640px){:root{--pm-type-brand:1.25rem}}
 
 /* Shared text behavior: prose is spacious; compact labels remain legible.
-   Use targeted rules for legacy IDs rather than shrinking text to fit panels. */
+   Use targeted rules for existing IDs rather than shrinking text to fit panels. */
 :root body main p:not(.prompt,.case,.kicker){font-family:var(--pm-font-reading);font-size:var(--pm-type-prose);line-height:1.75;letter-spacing:0}
 :root body :is(summary,.button){line-height:1.5;white-space:normal;overflow-wrap:anywhere}
 :root body :is(small,.muted){line-height:1.6}

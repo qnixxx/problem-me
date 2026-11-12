@@ -1,5 +1,4 @@
-/* Problem.me v2.0.2: static design tokens and reading components. */
-/* problem.me Capybara Terminal v2 — opt-in design system, deliverable 01 */
+/* problem.me v1.0 — shared capybara-terminal design tokens and reading components. */
 :root{
   color-scheme:dark;
   --pm-ink:#010704;--pm-night:#020c07;--pm-deep:#04160d;--pm-panel:#061810;
@@ -9,17 +8,16 @@
   --pm-font:"Courier New",Courier,monospace;--pm-font-reading:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-body.pm-v2{margin:0;color:var(--pm-reading);background:radial-gradient(ellipse 80% 440px at 74% 1%,rgba(5,92,45,.28),transparent 73%),var(--pm-ink);font:16px/1.6 var(--pm-font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-body.pm-v2 *,body.pm-v2 *::before,body.pm-v2 *::after{box-sizing:border-box}
-body.pm-v2 a:focus-visible{outline:2px solid var(--pm-cream);outline-offset:3px}
-body.pm-v2 :is(p,h1,h2,h3,li){overflow-wrap:anywhere}
-body.pm-v2 .pm-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border:1px solid var(--pm-green);border-radius:9px;background:var(--pm-night);color:var(--pm-cream);font:700 .9rem/1.4 var(--pm-font);text-decoration:none}
-body.pm-v2 .pm-button:hover{background:#0e291a}
-body.pm-v2 .pm-button--primary{background:var(--pm-green);color:var(--pm-ink)}
-body.pm-v2 .pm-button--primary:hover{background:#a5ffca;color:var(--pm-ink)}
+body.pm-site{margin:0;color:var(--pm-reading);background:radial-gradient(ellipse 80% 440px at 74% 1%,rgba(5,92,45,.28),transparent 73%),var(--pm-ink);font:16px/1.6 var(--pm-font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.pm-site *,body.pm-site *::before,body.pm-site *::after{box-sizing:border-box}
+body.pm-site a:focus-visible{outline:2px solid var(--pm-cream);outline-offset:3px}
+body.pm-site :is(p,h1,h2,h3,li){overflow-wrap:anywhere}
+body.pm-site .pm-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border:1px solid var(--pm-green);border-radius:9px;background:var(--pm-night);color:var(--pm-cream);font:700 .9rem/1.4 var(--pm-font);text-decoration:none}
+body.pm-site .pm-button:hover{background:#0e291a}
+body.pm-site .pm-button--primary{background:var(--pm-green);color:var(--pm-ink)}
+body.pm-site .pm-button--primary:hover{background:#a5ffca;color:var(--pm-ink)}
 
-/* Application rollout. Legacy component layouts still own their geometry.
-   Screen-only: exported reports retain their existing print palettes. */
+/* Shared screen styles for the published educational pages. */
 @media screen {
   html.pm-theme {
     --bg:var(--pm-ink);--panel:var(--pm-panel);--panel2:var(--pm-night);

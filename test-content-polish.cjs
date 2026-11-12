@@ -11,7 +11,6 @@ const pages=[
 ];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 const guides=pages.filter(p=>p.startsWith('articles/'));
-const retired=['investigation.html','investigations.html','board-experiment.html','brand-system.html'];
 const sitemap=fs.readFileSync(path.join(root,'sitemap.xml'),'utf8');
 const robots=fs.readFileSync(path.join(root,'robots.txt'),'utf8');
 assert(robots.includes('Sitemap: https://problem.me/sitemap.xml'),'robots sitemap advertised');
@@ -24,6 +23,7 @@ for(const p of pages){
  const html=fs.readFileSync(path.join(root,p),'utf8');
  const head=html.split('</head>')[0];
  assert(!pattern.test(head),p+' should be indexable');
+ assert(!/\bv(?:0|2)\.\d+(?:\.\d+)?\b/i.test(html),p+' must not mention a superseded version');
  assert(head.includes('https://problem.me/'+(p==='index.html'?'':p)),p+' canonical or social URL');
  assert(!/<(?:input|textarea|select|form|button|script)\b/i.test(html),p+' is static with no controls or scripts');
  assert(head.includes("script-src 'none'") && head.includes("connect-src 'none'"),p+' script and outbound requests forbidden');
@@ -33,9 +33,6 @@ for(const p of pages){
    assert(!/og:description"\s+content="[^"]*\binteractive\b/i.test(head),p+' obsolete preview copy');
  }
 }
-for(const p of retired){
- assert(!fs.existsSync(path.join(root,p)),p+' retired route must not be published');
-}
 for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
  const html=fs.readFileSync(path.join(root,'articles',slug+'.html'),'utf8');
  assert(html.includes('capybara-'+slug+'-3d.webp'),'Field Guide must use its unique method illustration: '+slug);
@@ -44,13 +41,14 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 }
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
-assert(home.includes('application-version" content="2.2.2"'),'release metadata');
-assert(feature.includes('CURRENT v2.2.2'),'release log version');
-assert(!home.includes('My Investigations'),'obsolete footer link');
-assert(!home.includes('CURRENT SITE ↗'),'obsolete label');
+assert(home.includes('application-version" content="1.0"'),'v1.0 release metadata');
+assert(home.includes('status-version"> / v1.0'),'homepage version');
+assert(feature.includes('problem.me / v1.0 /') && feature.includes('id="overview"'),'v1.0 feature overview');
+assert(!feature.includes('RELEASE HISTORY') && !feature.includes('class="timeline"'),'no historical release timeline');
+assert(fs.existsSync(path.join(root,'brand.css')),'current design stylesheet');
+assert(!fs.readdirSync(root).some(n=>/^RELEASE-v/i.test(n)),'release history documents removed from production tree');
 assert(home.includes('Skip to main content'),'keyboard Skip link');
-assert(!fs.existsSync(path.join(root,'readonly-home.js')),'homepage script removed');
-assert(!fs.existsSync(path.join(root,'runtime')),'runtime directory removed');
+assert(!fs.readdirSync(root).some(n=>n.endsWith('.js')),'site root has no application JavaScript');
 assert(fs.existsSync(path.join(root,'assets/capybara-soaking.webp')),'original mascot present');
 const academy=fs.readFileSync(path.join(root,'academy.html'),'utf8');
 const pathfinder=fs.readFileSync(path.join(root,'choose-method.html'),'utf8');
@@ -118,4 +116,4 @@ for(const p of ['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'
  const html=fs.readFileSync(path.join(root,p),'utf8');
  assert(!html.includes('READ-ONLY CASE STUDY'),p+' editorial case label');
 }
-console.log('PASS v2.2.2: 22 educational pages, established capybaras, enhanced evidence reasoning, no visitor inputs.');
+console.log('PASS v1.0: fresh feature overview, 22 educational pages, established capybaras, and no visitor inputs.');

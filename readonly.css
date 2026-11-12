@@ -7,7 +7,7 @@ body.pm-home .prompt,body.pm-home .capy-info{overflow-wrap:anywhere}
 body.pm-home .lagoon-topbar{flex-wrap:wrap;gap:6px 16px}
 body.pm-home .lagoon-topbar>*{min-width:0;overflow-wrap:anywhere}
 
-/* Read-only case endings: dedicated styles, independent of former editor buttons.
+/* Read-only case endings: dedicated styles, independent of links.
    Two separate touch targets; no inherited inline links or text collisions. */
 body.pm-readonly-case .readonly-close{margin:36px auto 28px;padding:22px;border:1px solid var(--line);border-radius:12px;background:#031009;min-width:0}
 body.pm-readonly-case .readonly-summary{margin:0 0 20px;color:var(--copy,#b9e4ce);line-height:1.65;font-size:1rem;overflow-wrap:anywhere}
@@ -20,7 +20,7 @@ body.pm-readonly-case .readonly-action--primary:hover{background:#b2ffdc;color:#
 body.pm-readonly-case .readonly-action--secondary:hover{border-color:#ffe95b;color:#ffe95b}
 body.pm-readonly-case .readonly-action:focus-visible{outline:3px solid #ffe95b;outline-offset:3px}
 /* The excerpt has no three-column pager content. Use a two-item,
-   gap-separated layout instead of leaving oversized empty legacy grid cells. */
+   gap-separated layout instead of leaving oversized empty grid cells. */
 body.pm-readonly-case .readonly-pager{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;border:0;background:transparent;max-width:var(--max);margin:0 auto 34px}
 body.pm-readonly-case .readonly-pager a{flex:1 1 200px;min-width:0;min-height:60px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:#031009;color:var(--cream,#f2f0df);font:700 .875rem/1.45 "Courier New",Courier,monospace;letter-spacing:0;overflow-wrap:anywhere}
 body.pm-readonly-case .readonly-pager a+a{border-left:1px solid var(--line)}
@@ -35,7 +35,7 @@ body.pm-readonly-case .readonly-pager a:hover{border-color:#63ffb5;color:#63ffb5
  body.pm-readonly-case .readonly-pager a{flex:0 0 auto;min-height:54px}
 }
 
-/* v2.0.1 accessible Skip link and standalone Field Guide action parity */
+/* Accessible Skip link and standalone Field Guide actions */
 .readonly-skip-link{position:absolute;top:-100px;left:12px;z-index:160;padding:12px 16px;background:#ffe95b;color:#020805;font:700 1rem/1.5 "Courier New",Courier,monospace}
 .readonly-skip-link:focus{top:10px;outline:3px solid #63ffb5;outline-offset:3px}
 body.pm-readonly-guide .readonly-guide-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:28px 0 35px;min-width:0}
@@ -51,7 +51,7 @@ body.pm-readonly-guide .readonly-guide-action:focus-visible{outline:3px solid #f
 body.pm-readonly-guide .capy-card .pm-guide-3d-art{width:100%;height:auto;max-width:480px;aspect-ratio:3/2;margin:0 auto 16px;position:relative;overflow:hidden;border:1px solid rgba(99,255,181,.22);border-radius:8px;background:#010704}
 body.pm-readonly-guide .capy-card .pm-guide-3d-art img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center}
 
-/* At phone widths the legacy sidebar uses a 108px thumbnail grid.
+/* At phone widths the narrow sidebar uses a 108px thumbnail grid.
    Give the new method art its own full-width row, with text underneath. */
 @media(max-width:760px){
   body.pm-readonly-guide .aside .capy-card{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;text-align:left}

@@ -1,6 +1,6 @@
 'use strict';
-// Real-browser gate for all publicly reachable v2 pages. No input, network
-// telemetry, third-party scripts, or persistence in the read-only edition.
+// Browser regression for all published problem.me v1.0 educational pages.
+// Enforces no visitor-input controls, third-party requests, or application storage.
 const {chromium}=require('playwright');
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
 const root=__dirname;
@@ -100,6 +100,12 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/techniques.html');
    assert.equal(await page.locator('.tech-card').count(),4,'library cases');
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
+   await page.goto(base+'/features.html');
+   assert.equal(await page.locator('.feature-path').count(),4,'v1.0 learning pillars');
+   assert.equal(await page.locator('.feature-link').count(),3,'v1.0 additional learning resources');
+   assert.equal(await page.locator('.feature-principles li').count(),3,'v1.0 approach');
+   assert.equal(await page.locator('article.release,.timeline').count(),0,'feature page contains no historical release timeline');
+   assert(await page.getByRole('heading',{name:/Learn the method/}).isVisible(),'v1.0 feature overview visible');
    await page.goto(base+'/academy.html');
    assert(await page.locator('main').isVisible(),'Academy content visible');
    assert.equal(await page.locator('.ac-card').count(),11,'Academy curriculum and method cards');
@@ -156,7 +162,7 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.deepEqual(errors,[],'Lab browser errors at '+width);
    assert.deepEqual(missing,[],'Lab missing resources at '+width);
    assert.deepEqual(external,[],'Lab external requests at '+width);
-   console.log('PASS Evidence Lab v2.2.2 at '+width+'px: '+routes.length+' routes, no inputs, storage or external requests');
+   console.log('PASS problem.me v1.0 at '+width+'px: '+routes.length+' routes, no inputs, storage or external requests');
    await ctx.close();
   }
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}

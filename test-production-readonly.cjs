@@ -121,7 +121,15 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
      'lab-warehouse.html':'assets/capybara-new-warehouse.svg',
      'lab-migration.html':'assets/capybara-new-migration.svg'
    };
-   const cardArt=await page.locator('.ev-case img').evaluateAll(imgs=>imgs.map(img=>({path:new URL(img.currentSrc).pathname.split('/').pop(),valid:img.complete&&img.naturalWidth>0,alt:img.alt})));
+   const cardArt=await page.locator('.ev-case img').evaluateAll(async imgs=>{
+     await Promise.all(imgs.map(img=>new Promise(ok=>{
+       img.loading='eager';
+       if(img.complete){ok();return;}
+       img.addEventListener('load',ok,{once:true});
+       img.addEventListener('error',ok,{once:true});
+     })));
+     return imgs.map(img=>({path:new URL(img.currentSrc||img.src).pathname.split('/').pop(),valid:img.complete&&img.naturalWidth>0,alt:img.alt}));
+   });
    assert.equal(cardArt.length,3,'three illustrated Evidence Lab cards');
    assert.deepEqual(cardArt.map(a=>a.path),['capybara-new-signin.svg','capybara-new-warehouse.svg','capybara-new-migration.svg'],'distinct capybara case artwork');
    assert(cardArt.every(a=>a.valid&&a.alt.length>40),'capybara artwork loads and has descriptive alt');

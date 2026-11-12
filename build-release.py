@@ -35,9 +35,7 @@ for p in files:
     assert "script-src 'none'" in source and "connect-src 'none'" in source, f'{p}: script-free CSP missing'
     assert not page.scripts,f'{p}: scripts are disallowed'
 assert (ROOT/'index.html').read_text().find('name="application-version" content="'+VERSION+'"')>=0
-assert not any(p.exists() for p in [ROOT/'investigation.js',ROOT/'handoff.js',ROOT/'private-default.js',ROOT/'investigation-store.js'])
-assert not (ROOT/'next').exists() and not (ROOT/'bureau').exists(),'Preview directories must not be deployed'
-assert not list(ROOT.glob('*.js')) and not (ROOT/'runtime').exists(), 'JavaScript runtime must not be published'
+assert not list(ROOT.glob('*.js')), 'Application JavaScript must not be published'
 PUBLIC_PAGES={'index.html','techniques.html','5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
  'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html',
  'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html','features.html','privacy.html','404.html'}

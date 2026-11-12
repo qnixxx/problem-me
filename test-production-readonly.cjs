@@ -117,9 +117,9 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/evidence-lab.html');
    assert.equal(await page.locator('.ev-case').count(),3,'Lab hub contains three investigations');
    const expectedArtwork={
-     'lab-signin.html':'assets/capybara-new-signin.svg',
-     'lab-warehouse.html':'assets/capybara-new-warehouse.svg',
-     'lab-migration.html':'assets/capybara-new-migration.svg'
+     'lab-signin.html':'assets/capybara-investigator.webp',
+     'lab-warehouse.html':'assets/capybara-analyst.webp',
+     'lab-migration.html':'assets/capybara-coffee.webp'
    };
    const cardArt=await page.locator('.ev-case img').evaluateAll(async imgs=>{
      await Promise.all(imgs.map(img=>new Promise(ok=>{
@@ -131,11 +131,15 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
      return imgs.map(img=>({path:new URL(img.currentSrc||img.src).pathname.split('/').pop(),valid:img.complete&&img.naturalWidth>0,alt:img.alt}));
    });
    assert.equal(cardArt.length,3,'three illustrated Evidence Lab cards');
-   assert.deepEqual(cardArt.map(a=>a.path),['capybara-new-signin.svg','capybara-new-warehouse.svg','capybara-new-migration.svg'],'distinct capybara case artwork');
+   assert.deepEqual(cardArt.map(a=>a.path),['capybara-investigator.webp','capybara-analyst.webp','capybara-coffee.webp'],'distinct capybara case artwork');
    assert(cardArt.every(a=>a.valid&&a.alt.length>40),'capybara artwork loads and has descriptive alt');
    for(const lab of ['lab-signin.html','lab-warehouse.html','lab-migration.html']){
      await page.goto(base+'/'+lab);
      assert.equal(await page.locator('.ev-stage').count(),3,lab+' three stages');
+     assert.equal(await page.locator('.ev-investigation-frame').count(),1,lab+' objective and evidence framing');
+     assert.equal(await page.locator('.ev-frame-panel').count(),2,lab+' observed and unknown comparison');
+     assert.equal(await page.locator('.ev-review').count(),1,lab+' reasoning workshop');
+     assert.equal(await page.locator('.ev-check-grid article').count(),3,lab+' verification plan');
      assert.equal(await page.locator('.ev-hero-art img').getAttribute('src'),expectedArtwork[lab],lab+' new capybara illustration');
      assert(await page.locator('.ev-hero-art img').evaluate(img=>img.complete&&img.naturalWidth>0&&img.alt.length>40),lab+' art renders and has accessible alternative');
      assert.equal(await page.locator('.ev-evidence').count(),3,lab+' three evidence disclosures');
@@ -152,7 +156,7 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.deepEqual(errors,[],'Lab browser errors at '+width);
    assert.deepEqual(missing,[],'Lab missing resources at '+width);
    assert.deepEqual(external,[],'Lab external requests at '+width);
-   console.log('PASS Evidence Lab v2.2.1 at '+width+'px: '+routes.length+' routes, no inputs, storage or external requests');
+   console.log('PASS Evidence Lab v2.2.2 at '+width+'px: '+routes.length+' routes, no inputs, storage or external requests');
    await ctx.close();
   }
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}

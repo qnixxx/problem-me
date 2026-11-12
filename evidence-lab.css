@@ -4,15 +4,15 @@
 .ev-hero h1{font:700 clamp(2.65rem,6vw,5rem)/1.07 "Courier New",Courier,monospace;color:#faf5e2;letter-spacing:-.055em;margin:12px 0 22px}
 .ev-hero h1 span{display:block;color:#35ff91}
 .ev-hero p{max-width:64ch}
-.ev-hero-art{margin:0;border:1px solid #326d4b;border-radius:16px;background:radial-gradient(circle at 50% 50%,#0b311c,#010704 75%);overflow:hidden}
-.ev-hero-art img{display:block;width:100%;height:auto;object-fit:contain}
+.ev-hero-art{margin:0;border:1px solid #326d4b;border-radius:16px;background:radial-gradient(circle at 52% 44%,#16442c,#07170f 67%,#010704 95%);overflow:hidden}
+.ev-hero-art img{display:block;width:100%;height:auto;max-height:340px;object-fit:contain;object-position:center bottom}
 .ev-hero-art figcaption{padding:11px 15px;border-top:1px solid #285a3f;color:#b8d7c3;font:.76rem/1.5 "Courier New",monospace}
 .ev-strip{display:flex;flex-wrap:wrap;gap:8px 12px;margin:20px 0}
 .ev-chip{display:inline-flex;align-items:center;min-height:32px;border:1px solid #3a7856;border-radius:99px;padding:6px 11px;color:#b9dec7;font:700 .73rem/1.5 "Courier New",monospace}
 .ev-chip.emphasis{color:#f4ca85;border-color:#8d703d}
 .ev-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin:26px 0}
 .ev-case{padding:0;border-radius:15px;background:#06170f;border:1px solid #31734f;overflow:hidden;display:flex;flex-direction:column}
-.ev-case img{display:block;width:100%;height:158px;object-fit:contain;background:radial-gradient(circle,#0b321d,#010704)}
+.ev-case img{display:block;width:100%;height:194px;object-fit:contain;object-position:center bottom;background:radial-gradient(circle at 50% 62%,#17442a,#071a10 63%,#010704)}
 .ev-case-body{padding:22px;display:flex;flex:1;flex-direction:column;gap:6px}
 .ev-case h3{color:#faf5e2;font:700 1.12rem/1.4 "Courier New",monospace;margin:6px 0}
 .ev-case p{margin:0 0 13px}
@@ -68,7 +68,7 @@
 .ev-ledger strong{color:#faf5e2}
 .ev-legal{font-size:.91rem;color:#b7d2c1}
 @media(max-width:860px){.ev-hero-grid{grid-template-columns:1fr}.ev-hero-art{max-width:500px}.ev-cases,.ev-method{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.ev-cases,.ev-method,.ev-choices{grid-template-columns:1fr}.ev-stage,.ev-dossier,.ev-debrief{padding:17px}.ev-outcome{padding:17px}.ev-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ev-hero h1{font-size:clamp(2.3rem,11vw,3.6rem)}.ev-case img{height:130px}.ev-progress a{font-size:.71rem}}
+@media(max-width:560px){.ev-cases,.ev-method,.ev-choices{grid-template-columns:1fr}.ev-stage,.ev-dossier,.ev-debrief{padding:17px}.ev-outcome{padding:17px}.ev-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ev-hero h1{font-size:clamp(2.3rem,11vw,3.6rem)}.ev-case img{height:180px}.ev-progress a{font-size:.71rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 
 /* Choice-to-outcome branching uses native disclosure, never visitor submission. */
@@ -86,3 +86,42 @@
 .ev-steps{list-style:decimal;padding-left:22px}.ev-steps li{margin:10px 0}
 .ev-outcome a{color:#35ff91}
 .ev-resource-link{font:700 .84rem/1.6 "Courier New",monospace;color:#35ff91!important}
+
+/* v2.2.2 editorial refactor: stronger hierarchy and better treatment of established art */
+.ev-hero-art{position:relative;box-shadow:0 20px 58px rgba(0,0,0,.22)}
+.ev-hero-art img{padding:16px 18px 0;box-sizing:border-box}
+.ev-case{transition:border-color .16s ease,transform .16s ease}
+.ev-case:hover{border-color:#6de8a2;transform:translateY(-2px)}
+.ev-case img{box-sizing:border-box;padding:12px 16px 0}
+.ev-case-body{padding:23px 24px}
+.ev-case-body .ac-kicker{color:#a7ceb4}
+.ev-investigation-frame{padding:clamp(20px,3.5vw,31px);background:#07160e;border:1px solid #316b49;border-radius:15px;margin:18px 0 24px;scroll-margin-top:160px}
+.ev-frame-head h2{font:700 clamp(1.35rem,2.7vw,1.9rem)/1.25 "Courier New",monospace;letter-spacing:-.03em;color:#f9f4e7;margin:7px 0 16px}
+.ev-frame-head p{max-width:76ch}
+.ev-framing-question{color:#d6f2db;font-size:1.08rem;line-height:1.7}
+.ev-frame-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0 14px}
+.ev-frame-panel{border:1px solid #306b4b;border-top:3px solid #4deb91;border-radius:10px;background:#0b2115;padding:19px;min-width:0}
+.ev-frame-panel:nth-child(2){border-top-color:#f0bb76}
+.ev-frame-panel h3{font:700 .96rem/1.4 "Courier New",monospace;color:#faf5e2;margin:0 0 13px}
+.ev-frame-panel ul{margin:0;padding-left:20px}
+.ev-frame-panel li{margin:8px 0;color:#c6dccb}
+.ev-evidence-limit{background:#11241b;border-left:3px solid #f0bb76;border-radius:0 8px 8px 0;padding:15px 18px}
+.ev-evidence-limit strong{color:#f3cf97;font:700 .85rem/1.5 "Courier New",monospace}
+.ev-evidence-limit p{margin:5px 0 0;color:#c6dfcc}
+.ev-review{border-top:1px solid #316b49;padding-top:20px;margin-top:25px}
+.ev-review h3{font:700 1.04rem/1.4 "Courier New",monospace;color:#f4ca85;margin:22px 0 11px}
+.ev-review p{max-width:77ch}
+.ev-check-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.ev-check-grid article{background:#0c2618;border:1px solid #346f50;border-radius:10px;padding:16px;min-width:0}
+.ev-check-grid strong{display:block;color:#b7ffc9;font:700 .86rem/1.4 "Courier New",monospace}
+.ev-check-grid p{margin:10px 0 0}
+.ev-takeaway{padding:15px 18px;background:#102719;border-left:3px solid #45ed8b;border-radius:0 9px 9px 0}
+.ev-takeaway strong{color:#d7ffd8}
+.ev-dossier{background:linear-gradient(140deg,#0b2418,#06160d);border-color:#40815a}
+.ev-stage{background:#07170f}
+.ev-stage h2{max-width:31ch}
+.ev-stage .ev-evidence summary:focus-visible,.ev-stage .ev-branch summary:focus-visible{outline:3px solid #f4ca85;outline-offset:-4px}
+.ev-legal{max-width:77ch}
+@media(max-width:860px){.ev-frame-grid{grid-template-columns:1fr}.ev-check-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ev-hero-art img{max-height:320px}.ev-case img{height:182px}.ev-check-grid{grid-template-columns:1fr}.ev-investigation-frame{padding:18px}.ev-frame-panel{padding:16px}.ev-review{padding-top:16px}}
+@media(prefers-reduced-motion:reduce){.ev-case{transition:none}.ev-case:hover{transform:none}}

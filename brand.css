@@ -1,0 +1,128 @@
+/* problem.me v1.0 — shared capybara-terminal design tokens and reading components. */
+:root{
+  color-scheme:dark;
+  --pm-ink:#010704;--pm-night:#020c07;--pm-deep:#04160d;--pm-panel:#061810;
+  --pm-green:#35ff91;--pm-glow:#08e87a;--pm-border:#158d52;
+  --pm-cream:#faf5e2;--pm-reading:#d0e7d8;--pm-muted:#99c7ac;--pm-capybara:#d18a49;
+  --pm-radius:15px;--pm-shadow:0 0 0 1px rgba(13,236,120,.08),0 12px 34px rgba(0,0,0,.27);
+  --pm-font:"Courier New",Courier,monospace;--pm-font-reading:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body.pm-site{margin:0;color:var(--pm-reading);background:radial-gradient(ellipse 80% 440px at 74% 1%,rgba(5,92,45,.28),transparent 73%),var(--pm-ink);font:16px/1.6 var(--pm-font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.pm-site *,body.pm-site *::before,body.pm-site *::after{box-sizing:border-box}
+body.pm-site a:focus-visible{outline:2px solid var(--pm-cream);outline-offset:3px}
+body.pm-site :is(p,h1,h2,h3,li){overflow-wrap:anywhere}
+body.pm-site .pm-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;border:1px solid var(--pm-green);border-radius:9px;background:var(--pm-night);color:var(--pm-cream);font:700 .9rem/1.4 var(--pm-font);text-decoration:none}
+body.pm-site .pm-button:hover{background:#0e291a}
+body.pm-site .pm-button--primary{background:var(--pm-green);color:var(--pm-ink)}
+body.pm-site .pm-button--primary:hover{background:#a5ffca;color:var(--pm-ink)}
+
+/* Shared screen styles for the published educational pages. */
+@media screen {
+  html.pm-theme {
+    --bg:var(--pm-ink);--panel:var(--pm-panel);--panel2:var(--pm-night);
+    --panel-2:var(--pm-night);--panel-3:var(--pm-deep);--surface:var(--pm-night);
+    --surface-deep:var(--pm-night);--surface-low:var(--pm-deep);
+    --green:var(--pm-green);--green2:var(--pm-glow);--green-2:var(--pm-glow);
+    --cream:var(--pm-cream);--text:var(--pm-reading);--copy:var(--pm-reading);
+    --muted:var(--pm-muted);--line:#337c55;--yellow:#f4ca85;
+    background:var(--pm-ink);
+  }
+  body.pm-app {color:var(--pm-reading)}
+  body.pm-app :is(header,footer.site-footer) {background:var(--pm-ink);border-color:var(--line)}
+  body.pm-app header .brand,body.pm-app .site-footer .footer-home {color:var(--pm-cream);letter-spacing:-.035em}
+  body.pm-app .brand-accent {font:inherit;color:var(--pm-green)}
+  body.pm-app :is(header .brand,.footer-home)>span {color:var(--pm-green)}
+  body.pm-app header .brand .blink {animation:pm-footer-cursor .8s steps(1,end) infinite}
+  body.pm-app :is(header .brand,.footer-home):hover,
+  body.pm-app :is(header .brand,.footer-home):hover>* {color:var(--yellow)}
+  body.pm-app .site-footer {padding-block:32px 20px}
+  body.pm-app .site-footer :is(.footer-identity p,.footer-utility a) {color:var(--pm-muted)}
+  body.pm-app .site-footer .footer-nav a {color:var(--pm-cream)}
+  body.pm-app .site-footer a:hover {color:var(--pm-green)}
+
+  /* Readable type stays local: mono identity, system sans for longer passages. */
+  :root body.pm-app .hero h1 {letter-spacing:-.045em;color:var(--pm-cream)}
+  :root body.pm-app .hero h1 span {letter-spacing:normal;line-height:1.4;color:var(--pm-green)}
+  :root body.pm-app main p:not(.prompt,.case,.kicker),
+  body.pm-app .article :is(ul,ol,.step span,.mini-row span,.truth-row span) {color:var(--pm-reading)}
+  body.pm-app :is(.case,.phase,.scene-no,.kicker) {color:var(--yellow)}
+  body.pm-app .hero {padding-block:clamp(32px,5vw,64px) 32px}
+  body.pm-app :is(.meta,.hero-meta) {border-radius:12px;background:var(--pm-panel)}
+
+  /* Shared surfaces; avoid overflow:hidden because workspaces have focus rings
+     and independently scrollable charts. No viewport-based height is added. */
+  body.pm-app :is(.mission-card,.tech,.tech-card,.guide-card,.trust-box,.launch-box,
+    .case-file,.library,.capy-card,.toc,.privacy-card,.rule,.step,.guide-pager,.case-pager,
+    .release-card) {
+    border-radius:var(--pm-radius);border-color:var(--line);background:var(--pm-night);
+  }
+  body.pm-app :is(.mission-card,.tech,.tech-card,.guide-card) {box-shadow:var(--pm-shadow)}
+  body.pm-app :is(.mission-card,.tech-card,.guide-card):hover {border-color:var(--pm-green);background:var(--pm-panel)}
+  body.pm-app :is(.guide-card,.tech-card) :is(h2,h3,strong) {color:var(--pm-cream)}
+  body.pm-app .guide-card span {font-family:var(--pm-font-reading);line-height:1.7}
+  body.pm-app :is(.card-copy,.tech,.guide-card) {min-width:0}
+  body.pm-app .case-file {box-shadow:0 10px 36px #0003}
+  body.pm-app .section-bar {border-radius:14px 14px 0 0;background:var(--pm-panel)}
+  body.pm-app .article section {border-top-style:solid;border-color:var(--line)}
+  body.pm-app .article .rule {border-left:3px solid var(--yellow)}
+  body.pm-app .toc a:hover {color:var(--pm-cream)}
+  body.pm-app .privacy-card {padding:22px}
+
+  body.pm-app :is(.button,.tech-actions a,.trust-link,.library-cta a,.lagoon-actions a) {border-radius:8px;min-height:44px}
+  body.pm-app :is(.button.primary,.tech-primary,.lagoon-start,.pm-button--primary) {background:var(--pm-green);border-color:var(--pm-green);color:var(--pm-ink);font-weight:700}
+  body.pm-app :is(.button.primary,button.primary,.tech-primary,.lagoon-start,.pm-button--primary):not(:disabled):hover {background:#a5ffca;color:var(--pm-ink)}
+  :root body.pm-app :focus-visible {outline-color:var(--pm-cream)}
+
+  body.pm-app .lagoon-scene {border-radius:15px 0 0 15px;background:radial-gradient(ellipse at center,#123723,var(--pm-night) 70%)}
+
+  /* Homepage: one primary action, one calm illustration, no competing animation. */
+  body.pm-home .hero-grid {grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+  :root body.pm-home .hero h1 {font-size:clamp(2.6rem,4.9vw,4.5rem);line-height:1.12;text-transform:none;letter-spacing:-.045em}
+  :root body.pm-home .hero h1 span {line-height:1.12;letter-spacing:-.045em}
+  body.pm-home .pm-home-actions {display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}
+  body.pm-home .pm-home-actions .pm-button {gap:16px;text-align:center}
+  body.pm-home .pm-mascot-terminal {margin:0;padding:0;min-height:0;border:0;border-radius:15px;background:var(--pm-ink);box-shadow:none;overflow:hidden}
+  body.pm-home .hero-art-top {padding:16px 20px;color:var(--pm-muted);flex-wrap:wrap}
+  body.pm-home .hero-art-top span:last-child {color:var(--pm-green)}
+  body.pm-home .pm-mascot-image {display:block;width:100%;height:auto}
+  body.pm-home .capy-info {position:static;margin:0;padding:20px;border:0;background:var(--pm-night);letter-spacing:normal;width:auto;text-align:left}
+  body.pm-home .capy-info strong {display:block;color:var(--pm-cream);font:600 1.125rem/1.5 var(--pm-font-reading);margin-bottom:6px}
+  body.pm-home .mini-status {margin:0;border:0;border-top:1px solid var(--line);padding:14px 20px;gap:8px 14px;background:var(--pm-night);color:var(--pm-muted)}
+  body.pm-home .mini-status strong {color:var(--pm-green);flex-basis:100%}
+  body.pm-home .terminal-prompt {border:0;padding:6px 0;background:transparent;min-height:44px;margin-top:10px}
+  body.pm-home .mission-card {padding:22px 22px 56px;min-height:200px}
+  body.pm-home .mission-card strong {color:var(--pm-cream);line-height:1.55}
+  body.pm-home .mission-card .num {color:var(--pm-muted)}
+  body.pm-home .mission-card .icon {color:var(--pm-green)}
+  body.pm-home .launch-box {border:1px solid var(--line)}
+  body.pm-home .lagoon-topbar {border-radius:15px 15px 0 0;background:var(--pm-panel)}
+}
+@media screen and (max-width:960px) {
+  body.pm-home .hero-grid {grid-template-columns:minmax(0,1fr);gap:28px}
+  body.pm-home .pm-mascot-terminal {max-width:620px;width:100%;justify-self:center}
+}
+@media screen and (max-width:640px) {
+  body.pm-app .wrap {width:min(calc(100% - 32px),var(--max));min-width:0}
+  body.pm-app .hero-meta {border-radius:12px}
+  body.pm-home .pm-home-actions {display:grid;grid-template-columns:1fr}
+  body.pm-home .hero-art-top {padding:14px 16px;font-size:.875rem}
+  body.pm-home .capy-info,body.pm-home .mini-status {padding:16px}
+  body.pm-home .mission-card {min-height:170px}
+  body.pm-app .lagoon-scene {border-radius:0}
+}
+
+/* Illustrated mascot family. Keep intrinsic square dimensions to reserve space
+   before lazy loading, and let labels participate in normal document flow. */
+body.pm-app :is(.capy,.capy-art).pm-illustrated {
+  position:relative;display:grid;justify-items:center;gap:8px;
+  width:160px;max-width:100%;height:auto;min-height:0;
+  margin-inline:auto;transform:none;flex-shrink:1;
+}
+body.pm-app .pm-illustrated::after {content:none}
+body.pm-app .pm-illustrated>img {display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain}
+body.pm-app .pm-mascot-label {position:static;display:block;width:100%;text-align:center;font-size:.875rem;line-height:1.5;color:var(--yellow)}
+body.pm-app .pa-mascot {flex-direction:column;gap:8px}
+body.pm-app .pa-mascot>.clipboard {order:2;flex-direction:row;flex-wrap:wrap;justify-content:center;max-width:100%}
+body.pm-app .pa-mascot>.capy {order:1}
+@media(max-width:760px){body.pm-app .capy-card .pm-illustrated{width:108px}}

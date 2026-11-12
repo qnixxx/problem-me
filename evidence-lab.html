@@ -20,14 +20,14 @@
 <main id="main-content">
 <section class="ev-hero"><div class="ac-shell ev-hero-grid">
 <div><p class="ac-kicker">Academy / Chapter 05 / Evidence Lab / Edition 2.2</p><h1>Inspect the evidence.<span>Earn your conclusion.</span></h1>
-<p class="ac-lede">Three guided investigations. Each gives you a problem brief, evidence you can inspect, choices with consequences, and a debrief. The objective is not guessing the answer: it is learning how to reason under uncertainty.</p>
-<div class="ev-strip"><span class="ev-chip emphasis">EVIDENCE FIRST</span><span class="ev-chip">FICTIONAL SCENARIO</span><span class="ev-chip">CHOOSE YOUR PATH</span></div>
-<div class="ac-actions"><a class="ac-link primary" href="#cases">Choose a case →</a><a class="ac-link" href="evidence-lab.html">How the Lab works ↗</a></div>
+<p class="ac-lede">Follow three different problems from first symptoms to a defensible conclusion. Examine evidence, challenge tempting explanations, and see what a credible verification plan actually requires.</p>
+<div class="ev-strip"><span class="ev-chip emphasis">EVIDENCE FIRST</span><span class="ev-chip">THREE PROFESSIONAL CASES</span><span class="ev-chip">CHOOSE YOUR PATH</span></div>
+<div class="ac-actions"><a class="ac-link primary" href="#cases">Choose a case →</a><a class="ac-link" href="#how-it-works">How the Lab works ↗</a></div>
 </div>
 <figure class="ev-hero-art"><img src="assets/capybara-terminal-unframed.webp" width="1448" height="1086" alt="Friendly orange capybara wearing green headphones and studying a laptop, on a dark backdrop"><figcaption>CAPYBARA.EXE / INVESTIGATE, DON'T GUESS</figcaption></figure>
 </div></section>
 <div class="ac-shell"><section class="ac-section" id="how-it-works">
-<p class="ev-kicker">&gt; protocol /evidence-lab</p><h2>A simulation without collecting your answers.</h2>
+<p class="ev-kicker">&gt; protocol /evidence-lab</p><h2>A better way to learn an investigation.</h2>
 <div class="ev-method">
 <article><strong>01 / INTERPRET</strong><p>Read a brief and inspect time-stamped observations. Some evidence contradicts the obvious story.</p></article>
 <article><strong>02 / CHOOSE</strong><p>Explore a possible action and discover what it might reveal, clarify or put at risk.</p></article>
@@ -38,12 +38,22 @@
 <section class="ac-section" id="cases">
 <p class="ev-kicker">&gt; select /simulation</p><h2>Choose your investigation.</h2>
 <div class="ev-cases">
-<article class="ev-case"><img src="assets/capybara-investigator.webp" width="480" height="480" alt="Warm orange capybara investigator holding a magnifying glass" loading="lazy" decoding="async"><div class="ev-case-body"><span class="ac-kicker">LAB 01 / SERVICE OPERATIONS</span><h3>The regional sign-in outage</h3><p>An identity gateway begins rejecting valid logins in one region after a certificate-key rotation. The obvious suspect may be the wrong one.</p><p><span class="ac-chip">IS / IS NOT</span><span class="ac-chip">CAUSAL TEST</span></p><a href="lab-signin.html">Investigate LAB 01 →</a></div></article>
-<article class="ev-case"><img src="assets/capybara-analyst.webp" width="480" height="480" alt="Warm orange capybara analyst with a pencil and checklist" loading="lazy" decoding="async"><div class="ev-case-body"><span class="ac-kicker">LAB 02 / QUALITY OPERATIONS</span><h3>The warehouse scanning mystery</h3><p>Wrong-item errors rise on one shift. Does the evidence point to staff behavior, shelf design, or a device change?</p><p><span class="ac-chip">RATE VS COUNT</span><span class="ac-chip">CONTROLLED TRIAL</span></p><a href="lab-warehouse.html">Investigate LAB 02 →</a></div></article>
-<article class="ev-case"><img src="assets/capybara-coffee.webp" width="480" height="480" alt="Thoughtful orange capybara holding a coffee mug" loading="lazy" decoding="async"><div class="ev-case-body"><span class="ac-kicker">LAB 03 / DECISION ANALYSIS</span><h3>The migration decision</h3><p>Three hosting options compete for a critical reporting system. One attractive option fails a nonnegotiable requirement.</p><p><span class="ac-chip">MUST / WANT</span><span class="ac-chip">RISK CONTROL</span></p><a href="lab-migration.html">Investigate LAB 03 →</a></div></article>
+<article class="ev-case"><img src="assets/capybara-investigator.webp" width="480" height="480" alt="Warm orange capybara investigator holding a magnifying glass" loading="lazy" decoding="async"><div class="ev-case-body"><span class="ac-kicker">LAB 01 / SERVICE OPERATIONS</span><h3>The regional sign-in outage</h3><p>Use a working region as a control. Trace an authentication failure from token rejection through key-refresh evidence to a testable cause.</p><p><span class="ac-chip">IS / IS NOT</span><span class="ac-chip">CAUSAL TEST</span></p><a href="lab-signin.html">Investigate LAB 01 →</a></div></article>
+<article class="ev-case"><img src="assets/capybara-analyst.webp" width="480" height="480" alt="Warm orange capybara analyst with a pencil and checklist" loading="lazy" decoding="async"><div class="ev-case-body"><span class="ac-kicker">LAB 02 / QUALITY OPERATIONS</span><h3>The warehouse scanning mystery</h3><p>Compare error rates by device and exposure, challenge an unfair shift-level assumption, and design a controlled quality trial.</p><p><span class="ac-chip">RATE VS COUNT</span><span class="ac-chip">CONTROLLED TRIAL</span></p><a href="lab-warehouse.html">Investigate LAB 02 →</a></div></article>
+<article class="ev-case"><img src="assets/capybara-coffee.webp" width="480" height="480" alt="Thoughtful orange capybara holding a coffee mug" loading="lazy" decoding="async"><div class="ev-case-body"><span class="ac-kicker">LAB 03 / DECISION ANALYSIS</span><h3>The migration decision</h3><p>Screen three alternatives against mandatory criteria, interrogate weighted scores, and prepare a defensible risk response.</p><p><span class="ac-chip">MUST / WANT</span><span class="ac-chip">RISK CONTROL</span></p><a href="lab-migration.html">Investigate LAB 03 →</a></div></article>
 </div>
-<p class="ev-legal">All organizations, records, measurements, timelines, and outcomes are fictional teaching material. These are not operational instructions for a live production system.</p>
+<p class="ev-legal">The examples use fictional measurements and outcomes to teach practical reasoning. Adapt the questions—not the invented figures—to your own context.</p>
 </section>
+<section class="ac-section" id="investigation-route"><p class="ev-kicker">&gt; learn /investigation-route</p><h2>One disciplined sequence, whatever the problem.</h2><p class="ac-intro">Each Lab follows the same reasoning structure. It is a learning aid, not a prescribed operational workflow.</p>
+<div class="ev-method">
+<article><strong>01 / DEFINE</strong><p>State the deviation, who or what is affected, and the most useful comparison population.</p></article>
+<article><strong>02 / DISTINGUISH</strong><p>Inspect records and separate direct observations from inferences, missing data and alternative explanations.</p></article>
+<article><strong>03 / DISCRIMINATE</strong><p>Choose a test that makes competing explanations produce different expected results.</p></article>
+<article><strong>04 / CONTAIN</strong><p>Limit impact using an authorized, reversible response while keeping core controls intact.</p></article>
+<article><strong>05 / VERIFY</strong><p>Define a suitable baseline, denominator, observation window, owner and conditions for reopening the case.</p></article>
+<article><strong>06 / TRANSFER</strong><p>Document what was established, what remains uncertain and which preventive control could generalize.</p></article>
+</div>
+<div class="ac-note"><strong>A useful habit_</strong><p>Before revealing any answer, ask: “What result would make my preferred explanation less likely?” It is easier to defend a conclusion after looking for evidence against it.</p></div></section>
 <section class="ac-section" id="principles"><p class="ev-kicker">&gt; method /evidence-first</p><h2>What good investigation looks like.</h2>
 <div class="ac-grid three">
 <div class="ac-card"><h3>Observe first</h3><p>Establish the actual deviation, affected population, comparison cases and quality of the evidence.</p></div>

@@ -1,4 +1,4 @@
-/* v2.0.2: static shared footer; former modal navigation and inputs retired. */
+/* Shared editorial footer. */
 /* Compact shared footer. Own layout explicitly; never inherit page nav grids. */
 footer.site-footer{margin-top:0;padding:24px 0 16px;border-top:1px solid #1f6f4d;background:#020805;color:#86b79e;text-align:left}
 footer.site-footer>.wrap{display:block}

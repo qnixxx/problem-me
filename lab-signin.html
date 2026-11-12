@@ -3,17 +3,17 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
 <meta name="theme-color" content="#010704"><meta name="description" content="Investigate a fictional regional sign-in outage. Compare evidence, choose causes and controls, and reveal outcomes without submitting or saving anything.">
 <link rel="canonical" href="https://problem.me/lab-signin.html"><meta property="og:type" content="article"><meta property="og:title" content="LAB 01: Regional Sign-in Outage | problem.me">
-<meta property="og:description" content="A guided, read-only investigation of a regional authentication failure."><meta property="og:url" content="https://problem.me/lab-signin.html">
+<meta property="og:description" content="A guided investigation of a regional authentication failure, from the first alert to evidence-backed prevention."><meta property="og:url" content="https://problem.me/lab-signin.html">
 <meta property="og:image" content="https://problem.me/problem-me-social-preview-1200x630.jpg"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.ico"><link rel="stylesheet" href="academy.css"><link rel="stylesheet" href="evidence-lab.css">
 <title>LAB 01 — Regional Sign-in Outage | problem.me</title></head>
 <body class="pm-academy"><a class="ac-skip" href="#main-content">Skip to content</a>
 <header class="ac-header"><nav class="ac-shell" aria-label="Evidence Lab navigation"><a class="ac-brand" href="index.html">problem<span>.me</span>_</a><div class="ac-nav"><a href="index.html">Home</a><a href="academy.html">Academy</a><a href="evidence-lab.html">Evidence Lab</a><a href="professional-cases.html">Cases</a><a href="practice.html">Practice</a><a href="glossary.html">Glossary</a></div></nav></header>
 <main id="main-content"><section class="ev-hero"><div class="ac-shell ev-hero-grid"><div><p class="ac-kicker">EVIDENCE LAB / 01 / SERVICE RELIABILITY</p>
-<h1>One region fails.<span>Why not both?</span></h1><p class="ac-lede">Start with a disputed outage, review logs and changes, test the competing stories and choose a safe next step. Your choices reveal prewritten feedback; none are submitted or stored.</p>
-<div class="ev-strip"><span class="ev-chip emphasis">FICTIONAL</span><span class="ev-chip">3 STAGES</span><span class="ev-chip">NO USER DATA</span></div>
+<h1>One region fails.<span>Why not both?</span></h1><p class="ac-lede">Start with a disputed outage, review logs and changes, test the competing stories and choose a safe next step. Explore alternate responses and uncover where the evidence leads.</p>
+<div class="ev-strip"><span class="ev-chip emphasis">FICTIONAL</span><span class="ev-chip">3 STAGES</span><span class="ev-chip">TEST THE THEORY</span></div>
 <div class="ac-actions"><a class="ac-link primary" href="#brief">Open the brief →</a><a class="ac-link" href="evidence-lab.html">All labs ↗</a></div>
-</div><figure class="ev-hero-art"><img src="assets/capybara-investigator.webp" width="1254" height="1254" alt="Illustrated orange capybara detective studying evidence" fetchpriority="high"><figcaption>CAPYBARA.EXE / TRACE THE DISTINCTION</figcaption></figure></div></section>
+</div><figure class="ev-hero-art"><img src="assets/capybara-new-signin.svg" width="960" height="620" alt="Orange capybara wearing neon headphones beside two identity gateway displays and a verification shield" fetchpriority="high"><figcaption>CAPYBARA.EXE / TRACE THE DISTINCTION</figcaption></figure></div></section>
 <div class="ac-shell">
 <section class="ev-dossier" id="brief"><p class="ev-kicker">&gt; open /lab-01/brief.txt</p><h2>The regional sign-in outage</h2>
 <p>A fictional organization uses two independently deployed identity-gateway regions. After an identity-provider signing-key rotation, login failures spike in the West region. The on-call team is under pressure to declare that the external identity provider is down.</p>
@@ -23,7 +23,7 @@
 <nav class="ev-progress" aria-label="Investigation stages"><a href="#stage1">01 / Triage</a><a href="#stage2">02 / Review evidence</a><a href="#stage3">03 / Control</a><a href="#debrief">04 / Debrief</a></nav>
 <section class="ev-stage" id="stage1"><p class="ev-kicker">STAGE 01 / START WITH THE DEVIATION</p><h2>Two regions. One alleged outage.</h2>
 <p>At 09:08 UTC, successful login traffic falls in West, but East remains within its usual error range. The identity provider reports normal availability. A recent signing-key rotation is visible in the change calendar, but its role is not yet established.</p>
-<p><strong>What is your first move?</strong> Choose a response to reveal its consequence. Neither choice sends information anywhere.</p>
+<p><strong>What is your first move?</strong> Choose a response to reveal its consequence. Think about what each response would reveal.</p>
 <details class="ev-branch"><summary>A — Compare the affected and unaffected regions</summary><div class="ev-branch-body"><p><strong>Promising triage.</strong> You preserve the distinction between West (IS failing) and East (IS NOT failing). Compare error type, token metadata, recent network changes and key-refresh results. The rotation may be a trigger, but the regional difference needs explaining.</p><a href="#stage2">Continue to the evidence review →</a></div></details>
 <details class="ev-branch caution"><summary>B — Restart every identity gateway and declare a provider outage</summary><div class="ev-branch-body"><p><strong>Weak and risky.</strong> A restart might briefly reset state, but it destroys useful timing evidence and does not explain why East still works. Calling the provider unavailable contradicts available comparative evidence. Keep service restoration coordinated with the incident lead, then examine the regional difference.</p><a href="#stage2">Continue to the evidence review →</a></div></details>
 </section>
@@ -52,5 +52,5 @@
 <div class="ac-next"><div><strong>Continue the Evidence Lab</strong><p>Different domain, same discipline: compare the rate of defects rather than blaming a shift.</p></div><a class="ac-link primary" href="lab-warehouse.html">LAB 02 / Warehouse →</a></div>
 <p class="ev-legal">Fictional case for critical thinking. Not deployment, security, or emergency-response instructions. Production system changes require authorized personnel and relevant controls.</p>
 </section></div></main>
-<footer class="ac-footer"><div class="ac-shell"><a class="ac-brand" href="index.html">problem<span>.me</span>_</a><p>Evidence before certainty. Fictional scenario; no accounts, tracking, JavaScript or saved responses.</p><nav aria-label="Footer"><a href="academy.html">Academy</a><a href="evidence-lab.html">Evidence Lab</a><a href="lab-warehouse.html">Next Lab</a><a href="privacy.html">Privacy</a></nav></div></footer>
+<footer class="ac-footer"><div class="ac-shell"><a class="ac-brand" href="index.html">problem<span>.me</span>_</a><p>Evidence before certainty. Every strong conclusion deserves a stronger test.</p><nav aria-label="Footer"><a href="academy.html">Academy</a><a href="evidence-lab.html">Evidence Lab</a><a href="lab-warehouse.html">Next Lab</a><a href="privacy.html">Privacy</a></nav></div></footer>
 </body></html>

@@ -44,8 +44,8 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 }
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
-assert(home.includes('application-version" content="2.2.0"'),'release metadata');
-assert(feature.includes('CURRENT v2.2.0'),'release log version');
+assert(home.includes('application-version" content="2.2.1"'),'release metadata');
+assert(feature.includes('CURRENT v2.2.1'),'release log version');
 assert(!home.includes('My Investigations'),'obsolete footer link');
 assert(!home.includes('CURRENT SITE ↗'),'obsolete label');
 assert(home.includes('Skip to main content'),'keyboard Skip link');
@@ -91,4 +91,25 @@ for(const p of labs){
  assert(html.includes('FICTIONAL'),p+' fictional data labeling');
 }
 assert(labHub.includes('href="lab-signin.html"')&&labHub.includes('href="lab-warehouse.html"')&&labHub.includes('href="lab-migration.html"'),'all three Lab routes discoverable');
-console.log('PASS v2.2.0: 22 indexable pages, three guided Evidence Labs, no scripts or visitor inputs.');
+const art={
+ 'lab-signin.html':'assets/capybara-new-signin.svg',
+ 'lab-warehouse.html':'assets/capybara-new-warehouse.svg',
+ 'lab-migration.html':'assets/capybara-new-migration.svg'
+};
+for(const [page,asset] of Object.entries(art)){
+ const html=fs.readFileSync(path.join(root,page),'utf8');
+ const svg=fs.readFileSync(path.join(root,asset),'utf8');
+ assert(html.includes('src="'+asset+'"'),page+' new capybara illustration');
+ assert(labHub.includes('src="'+asset+'"'),'Evidence Lab card illustration '+asset);
+ assert(svg.includes('<svg') && svg.includes('</svg>') && svg.includes('viewBox="0 0 960 620"'),asset+' complete vector image');
+ assert(!/<script\b|\bon[a-z]+\s*=|<foreignObject\b/i.test(svg),asset+' inert illustration');
+ assert(svg.length>5000,asset+' illustration not a placeholder');
+}
+assert(!home.includes('NO INPUT. JUST INSIGHT_'),'homepage uses learning-first language');
+assert(!academy.includes('STILL COMPLETELY READ-ONLY_'),'Academy does not foreground platform restrictions');
+assert(!labHub.includes('NO DATA ENTRY'),'Lab uses investigator-first labels');
+for(const p of ['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html']){
+ const html=fs.readFileSync(path.join(root,p),'utf8');
+ assert(!html.includes('READ-ONLY CASE STUDY'),p+' editorial case label');
+}
+console.log('PASS v2.2.1: 22 indexable pages, three original capybara illustrations, no scripts or visitor inputs.');

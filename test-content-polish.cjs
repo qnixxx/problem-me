@@ -32,6 +32,11 @@ for(const p of pages){
  assert(html.includes('href="'+prefix+'site-structure.css"'),p+' shared navigation stylesheet');
  assert((html.match(/class="pm-global-header"/g)||[]).length===1,p+' exactly one global header');
  assert((html.match(/class="pm-global-footer"/g)||[]).length===1,p+' exactly one simple footer');
+ const footer=html.match(/<footer class="pm-global-footer">([\s\S]*?)<\/footer>/);
+ assert(footer,p+' footer exists');
+ assert(footer[1].includes('class="pm-footer-word"'),p+' footer word can highlight on hover');
+ assert(footer[1].includes('class="pm-footer-dot"'),p+' footer keeps the green dot-me segment');
+ assert(footer[1].includes('class="pm-footer-cursor" aria-hidden="true">_</span>'),p+' separate visible footer cursor');
  assert((html.match(/class="pm-global-nav"/g)||[]).length===1,p+' primary navigation');
  const primary=html.match(/<nav class="pm-global-nav"[^>]*>([\s\S]*?)<\/nav>/);
  assert(primary,p+' primary nav exists');
@@ -57,6 +62,8 @@ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
 assert(home.includes('application-version" content="1.0"'),'v1.0 release metadata');
 assert(home.includes('class="pm-boot-brand"'),'homepage terminal identity');
+assert(home.includes('class="capy-status-values" aria-hidden="true"'),'status animation uses no visitor tracking');
+for(const label of ['UNBOTHERED','CURIOUS','ON THE CASE','THINKING CLEARLY'])assert(home.includes('<span>'+label+'</span>'), 'homepage capybara status '+label);
 assert(feature.includes('problem.me / v1.0 /') && feature.includes('id="overview"'),'v1.0 feature overview');
 assert(!feature.includes('RELEASE HISTORY') && !feature.includes('class="timeline"'),'no historical release timeline');
 assert(fs.existsSync(path.join(root,'brand.css')),'current design stylesheet');
@@ -68,6 +75,11 @@ assert((home.match(/class="pm-journey-card"/g)||[]).length===3,'three distinct h
 assert(!home.includes('id="mission"')&&!home.includes('id="academy-paths"')&&!home.includes('id="launch"'),'homepage avoids duplicate funnels');
 const structure=fs.readFileSync(path.join(root,'site-structure.css'),'utf8');
 assert(structure.includes('prefers-reduced-motion:reduce')&&structure.includes('body:has(main#top:target)'), 'intro respects reduced motion and can be skipped');
+assert(structure.includes('.pm-footer-title:hover .pm-footer-word'),'footer hover color is defined');
+assert(structure.includes('.pm-footer-title .pm-footer-cursor'),'footer animation target matches footer markup');
+assert(structure.includes('animation:pm-brand-blink .9s'),'footer uses existing brand cursor animation');
+assert(structure.includes('@keyframes pm-capy-state'),'four-state animation is defined');
+assert(structure.includes('body.pm-home .capy-status-values > span:first-child{opacity:1!important}'),'reduced motion shows first status');
 
 assert(!fs.readdirSync(root).some(n=>n.endsWith('.js')),'site root has no application JavaScript');
 assert(fs.existsSync(path.join(root,'assets/capybara-soaking.webp')),'original mascot present');

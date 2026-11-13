@@ -39,6 +39,9 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
     assert.equal(await page.locator('.pm-global-nav a').count(),4,route+' four top-level links');
     assert.deepEqual(await page.locator('.pm-global-nav a').allTextContents(),['Home','Learn','Techniques','Practice'],route+' predictable nav labels');
     assert.equal(await page.locator('.pm-global-footer').count(),1,route+' one compact footer');
+    assert.equal(await page.locator('.pm-global-footer .pm-footer-cursor').count(),1,route+' footer has dedicated blinking cursor');
+    assert.equal(await page.locator('.pm-global-footer .pm-footer-word').count(),1,route+' footer has independently hoverable problem word');
+    assert.equal(await page.locator('.pm-global-footer .pm-footer-cursor').evaluate(el=>getComputedStyle(el).animationName),'none',route+' cursor respects reduced motion');
     if(route!=='index.html'){
       assert.equal(await page.locator('.pm-breadcrumbs').count(),1,route+' breadcrumbs');
       assert.equal(await page.locator('.pm-breadcrumbs [aria-current="location"]').count(),1,route+' current breadcrumb location');
@@ -104,6 +107,10 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('.pm-boot-skip[href="#top"]').count(),1,'skip intro link available');
    assert.equal(await page.locator('.pm-boot-intro').isVisible(),false,'intro hidden when reduced motion preferred');
    assert.equal(await page.locator('.pm-boot-skip').isVisible(),false,'skip hidden when reduced motion preferred');
+   const reducedStatuses=await page.locator('.capy-status-values > span').evaluateAll(els=>els.map(el=>({label:el.textContent.trim(),opacity:getComputedStyle(el).opacity,animation:getComputedStyle(el).animationName})));
+   assert.deepEqual(reducedStatuses.map(e=>e.label),['UNBOTHERED','CURIOUS','ON THE CASE','THINKING CLEARLY'],'four meaningful capybara statuses');
+   assert.deepEqual(reducedStatuses.map(e=>e.opacity),['1','0','0','0'],'reduced motion keeps a stable accessible first status');
+   assert(reducedStatuses.every(e=>e.animation==='none'),'reduced motion disables status cycling');
    await page.locator('.readonly-skip-link').focus();
    assert.equal(await page.locator('.readonly-skip-link').evaluate(el=>getComputedStyle(el).top),'10px','Skip link appears when focused');
 
@@ -206,6 +213,22 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
     await introPage.goto(base+'/index.html');
     await introPage.locator('.pm-boot-intro').waitFor({state:'hidden',timeout:5000});
     assert(await introPage.locator('main#top').isVisible(),'terminal intro naturally completes');
+    const footerTitle=introPage.locator('.pm-global-footer .pm-footer-title');
+    const word=introPage.locator('.pm-global-footer .pm-footer-word');
+    const baseColor=await word.evaluate(el=>getComputedStyle(el).color);
+    await footerTitle.hover();
+    await introPage.waitForTimeout(220);
+    const hoverColor=await word.evaluate(el=>getComputedStyle(el).color);
+    assert.notEqual(hoverColor,baseColor,'problem word changes color when footer brand hovered');
+    const cursor=introPage.locator('.pm-global-footer .pm-footer-cursor');
+    assert.equal(await cursor.evaluate(el=>getComputedStyle(el).animationName),'pm-brand-blink','footer cursor animates');
+    const statusEls=introPage.locator('.capy-status-values > span');
+    assert.equal(await statusEls.count(),4,'four capybara statuses exist');
+    const firstVisible=await statusEls.evaluateAll(els=>els.findIndex(el=>getComputedStyle(el).opacity==='1'));
+    assert(firstVisible>=0,'one status is displayed');
+    await introPage.waitForTimeout(3300);
+    const nextVisible=await statusEls.evaluateAll(els=>els.findIndex(el=>getComputedStyle(el).opacity==='1'));
+    assert(nextVisible>=0 && nextVisible!==firstVisible,'capybara status automatically changes');
     console.log('PASS terminal entrance: animation completes, skip works, reduced motion respected');
   }finally{await introCtx.close();}
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}

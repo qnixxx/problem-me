@@ -90,7 +90,7 @@ for(const p of ['academy.html','foundations.html','choose-method.html','professi
 }
 const labs=['lab-signin.html','lab-warehouse.html','lab-migration.html'];
 const labHub=fs.readFileSync(path.join(root,'evidence-lab.html'),'utf8');
-assert(home.includes('href="evidence-lab.html"'),'homepage Evidence Lab discovery');
+assert(practice.includes('href="evidence-lab.html"'),'Evidence Lab discoverable from Practice');
 assert(academy.includes('05 / INVESTIGATE THE EVIDENCE'),'fifth Academy chapter');
 assert((academy.match(/class="ac-card"/g)||[]).length===11,'Academy has 11 learning and method cards');
 assert((labHub.match(/class="ev-case"/g)||[]).length===3,'Evidence Lab has three scenario cards');

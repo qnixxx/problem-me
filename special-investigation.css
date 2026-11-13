@@ -1,0 +1,66 @@
+/* Special Investigation 001 / 3-SAT. All interactions are native HTML disclosures. */
+.sat-hero{background:radial-gradient(ellipse at 72% 25%,rgba(42,147,80,.21),transparent 55%),#020b06;border-bottom:1px solid #326d4d;padding:clamp(38px,6vw,76px) 0}
+.sat-hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(230px,.7fr);gap:30px;align-items:center}
+.sat-hero h1{font:700 clamp(2.45rem,5.8vw,4.75rem)/1.08 "Courier New",Courier,monospace;letter-spacing:-.055em;margin:14px 0 20px;color:#fff7df}
+.sat-hero h1 span{display:block;color:#58f9a1}
+.sat-hero p{max-width:67ch}
+.sat-hero figure{margin:0;padding:15px 12px 0;background:radial-gradient(circle at 50% 48%,#19462e,#04150d 72%);border:1px solid #377f54;border-radius:16px;overflow:hidden}
+.sat-hero img{width:100%;height:auto;max-height:310px;display:block;object-fit:contain}
+.sat-hero figcaption{color:#a6d7ba;border-top:1px solid #286f48;padding:11px 8px;text-align:center;font:700 .74rem/1.5 "Courier New",Courier,monospace}
+.sat-meta{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.sat-meta span{border:1px solid #357651;background:#0a2416;border-radius:20px;padding:5px 11px;color:#c4e9d2;font:700 .75rem/1.6 "Courier New",Courier,monospace}
+.sat-section{padding:clamp(30px,4.5vw,54px) 0;border-bottom:1px solid #205536;scroll-margin-top:130px}
+.sat-section:last-child{border:0}
+.sat-section h2{font:700 clamp(1.45rem,3vw,2.15rem)/1.2 "Courier New",Courier,monospace;color:#faf5e2;margin:9px 0 16px;letter-spacing:-.03em}
+.sat-section h3{font:700 1.02rem/1.5 "Courier New",Courier,monospace;color:#f5c98d;margin:20px 0 10px}
+.sat-section p{max-width:76ch}
+.sat-synopsis{font-size:1.08rem;line-height:1.75;color:#d6ebdc}
+.sat-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}
+.sat-step{background:#081c11;border:1px solid #32754e;border-radius:12px;padding:19px}
+.sat-step .sat-num{font:700 .78rem "Courier New",monospace;color:#79fdb0}
+.sat-step strong{display:block;font:700 1rem/1.4 "Courier New",monospace;color:#fdf4df;margin:8px 0}
+.sat-step p{margin:0}
+.sat-formula{margin:24px 0;padding:24px 20px;background:radial-gradient(ellipse at 50% 0,#153f2a,#071810 75%);border:1px solid #459569;border-radius:14px;overflow-x:auto}
+.sat-formula .sat-expression{font:700 clamp(1.04rem,2.45vw,1.5rem)/1.7 "Courier New",monospace;letter-spacing:-.01em;color:#eaffdd;white-space:normal;overflow-wrap:anywhere}
+.sat-clauses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:18px 0}
+.sat-clause{padding:16px;border:1px solid #377a56;border-radius:10px;background:#0a2518}
+.sat-clause .sat-clause-id{font:700 .76rem/1.4 "Courier New",monospace;color:#a1cfb0}
+.sat-clause strong{display:block;margin-top:6px;color:#f5f1dd;font:700 1.06rem/1.5 "Courier New",monospace}
+.sat-prompt{border-left:4px solid #f5c98d;background:#1c2015;padding:18px 20px;margin:23px 0;border-radius:0 10px 10px 0}
+.sat-prompt strong{color:#f5c98d;font:700 .9rem "Courier New",monospace}
+.sat-prompt p{margin:8px 0 0}
+.sat-disclosure{margin:12px 0;border:1px solid #3b825a;border-radius:11px;background:#092116;overflow:hidden}
+.sat-disclosure summary{display:flex;align-items:center;gap:10px;cursor:pointer;min-height:50px;padding:13px 17px;font:700 .88rem/1.55 "Courier New",monospace;color:#7affb0}
+.sat-disclosure summary::before{content:"▸";color:#f5c98d;font-size:1.2rem}
+.sat-disclosure[open] summary::before{content:"▾"}
+.sat-disclosure[open] summary{border-bottom:1px solid #357651;background:#10301d}
+.sat-disclosure > div{padding:18px}
+.sat-disclosure p:last-child{margin-bottom:0}
+.sat-table-wrap{max-width:100%;overflow-x:auto;border:1px solid #367a56;border-radius:10px;margin:19px 0}
+.sat-table{border-collapse:collapse;width:100%;min-width:560px;font-variant-numeric:tabular-nums}
+.sat-table th,.sat-table td{padding:11px 13px;border-bottom:1px solid #2b6043;text-align:center}
+.sat-table thead{background:#0f2c1d}
+.sat-table th{font:700 .8rem "Courier New",monospace;color:#f5c98d}
+.sat-table tbody tr:last-child td{border:0}
+.sat-table tbody tr[data-sat="yes"]{background:#0e2d1b}
+.sat-table td:first-child{text-align:left;font:700 .8rem "Courier New",monospace;color:#d7f9de}
+.sat-pass{color:#8effad;font-weight:800}.sat-fail{color:#ffd096;font-weight:800}
+.sat-proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:21px 0}
+.sat-proof-grid article{padding:20px;border:1px solid #387a56;background:#071b11;border-radius:12px}
+.sat-proof-grid strong{font:700 1rem/1.5 "Courier New",monospace;color:#faf3e0}
+.sat-proof-grid p{margin:9px 0 0}
+.sat-banner{padding:20px 22px;margin:22px 0;border:1px solid #a3854c;border-left:4px solid #f5c98d;background:#1b1c12;border-radius:0 11px 11px 0}
+.sat-banner strong{color:#ffe0ac;font:700 .88rem "Courier New",monospace}
+.sat-banner p{margin:9px 0 0}
+.sat-source-list li{padding:7px 0;overflow-wrap:anywhere}
+.sat-source-list a{color:#6affb1}
+.sat-bridge{padding:22px;border:1px solid #31784c;border-radius:12px;background:#0c291a;margin:22px 0}
+.sat-bridge h3{margin-top:0}
+.sat-route{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.sat-route a{min-height:46px;display:inline-flex;align-items:center;border:1px solid #3d9d66;border-radius:8px;padding:10px 15px;font:700 .83rem/1.4 "Courier New",monospace;color:#7affb0;text-decoration:none}
+.sat-route a:hover{border-color:#eacc8d}
+.sat-route .sat-primary{background:#68fca5;color:#021006}
+.sat-small{font-size:.86rem;color:#a7c8b1}
+@media(max-width:850px){.sat-hero-grid{grid-template-columns:1fr}.sat-hero figure{max-width:430px}.sat-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:570px){.sat-clauses,.sat-steps,.sat-proof-grid{grid-template-columns:1fr}.sat-formula{padding:17px}.sat-hero h1{font-size:clamp(2.3rem,11vw,3.5rem)}.sat-hero{padding:35px 0}.sat-table th,.sat-table td{padding:10px}.sat-route a{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}

@@ -130,3 +130,26 @@ body:has(main#top:target) .pm-boot-skip{display:none}
  .pm-journey-card{transition:none}
  .pm-journey-card:hover{transform:none}
 }
+/* Keep orientation consistent across original terminal and editorial layouts. */
+.pm-global-header .pm-global-inner{box-sizing:border-box}
+.pm-global-header .pm-global-nav a[aria-current="location"]{color:#63ffb5;border-color:#387451;background:#10311f}
+.pm-breadcrumbs .pm-crumbs-inner{box-sizing:border-box}
+.pm-global-footer{padding:25px 0 26px;margin:0;background:#020805;color:#a6cdb5;border-top:1px solid #2c6b49}
+.pm-global-footer .pm-footer-inner{width:min(calc(100% - 32px),1160px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.pm-global-footer .pm-footer-title{font:700 1.17rem/1.4 "Courier New",Courier,monospace;color:#f4f1df;letter-spacing:-.04em}
+.pm-global-footer .pm-footer-title span{color:#63ffb5}
+.pm-global-footer p{margin:4px 0 0;font:400 .88rem/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.pm-global-footer nav{display:flex;align-items:center;gap:10px 21px;flex-wrap:wrap;min-height:0}
+.pm-global-footer nav a{min-height:44px;display:inline-flex;align-items:center;color:#e2f0e5;text-decoration:none;font:700 .79rem/1.5 "Courier New",monospace}
+.pm-global-footer nav a:hover{color:#ffe95b}
+.pm-global-footer a:focus-visible{outline:3px solid #ffe95b;outline-offset:3px}
+.pm-global-header,.pm-breadcrumbs,.pm-global-footer{box-sizing:border-box}
+.pm-global-header .pm-global-brand,.pm-global-header .pm-global-nav a{text-transform:none}
+.pm-home-orientation h2{font-family:"Courier New",Courier,monospace}
+.pm-home-orientation .pm-journey-card{text-transform:none}
+@media(max-width:760px){
+ .pm-global-header .pm-global-inner{min-height:0}
+ .pm-global-header .pm-global-nav{min-height:44px}
+ .pm-global-footer .pm-footer-inner{display:block}
+ .pm-global-footer nav{margin-top:14px}
+}

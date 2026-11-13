@@ -153,3 +153,24 @@ body:has(main#top:target) .pm-boot-skip{display:none}
  .pm-global-footer .pm-footer-inner{display:block}
  .pm-global-footer nav{margin-top:14px}
 }
+
+/* Consistent terminal brand behavior across the shared footer and header. */
+.pm-global-footer .pm-footer-title{
+  display:inline-flex;align-items:baseline;
+  color:#f4f1df;text-decoration:none;
+}
+.pm-global-footer .pm-footer-title .pm-footer-word{color:#f4f1df;transition:color .16s ease}
+.pm-global-footer .pm-footer-title .pm-footer-dot{color:#63ffb5;transition:color .16s ease}
+.pm-global-footer .pm-footer-title .pm-footer-cursor{
+  display:inline-block;min-width:.58em;color:#63ffb5;
+  animation:pm-brand-blink .9s steps(1,end) infinite;
+}
+@media(hover:hover) and (pointer:fine){
+  .pm-global-footer .pm-footer-title:hover .pm-footer-word{color:#ffe95b}
+}
+.pm-global-footer .pm-footer-title:focus-visible .pm-footer-word{color:#ffe95b}
+@media(prefers-reduced-motion:reduce){
+  .pm-global-footer .pm-footer-title .pm-footer-cursor{animation:none!important;opacity:1}
+  .pm-global-footer .pm-footer-title .pm-footer-word,
+  .pm-global-footer .pm-footer-title .pm-footer-dot{transition:none}
+}

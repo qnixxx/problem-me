@@ -15,6 +15,19 @@ Problem.me is an independent, non-commercial educational website for learning pr
 - [What's Inside](features.html) — a current guide to the v1.0 learning experience.
 - [Privacy](privacy.html) — how the educational site handles visitor information.
 
+## Site structure
+
+The same four destinations appear in the header on every public page:
+
+1. **Home** (`index.html`) — a short introduction and three obvious starting paths.
+2. **Learn** (`academy.html`) — the five-chapter Academy: foundations, method selection, professional cases, reasoning practice and guided investigations. Individual lesson pages show breadcrumbs back to Learn.
+3. **Techniques** (`techniques.html`) — four methods, each with one illustrated Case File and one evidence-first Field Guide. Case and guide pages link back to the Technique Library.
+4. **Practice** (`practice.html`) — choose short self-checks or explore the Evidence Lab's three longer scenarios. All labs link back to the Lab index and then Practice.
+
+Secondary pages (Glossary, What's Inside, Privacy) are available contextually and through the compact footer. Detail pages have short Home → Section → Page breadcrumb trails. Avoid separate competing menus or links that send visitors back to the same page as their primary call to action.
+
+The homepage terminal entrance is a ~2-second CSS-only visual introduction. It uses the established terminal identity, can be skipped immediately with the “Skip intro” anchor, respects reduced-motion settings, and never delays the actual page content. No visitor data is entered or stored.
+
 ## Learning philosophy
 
 Understand the deviation before choosing a method. Separate observed facts from plausible explanations, actively test competing hypotheses, and define how durable improvement will be verified. All professional scenarios and their numerical observations are explicitly fictional teaching examples.

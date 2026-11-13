@@ -7,7 +7,8 @@ const pages=[
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
 'privacy.html','features.html',
 'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html',
-'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html'
+'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html',
+'special-investigation-3sat.html'
 ];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 const guides=pages.filter(p=>p.startsWith('articles/'));
@@ -136,4 +137,27 @@ for(const p of ['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'
  const html=fs.readFileSync(path.join(root,p),'utf8');
  assert(!html.includes('READ-ONLY CASE STUDY'),p+' editorial case label');
 }
-console.log('PASS v1.0: terminal entrance, four consistent nav choices, three homepage paths, 22 educational pages, and no visitor inputs.');
+const special=fs.readFileSync(path.join(root,'special-investigation-3sat.html'),'utf8');
+assert(practice.includes('href="special-investigation-3sat.html"'),'Special Investigation discoverable under Practice');
+assert(feature.includes('href="special-investigation-3sat.html"'),'Special Investigation in current feature overview');
+assert(special.includes('SPECIAL INVESTIGATION 001'),'the named special-investigation series');
+assert(special.includes('assets/capybara-investigator.webp'),'uses established mascot artwork');
+assert(special.includes('href="special-investigation.css"'),'dedicated lesson stylesheet');
+assert(special.includes('href="practice.html"'),'returns to parent Practice section');
+assert(special.includes('href="https://openai.com/index/building-scientific-understanding-with-academic-communities/"'),'official research source');
+assert(special.includes('does not prove P = NP'),'no exaggerated theorem claim');
+assert(special.includes('Claim status')||special.includes('CLAIM STATUS'),'clearly labeled claim status');
+assert((special.match(/<tr data-sat=/g)||[]).length===8,'all eight 3-SAT assignments');
+assert((special.match(/<tr data-sat="yes"/g)||[]).length===4,'precisely four satisfying assignments');
+assert((special.match(/<tr data-sat="no"/g)||[]).length===4,'precisely four failing assignments');
+assert((special.match(/<details class="sat-disclosure">/g)||[]).length===4,'four inspectable worked responses');
+assert(!/<(?:form|input|textarea|button|select|script)\b/i.test(special),'Special Investigation preserves no-input boundary');
+const clauses=[[1,2,3],[-1,2,-3],[1,-2,3],[-1,-2,3]];
+let solutions=0;
+for(let k=0;k<8;k++){
+ const bits=[Boolean(k&4),Boolean(k&2),Boolean(k&1)];
+ const satisfied=clauses.every(clause=>clause.some(lit=>lit>0?bits[lit-1]:!bits[-lit-1]));
+ if(satisfied)solutions++;
+}
+assert.equal(solutions,4,'published logic puzzle checked independently');
+console.log('PASS v1.0: terminal entrance, four consistent nav choices, three homepage paths, 23 educational pages, and no visitor inputs.');

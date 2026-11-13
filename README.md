@@ -11,6 +11,7 @@ Problem.me is an independent, non-commercial educational website for learning pr
 - [Professional Cases](professional-cases.html) — four fictional operational investigations for applying each method to realistic problem shapes.
 - [Evidence Lab](evidence-lab.html) — three staged fictional investigations with evidence packets, choices and reasoning debriefs.
 - [Practice](practice.html) — eight guided reasoning challenges with worked explanations.
+- [Special Investigation 001: The 3-SAT Challenge](special-investigation-3sat.html) — an original Boolean puzzle and a careful introduction to the October 2026 ETH research claim.
 - [Glossary](glossary.html) — concise definitions of 22 core terms.
 - [What's Inside](features.html) — a current guide to the v1.0 learning experience.
 - [Privacy](privacy.html) — how the educational site handles visitor information.

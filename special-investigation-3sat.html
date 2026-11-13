@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#010704">
+<meta name="color-scheme" content="dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
+<meta name="description" content="A capybara-guided 3-SAT logic challenge: explore Boolean rules, verify satisfying assignments, understand ETH and evaluate OpenAI's 2026 research claim.">
+<link rel="canonical" href="https://problem.me/special-investigation-3sat.html">
+<meta property="og:type" content="article"><meta property="og:title" content="The 3-SAT Challenge — Special Investigation 001 | problem.me">
+<meta property="og:description" content="When impossible meets evidence: an approachable 3-SAT puzzle and a lesson in checking extraordinary research claims.">
+<meta property="og:url" content="https://problem.me/special-investigation-3sat.html">
+<meta property="og:image" content="https://problem.me/problem-me-social-preview-1200x630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="academy.css">
+<link rel="stylesheet" href="site-structure.css">
+<link rel="stylesheet" href="special-investigation.css">
+<title>The 3-SAT Challenge — Special Investigation 001 | problem.me</title>
+</head>
+<body class="pm-academy">
+<a class="ac-skip" href="#main-content">Skip to content</a>
+<header class="pm-global-header"><div class="pm-global-inner"><a class="pm-global-brand" href="index.html" aria-label="problem.me — Home">problem<em>.me</em><span class="pm-brand-cursor" aria-hidden="true">_</span></a><nav class="pm-global-nav" aria-label="Primary navigation"><a href="index.html">Home</a><a href="academy.html">Learn</a><a href="techniques.html">Techniques</a><a href="practice.html" aria-current="location">Practice</a></nav></div></header>
+<nav class="pm-breadcrumbs" aria-label="Breadcrumb"><div class="pm-crumbs-inner"><a href="index.html">Home</a><span class="pm-crumb-sep" aria-hidden="true">/</span><a href="practice.html">Practice</a><span class="pm-crumb-sep" aria-hidden="true">/</span><span aria-current="location">3-SAT Challenge</span></div></nav>
+<main id="main-content">
+<section class="sat-hero"><div class="ac-shell sat-hero-grid"><div>
+<p class="ac-kicker">SPECIAL INVESTIGATION 001 / LOGIC AND EVIDENCE</p>
+<h1>The 3-SAT Challenge<span>When impossible meets evidence.</span></h1>
+<p class="ac-lede">Can you make every logical condition true at once? Investigate a tiny 3-SAT puzzle, then examine why a remarkable new scientific claim needs more than a persuasive headline.</p>
+<div class="sat-meta"><span>BEGINNER FRIENDLY</span><span>3 VARIABLES</span><span>4 CLAUSES</span><span>8 POSSIBLE ASSIGNMENTS</span></div>
+<div class="sat-route"><a class="sat-primary" href="#rules">Start the challenge →</a><a href="#research">Explore the research claim ↗</a></div>
+</div><figure><img src="assets/capybara-investigator.webp" width="480" height="480" alt="Orange capybara investigator studying a problem with a magnifying glass" fetchpriority="high" decoding="async"><figcaption>INVESTIGATOR.EXE / THE LOGIC MUST HOLD</figcaption></figure></div></section>
+<div class="ac-shell">
+<section class="sat-section" id="rules"><p class="ac-kicker">PART 01 / LEARN THE RULES</p><h2>Three switches. Four conditions.</h2>
+<p class="sat-synopsis">Imagine three switches named <strong>A</strong>, <strong>B</strong>, and <strong>C</strong>. Each is either <strong>TRUE</strong> (on) or <strong>FALSE</strong> (off). A condition is satisfied when at least one of its three statements is true. Your mission is to find a single switch setting that makes <em>all four conditions</em> true.</p>
+<div class="sat-steps">
+<article class="sat-step"><span class="sat-num">01 / OR</span><strong>A OR B OR C</strong><p>This condition succeeds when at least one of A, B, or C is true.</p></article>
+<article class="sat-step"><span class="sat-num">02 / NOT</span><strong>NOT A</strong><p>The symbol ¬A means A must be false for that particular statement to be true.</p></article>
+<article class="sat-step"><span class="sat-num">03 / AND</span><strong>Every condition</strong><p>Different conditions are combined with AND: all of them must succeed.</p></article>
+</div>
+<p>In 3-SAT, each condition is a <strong>clause</strong> containing exactly three <strong>literals</strong> (variables or their negations). The clauses are connected by AND.</p>
+<div class="sat-clauses" aria-label="The four clauses in the puzzle">
+<div class="sat-clause"><span class="sat-clause-id">CLAUSE 01</span><strong>A ∨ B ∨ C</strong></div>
+<div class="sat-clause"><span class="sat-clause-id">CLAUSE 02</span><strong>¬A ∨ B ∨ ¬C</strong></div>
+<div class="sat-clause"><span class="sat-clause-id">CLAUSE 03</span><strong>A ∨ ¬B ∨ C</strong></div>
+<div class="sat-clause"><span class="sat-clause-id">CLAUSE 04</span><strong>¬A ∨ ¬B ∨ C</strong></div>
+</div>
+<div class="sat-formula"><p class="ac-kicker">THE COMPLETE PUZZLE</p><div class="sat-expression">(A ∨ B ∨ C) ∧ (¬A ∨ B ∨ ¬C) ∧ (A ∨ ¬B ∨ C) ∧ (¬A ∨ ¬B ∨ C)</div></div>
+<div class="sat-prompt"><strong>YOUR TURN_</strong><p>Before revealing the answers, try setting <strong>A = TRUE, B = FALSE, C = FALSE</strong>. Does every clause succeed? Then try setting all three switches to FALSE. What changes?</p></div>
+<details class="sat-disclosure"><summary>Reveal the first worked answer</summary><div>
+<p>With <strong>A = TRUE, B = FALSE, C = FALSE</strong>, clause 01 succeeds because A is true. Clause 02 succeeds because ¬C is true. Clauses 03 and 04 also succeed (A in clause 03, ¬B in clause 04).</p><p><strong class="sat-pass">All four clauses are true.</strong> This one assignment is enough to prove that the example formula is satisfiable.</p>
+</div></details>
+<details class="sat-disclosure"><summary>What happens when all three are FALSE?</summary><div><p>Clause 01 becomes FALSE ∨ FALSE ∨ FALSE, which is false. The other three clauses are true, but that is not enough: all four are connected by AND.</p><p><strong class="sat-fail">This assignment does not satisfy the formula.</strong> That does not mean the formula is unsatisfiable, because another assignment already works.</p></div></details>
+</section>
+<section class="sat-section" id="search"><p class="ac-kicker">PART 02 / CHECK THE EVIDENCE</p><h2>Eight candidates. Not eight guesses.</h2>
+<p>With three Boolean variables, there are 2 × 2 × 2 = <strong>8 assignments</strong>. To establish that the formula is satisfiable, you need just one working assignment. To establish that it is unsatisfiable by exhaustive checking, you would have to rule out every possible assignment.</p>
+<details class="sat-disclosure"><summary>Reveal the complete truth table and verify the puzzle</summary><div>
+<p>Each column labelled C1 through C4 reports whether that clause is true. “SAT” means all four are true in the same row. This table is exhaustive for these three variables.</p>
+<div class="sat-table-wrap"><table class="sat-table"><thead><tr><th scope="col">TRY</th><th scope="col">A</th><th scope="col">B</th><th scope="col">C</th><th scope="col">C1</th><th scope="col">C2</th><th scope="col">C3</th><th scope="col">C4</th><th scope="col">ALL?</th></tr></thead><tbody><tr data-sat="no"><td>01</td><td>F</td><td>F</td><td>F</td><td><span class="sat-fail">FALSE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-fail">NO</strong></td></tr>
+<tr data-sat="yes"><td>02</td><td>F</td><td>F</td><td>T</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-pass">SAT</strong></td></tr>
+<tr data-sat="no"><td>03</td><td>F</td><td>T</td><td>F</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-fail">FALSE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-fail">NO</strong></td></tr>
+<tr data-sat="yes"><td>04</td><td>F</td><td>T</td><td>T</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-pass">SAT</strong></td></tr>
+<tr data-sat="yes"><td>05</td><td>T</td><td>F</td><td>F</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-pass">SAT</strong></td></tr>
+<tr data-sat="no"><td>06</td><td>T</td><td>F</td><td>T</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-fail">FALSE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-fail">NO</strong></td></tr>
+<tr data-sat="no"><td>07</td><td>T</td><td>T</td><td>F</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-fail">FALSE</span></td><td><strong class="sat-fail">NO</strong></td></tr>
+<tr data-sat="yes"><td>08</td><td>T</td><td>T</td><td>T</td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><span class="sat-pass">TRUE</span></td><td><strong class="sat-pass">SAT</strong></td></tr></tbody></table></div>
+<p><strong>Cross-check:</strong> four rows satisfy every clause: (F, F, T), (F, T, T), (T, F, F), and (T, T, T). Four rows fail at least one clause.</p>
+</div></details>
+<h3>Why not test every assignment in a large problem?</h3>
+<p>For <em>n</em> Boolean variables there are 2<sup>n</sup> possible assignments. A brute-force search may inspect many of them, but a smarter algorithm can sometimes exploit the structure of clauses and avoid examining every assignment individually.</p>
+<div class="sat-proof-grid">
+<article><strong>20 variables</strong><p>1,048,576 possible settings. Many are manageable with modern algorithms and useful structure, but the number of possible settings grows rapidly.</p></article>
+<article><strong>50 variables</strong><p>1,125,899,906,842,624 possible settings. This is the size of the brute-force search space—not a claim that every solver examines every setting.</p></article>
+</div>
+<div class="sat-banner"><strong>THE CRUCIAL DISTINCTION_</strong><p>“There are exponentially many possible assignments” does not prove that every algorithm requires exponential time. Proving computational lower bounds is much harder than counting brute-force possibilities.</p></div>
+</section>
+<section class="sat-section" id="research"><p class="ac-kicker">PART 03 / REAL-WORLD RESEARCH</p><h2>What exactly did OpenAI announce?</h2>
+<p>On <strong>26 October 2026</strong>, OpenAI published a research announcement stating that an internal AI system had produced a claimed refutation of the <strong>Exponential Time Hypothesis (ETH)</strong>, a long-standing conjecture about the worst-case complexity of problems including 3-SAT. OpenAI released a manuscript and Lean formalization, and described an independent group of complexity researchers convening to examine and explain the result.</p>
+<p>ETH informally says there is <em>no subexponential-time algorithm for 3-SAT</em>, as a function of the number of variables, in the standard worst-case setting. A correct subexponential-time algorithm would overturn that conjecture. The announced result concerns a theoretical asymptotic bound, not a practical benchmark for this page's little puzzle.</p>
+<div class="sat-banner"><strong>CLAIM STATUS / NOVEMBER 2026_</strong><p>OpenAI publicly presents this as a breakthrough; its independent examination and broader scientific assessment matter. The public Lean artifact is meaningful evidence about a formal statement, but reviewers must also understand whether the formalization matches the intended mathematical claim and whether the argument and its consequences are correctly interpreted.</p></div>
+<div class="sat-proof-grid">
+<article><strong>What the announcement claims</strong><p>A new subexponential theoretical algorithm for counting solutions of fixed-width Boolean formulas, with consequences for ETH and 3-SAT if the result withstands scrutiny.</p></article>
+<article><strong>What it does not establish</strong><p>It does not prove P = NP, supply a universally practical solver, or mean that real-world cryptography or every hard optimization task is suddenly broken.</p></article>
+</div>
+<h3>Why is Lean verification important, but not the final word?</h3><p>A proof assistant checks whether a formally expressed argument follows from its specified definitions and rules. Expert review still needs to check that those definitions express the intended theorem, that the mathematical scope is understood, and that the result connects correctly to the claims being made.</p>
+<details class="sat-disclosure"><summary>Investigate the strength of the scientific evidence</summary><div><ol class="ac-list"><li><strong>Claim:</strong> What precise algorithmic guarantee does the manuscript state?</li><li><strong>Formal statement:</strong> What exactly was checked in Lean? Is its bound or formulation identical to the strongest claim?</li><li><strong>Independent review:</strong> Can experts reconstruct and explain the argument, or identify an incorrect assumption?</li><li><strong>Consequences:</strong> Which established conditional results really depend on ETH in the relevant form?</li><li><strong>Practical relevance:</strong> Can the technique become an implementable speedup on useful instances? This is a separate question from asymptotic theory.</li></ol></div></details>
+<p class="sat-small">Editorial note: this is an independent learning explanation, not an original validation of OpenAI’s proof. Its scientific status may change as experts publish further assessments.</p>
+</section>
+<section class="sat-section" id="lesson"><p class="ac-kicker">PART 04 / TRANSFER THE SKILL</p><h2>The problem-management connection.</h2>
+<p>An investigator's job is not to defend the first explanation. It is to make assumptions explicit, compare alternatives, test what could prove them wrong, and communicate the confidence justified by the evidence.</p>
+<div class="sat-steps">
+<article class="sat-step"><span class="sat-num">01 / FRAME</span><strong>Define the claim</strong><p>Here: find a setting that satisfies every clause—or explain a reliable method for larger instances.</p></article>
+<article class="sat-step"><span class="sat-num">02 / TEST</span><strong>Use disconfirming cases</strong><p>One successful assignment settles satisfiability; one failing assignment does not establish impossibility.</p></article>
+<article class="sat-step"><span class="sat-num">03 / VERIFY</span><strong>Know what was checked</strong><p>A truth table proves the toy result; a machine-checked theorem and independent scrutiny serve different roles in research.</p></article>
+</div>
+<div class="sat-bridge"><h3>A powerful question to take away</h3><p>“What evidence would make my preferred explanation less likely?” That question can improve an incident investigation, a root-cause analysis, an engineering decision and the evaluation of an extraordinary scientific announcement.</p></div>
+<div class="sat-route"><a class="sat-primary" href="practice.html">Back to Practice →</a><a href="evidence-lab.html">Explore another investigation ↗</a></div>
+</section>
+<section class="sat-section" id="sources"><p class="ac-kicker">SOURCE NOTES_</p><h2>Read the original research context.</h2>
+<p>The toy clauses and solutions in this lesson are original educational examples, independent of the algorithm claimed in the research.</p>
+<ol class="sat-source-list">
+<li><a href="https://openai.com/index/building-scientific-understanding-with-academic-communities/" rel="noopener noreferrer">OpenAI — Working with academic communities to build scientific understanding</a> (26 October 2026): the announcement, research context and independent review plan.</li>
+<li><a href="https://github.com/openai/math" rel="noopener noreferrer">OpenAI’s public mathematical research repository</a>: research materials, manuscripts and formal proof artifacts linked from the announcement. Consult the ETH-related files and scope notes for the actual formal statements.</li>
+</ol>
+<p class="sat-small">Independent educational feature by problem.me. Not affiliated with OpenAI and not an assertion that the ETH claim has been independently validated.</p></section>
+</div></main>
+<footer class="pm-global-footer"><div class="pm-footer-inner"><div><a href="index.html" class="pm-footer-title" style="text-decoration:none">problem<span>.me</span>_</a><p>Same problems. Clearer thinking.</p></div><nav aria-label="Site information"><a href="features.html">What’s Inside</a><a href="privacy.html">Privacy</a></nav></div></footer>
+</body></html>

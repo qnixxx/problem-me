@@ -38,7 +38,8 @@ assert (ROOT/'index.html').read_text().find('name="application-version" content=
 assert not list(ROOT.glob('*.js')), 'Application JavaScript must not be published'
 PUBLIC_PAGES={'index.html','techniques.html','5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html',
  'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html',
- 'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html','features.html','privacy.html','404.html'}
+ 'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html','special-investigation-3sat.html',
+ 'features.html','privacy.html','404.html'}
 assert {p.name for p in ROOT.glob('*.html')} == PUBLIC_PAGES, 'Unexpected public HTML page or missing learning route'
 links=0
 for p in files:

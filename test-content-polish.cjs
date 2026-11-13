@@ -32,9 +32,11 @@ for(const p of pages){
  assert(html.includes('href="'+prefix+'site-structure.css"'),p+' shared navigation stylesheet');
  assert((html.match(/class="pm-global-header"/g)||[]).length===1,p+' exactly one global header');
  assert((html.match(/class="pm-global-footer"/g)||[]).length===1,p+' exactly one simple footer');
- assert(html.includes('class="pm-footer-word"'),p+' footer word can highlight on hover');
- assert(html.includes('class="pm-footer-dot"'),p+' footer keeps the green dot-me segment');
- assert(html.includes('class="pm-footer-cursor" aria-hidden="true">_</span>'),p+' separate visible footer cursor');
+ const footer=html.match(/<footer class="pm-global-footer">([\s\S]*?)<\/footer>/);
+ assert(footer,p+' footer exists');
+ assert(footer[1].includes('class="pm-footer-word"'),p+' footer word can highlight on hover');
+ assert(footer[1].includes('class="pm-footer-dot"'),p+' footer keeps the green dot-me segment');
+ assert(footer[1].includes('class="pm-footer-cursor" aria-hidden="true">_</span>'),p+' separate visible footer cursor');
  assert((html.match(/class="pm-global-nav"/g)||[]).length===1,p+' primary navigation');
  const primary=html.match(/<nav class="pm-global-nav"[^>]*>([\s\S]*?)<\/nav>/);
  assert(primary,p+' primary nav exists');

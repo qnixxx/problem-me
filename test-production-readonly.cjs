@@ -35,6 +35,15 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
     await page.goto(base+'/'+route,{waitUntil:'load'});
     assert(await page.title(),route+' title');
     assert.equal(await page.locator('main').count(),1,route+' main landmark');
+    assert.equal(await page.locator('.pm-global-header').count(),1,route+' consistent global header');
+    assert.equal(await page.locator('.pm-global-nav a').count(),4,route+' four top-level links');
+    assert.deepEqual(await page.locator('.pm-global-nav a').allTextContents(),['Home','Learn','Techniques','Practice'],route+' predictable nav labels');
+    assert.equal(await page.locator('.pm-global-footer').count(),1,route+' one compact footer');
+    if(route!=='index.html'){
+      assert.equal(await page.locator('.pm-breadcrumbs').count(),1,route+' breadcrumbs');
+      assert.equal(await page.locator('.pm-breadcrumbs [aria-current="location"]').count(),1,route+' current breadcrumb location');
+    }
+
     assert.equal(await page.locator('input,textarea,form,select,button,script,[contenteditable]').count(),0,route+' user input, button or script');
     assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0,route+' browser persistence');
     assert.equal(await page.locator('html.investigation-embedded, .site-drawer, .workspace-shell, .pm-reasoning').count(),0,route+' retired interactive UI');
@@ -91,11 +100,14 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/index.html');
    assert.equal(await page.locator('.readonly-skip-link[href="#top"]').count(),1,'homepage keyboard Skip link');
    assert(await page.locator('main#top').isVisible(),'homepage content visible immediately');
-   assert.equal(await page.locator('#boot').count(),0,'old boot gate absent');
+   assert.equal(await page.locator('.pm-boot-intro').count(),1,'terminal entrance retained');
+   assert.equal(await page.locator('.pm-boot-skip[href="#top"]').count(),1,'skip intro link available');
+   assert.equal(await page.locator('.pm-boot-intro').isVisible(),false,'intro hidden when reduced motion preferred');
+   assert.equal(await page.locator('.pm-boot-skip').isVisible(),false,'skip hidden when reduced motion preferred');
    await page.locator('.readonly-skip-link').focus();
    assert.equal(await page.locator('.readonly-skip-link').evaluate(el=>getComputedStyle(el).top),'10px','Skip link appears when focused');
 
-   assert.equal(await page.locator('#mission .mission-card').count(),4,'homepage paths');
+   assert.equal(await page.locator('#start .pm-journey-card').count(),3,'three homepage starting paths');
    assert.equal(await page.locator('#techniques .tech').count(),4,'homepage case cards');
    await page.goto(base+'/techniques.html');
    assert.equal(await page.locator('.tech-card').count(),4,'library cases');
@@ -119,7 +131,9 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/glossary.html');
    assert.equal(await page.locator('.ac-term').count(),22,'Academy glossary');
    await page.goto(base+'/index.html');
-   assert.equal(await page.locator('#academy-paths a[href="foundations.html"]').count(),1,'Academy homepage discovery');
+   assert.equal(await page.locator('#start a[href="academy.html"]').count(),1,'Academy homepage discovery');
+   assert.equal(await page.locator('#start a[href="techniques.html"]').count(),1,'technique homepage discovery');
+   assert.equal(await page.locator('#start a[href="practice.html"]').count(),1,'practice homepage discovery');
    await page.goto(base+'/evidence-lab.html');
    assert.equal(await page.locator('.ev-case').count(),3,'Lab hub contains three investigations');
    const expectedArtwork={
@@ -165,5 +179,20 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    console.log('PASS problem.me v1.0 at '+width+'px: '+routes.length+' routes, no inputs, storage or external requests');
    await ctx.close();
   }
+  // Verify the nostalgic intro with ordinary motion and a working instant skip.
+  const introCtx=await browser.newContext({viewport:{width:1280,height:800},reducedMotion:'no-preference'});
+  try{
+    const introPage=await introCtx.newPage();
+    await introPage.goto(base+'/index.html');
+    assert(await introPage.locator('.pm-boot-intro').isVisible(),'terminal intro appears for ordinary motion');
+    assert(await introPage.locator('main#top').count()===1,'homepage exists before intro ends');
+    await introPage.locator('.pm-boot-skip').click();
+    await introPage.locator('.pm-boot-intro').waitFor({state:'hidden',timeout:1000});
+    assert.equal(await introPage.locator('main#top').isVisible(),true,'skip reveals homepage');
+    await introPage.goto(base+'/index.html');
+    await introPage.locator('.pm-boot-intro').waitFor({state:'hidden',timeout:5000});
+    assert(await introPage.locator('main#top').isVisible(),'terminal intro naturally completes');
+    console.log('PASS terminal entrance: animation completes, skip works, reduced motion respected');
+  }finally{await introCtx.close();}
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}
 })().catch(err=>{console.error(err);process.exitCode=1;});

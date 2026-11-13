@@ -1,0 +1,155 @@
+/* problem.me v1.0 — shared site orientation and accessible terminal entrance. */
+.pm-global-header{
+  position:relative;position:sticky;top:0;z-index:55;
+  background:rgba(2,9,5,.97);border-bottom:1px solid #286f48;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.pm-global-header .pm-global-inner{
+  width:min(calc(100% - 32px),1160px);margin:0 auto;
+  min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:7px 0;
+}
+.pm-global-header .pm-global-brand{
+  flex:none;display:inline-flex;align-items:center;min-height:44px;
+  font:700 1.45rem/1.25 "Courier New",Courier,monospace;
+  letter-spacing:-.055em;color:#f4f1df;text-decoration:none;white-space:nowrap;
+}
+.pm-global-header .pm-global-brand em{font-style:normal;color:#63ffb5}
+.pm-global-header .pm-global-brand .pm-brand-cursor{color:#63ffb5;margin-left:1px;animation:pm-brand-blink .9s steps(1,end) infinite}
+@keyframes pm-brand-blink{50%{opacity:0}}
+.pm-global-header .pm-global-nav{
+  display:flex;flex:none;align-items:center;justify-content:flex-end;gap:6px;
+  min-height:44px;padding:0;margin:0;
+}
+.pm-global-header .pm-global-nav a{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:11px 14px;min-height:44px;border:1px solid transparent;border-radius:7px;
+  text-decoration:none;color:#d8ebdc;font:700 .81rem/1.3 "Courier New",Courier,monospace;
+  white-space:nowrap;letter-spacing:0;
+}
+.pm-global-header .pm-global-nav a:hover{color:#63ffb5;border-color:#346e50;background:#0c2819}
+.pm-global-header .pm-global-nav a[aria-current="page"]{
+  color:#020805;background:#63ffb5;border-color:#63ffb5;
+}
+.pm-global-header a:focus-visible,.pm-breadcrumbs a:focus-visible{
+  outline:3px solid #ffe95b;outline-offset:3px;
+}
+.pm-breadcrumbs{
+  display:block;position:relative;z-index:1;min-height:0;padding:0;margin:0;
+  border-bottom:1px solid #1b442f;background:#06140c;
+}
+.pm-breadcrumbs .pm-crumbs-inner{
+  width:min(calc(100% - 32px),1160px);margin:0 auto;padding:10px 0;
+  display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;
+  font:700 .75rem/1.6 "Courier New",Courier,monospace;min-height:42px;
+}
+.pm-breadcrumbs a{color:#9cd5b4;text-decoration:none}
+.pm-breadcrumbs a:hover{color:#ffe95b;text-decoration:underline}
+.pm-breadcrumbs .pm-crumb-sep{color:#538b69;user-select:none}
+.pm-breadcrumbs [aria-current="location"]{color:#f4f1df;overflow-wrap:anywhere}
+.pm-journey{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+  margin:24px 0 10px;
+}
+.pm-journey-card{
+  min-width:0;display:flex;flex-direction:column;gap:9px;
+  min-height:228px;padding:23px 22px;border:1px solid #317a52;border-radius:13px;
+  text-decoration:none;background:linear-gradient(145deg,#0a2718,#04120b);
+  color:#d2e6d8;transition:background .16s,border-color .16s,transform .16s;
+}
+.pm-journey-card .pm-journey-step{font:700 .78rem/1.4 "Courier New",Courier,monospace;color:#9ecfb2}
+.pm-journey-card strong{display:block;color:#f5f1e1;font:700 clamp(1.25rem,2.2vw,1.55rem)/1.3 "Courier New",Courier,monospace}
+.pm-journey-card .pm-journey-desc{font:400 .99rem/1.62 system-ui,-apple-system,"Segoe UI",sans-serif;color:#bad9c6;flex:1}
+.pm-journey-card .pm-journey-go{font:700 .85rem/1.4 "Courier New",Courier,monospace;color:#71ffae}
+.pm-journey-card:hover{border-color:#70f7aa;background:#0c3020;transform:translateY(-2px)}
+.pm-journey-card:focus-visible{outline:3px solid #ffe95b;outline-offset:3px}
+.pm-home-orientation{padding:40px 0 50px}
+.pm-home-orientation .pm-home-orientation-intro{max-width:70ch;color:#c4ddcc}
+.pm-boot-intro{
+  position:fixed;inset:0;z-index:105;pointer-events:none;
+  display:grid;place-items:center;padding:20px;
+  background:radial-gradient(ellipse at 52% 37%,#09331d 0%,#020805 68%);
+  color:#9dffbe;opacity:1;visibility:visible;
+  animation:pm-boot-exit 1.9s ease forwards;
+}
+.pm-boot-box{width:min(100%,660px);padding:clamp(20px,5vw,37px);border:1px solid #3ca972;border-radius:12px;
+  background:#031009;box-shadow:0 0 80px #0b482a66,inset 0 0 45px #174c2925}
+.pm-boot-heading{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  border-bottom:1px solid #295b3f;padding-bottom:13px;margin-bottom:20px;
+  font:700 .8rem/1.4 "Courier New",Courier,monospace;letter-spacing:.09em;color:#b2d9bd}
+.pm-boot-brand{font:700 clamp(1.9rem,7vw,3rem)/1.1 "Courier New",Courier,monospace;
+  letter-spacing:-.05em;color:#f4f1df;margin:0 0 17px}
+.pm-boot-brand span{color:#63ffb5}
+.pm-boot-log{list-style:none;padding:0;margin:0;font:700 clamp(.76rem,2.5vw,.94rem)/1.7 "Courier New",Courier,monospace}
+.pm-boot-log li{opacity:0;transform:translateY(6px);animation:pm-boot-line .22s linear forwards}
+.pm-boot-log li:nth-child(1){animation-delay:.1s}
+.pm-boot-log li:nth-child(2){animation-delay:.35s}
+.pm-boot-log li:nth-child(3){animation-delay:.6s}
+.pm-boot-log li:nth-child(4){animation-delay:.85s}
+.pm-boot-log .pm-boot-ok{color:#ffe77e}
+.pm-boot-progress{height:6px;overflow:hidden;border:1px solid #31764c;margin-top:22px;background:#07150e}
+.pm-boot-progress::after{content:"";display:block;height:100%;width:0;background:linear-gradient(90deg,#29c77a,#aeffce);
+ animation:pm-boot-fill 1.25s steps(15,end) forwards}
+.pm-boot-skip{
+  position:fixed;right:clamp(16px,4vw,45px);bottom:clamp(16px,4vw,35px);
+  z-index:107;min-height:48px;display:inline-flex;align-items:center;padding:11px 16px;
+  border:1px solid #79ffc0;border-radius:8px;background:#072417;
+  color:#f4f1df;text-decoration:none;font:700 .84rem "Courier New",Courier,monospace;
+  visibility:visible;animation:pm-boot-skip-exit 1.9s steps(1,end) forwards;
+}
+.pm-boot-skip:hover{background:#145233}
+.pm-boot-skip:focus-visible{outline:3px solid #ffe95b;outline-offset:4px}
+@keyframes pm-boot-line{to{opacity:1;transform:translateY(0)}}
+@keyframes pm-boot-fill{to{width:100%}}
+@keyframes pm-boot-exit{
+  0%,76%{opacity:1;visibility:visible}
+  99%{opacity:0;visibility:visible}
+  100%{opacity:0;visibility:hidden}
+}
+@keyframes pm-boot-skip-exit{0%,99%{visibility:visible}100%{visibility:hidden}}
+/* The homepage is already rendered; clicking the anchor dismisses the visual intro immediately. */
+body:has(main#top:target) .pm-boot-intro,
+body:has(main#top:target) .pm-boot-skip{display:none}
+@media(max-width:760px){
+  .pm-journey{grid-template-columns:1fr}
+  .pm-journey-card{min-height:160px}
+  .pm-global-header .pm-global-inner{width:calc(100% - 24px);display:grid;grid-template-columns:1fr;gap:0;padding:7px 0 6px}
+  .pm-global-header .pm-global-brand{min-height:38px;font-size:1.27rem}
+  .pm-global-header .pm-global-nav{justify-content:space-between;gap:1px;width:100%}
+  .pm-global-header .pm-global-nav a{padding:10px 8px;font-size:.76rem;min-height:44px}
+  .pm-breadcrumbs .pm-crumbs-inner{width:calc(100% - 24px)}
+}
+@media(max-width:360px){
+  .pm-global-header .pm-global-nav a{font-size:.71rem;padding-inline:5px}
+  .pm-boot-box{padding:18px 15px}
+  .pm-boot-log{font-size:.72rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .pm-global-header .pm-brand-cursor{animation:none}
+ .pm-boot-intro,.pm-boot-skip{display:none!important;animation:none!important}
+ .pm-journey-card{transition:none}
+ .pm-journey-card:hover{transform:none}
+}
+/* Keep orientation consistent across original terminal and editorial layouts. */
+.pm-global-header .pm-global-inner{box-sizing:border-box}
+.pm-global-header .pm-global-nav a[aria-current="location"]{color:#63ffb5;border-color:#387451;background:#10311f}
+.pm-breadcrumbs .pm-crumbs-inner{box-sizing:border-box}
+.pm-global-footer{padding:25px 0 26px;margin:0;background:#020805;color:#a6cdb5;border-top:1px solid #2c6b49}
+.pm-global-footer .pm-footer-inner{width:min(calc(100% - 32px),1160px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.pm-global-footer .pm-footer-title{font:700 1.17rem/1.4 "Courier New",Courier,monospace;color:#f4f1df;letter-spacing:-.04em}
+.pm-global-footer .pm-footer-title span{color:#63ffb5}
+.pm-global-footer p{margin:4px 0 0;font:400 .88rem/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.pm-global-footer nav{display:flex;align-items:center;gap:10px 21px;flex-wrap:wrap;min-height:0}
+.pm-global-footer nav a{min-height:44px;display:inline-flex;align-items:center;color:#e2f0e5;text-decoration:none;font:700 .79rem/1.5 "Courier New",monospace}
+.pm-global-footer nav a:hover{color:#ffe95b}
+.pm-global-footer a:focus-visible{outline:3px solid #ffe95b;outline-offset:3px}
+.pm-global-header,.pm-breadcrumbs,.pm-global-footer{box-sizing:border-box}
+.pm-global-header .pm-global-brand,.pm-global-header .pm-global-nav a{text-transform:none}
+.pm-home-orientation h2{font-family:"Courier New",Courier,monospace}
+.pm-home-orientation .pm-journey-card{text-transform:none}
+@media(max-width:760px){
+ .pm-global-header .pm-global-inner{min-height:0}
+ .pm-global-header .pm-global-nav{min-height:44px}
+ .pm-global-footer .pm-footer-inner{display:block}
+ .pm-global-footer nav{margin-top:14px}
+}

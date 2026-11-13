@@ -27,6 +27,19 @@ for(const p of pages){
  assert(head.includes('https://problem.me/'+(p==='index.html'?'':p)),p+' canonical or social URL');
  assert(!/<(?:input|textarea|select|form|button|script)\b/i.test(html),p+' is static with no controls or scripts');
  assert(head.includes("script-src 'none'") && head.includes("connect-src 'none'"),p+' script and outbound requests forbidden');
+ const prefix=p.startsWith('articles/')?'../':'';
+ assert(html.includes('href="'+prefix+'site-structure.css"'),p+' shared navigation stylesheet');
+ assert((html.match(/class="pm-global-header"/g)||[]).length===1,p+' exactly one global header');
+ assert((html.match(/class="pm-global-footer"/g)||[]).length===1,p+' exactly one simple footer');
+ assert((html.match(/class="pm-global-nav"/g)||[]).length===1,p+' primary navigation');
+ const primary=html.match(/<nav class="pm-global-nav"[^>]*>([\s\S]*?)<\/nav>/);
+ assert(primary,p+' primary nav exists');
+ const items=[...primary[1].matchAll(/<a href="([^"]+)"/g)].map(m=>m[1]);
+ assert.deepEqual(items,['index.html','academy.html','techniques.html','practice.html'].map(x=>prefix+x),p+' same four top-level destinations');
+ if(p!=='index.html'){
+   assert(html.includes('class="pm-breadcrumbs"'),p+' contextual breadcrumb');
+   assert(html.includes('class="pm-crumbs-inner"'),p+' breadcrumb trail');
+ }
  if(cases.includes(p)||guides.includes(p)){
    assert(/rel="canonical"/i.test(head),p+' canonical link');
    assert(/property="og:description"/i.test(head),p+' sharing description');
@@ -42,12 +55,19 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
 assert(home.includes('application-version" content="1.0"'),'v1.0 release metadata');
-assert(home.includes('status-version"> / v1.0'),'homepage version');
+assert(home.includes('class="pm-boot-brand"'),'homepage terminal identity');
 assert(feature.includes('problem.me / v1.0 /') && feature.includes('id="overview"'),'v1.0 feature overview');
 assert(!feature.includes('RELEASE HISTORY') && !feature.includes('class="timeline"'),'no historical release timeline');
 assert(fs.existsSync(path.join(root,'brand.css')),'current design stylesheet');
 assert(!fs.readdirSync(root).some(n=>/^RELEASE-v/i.test(n)),'release history documents removed from production tree');
 assert(home.includes('Skip to main content'),'keyboard Skip link');
+assert(home.includes('class="pm-boot-intro"')&&home.includes('class="pm-boot-skip"'),'terminal entrance and skip action');
+assert(home.includes('aria-hidden="true"><div class="pm-boot-box"'),'intro decorative for assistive tech');
+assert((home.match(/class="pm-journey-card"/g)||[]).length===3,'three distinct homepage destinations');
+assert(!home.includes('id="mission"')&&!home.includes('id="academy-paths"')&&!home.includes('id="launch"'),'homepage avoids duplicate funnels');
+const structure=fs.readFileSync(path.join(root,'site-structure.css'),'utf8');
+assert(structure.includes('prefers-reduced-motion:reduce')&&structure.includes('body:has(main#top:target)'), 'intro respects reduced motion and can be skipped');
+
 assert(!fs.readdirSync(root).some(n=>n.endsWith('.js')),'site root has no application JavaScript');
 assert(fs.existsSync(path.join(root,'assets/capybara-soaking.webp')),'original mascot present');
 const academy=fs.readFileSync(path.join(root,'academy.html'),'utf8');
@@ -70,7 +90,7 @@ for(const p of ['academy.html','foundations.html','choose-method.html','professi
 }
 const labs=['lab-signin.html','lab-warehouse.html','lab-migration.html'];
 const labHub=fs.readFileSync(path.join(root,'evidence-lab.html'),'utf8');
-assert(home.includes('href="evidence-lab.html"'),'homepage Evidence Lab discovery');
+assert(practice.includes('href="evidence-lab.html"'),'Evidence Lab discoverable from Practice');
 assert(academy.includes('05 / INVESTIGATE THE EVIDENCE'),'fifth Academy chapter');
 assert((academy.match(/class="ac-card"/g)||[]).length===11,'Academy has 11 learning and method cards');
 assert((labHub.match(/class="ev-case"/g)||[]).length===3,'Evidence Lab has three scenario cards');
@@ -116,4 +136,4 @@ for(const p of ['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'
  const html=fs.readFileSync(path.join(root,p),'utf8');
  assert(!html.includes('READ-ONLY CASE STUDY'),p+' editorial case label');
 }
-console.log('PASS v1.0: fresh feature overview, 22 educational pages, established capybaras, and no visitor inputs.');
+console.log('PASS v1.0: terminal entrance, four consistent nav choices, three homepage paths, 22 educational pages, and no visitor inputs.');

@@ -812,6 +812,8 @@
 </head>
 
 <body class="pm-site pm-app pm-home">
+  <div class="pm-boot-intro" aria-hidden="true"><div class="pm-boot-box"><div class="pm-boot-heading"><span>&gt; SYSTEM / PROBLEM.ME</span><span>SESSION READY</span></div><p class="pm-boot-brand">problem<span>.me</span>_</p><ul class="pm-boot-log"><li>&gt; initializing clearer thinking...</li><li>&gt; loading field guides and case files...</li><li>&gt; checking evidence-first protocols...</li><li class="pm-boot-ok">&gt; [OK] LET'S INVESTIGATE.</li></ul><div class="pm-boot-progress"></div></div></div>
+  <a class="pm-boot-skip" href="#top">Skip intro →</a>
   <div id="site">
     <a class="readonly-skip-link" href="#top">Skip to main content</a>
     <header class="pm-global-header"><div class="pm-global-inner"><a class="pm-global-brand" href="index.html" aria-label="problem.me — Home">problem<em>.me</em><span class="pm-brand-cursor" aria-hidden="true">_</span></a><nav class="pm-global-nav" aria-label="Primary navigation"><a href="index.html" aria-current="page">Home</a><a href="academy.html">Learn</a><a href="techniques.html">Techniques</a><a href="practice.html">Practice</a></nav></div></header>
@@ -824,8 +826,8 @@
             <h1 id="hero-title">Same problems.<span>Clearer thinking.</span></h1>
             <p class="lede">A calm place to learn problem management. Explore guided lessons, compare techniques, investigate professional examples and follow the evidence in illustrated capybara stories.</p>
 
-            <div class="pm-home-actions"><a class="pm-button pm-button--primary" href="academy.html">Start learning <span aria-hidden="true">→</span></a><a class="pm-button" href="techniques.html">Explore capybara case files</a></div>
-            <div class="terminal-prompt" aria-label="Animated mission prompt">
+            <div class="pm-home-actions"><a class="pm-button pm-button--primary" href="#start">Choose your starting point <span aria-hidden="true">↓</span></a></div>
+            <div class="terminal-prompt" aria-label="Problem.me thinking prompt">
               <span class="chev" aria-hidden="true">&gt;</span>
               <span>learn a method. follow the evidence. test your conclusion.</span>
               <span class="blink-cursor" aria-hidden="true">_</span>
@@ -839,63 +841,17 @@
           </figure>
         </div>
       </section>
-
-      <section class="mission" id="academy-paths" aria-labelledby="academy-paths-title">
-        <div class="wrap">
-          <div class="prompt">&gt; open /academy --start</div>
-          <h2 id="academy-paths-title" style="color:var(--cream);font-size:clamp(1.5rem,3vw,2.15rem);margin:12px 0 16px">THE PROBLEM MANAGEMENT ACADEMY_</h2>
-          <p style="max-width:65ch">A guided route from incidents and recurring patterns to defensible causes, sensible countermeasures and verified results. Start with the fundamentals, follow the evidence and explore how thoughtful investigators reach defensible conclusions.</p>
-          <div class="pm-home-actions">
-            <a class="pm-button pm-button--primary" href="foundations.html">Learn the fundamentals →</a>
-            <a class="pm-button" href="choose-method.html">Choose a technique ↗</a>
-            <a class="pm-button" href="professional-cases.html">Professional cases ↗</a>
-            <a class="pm-button" href="practice.html">Test your reasoning ↗</a>
-            <a class="pm-button" href="evidence-lab.html">Investigate the Evidence Lab ↗</a>
-          </div>
+      <section class="pm-home-orientation" id="start" aria-labelledby="start-title"><div class="wrap">
+        <p class="prompt">&gt; select /your-path</p>
+        <h2 id="start-title">Where would you like to start?_</h2>
+        <p class="pm-home-orientation-intro">One site, three clear ways in. Start from the basics, find a technique for a particular question, or practise your reasoning with worked scenarios.</p>
+        <div class="pm-journey">
+          <a class="pm-journey-card" href="academy.html"><span class="pm-journey-step">01 / LEARN</span><strong>Build your understanding</strong><span class="pm-journey-desc">A guided path through incident and problem management, causes, evidence, real-world examples and effective verification.</span><span class="pm-journey-go">Enter the Academy →</span></a>
+          <a class="pm-journey-card" href="techniques.html"><span class="pm-journey-step">02 / TECHNIQUES</span><strong>Find the right method</strong><span class="pm-journey-desc">Compare 5 Whys, Fishbone, Pareto and Kepner–Tregoe through concise guides and illustrated case studies.</span><span class="pm-journey-go">Browse methods →</span></a>
+          <a class="pm-journey-card" href="practice.html"><span class="pm-journey-step">03 / PRACTICE</span><strong>Put your reasoning to work</strong><span class="pm-journey-desc">Try short self-checks or continue into the Evidence Lab for longer investigations with consequences and debriefs.</span><span class="pm-journey-go">Explore practice →</span></a>
         </div>
-      </section>
+      </div></section>
 
-      <section class="mission" id="mission" aria-labelledby="mission-title">
-        <div class="wrap">
-          <div class="section-head">
-            <div>
-              <div class="prompt">&gt; pathfinder --start</div>
-              <h2 id="mission-title">What would you like to understand?_</h2>
-            </div>
-            <p>Choose a question that feels familiar. Each path leads to an illustrated article—not a form.</p>
-          </div>
-
-          <div class="mission-grid">
-            <a class="mission-card" href="5-whys.html" aria-label="I don't know why it happened — open 5 Whys">
-              <span class="num">01</span>
-              <div class="icon" aria-hidden="true">◎</div>
-              <strong>I DON'T KNOW WHY IT HAPPENED</strong>
-              <span class="arrow">→ 5 WHYS</span>
-            </a>
-
-            <a class="mission-card" href="fishbone.html" aria-label="There are too many possible causes — open Fishbone">
-              <span class="num">02</span>
-              <div class="icon" aria-hidden="true">◇─◇</div>
-              <strong>THERE ARE TOO MANY POSSIBLE CAUSES</strong>
-              <span class="arrow">→ FISHBONE</span>
-            </a>
-
-            <a class="mission-card" href="pareto.html" aria-label="I don't know what to fix first — open Pareto Analysis">
-              <span class="num">03</span>
-              <div class="icon" aria-hidden="true">▂▄▆█</div>
-              <strong>I DON'T KNOW WHAT TO FIX FIRST</strong>
-              <span class="arrow">→ PARETO</span>
-            </a>
-
-            <a class="mission-card" href="kepner-tregoe.html" aria-label="I need to make a decision — open Kepner–Tregoe">
-              <span class="num">04</span>
-              <div class="icon" aria-hidden="true">←┼→</div>
-              <strong>I NEED TO MAKE A DECISION</strong>
-              <span class="arrow">→ KEPNER–TREGOE</span>
-            </a>
-          </div>
-        </div>
-      </section>
 
       <section class="preview" id="techniques" aria-labelledby="techniques-title">
         <div class="wrap">
@@ -904,7 +860,7 @@
               <div class="prompt">&gt; list /techniques --featured</div>
               <h2 id="techniques-title">Featured Case Files_</h2>
             </div>
-            <p>Explore the original capybara case examples, or read the complete Field Guide behind each technique.</p>
+            <p>Explore four capybara case examples and the corresponding Field Guides. Not sure which method fits? The Technique Pathfinder helps you decide.</p>
           </div>
 
           <div class="tech-grid">
@@ -976,56 +932,10 @@ RISK    | DECIDE</pre>
             </article>
           </div>
 
-          <div class="library-cta">
-            <a href="techniques.html">[ BROWSE THE TECHNIQUE LIBRARY → ]</a>
-          </div>
+          <div class="library-cta"><a href="choose-method.html">[ NOT SURE? CHOOSE A METHOD → ]</a></div>
         </div>
       </section>
 
-      <section class="trust" id="privacy" aria-labelledby="privacy-title">
-        <div class="wrap">
-          <div class="trust-box">
-            <div>
-              <div class="prompt">&gt; cat /privacy/README</div>
-              <h2 id="privacy-title">LEARN WITH CURIOSITY_</h2>
-              <p>Explore each idea at your own pace. Our privacy notes explain how the site is delivered.</p>
-            </div>
-            <a class="trust-link" href="privacy.html">[ PRIVACY NOTES → ]</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="launch" id="launch" aria-labelledby="launch-title">
-        <div class="wrap">
-          <div class="launch-box frame">
-            <div class="lagoon-topbar">
-              <span>STATION 01 / THINKING LAGOON</span>
-              <span class="launch-state">V1.0 ONLINE</span>
-            </div>
-            <div class="lagoon-grid">
-              <figure class="lagoon-scene">
-                <img class="lagoon-mascot" src="assets/capybara-soaking.webp" width="1448" height="1086" alt="A contented golden capybara soaking in glowing green water, with a citrus fruit balanced on its head" loading="lazy" decoding="async">
-                <figcaption><strong>CAPYBARA.EXE</strong><span>Soaking. Observing. Not jumping to conclusions.</span></figcaption>
-              </figure>
-              <div class="lagoon-copy">
-                <div class="prompt">&gt; lower the panic. raise the evidence.</div>
-                <h2 id="launch-title">THE FIELD MANUAL IS ONLINE_</h2>
-                <p>Read the original explanations, worked examples and evidence checks for 5 Whys, Fishbone, Pareto and Kepner–Tregoe—without entering anything.</p>
-                <div class="lagoon-actions">
-                  <a class="lagoon-start" href="techniques.html"><span>EXPLORE ALL TECHNIQUES</span><span aria-hidden="true">→</span></a>
-                  <a href="techniques.html#field-guides"><span>READ FIELD GUIDES</span><span aria-hidden="true">↗</span></a>
-                  <a href="features.html"><span>WHAT’S INSIDE</span><span aria-hidden="true">↗</span></a>
-                </div>
-                <p class="lagoon-save-note">An invitation to think carefully, challenge assumptions and enjoy the discovery.</p>
-                <details class="lagoon-briefing">
-                  <summary>READ A CAPYBARA BRIEFING</summary>
-                  <p>“The water is warm. A convincing explanation is still a hypothesis. Before drawing a conclusion, ask what the evidence actually shows.”</p>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer class="pm-global-footer"><div class="pm-footer-inner"><div><a href="index.html" class="pm-footer-title" style="text-decoration:none">problem<span>.me</span>_</a><p>Same problems. Clearer thinking.</p></div><nav aria-label="Site information"><a href="features.html">What’s Inside</a><a href="privacy.html">Privacy</a></nav></div></footer>

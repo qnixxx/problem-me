@@ -55,7 +55,7 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
 assert(home.includes('application-version" content="1.0"'),'v1.0 release metadata');
-assert(home.includes('status-version"> / v1.0'),'homepage version');
+assert(home.includes('class="pm-boot-brand"'),'homepage terminal identity');
 assert(feature.includes('problem.me / v1.0 /') && feature.includes('id="overview"'),'v1.0 feature overview');
 assert(!feature.includes('RELEASE HISTORY') && !feature.includes('class="timeline"'),'no historical release timeline');
 assert(fs.existsSync(path.join(root,'brand.css')),'current design stylesheet');

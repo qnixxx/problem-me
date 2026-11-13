@@ -16,7 +16,7 @@ const routes=['index.html','techniques.html','5-whys.html','fishbone.html','pare
 'articles/5-whys.html','articles/fishbone.html','articles/pareto.html','articles/kepner-tregoe.html',
 'privacy.html','features.html',
 'academy.html','foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html',
-'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html'];
+'evidence-lab.html','lab-signin.html','lab-warehouse.html','lab-migration.html','special-investigation-3sat.html'];
 const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 (async()=>{
  await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
@@ -114,7 +114,7 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
    await page.goto(base+'/features.html');
    assert.equal(await page.locator('.feature-path').count(),4,'v1.0 learning pillars');
-   assert.equal(await page.locator('.feature-link').count(),3,'v1.0 additional learning resources');
+   assert.equal(await page.locator('.feature-link').count(),4,'learning resources including 3-SAT');
    assert.equal(await page.locator('.feature-principles li').count(),3,'v1.0 approach');
    assert.equal(await page.locator('article.release,.timeline').count(),0,'feature page contains no historical release timeline');
    assert(await page.getByRole('heading',{name:/Learn the method/}).isVisible(),'v1.0 feature overview visible');
@@ -128,6 +128,20 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.locator('.ac-quiz details').first().locator('summary').click();
    assert(await page.locator('.ac-quiz details').first().getAttribute('open')!==null,'native disclosure works');
    assert.equal(await page.locator('input,textarea,button,select,form,script').count(),0,'practice remains no-input');
+   await page.goto(base+'/practice.html');
+   assert.equal(await page.locator('a[href="special-investigation-3sat.html"]').count(),1,'Special Investigation visible under Practice');
+   await page.goto(base+'/special-investigation-3sat.html');
+   assert(await page.getByRole('heading',{name:/The 3-SAT Challenge/}).isVisible(),'3-SAT main title visible');
+   assert.equal(await page.locator('.sat-clause').count(),4,'four example 3-SAT clauses');
+   assert.equal(await page.locator('table.sat-table tbody tr').count(),8,'eight assignments');
+   assert.equal(await page.locator('table.sat-table tbody tr[data-sat="yes"]').count(),4,'four satisfying assignments');
+   assert.equal(await page.locator('.sat-disclosure').count(),4,'worked explanations and truth table');
+   await page.locator('.sat-disclosure').first().locator('summary').click();
+   assert(await page.locator('.sat-disclosure').first().evaluate(e=>e.open),'native 3-SAT explanation opens');
+   await page.locator('.sat-disclosure').nth(2).locator('summary').click();
+   assert(await page.locator('.sat-disclosure').nth(2).evaluate(e=>e.open),'truth table disclosure opens');
+   assert(await page.locator('table.sat-table').isVisible(),'truth table becomes visible');
+   assert.equal(await page.locator('input,textarea,form,select,button,script').count(),0,'3-SAT lesson contains no user input or scripts');
    await page.goto(base+'/glossary.html');
    assert.equal(await page.locator('.ac-term').count(),22,'Academy glossary');
    await page.goto(base+'/index.html');

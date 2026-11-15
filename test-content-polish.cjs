@@ -62,7 +62,7 @@ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
 assert(home.includes('application-version" content="1.0"'),'v1.0 release metadata');
 assert(home.includes('class="pm-boot-brand"'),'homepage terminal identity');
-assert(home.includes('class="capy-status-values" aria-hidden="true"'),'status animation uses no visitor tracking');
+assert(home.includes('class="capy-status-values" aria-hidden="true"><span class="capy-status-track">'),'all four statuses are confined to one animated track');
 for(const label of ['UNBOTHERED','CURIOUS','ON THE CASE','THINKING CLEARLY'])assert(home.includes('<span>'+label+'</span>'), 'homepage capybara status '+label);
 assert(feature.includes('problem.me / v1.0 /') && feature.includes('id="overview"'),'v1.0 feature overview');
 assert(!feature.includes('RELEASE HISTORY') && !feature.includes('class="timeline"'),'no historical release timeline');
@@ -78,8 +78,10 @@ assert(structure.includes('prefers-reduced-motion:reduce')&&structure.includes('
 assert(structure.includes('.pm-footer-title:hover .pm-footer-word'),'footer hover color is defined');
 assert(structure.includes('.pm-footer-title .pm-footer-cursor'),'footer animation target matches footer markup');
 assert(structure.includes('animation:pm-brand-blink .9s'),'footer uses existing brand cursor animation');
-assert(structure.includes('@keyframes pm-capy-state'),'four-state animation is defined');
-assert(structure.includes('body.pm-home .capy-status-values > span:first-child{opacity:1!important}'),'reduced motion shows first status');
+assert(structure.includes('@keyframes pm-capy-track'),'four-step track animation is defined');
+assert(structure.includes('height:1.6em;')&&structure.includes('line-height:1.6;overflow:hidden;'),'status window clips every inactive label');
+assert(structure.includes('body.pm-home .capy-status-track{animation:none!important;transform:none!important}'),'reduced motion leaves the first status steady');
+assert(!structure.includes('@keyframes pm-capy-state'),'obsolete opacity animation removed');
 
 assert(!fs.readdirSync(root).some(n=>n.endsWith('.js')),'site root has no application JavaScript');
 assert(fs.existsSync(path.join(root,'assets/capybara-soaking.webp')),'original mascot present');

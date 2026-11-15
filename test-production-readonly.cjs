@@ -107,10 +107,16 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('.pm-boot-skip[href="#top"]').count(),1,'skip intro link available');
    assert.equal(await page.locator('.pm-boot-intro').isVisible(),false,'intro hidden when reduced motion preferred');
    assert.equal(await page.locator('.pm-boot-skip').isVisible(),false,'skip hidden when reduced motion preferred');
-   const reducedStatuses=await page.locator('.capy-status-values > span').evaluateAll(els=>els.map(el=>({label:el.textContent.trim(),opacity:getComputedStyle(el).opacity,animation:getComputedStyle(el).animationName})));
-   assert.deepEqual(reducedStatuses.map(e=>e.label),['UNBOTHERED','CURIOUS','ON THE CASE','THINKING CLEARLY'],'four meaningful capybara statuses');
-   assert.deepEqual(reducedStatuses.map(e=>e.opacity),['1','0','0','0'],'reduced motion keeps a stable accessible first status');
-   assert(reducedStatuses.every(e=>e.animation==='none'),'reduced motion disables status cycling');
+   const reducedStatuses=await page.locator('.capy-status-track').evaluate(el=>({
+     labels:[...el.children].map(item=>item.textContent.trim()),
+     animation:getComputedStyle(el).animationName,
+     offset:el.getBoundingClientRect().top-el.parentElement.getBoundingClientRect().top,
+     overflow:getComputedStyle(el.parentElement).overflow
+   }));
+   assert.deepEqual(reducedStatuses.labels,['UNBOTHERED','CURIOUS','ON THE CASE','THINKING CLEARLY'],'four meaningful capybara statuses');
+   assert.equal(reducedStatuses.animation,'none','reduced motion stops status cycling');
+   assert(Math.abs(reducedStatuses.offset)<2,'reduced motion shows first status only');
+   assert.equal(reducedStatuses.overflow,'hidden','status text is clipped to one line');
    await page.locator('.readonly-skip-link').focus();
    assert.equal(await page.locator('.readonly-skip-link').evaluate(el=>getComputedStyle(el).top),'10px','Skip link appears when focused');
 
@@ -222,13 +228,32 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
     assert.notEqual(hoverColor,baseColor,'problem word changes color when footer brand hovered');
     const cursor=introPage.locator('.pm-global-footer .pm-footer-cursor');
     assert.equal(await cursor.evaluate(el=>getComputedStyle(el).animationName),'pm-brand-blink','footer cursor animates');
-    const statusEls=introPage.locator('.capy-status-values > span');
-    assert.equal(await statusEls.count(),4,'four capybara statuses exist');
-    const firstVisible=await statusEls.evaluateAll(els=>els.findIndex(el=>getComputedStyle(el).opacity==='1'));
-    assert(firstVisible>=0,'one status is displayed');
-    await introPage.waitForTimeout(3300);
-    const nextVisible=await statusEls.evaluateAll(els=>els.findIndex(el=>getComputedStyle(el).opacity==='1'));
-    assert(nextVisible>=0 && nextVisible!==firstVisible,'capybara status automatically changes');
+    const track=introPage.locator('.capy-status-track');
+    assert.equal(await track.locator(':scope > span').count(),4,'four capybara status labels');
+    assert.equal(await track.evaluate(el=>getComputedStyle(el).animationName),'pm-capy-track','single-track status animation is active');
+    // Sample each quarter of the timeline. Every sample must display exactly
+    // one full line inside the clipped viewport, never overlapping letters.
+    for(let i=0;i<4;i++){
+      const state=await track.evaluate((el,time)=>{
+        const anim=el.getAnimations()[0];
+        anim.pause();anim.currentTime=time;
+        const viewport=el.parentElement.getBoundingClientRect();
+        const visible=[...el.children].map((label,index)=>{
+          const rect=label.getBoundingClientRect();
+          return {index,inside:rect.top>=viewport.top-2&&rect.bottom<=viewport.bottom+2,
+            overlap:Math.max(0,Math.min(rect.bottom,viewport.bottom)-Math.max(rect.top,viewport.top))};
+        });
+        return {visible,viewportHeight:viewport.height};
+      },1500+i*3000);
+      const shown=state.visible.filter(x=>x.overlap>2);
+      assert.equal(shown.length,1,'one capybara status visible at state '+i);
+      assert.equal(shown[0].index,i,'expected status at state '+i);
+      assert(shown[0].inside,'entire status line fits at state '+i);
+    }
+    await track.evaluate(el=>{const a=el.getAnimations()[0];a.currentTime=1500;a.play()});
+    await introPage.waitForTimeout(3200);
+    const advanced=await track.evaluate(el=>getComputedStyle(el).transform);
+    assert.notEqual(advanced,'matrix(1, 0, 0, 1, 0, 0)','status automatically advances in normal motion');
     console.log('PASS terminal entrance: animation completes, skip works, reduced motion respected');
   }finally{await introCtx.close();}
  }finally{if(browser)await browser.close();await new Promise(ok=>server.close(ok));}

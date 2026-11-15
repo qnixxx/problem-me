@@ -175,27 +175,31 @@ body:has(main#top:target) .pm-boot-skip{display:none}
   .pm-global-footer .pm-footer-title .pm-footer-dot{transition:none}
 }
 
-/* Home mascot: visual states rotate without JavaScript or browser storage. */
+/* Home mascot status: a single clipped row, never four overlapping layers. */
 body.pm-home .capy-status{
   display:flex;align-items:baseline;flex-wrap:wrap;gap:.55ch;
 }
 body.pm-home .capy-status-label{color:#8dcdb0}
 body.pm-home .capy-status-values{
-  display:inline-grid;min-width:16ch;color:#63ffb5;
+  display:block;flex:none;position:relative;
+  width:18ch;max-width:100%;height:1.6em;
+  line-height:1.6;overflow:hidden;color:#63ffb5;
 }
-body.pm-home .capy-status-values > span{
-  grid-area:1 / 1;opacity:0;white-space:nowrap;
-  animation:pm-capy-state 12s steps(1,end) infinite both;
+body.pm-home .capy-status-track{
+  display:flex;flex-direction:column;align-items:stretch;
+  width:100%;height:6.4em;
+  animation:pm-capy-track 12s linear infinite;
 }
-body.pm-home .capy-status-values > span:nth-child(1){animation-delay:0s}
-body.pm-home .capy-status-values > span:nth-child(2){animation-delay:3s}
-body.pm-home .capy-status-values > span:nth-child(3){animation-delay:6s}
-body.pm-home .capy-status-values > span:nth-child(4){animation-delay:9s}
-@keyframes pm-capy-state{
-  0%,24.999%{opacity:1}
-  25%,100%{opacity:0}
+body.pm-home .capy-status-track > span{
+  display:block;flex:0 0 1.6em;height:1.6em;
+  line-height:1.6;white-space:nowrap;overflow-wrap:normal;
+}
+@keyframes pm-capy-track{
+  0%,24.99%{transform:translateY(0)}
+  25%,49.99%{transform:translateY(-25%)}
+  50%,74.99%{transform:translateY(-50%)}
+  75%,100%{transform:translateY(-75%)}
 }
 @media(prefers-reduced-motion:reduce){
-  body.pm-home .capy-status-values > span{animation:none!important;opacity:0!important}
-  body.pm-home .capy-status-values > span:first-child{opacity:1!important}
+  body.pm-home .capy-status-track{animation:none!important;transform:none!important}
 }

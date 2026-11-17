@@ -92,6 +92,13 @@ const practice=fs.readFileSync(path.join(root,'practice.html'),'utf8');
 const glossary=fs.readFileSync(path.join(root,'glossary.html'),'utf8');
 assert(home.includes('href="academy.html"'),'Academy visible on home');
 assert(academy.includes('href="foundations.html"')&&academy.includes('href="professional-cases.html"'),'learning path navigation');
+assert(academy.includes('id="sources"'),'Academy maintains source section');
+for(const term of ['ITIL®','PeopleCert','Kepner–Tregoe','Kepner-Tregoe, Inc.','ASQ','not affiliated with','not official courseware']){
+ assert(academy.includes(term),'Academy attribution mentions '+term);
+}
+const ktGuide=fs.readFileSync(path.join(root,'articles/kepner-tregoe.html'),'utf8');
+assert(ktGuide.includes('href="../academy.html#sources"'),'KT Field Guide links to attribution');
+assert(ktGuide.includes('not an official or accredited'),'KT guide independently positioned');
 assert(pathfinder.includes('Pareto Analysis')&&pathfinder.includes('Problem Analysis'),'method-selection content');
 assert((professionals.match(/class="ac-case"/g)||[]).length===4,'four professional cases');
 assert((practice.match(/class="ac-quiz"/g)||[]).length===8,'eight self-checks');

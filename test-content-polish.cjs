@@ -30,6 +30,8 @@ for(const p of pages){
  assert(head.includes("script-src 'none'") && head.includes("connect-src 'none'"),p+' script and outbound requests forbidden');
  const prefix=p.startsWith('articles/')?'../':'';
  assert(html.includes('href="'+prefix+'site-structure.css"'),p+' shared navigation stylesheet');
+ assert((html.match(new RegExp('href="'+prefix+'studio\\.css"','g'))||[]).length===1,p+' Studio Edition loaded exactly once');
+ assert(fs.existsSync(path.join(root,prefix+'studio.css')),p+' shared editorial design exists');
  assert((html.match(/class="pm-global-header"/g)||[]).length===1,p+' exactly one global header');
  assert((html.match(/class="pm-global-footer"/g)||[]).length===1,p+' exactly one simple footer');
  const footer=html.match(/<footer class="pm-global-footer">([\s\S]*?)<\/footer>/);
@@ -57,6 +59,25 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
  assert(html.includes('capybara-'+slug+'-3d.webp'),'Field Guide must use its unique method illustration: '+slug);
  assert(!html.includes('class="capy-art pm-illustrated" aria-hidden="true"'),'Artwork must be accessible: '+slug);
  assert(fs.existsSync(path.join(root,'assets','capybara-'+slug+'-3d.webp')),'Method artwork file exists: '+slug);
+}
+const studio=fs.readFileSync(path.join(root,'studio.css'),'utf8');
+assert(studio.length>14000,'sitewide Studio Edition contains full design treatments');
+assert(studio.includes('prefers-reduced-motion:reduce'),'Studio Edition motion accessibility');
+assert(!/@import\\b|url\\s*\\(\\s*['"]?https?:/i.test(studio),'no remote style or font dependencies');
+for(const component of ['.pm-global-header','.pm-journey-card','.ev-case','.library-grid','.ac-hero-split','.pm-footer-title']){
+ assert(studio.includes(component),'Studio Edition styles '+component);
+}
+for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
+ const homeHtml=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ const libraryHtml=fs.readFileSync(path.join(root,'techniques.html'),'utf8');
+ assert(homeHtml.includes('class="pm-featured-art" src="assets/capybara-'+slug+'-3d.webp"'),'homepage established '+slug+' illustration');
+ assert(libraryHtml.includes('src="assets/capybara-'+slug+'-3d.webp"'),'technique library established '+slug+' illustration');
+}
+for(const p of ['foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html']){
+ const html=fs.readFileSync(path.join(root,p),'utf8');
+ assert(html.includes('class="ac-hero-split"'),'Academy cover split on '+p);
+ assert(html.includes('class="ac-hero-portrait"'),'Academy capybara cover on '+p);
+ assert(/class="ac-hero-portrait">\\s*<img[^>]*alt="[^"]+"/.test(html),'accessible cover art on '+p);
 }
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');
@@ -181,4 +202,4 @@ for(let k=0;k<8;k++){
  if(satisfied)solutions++;
 }
 assert.equal(solutions,4,'published logic puzzle checked independently');
-console.log('PASS v1.0: terminal entrance, four consistent nav choices, three homepage paths, 23 educational pages, and no visitor inputs.');
+console.log('PASS v1.0 Studio Edition: 23 educational pages, illustrated method covers, unified design and no visitor inputs.');

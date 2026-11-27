@@ -75,7 +75,7 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 }
 for(const p of ['foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html']){
  const html=fs.readFileSync(path.join(root,p),'utf8');
- assert(html.includes('class="ac-hero-split"'),'Academy cover split on '+p);
+ assert(html.includes('ac-shell ac-hero-split'),'Academy cover split on '+p);
  assert(html.includes('class="ac-hero-portrait"'),'Academy capybara cover on '+p);
  assert(/class="ac-hero-portrait">\s*<img[^>]*alt="[^"]+"/.test(html),'accessible cover art on '+p);
 }

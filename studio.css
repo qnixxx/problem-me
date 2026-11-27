@@ -633,3 +633,130 @@ body.pm-academy .ac-hero-portrait figcaption{
  body.pm-academy .ac-hero-portrait{max-width:480px;width:100%}
  body.pm-academy .ac-hero-portrait img{max-height:300px}
 }
+
+/* Mobile refinement: art is part of the card, not a black rectangle pasted over it.
+   Source artwork remains unchanged; screen blending makes source black disappear
+   against the existing dark green surfaces. */
+body.pm-site .library-grid .tech-card .visual{
+  isolation:isolate;
+  background:radial-gradient(ellipse 100% 80% at 50% 45%,#16412c,#092117 72%,#071b12);
+}
+body.pm-site .library-grid .tech-card .visual img,
+body.pm-site .preview .tech .pm-featured-art,
+body.pm-site.pm-readonly-guide .pm-guide-3d-art img{
+  mix-blend-mode:screen;
+  background:transparent;
+  filter:none;
+}
+body.pm-site .library-grid .tech-card .visual img{
+  width:100%;max-width:248px;max-height:192px;
+  object-fit:contain;
+}
+body.pm-site .library-grid .tech-card .visual .case-no{
+  position:absolute;bottom:15px;left:18px;
+  color:#b8edcb;
+}
+body.pm-site .preview .tech .pm-featured-art{
+  width:100%;max-width:256px;height:151px;
+  object-fit:contain;object-position:center;
+  border:0;padding:0;margin:0 auto 18px;
+}
+body.pm-site .preview .tech{isolation:isolate}
+body.pm-site.pm-readonly-guide .pm-guide-3d-art{
+  isolation:isolate;
+  background:radial-gradient(ellipse at center,#123b27,#091a12 75%);
+}
+body.pm-site .library-grid .tech-card .visual .case-no{
+  background:none;border:0;
+}
+@media(max-width:620px){
+  body.pm-site .library-grid .tech-card .visual{
+    min-height:210px;
+  }
+  body.pm-site .library-grid .tech-card .visual img{
+    max-width:245px;max-height:175px;
+  }
+}
+@media(max-width:430px){
+  body.pm-site .library-grid .tech-card .visual{
+    min-height:197px;
+    padding:17px 17px 28px;
+  }
+  body.pm-site .library-grid .tech-card .visual img{
+    width:100%;max-width:238px;max-height:155px;
+  }
+  body.pm-site .library-grid .tech-card .card-copy .meta{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0 8px;
+    margin-top:13px;
+    padding-top:10px;
+  }
+  body.pm-site .library-grid .tech-card .card-copy .meta div{
+    border:0;
+    padding:7px 3px 6px 0;
+  }
+  body.pm-site .library-grid .tech-card .card-copy .meta small{
+    font-size:.67rem;
+  }
+  body.pm-site .library-grid .tech-card .card-copy .meta strong{
+    font-size:.75rem;
+  }
+}
+
+/* Mobile header: unobtrusive tabs instead of tall filled buttons.
+   Keep 44px touch areas and the original four destination labels. */
+@media(max-width:760px){
+  .pm-global-header .pm-global-inner{
+    display:grid;grid-template-columns:minmax(0,1fr);
+    align-items:stretch;
+    min-height:0;
+    gap:0;
+    padding:3px 0 2px;
+  }
+  .pm-global-header .pm-global-brand{
+    min-height:34px;
+    padding:0;
+    font-size:1.30rem;
+    line-height:1.2;
+  }
+  .pm-global-header .pm-global-nav{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:3px;
+    width:100%;
+    min-height:44px;
+  }
+  .pm-global-header .pm-global-nav a{
+    min-width:0;
+    min-height:44px;
+    padding:8px 3px;
+    border:0;
+    border-bottom:2px solid transparent;
+    border-radius:0;
+    box-shadow:none;
+    background:transparent;
+    color:#cee4d6;
+    font-size:.76rem;
+    line-height:1.2;
+    text-align:center;
+  }
+  .pm-global-header .pm-global-nav a:hover{
+    background:rgba(99,251,177,.055);
+    color:var(--studio-mint);
+    border-color:rgba(99,251,177,.24);
+  }
+  .pm-global-header .pm-global-nav a[aria-current="page"],
+  .pm-global-header .pm-global-nav a[aria-current="location"]{
+    color:var(--studio-mint);
+    background:transparent;
+    border:0;
+    border-bottom:2px solid var(--studio-mint);
+    border-radius:0;
+    box-shadow:none;
+  }
+}
+@media(max-width:360px){
+  .pm-global-header .pm-global-brand{font-size:1.24rem}
+  .pm-global-header .pm-global-nav a{font-size:.70rem;padding-inline:2px}
+}

@@ -63,7 +63,7 @@ for(const slug of ['5-whys','fishbone','pareto','kepner-tregoe']){
 const studio=fs.readFileSync(path.join(root,'studio.css'),'utf8');
 assert(studio.length>14000,'sitewide Studio Edition contains full design treatments');
 assert(studio.includes('prefers-reduced-motion:reduce'),'Studio Edition motion accessibility');
-assert(!/@import\\b|url\\s*\\(\\s*['"]?https?:/i.test(studio),'no remote style or font dependencies');
+assert(!studio.includes('@import') && !studio.includes('https://') && !studio.includes('http://'),'no remote style or font dependencies');
 for(const component of ['.pm-global-header','.pm-journey-card','.ev-case','.library-grid','.ac-hero-split','.pm-footer-title']){
  assert(studio.includes(component),'Studio Edition styles '+component);
 }

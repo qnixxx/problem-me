@@ -41,6 +41,23 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
     assert.equal(await page.locator('.pm-global-header').count(),1,route+' consistent global header');
     assert.equal(await page.locator('.pm-global-nav a').count(),4,route+' four top-level links');
     assert.deepEqual(await page.locator('.pm-global-nav a').allTextContents(),['Home','Learn','Techniques','Practice'],route+' predictable nav labels');
+    if(width<=390){
+      const header=await page.locator('.pm-global-header').evaluate(el=>{
+        const nav=el.querySelector('.pm-global-nav');
+        const links=[...nav.querySelectorAll('a')];
+        const active=nav.querySelector('a[aria-current]');
+        return {height:el.getBoundingClientRect().height,
+          targets:links.map(a=>a.getBoundingClientRect().height),
+          activeBackground:active?getComputedStyle(active).backgroundColor:null,
+          underline:active?getComputedStyle(active).borderBottomWidth:null};
+      });
+      assert(header.height<=100,route+' mobile header is compact: '+header.height);
+      assert(header.targets.every(h=>h>=43),route+' mobile nav tap targets remain >=44px');
+      if(header.activeBackground){
+        assert.equal(header.activeBackground,'rgba(0, 0, 0, 0)',route+' active tab has no large filled pill');
+        assert.equal(header.underline,'2px',route+' active tab uses a slim underline');
+      }
+    }
     assert.equal(await page.locator('.pm-global-footer').count(),1,route+' one compact footer');
     assert.equal(await page.locator('.pm-global-footer .pm-footer-cursor').count(),1,route+' footer has dedicated blinking cursor');
     assert.equal(await page.locator('.pm-global-footer .pm-footer-word').count(),1,route+' footer has independently hoverable problem word');
@@ -126,6 +143,8 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    assert.equal(await page.locator('#start .pm-journey-card').count(),3,'three homepage starting paths');
    assert.equal(await page.locator('#techniques .tech').count(),4,'homepage case cards');
    assert.equal(await page.locator('#techniques img.pm-featured-art').count(),4,'four illustrated homepage techniques');
+   assert.equal(await page.locator('#techniques .tech pre').count(),0,'homepage art is not crowded by redundant ASCII diagrams');
+   assert(await page.locator('#techniques .pm-featured-art').first().evaluate(img=>getComputedStyle(img).mixBlendMode==='screen'),'homepage technique art blends away black backgrounds');
    assert(await page.locator('.hero-art .pm-mascot-image').evaluate(img=>img.complete&&img.naturalWidth>0),'established hero capybara loads');
    const featured=await page.locator('#techniques img.pm-featured-art').evaluateAll(async imgs=>{
       await Promise.all(imgs.map(async img=>{img.loading='eager';if(!img.complete)await new Promise(done=>{img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true})});}));
@@ -135,6 +154,9 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/techniques.html');
    assert.equal(await page.locator('.tech-card').count(),4,'library cases');
    assert.equal(await page.locator('.tech-card .visual img').count(),4,'method library has four matching illustrated covers');
+   assert.equal(await page.locator('.tech-card .visual pre').count(),0,'no ASCII diagram beneath illustrated covers');
+   assert(await page.locator('.tech-card .visual img').first().evaluate(img=>getComputedStyle(img).mixBlendMode==='screen'),'technique card artwork blends into its stage');
+   assert(await page.locator('.tech-card .visual').first().evaluate(el=>getComputedStyle(el).isolation==='isolate'),'art blending stays within its card');
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
    await page.goto(base+'/features.html');
    assert.equal(await page.locator('.feature-path').count(),4,'v1.0 learning pillars');

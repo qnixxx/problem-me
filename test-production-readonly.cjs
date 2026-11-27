@@ -34,6 +34,9 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    for(const route of routes){
     await page.goto(base+'/'+route,{waitUntil:'load'});
     assert(await page.title(),route+' title');
+    const styleLink=page.locator('link[rel="stylesheet"][href$="studio.css"]');
+    assert.equal(await styleLink.count(),1,route+' loads the premium shared design stylesheet once');
+    assert(await styleLink.evaluate(link=>Boolean(link.sheet)),route+' shared design sheet is applied');
     assert.equal(await page.locator('main').count(),1,route+' main landmark');
     assert.equal(await page.locator('.pm-global-header').count(),1,route+' consistent global header');
     assert.equal(await page.locator('.pm-global-nav a').count(),4,route+' four top-level links');
@@ -122,8 +125,16 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
 
    assert.equal(await page.locator('#start .pm-journey-card').count(),3,'three homepage starting paths');
    assert.equal(await page.locator('#techniques .tech').count(),4,'homepage case cards');
+   assert.equal(await page.locator('#techniques img.pm-featured-art').count(),4,'four illustrated homepage techniques');
+   assert(await page.locator('.hero-art .pm-mascot-image').evaluate(img=>img.complete&&img.naturalWidth>0),'established hero capybara loads');
+   const featured=await page.locator('#techniques img.pm-featured-art').evaluateAll(async imgs=>{
+      await Promise.all(imgs.map(async img=>{img.loading='eager';if(!img.complete)await new Promise(done=>{img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true})});}));
+      return imgs.map(img=>({ok:img.complete&&img.naturalWidth>0,alt:img.alt}));
+   });
+   assert(featured.every(img=>img.ok&&img.alt.length>25),'all homepage technique illustrations load with useful alt text');
    await page.goto(base+'/techniques.html');
    assert.equal(await page.locator('.tech-card').count(),4,'library cases');
+   assert.equal(await page.locator('.tech-card .visual img').count(),4,'method library has four matching illustrated covers');
    assert.equal(await page.locator('#field-guides .guide-card').count(),4,'field guides');
    await page.goto(base+'/features.html');
    assert.equal(await page.locator('.feature-path').count(),4,'v1.0 learning pillars');
@@ -134,6 +145,12 @@ const cases=['5-whys.html','fishbone.html','pareto.html','kepner-tregoe.html'];
    await page.goto(base+'/academy.html');
    assert(await page.locator('main').isVisible(),'Academy content visible');
    assert.equal(await page.locator('.ac-card').count(),11,'Academy curriculum and method cards');
+   for(const p of ['foundations.html','choose-method.html','professional-cases.html','practice.html','glossary.html']){
+      await page.goto(base+'/'+p);
+      assert.equal(await page.locator('.ac-hero-portrait img').count(),1,p+' illustration-led editorial hero');
+      assert(await page.locator('.ac-hero-portrait img').evaluate(img=>img.complete&&img.naturalWidth>0),p+' hero illustration loaded');
+   }
+   await page.goto(base+'/academy.html');
    await page.goto(base+'/professional-cases.html');
    assert.equal(await page.locator('article.ac-case').count(),4,'four professional cases');
    await page.goto(base+'/practice.html');

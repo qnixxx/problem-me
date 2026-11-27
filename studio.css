@@ -602,3 +602,34 @@ body.pm-academy .sat-formula .sat-expression{
     transition:none!important;transform:none!important;
   }
 }
+
+/* One coherent cover system for Academy pages with a supporting capybara portrait. */
+body.pm-academy .ac-hero-split{
+  display:grid;
+  grid-template-columns:minmax(0,1.14fr) minmax(240px,.86fr);
+  gap:clamp(26px,4.3vw,65px);
+  align-items:center;
+}
+body.pm-academy .ac-hero-copy{min-width:0}
+body.pm-academy .ac-hero-portrait{
+  margin:0;min-width:0;overflow:hidden;
+  border:1px solid var(--studio-line-strong);
+  border-radius:22px;
+  background:radial-gradient(ellipse at 50% 40%,#194b31,#0a2517 58%,#06160e 90%);
+  box-shadow:var(--studio-shadow);
+}
+body.pm-academy .ac-hero-portrait img{
+  display:block;width:100%;height:auto;max-height:360px;
+  padding:14px 20px 2px;object-fit:contain;object-position:center bottom;
+}
+body.pm-academy .ac-hero-portrait figcaption{
+  border-top:1px solid var(--studio-line);
+  color:#c0e3cb;font:700 .7rem/1.6 var(--studio-mono);
+  letter-spacing:.07em;padding:14px 17px;
+  background:rgba(2,14,8,.68);
+}
+@media(max-width:760px){
+ body.pm-academy .ac-hero-split{grid-template-columns:1fr;gap:30px}
+ body.pm-academy .ac-hero-portrait{max-width:480px;width:100%}
+ body.pm-academy .ac-hero-portrait img{max-height:300px}
+}

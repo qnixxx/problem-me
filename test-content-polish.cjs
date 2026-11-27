@@ -77,7 +77,7 @@ for(const p of ['foundations.html','choose-method.html','professional-cases.html
  const html=fs.readFileSync(path.join(root,p),'utf8');
  assert(html.includes('class="ac-hero-split"'),'Academy cover split on '+p);
  assert(html.includes('class="ac-hero-portrait"'),'Academy capybara cover on '+p);
- assert(/class="ac-hero-portrait">\\s*<img[^>]*alt="[^"]+"/.test(html),'accessible cover art on '+p);
+ assert(/class="ac-hero-portrait">\s*<img[^>]*alt="[^"]+"/.test(html),'accessible cover art on '+p);
 }
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const feature=fs.readFileSync(path.join(root,'features.html'),'utf8');

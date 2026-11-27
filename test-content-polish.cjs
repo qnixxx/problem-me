@@ -31,7 +31,7 @@ for(const p of pages){
  const prefix=p.startsWith('articles/')?'../':'';
  assert(html.includes('href="'+prefix+'site-structure.css"'),p+' shared navigation stylesheet');
  assert((html.match(new RegExp('href="'+prefix+'studio\\.css"','g'))||[]).length===1,p+' Studio Edition loaded exactly once');
- assert(fs.existsSync(path.join(root,prefix+'studio.css')),p+' shared editorial design exists');
+ assert(fs.existsSync(path.join(root,'studio.css')),p+' shared editorial design exists');
  assert((html.match(/class="pm-global-header"/g)||[]).length===1,p+' exactly one global header');
  assert((html.match(/class="pm-global-footer"/g)||[]).length===1,p+' exactly one simple footer');
  const footer=html.match(/<footer class="pm-global-footer">([\s\S]*?)<\/footer>/);
